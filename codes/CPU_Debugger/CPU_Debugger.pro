@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT       += serialport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Controllers/BackendController.cpp \
+    Lib_Comm/comm.cpp \
     States/DebugginState.cpp \
     States/State.cpp \
     States/WaitingState.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     Controllers/BackendController.h \
+    Lib_Comm/comm.h \
     States/DebugginState.h \
     States/State.h \
     States/WaitingState.h \
