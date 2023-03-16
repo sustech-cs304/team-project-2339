@@ -2,7 +2,7 @@
 
 ## Motivation
 
-Hardware programming has few debugging tools and is mostly bundled with bulky IDEs such as VIVADO. The processes of using those debuggers are often tedious and complex, which becomes a great obstacle when students start designing their implementation of a CPU and are met with numerous bugs undetectable during hardware simulation.
+Hardware programming has few debugging tools and is mostly bundled with bulky IDEs such as VIVADO. The processes of using those debuggers are often tedious and complex, which becomes a great obstacle when students start designing their implementation of a CPU and are met with numerous bugs undetectable during hardware simulation. An additional downside is that existing hardware debuggers are designed solely for the hardware description language used to implement the circuit, hence individual lines of instructions cannot be targeted for breakpoints.
 
 CPUs are complex, and sometimes the translation from a hardware descriptive language to an FPGA programming bitstream can be inaccurate and needs that portion of code rewritten. But during normal CPU execution, there’s no way to press pause and peek into the various signals present in the CPU, similar to what GDB provides for C programming.
 
@@ -27,6 +27,7 @@ The debugger will only provide functionalities related to debugging:
 - Analyzing the `top.v` file and illustrating CPU module diagrams.
 - Allows the user to specify the signals they want to check during CPU operation on a graphical interface (the module diagram generated).
 - Providing UART transmission of instruction files to the CPU.
+- Generating a debug core for the CPU.
 - Pausing the CPU anytime during execution while preserving the entire CPU’s state.
 - Dynamically inserting breakpoints in the instruction file after transmitting the instruction file to the CPU.
 
@@ -97,7 +98,7 @@ As the process is iterative, instead of developing different functions each at a
 
 ## Schedule
 
-The debugger will probability undergo 3 revisions:
+The debugger will undergo 3 revisions:
 
 1. `rev0.9` (week 5): a bare Qt framework with some UI components available with QML
 2. `rev1.0` (week 9): a working prototype without non-essential features, this will be constantly improved upon during beta testing among the students during their project
