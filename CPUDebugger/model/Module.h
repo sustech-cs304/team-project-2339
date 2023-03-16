@@ -2,12 +2,12 @@
 #define MODULE_H
 #include <QString>
 #include <QList>
-#include "Signal.h"
+#include "MySignal.h"
 class Module {
 private:
     QString name;
-    QList<Signal> inputSignals;
-    QList<Signal> outputSignals;
+    QList<MySignal> inputSignals;
+    QList<MySignal> outputSignals;
 };
 
 #endif // MODULE_H

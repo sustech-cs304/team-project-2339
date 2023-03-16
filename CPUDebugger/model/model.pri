@@ -6,6 +6,9 @@ HEADERS += \
     $$PWD/FileStore.h \
     $$PWD/Module.h \
     $$PWD/ModuleData.h \
-    $$PWD/Signal.h \
+    $$PWD/MySignal.h \
     $$PWD/TopVFileInputFactory.h \
     $$PWD/VFile.h
+
+SOURCES += \
+    $$PWD/FileInputFactory.cpp

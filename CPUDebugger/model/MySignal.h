@@ -1,16 +1,16 @@
-#ifndef SIGNAL_H
-#define SIGNAL_H
+#ifndef MYSIGNAL_H
+#define MYSIGNAL_H
 #include <QString>
 #include <QBitArray>
 enum SignalState {
     ON=1, OFF=0
 };
 
-class Signal {
+class MySignal {
 private:
     QString name;
     QBitArray bitVal;
     bool isFlagged;
 };
 
-#endif // SIGNAL_H
+#endif // MYSIGNAL_H

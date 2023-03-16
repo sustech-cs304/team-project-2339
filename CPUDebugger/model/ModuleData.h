@@ -1,6 +1,6 @@
 #ifndef MODULEDATA_H
 #define MODULEDATA_H
-#include <QString>
+#include "QString"
 #include <QList>
 #include "Module.h"
 class ModuleData {
