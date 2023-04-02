@@ -53,7 +53,7 @@
 
 `PROGRAM`: send the ASM file through UART to the CPU’s RAM and ROM, the ASM file should be 64K with the following memory arrangement:
 
-![ASM file memory arrangement](/UART_Address.png)
+![ASM file memory arrangement](UART_Address.png)
 
 ASM file memory arrangement
 
