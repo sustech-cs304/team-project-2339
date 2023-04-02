@@ -17,7 +17,7 @@ module input_unit (
     output reg switch_enable,                                           // for (1) seven_seg_unit (user is using switches)
                                                                         //     (2) output_unit (display that input is switches)
                                                                         //     (3) mem_wb_reg (select the appropriate value from switch or keypad)
-    output reg cpu_pause,                                               // for hazard_unit (user pressed pause)
+    output reg used_pause,                                              // for hazard_unit (user pressed pause)
     output     overflow_9th,                                            // for hardware LED to indicate a overflow of the 9th  digit on tube display
     output     overflow_10th                                            // for hardware LED to indicate a overflow of the 10th digit on tube display
     );
@@ -61,7 +61,7 @@ module input_unit (
                 keypad_digits,
                 overflow_repo,
                 switch_enable,
-                cpu_pause,
+                used_pause,
                 digit_counter
             }           <= 0;
             input_state <= STATE_BLOCK;
@@ -79,7 +79,7 @@ module input_unit (
                         2'b01  : begin
                             input_state    <= STATE_PAUSE;
                             prev_state     <= STATE_BLOCK;
-                            cpu_pause      <= 1'b1;
+                            used_pause      <= 1'b1;
                         end
                         default: 
                             input_state    <= input_state;
@@ -113,7 +113,7 @@ module input_unit (
                         KEY_PAUSE    : begin
                             input_state    <= STATE_PAUSE;
                             prev_state     <= STATE_KEYPAD;
-                            cpu_pause      <= 1'b1;
+                            used_pause      <= 1'b1;
                         end
                         default      : begin
                             if (digit_pressed                                 &
@@ -148,7 +148,7 @@ module input_unit (
                         KEY_PAUSE : begin
                             input_state    <= STATE_PAUSE;
                             prev_state     <= STATE_SWITCH;
-                            cpu_pause      <= 1'b1;
+                            used_pause      <= 1'b1;
                         end
                         default   :
                             input_state    <= input_state; // prevent auto latches
@@ -157,9 +157,9 @@ module input_unit (
                 default     : 
                     if (~ignore_pause & key_coord == KEY_PAUSE) begin
                         input_state        <= prev_state;
-                        cpu_pause          <= 1'b0;
+                        used_pause          <= 1'b0;
                     end else
-                        cpu_pause          <= cpu_pause; // prevent auto latches
+                        used_pause          <= used_pause; // prevent auto latches
             endcase
         end
     end

@@ -33,17 +33,36 @@ module top_testbench ();
                 SWITCH    = 4'd13, // "B": change input between switches and keypad
                 NO_KEY    = 4'd14;
 
+    localparam  OP_NONE    = 8'hff,
+                // to client
+                OP_SIGNAL  = 8'h01, // send pc and all signals
+                OP_OK      = 8'h02, // received ping
+                // from client
+                OP_PING    = 8'h03, // ping the debug unit
+                OP_PAUSE   = 8'h04, // pause the CPU
+                OP_RESUME  = 8'h05, // resume the CPU
+                OP_NEXT    = 8'h06, // execute the next instruction
+                OP_PROGRAM = 8'h07; // reprogram the CPU
+
     localparam  KEYPRESS_CNT = 40;
+    localparam  SIGNAL_CNT   = 20;
+
+    localparam  UNIT_TIME    = 5,
+                UART_TIME    = 868 * UNIT_TIME * 2,
+                KEYP_TIME    = 62501 * UNIT_TIME * 2;
 
     reg  [3:0]  row_in = 4'hf;
     reg  [15:0] row_in_reg = 16'hffff;
     reg  [3:0]  keys [KEYPRESS_CNT - 1:0];
+    reg  [9:0]  signals [SIGNAL_CNT - 1:0];
+    reg         uart_rx = 1;
+    reg  [9:0]  uart_rx_reg = {10{1'b1}};
     
     top uut(
         .clk_raw            (clk),
         .rst_n              (rst_n),
         .switch_map         (8'b1111_1111),
-        .uart_rx            (1'b0),
+        .uart_rx            (uart_rx),
         .row_in             (row_in),
         .col_out            (col_out),
         .seg_tube           (seg_tube),   
@@ -57,13 +76,13 @@ module top_testbench ();
 
     // simulate clock
     always begin
-        #5 clk = ~clk;
+        #UNIT_TIME clk = ~clk;
     end
 
     // reset
     initial begin
-        #5 rst_n = 0;
-        #5 rst_n = 1;
+        #UNIT_TIME rst_n = 0;
+        #UNIT_TIME rst_n = 1;
     end
 
     function [15:0] press_key(input [3:0] key);
@@ -122,20 +141,70 @@ module top_testbench ();
         keys[28] = ONE;         // 1st number
         keys[29] = ENTER;
     end
-    reg counter = 0;
+
+    function [9:0]  serialize(input [7:0] opcode);
+        case (opcode)
+                                 /* {STOP     BYTE     START} */
+            OP_NONE   : serialize = {1'b1,  {8{1'b1}},  1'b1};
+            default   : serialize = {1'b1,  opcode,     1'b0};
+        endcase
+    endfunction
+
+    // simulate uart transmission
+    initial begin
+        for (i = 0; i < SIGNAL_CNT; i = i + 1) signals[i] = OP_NONE;
+        signals[1]  = OP_RESUME;
+        signals[2]  = 4;           // breakpoint at 2nd instruction
+        signals[3]  = 0;
+        signals[4]  = 0;
+        signals[5]  = 0;
+        signals[6]  = OP_NONE;
+        signals[7]  = OP_NEXT;
+        signals[8]  = OP_NEXT;
+        signals[9]  = OP_RESUME;
+        signals[10] = 220;          // breakpoint at 64th instruction
+        signals[11] = 0;
+        signals[12] = 0;
+        signals[13] = 0;
+        signals[14] = OP_PAUSE;
+        signals[15] = OP_PROGRAM;
+        signals[16] = 1;
+        signals[17] = 1;
+        signals[18] = 1;
+        signals[19] = 1;
+    end
+
+    initial begin
+        #UNIT_TIME;
+        for (i = 0; i < SIGNAL_CNT; i = i + 1) begin
+            uart_rx_reg = serialize(signals[i]);
+
+            uart_rx = uart_rx_reg[0]; #UART_TIME;
+            uart_rx = uart_rx_reg[1]; #UART_TIME;
+            uart_rx = uart_rx_reg[2]; #UART_TIME;
+            uart_rx = uart_rx_reg[3]; #UART_TIME;
+            uart_rx = uart_rx_reg[4]; #UART_TIME;
+            uart_rx = uart_rx_reg[5]; #UART_TIME;
+            uart_rx = uart_rx_reg[6]; #UART_TIME;
+            uart_rx = uart_rx_reg[7]; #UART_TIME;
+            uart_rx = uart_rx_reg[8]; #UART_TIME;
+            uart_rx = uart_rx_reg[9]; #UART_TIME;
+        end
+    end
+
     initial begin
         for (i = 0; i < KEYPRESS_CNT; i = i + 1) begin
             row_in_reg = press_key(keys[i]);
 
             repeat(4) begin
-                row_in = NONE ; #625010;
+                row_in = NONE ; #KEYP_TIME;
             end
             
             repeat(2) begin
-                row_in = row_in_reg[ 3: 0]; #625010; // COL_1
-                row_in = row_in_reg[ 7: 4]; #625010; // COL_2
-                row_in = row_in_reg[11: 8]; #625010; // COL_3
-                row_in = row_in_reg[15:12]; #625010; // COL_4
+                row_in = row_in_reg[ 3: 0]; #KEYP_TIME; // COL_1
+                row_in = row_in_reg[ 7: 4]; #KEYP_TIME; // COL_2
+                row_in = row_in_reg[11: 8]; #KEYP_TIME; // COL_3
+                row_in = row_in_reg[15:12]; #KEYP_TIME; // COL_4
             end
         end
         

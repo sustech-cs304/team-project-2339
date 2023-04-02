@@ -163,7 +163,7 @@ module top (
     wire [`DIGIT_CNT * `DIGIT_RADIX_WIDTH - 1:0] input_unit_keypad_digits;
     wire input_unit_input_complete,
          input_unit_switch_enable,
-         input_unit_cpu_pause;
+         input_unit_user_pause;
 
     // vga sync 
     wire [`COORDINATE_WIDTH - 1:0] vga_unit_x, vga_unit_y;
@@ -173,10 +173,11 @@ module top (
     wire [7:0] keypad_unit_key_coord;
 
     // uart unit
-    wire uart_unit_write_enable,
-         uart_unit_uart_complete;
-    wire [`ISA_WIDTH - 1:0] uart_unit_write_data;
-    wire [`RAM_DEPTH:0] uart_unit_write_address;
+    wire debug_unit_write_enable,
+         debug_unit_debug_pause,
+         debug_unit_uart_complete;
+    wire [`ISA_WIDTH - 1:0] debug_unit_write_data;
+    wire [`RAM_DEPTH:0] debug_unit_write_address;
             
 
     // LED
@@ -208,8 +209,8 @@ module top (
         .clk                    (clk_cpu),
         .rst_n                  (rst_n),
 
-        .uart_complete          (uart_unit_uart_complete),
-        .uart_write_enable      (uart_unit_write_enable),
+        .uart_complete          (debug_unit_uart_complete),
+        .uart_write_enable      (debug_unit_write_enable),
         .uart_disable           (hazard_unit_uart_disable),
 
         .branch_instruction     (branch_instruction),
@@ -235,7 +236,8 @@ module top (
 
         .input_enable           (data_mem_input_enable),
         .input_complete         (input_unit_input_complete),
-        .cpu_pause              (input_unit_cpu_pause),
+        .user_pause             (input_unit_user_pause),
+        .debug_pause            (debug_unit_debug_pause),
         .ignore_pause           (hazard_unit_ignore_pause),
 
         .pc_reset               (hazard_unit_pc_reset),
@@ -257,9 +259,9 @@ module top (
         .rst_n                  (rst_n),
 
         .uart_disable           (hazard_unit_uart_disable),
-        .uart_write_enable      (uart_unit_write_enable),
-        .uart_data              (uart_unit_write_data),
-        .uart_addr              (uart_unit_write_address),
+        .uart_write_enable      (debug_unit_write_enable),
+        .uart_data              (debug_unit_write_data),
+        .uart_addr              (debug_unit_write_address),
 
         .pc_offset              (mux_pc_offset),
         .pc_offset_value        (mux_operand_2),
@@ -457,9 +459,9 @@ module top (
         .clk                    (clk_cpu),
 
         .uart_disable           (hazard_unit_uart_disable),
-        .uart_write_enable      (uart_unit_write_enable),
-        .uart_data              (uart_unit_write_data),
-        .uart_addr              (uart_unit_write_address),
+        .uart_write_enable      (debug_unit_write_enable),
+        .uart_data              (debug_unit_write_data),
+        .uart_addr              (debug_unit_write_address),
 
         .no_op                  (ex_mem_reg_no_op),
         .mem_control            (ex_mem_reg_mem_control),
@@ -515,17 +517,6 @@ module top (
     );
 
     //-----------------------------------input---------------------------------------//
-    uart_unit uart_unit(
-        .clk_uart               (clk_uart),
-        .uart_disable           (hazard_unit_uart_disable),
-        .uart_rx                (uart_rx),
-        
-        .uart_tx                (uart_tx),
-        .uart_addr              (uart_unit_write_address),
-        .uart_data              (uart_unit_write_data),
-        .uart_write_enable      (uart_unit_write_enable),
-        .uart_complete          (uart_unit_uart_complete)
-    );
     keypad_unit keypad_unit(
         .clk                    (clk_raw),
         .rst_n                  (rst_n),
@@ -543,7 +534,7 @@ module top (
         .keypad_data            (input_unit_keypad_data),
         .keypad_digits          (input_unit_keypad_digits),
         .switch_enable          (input_unit_switch_enable),
-        .cpu_pause              (input_unit_cpu_pause),
+        .used_pause             (input_unit_user_pause),
         .overflow_9th           (digit_overflow_9th),
         .overflow_10th          (digit_overflow_10th)
     );
@@ -579,5 +570,24 @@ module top (
         .issue_type             (hazard_unit_issue_type),
         .switch_enable          (input_unit_switch_enable),
         .vga_rgb                (vga_signal)
+    );
+
+    //-------------------------------------debug----------------------------------------//
+    debug_unit debug_unit(
+        .clk                    (clk_cpu),
+        .rst_n                  (rst_n),
+
+        .uart_rx                (uart_rx),
+        .uart_tx                (uart_tx),
+
+        .pc                     (instruction_mem_pc),
+        .instruction            (instruction_mem_instruction),
+
+        .uart_addr              (debug_unit_write_address),
+        .uart_data              (debug_unit_write_data),
+        .uart_write_enable      (debug_unit_write_enable),
+
+        .debug_pause            (debug_unit_debug_pause),
+        .uart_complete          (debug_unit_uart_complete)
     );
 endmodule

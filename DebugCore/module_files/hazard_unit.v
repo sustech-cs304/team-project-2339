@@ -34,7 +34,7 @@ module hazard_unit (
 
     input      input_enable,                                    // from data_mem (the keypad input is needed)
     input      input_complete,                                  // from input_unit (user pressed enter)
-    input      cpu_pause,                                       // from input_unit (user pressed pause)
+    input      user_pause,                                      // from input_unit (user pressed pause)
     input      debug_pause,                                     // from debug_unit (the pc reached the breakpoint)
     output reg ignore_pause,                                    // for input_unit (ignore the user resume action during uart transmission)
 
@@ -77,6 +77,7 @@ module hazard_unit (
     wire data_hazard  = (branch_instruction  & (ex_conflict | mem_conflict)) |          // data hazard when branch depends on data from previous stages 
                         (ex_mem_read_enable  & ex_conflict);                            // data hazard when alu depends on data from memory at the next stage
     wire fallthrough  = `PC_MAX_VALUE == pc  & ~if_no_op;                               // uart hazard when next instruction is valid and not in memory 
+    wire cpu_pause    = user_pause | debug_pause;                                       // user paused or received pause signal from PC
 
     always @(negedge clk, negedge rst_n) begin
         if (~rst_n) begin
@@ -91,7 +92,7 @@ module hazard_unit (
             uart_disable       = 1'b1;
 
             issue_type         = `ISSUE_NONE;
-            cpu_state          = IDLE;
+            cpu_state          = EXECUTE;
 
             if_hazard_control  = `HAZD_CTL_NORMAL;
             id_hazard_control  = `HAZD_CTL_NORMAL;
@@ -368,7 +369,7 @@ module hazard_unit (
                         default      : 
                             cpu_state = cpu_state; // prevent auto latches
                     endcase
-                /* this is the IDLE state, gives one cycle for the IF stage to complete */
+                /* this is the IDLE state */
                 default: 
                     cpu_state = EXECUTE;
             endcase   

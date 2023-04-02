@@ -10,7 +10,7 @@ module debug_unit (
     input      [`ISA_WIDTH - 1:0] pc,           //
 
     //// [TODO] demo only !!! ////
-    output     [`ISA_WIDTH - 1:0] instruction,  // from instruction_mem
+    input      [`ISA_WIDTH - 1:0] instruction,  // from instruction_mem
 
     output reg [`RAM_DEPTH:0] uart_addr,        // 
     output reg [`ISA_WIDTH - 1:0] uart_data,    // 
@@ -27,8 +27,11 @@ module debug_unit (
     reg [ISA_BYTE_IDX_WIDTH - 1:0] uart_byte_idx;
 
     localparam  PERIOD_WIDTH = 10,
-                FULL_PERIOD  = 867,                 // CPU clock to UART clock (100MHz -> 115200Hz) - last cycle
-                HALF_PERIOD  = 432;                 // 868 / 2 - 2: half of delay (to capture the center of a bit) - discover cycle - last cycle
+                FULL_PERIOD  = 10'd867,             // CPU clock to UART clock (100MHz -> 115200Hz) - last cycle
+                HALF_PERIOD  = 10'd432;             // 868 / 2 - 2: half of delay (to capture the center of a bit) - discover cycle - last cycle
+    // localparam  PERIOD_WIDTH = 10,
+    //             FULL_PERIOD  = 7,
+    //             HALF_PERIOD  = 2;
     reg [PERIOD_WIDTH - 1:0] rx_delay, tx_delay;
 
     localparam  // to client
@@ -46,12 +49,12 @@ module debug_unit (
                 RX_START       = 3'b001,    // start bit detected
                 RX_DATA        = 3'b010,    // collecting data bits
                 RX_STOP        = 3'b011,    // stop bit detected
-                RX_WAIT        = 3'b111;    // wait for the next byte to carry on
+                RX_WAIT        = 3'b100;    // wait for the next byte to carry on
     reg [RX_STATE_WIDTH - 1:0] rx_state;
 
     localparam  TX_STATE_WIDTH = 1,
-                TX_IDLE        = 1'b1,  // uart waiting for output
-                TX_SEND        = 1'b0;  // sending the data (with start and stop bits)
+                TX_IDLE        = 1'b0,  // uart waiting for output
+                TX_SEND        = 1'b1;  // sending the data (with start and stop bits)
     reg tx_state;
 
     localparam  CORE_RX_STATE_WIDTH = 2,
@@ -65,6 +68,7 @@ module debug_unit (
                 CORE_TX_SIGNAL      = 2'b01,    // send signals
                 CORE_TX_PING        = 2'b10;    // respond ok to ping
     reg [CORE_TX_STATE_WIDTH - 1:0] core_tx_state;
+    reg                             core_tx_up;
     
     localparam  SIGNALS_WIDTH          = `ISA_WIDTH * 2,            //// [TODO] demo only !!! ////
                 SIGNALS_BYTE_CNT       = SIGNALS_WIDTH / 8 - 1,
@@ -77,14 +81,15 @@ module debug_unit (
     
     reg       rx_bit_buffer, rx_bit;
     reg [2:0] rx_bit_idx; 
-    reg [7:0] rx_byte, tx_byte;
+    reg [7:0] rx_byte;
     reg       rx_complete;
 
     reg [3:0] tx_bit_idx;   // accomodates total of 10 bits
+    reg [9:0] tx_byte;
     reg       tx_start, tx_complete;
 
     reg [`ISA_WIDTH - 1:0] breakpoint;
-    wire                   breakpoint_reached = (breakpoint == pc) ? 1'b1 : 1'b0;
+    wire                   breakpoint_reached = (breakpoint == pc);
 
     reg    debug_write_enable;
     assign uart_write_enable = debug_write_enable & rx_complete;
@@ -162,8 +167,8 @@ module debug_unit (
                             rx_delay      <= 0;
                             rx_state      <= RX_IDLE;
 
-                            uart_complete <= 1'b1;  // (1) notify hazard unit that the transfer is completed
-                                                    // (2) turn off debug_write_enable
+                            uart_complete <= (core_rx_state == CORE_RX_PROGRAM);    // (1) notify hazard unit that the transfer is completed
+                                                                                    // (2) turn off debug_write_enable
                         end
                         default:
                             rx_delay      <= rx_delay + 1; 
@@ -207,7 +212,7 @@ module debug_unit (
         end
     end
 
-    always @(posedge tx_complete, core_tx_state) begin
+    always @(posedge tx_complete, posedge core_tx_up, negedge rst_n) begin
         case (core_tx_state)
             CORE_TX_SIGNAL : begin
                 tx_byte[1+:8] <= signals[(signals_byte_idx * 8)+:8];
@@ -221,12 +226,18 @@ module debug_unit (
                 end
             end
             CORE_TX_PING   : begin
-                tx_start      <= ~tx_complete;
-                tx_byte[1+:8] <= OP_OK;
+                if (~tx_complete) begin
+                    tx_start      <= 1'b1;
+                    tx_byte[1+:8] <= OP_OK;
+                end else 
+                    tx_start      <= 1'b0;
             end
             /* CORE_TX_IDLE */
-            default        :
+            default        : begin
+                tx_start         <= 1'b0;
                 signals_byte_idx <= 0;
+                tx_byte          <= {1'b1, {8{1'b0}}, 1'b0};
+            end
         endcase
     end
 
@@ -241,16 +252,18 @@ module debug_unit (
 
             debug_write_enable = 1'b0;
             breakpoint         = 0;
+            debug_pause        = 1'b1;
 
             core_rx_state      = CORE_RX_OPCODE;
             core_tx_state      = CORE_TX_IDLE;
+            core_tx_up         = 1'b0;
         end else begin
             case (core_rx_state)
                 CORE_RX_OPCODE  : begin
                     /* 
                         (1) positive-edge of the rx_complete signal for opcode
                      */
-                    core_tx_state = CORE_TX_IDLE;
+                    core_tx_up = 1'b0;
 
                     case (rx_byte)
                         // receive additional data
@@ -264,19 +277,22 @@ module debug_unit (
                         // send data back to PC
                         OP_PING    : begin
                             core_tx_state = CORE_TX_PING;
+                            core_tx_up    = 1'b1;
                         end
                         OP_PAUSE   : begin
                             debug_pause   = 1'b1;
                             core_tx_state = CORE_TX_SIGNAL;
+                            core_tx_up    = 1'b1;
                         end
                         // trigger breakpoint_reached in next cycle
                         OP_NEXT    : begin
-                            breakpoint    = breakpoint + 1;
+                            breakpoint    = breakpoint + 4;
                         end
                         default    :
                             if (breakpoint_reached) begin
                                 debug_pause   = 1'b1;
                                 core_tx_state = CORE_TX_SIGNAL;
+                                core_tx_up    = 1'b1;
                             end else
                                 core_rx_state = core_rx_state; // prevent auto latches
                     endcase
