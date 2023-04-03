@@ -14,9 +14,11 @@ module debug_unit (
 
     output reg [`RAM_DEPTH:0] uart_addr,        // 
     output reg [`ISA_WIDTH - 1:0] uart_data,    // 
-    output     uart_write_enable,               // for (1) hazard_unit
+    output reg uart_write_enable,               // for (1) hazard_unit
                                                 //     (2) instruction_mem
                                                 //     (3) data_mem
+
+    output [7:0] rx_light,
 
     output reg debug_pause,                     // for hazard_unit (to pause the CPU)
     output reg uart_complete                    // for hazard_unit (programming completed)
@@ -29,10 +31,12 @@ module debug_unit (
     localparam  PERIOD_WIDTH = 10,
                 FULL_PERIOD  = 10'd867,             // CPU clock to UART clock (100MHz -> 115200Hz) - last cycle
                 HALF_PERIOD  = 10'd432;             // 868 / 2 - 2: half of delay (to capture the center of a bit) - discover cycle - last cycle
-    // localparam  PERIOD_WIDTH = 10,
-    //             FULL_PERIOD  = 7,
-    //             HALF_PERIOD  = 2;
     reg [PERIOD_WIDTH - 1:0] rx_delay, tx_delay;
+
+    localparam  UART_LEN       = 8,             // number of bits in a uart packet
+                UART_LEN_WIDTH = 3,             // sqrt(UART_LEN)
+                UART_RX_CNT    = UART_LEN - 1,
+                UART_TX_CNT    = UART_LEN + 1;
 
     localparam  // to client
                 OP_SIGNAL  = 8'h01, // send pc and all signals
@@ -68,31 +72,27 @@ module debug_unit (
                 CORE_TX_SIGNAL      = 2'b01,    // send signals
                 CORE_TX_PING        = 2'b10;    // respond ok to ping
     reg [CORE_TX_STATE_WIDTH - 1:0] core_tx_state;
-    reg                             core_tx_up;
     
     localparam  SIGNALS_WIDTH          = `ISA_WIDTH * 2,            //// [TODO] demo only !!! ////
-                SIGNALS_BYTE_CNT       = SIGNALS_WIDTH / 8 - 1,
-                SIGNALS_BYTE_CNT_WIDTH = 3;                         // ceil(sqrt(SIGNALS_WIDTH / 8)): has to be calculated [TODO]
+                SIGNALS_BYTE_CNT       = SIGNALS_WIDTH / 8,
+                SIGNALS_BYTE_CNT_WIDTH = 4;                         // ceil(sqrt(SIGNALS_WIDTH / 8)): has to be calculated [TODO]
     reg  [SIGNALS_BYTE_CNT_WIDTH - 1:0] signals_byte_idx;
     wire [SIGNALS_WIDTH - 1:0]          signals = {
                                                       instruction,
                                                       pc
                                                   };                //// [TODO] demo only !!! ////
     
-    reg       rx_bit_buffer, rx_bit;
-    reg [2:0] rx_bit_idx; 
-    reg [7:0] rx_byte;
-    reg       rx_complete;
+    reg                        rx_bit_buffer, rx_bit;
+    reg [UART_LEN_WIDTH - 1:0] rx_bit_idx; 
+    reg [UART_LEN - 1:0]       rx_byte;
+    reg                        rx_complete;
 
-    reg [3:0] tx_bit_idx;   // accomodates total of 10 bits
-    reg [9:0] tx_byte;
-    reg       tx_start, tx_complete;
+    reg [UART_LEN_WIDTH:0]     tx_bit_idx;   // 1 more bit to accomodate total of 10 bits
+    reg [UART_LEN + 1:0]       tx_byte;
+    reg                        tx_start, tx_complete;
 
     reg [`ISA_WIDTH - 1:0] breakpoint;
     wire                   breakpoint_reached = (breakpoint == pc);
-
-    reg    debug_write_enable;
-    assign uart_write_enable = debug_write_enable & rx_complete;
 
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
@@ -108,7 +108,7 @@ module debug_unit (
     end
 
     // RX
-    always @(posedge clk, negedge rst_n) begin
+    always @(negedge clk, negedge rst_n) begin
         if (~rst_n) begin
             rx_bit_idx    <= 0;
             rx_byte       <= 0;
@@ -137,7 +137,7 @@ module debug_unit (
                         rx_delay            <= 0;
                         rx_byte[rx_bit_idx] <= rx_bit;
 
-                        if (rx_bit_idx == 3'd7) begin
+                        if (rx_bit_idx == UART_RX_CNT) begin
                             rx_bit_idx      <= 0;
                             rx_state        <= RX_STOP;
                         end else 
@@ -181,7 +181,7 @@ module debug_unit (
     end
     
     // TX
-    always @(posedge clk, negedge rst_n) begin
+    always @(negedge clk, negedge rst_n) begin
         if (~rst_n) begin
             tx_bit_idx  <= 0;
             tx_state    <= TX_IDLE;
@@ -201,7 +201,7 @@ module debug_unit (
             if (tx_delay == FULL_PERIOD) begin
                 tx_delay        <= 0;
                 
-                if (tx_bit_idx == 4'd9) begin
+                if (tx_bit_idx == UART_TX_CNT) begin
                     tx_bit_idx  <= 0;
                     tx_complete <= 1'b1;
                     tx_state    <= TX_IDLE;
@@ -212,135 +212,146 @@ module debug_unit (
         end
     end
 
-    always @(posedge tx_complete, posedge core_tx_up, negedge rst_n) begin
-        case (core_tx_state)
-            CORE_TX_SIGNAL : begin
-                tx_byte[1+:8] <= signals[(signals_byte_idx * 8)+:8];
+    assign rx_light = rx_byte;
 
-                if (signals_byte_idx == SIGNALS_BYTE_CNT) begin
-                    tx_start         <= 1'b0;
-                    signals_byte_idx <= 0;
-                end else begin
-                    tx_start         <= 1'b1;
-                    signals_byte_idx <= signals_byte_idx + 1;
-                end
-            end
-            CORE_TX_PING   : begin
-                if (~tx_complete) begin
-                    tx_start      <= 1'b1;
-                    tx_byte[1+:8] <= OP_OK;
-                end else 
-                    tx_start      <= 1'b0;
-            end
-            /* CORE_TX_IDLE */
-            default        : begin
-                tx_start         <= 1'b0;
-                signals_byte_idx <= 0;
-                tx_byte          <= {1'b1, {8{1'b0}}, 1'b0};
-            end
-        endcase
-    end
-
-    always @(posedge rx_complete,        posedge uart_complete, 
-             posedge breakpoint_reached, negedge rst_n        ) begin
+    always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
+            // transmission
+            tx_byte            <= {1'b1, {(UART_LEN){1'b0}}, 1'b0};
+            tx_start           <= 1'b0;
+            signals_byte_idx   <= 1;
+            core_tx_state      <= CORE_TX_IDLE;
+            
+            // reception
             {
-                uart_addr,
                 uart_data,
                 uart_byte_idx
-            }                  = 0;
-
-            debug_write_enable = 1'b0;
-            breakpoint         = 0;
-            debug_pause        = 1'b1;
-
-            core_rx_state      = CORE_RX_OPCODE;
-            core_tx_state      = CORE_TX_IDLE;
-            core_tx_up         = 1'b0;
+            }                  <= 0;
+            uart_addr          <= -1;
+            uart_write_enable  <= 1'b0;
+            breakpoint         <= 64;
+            debug_pause        <= 1'b0;
+            core_rx_state      <= CORE_RX_OPCODE;
         end else begin
-            case (core_rx_state)
-                CORE_RX_OPCODE  : begin
-                    /* 
-                        (1) positive-edge of the rx_complete signal for opcode
-                     */
-                    core_tx_up = 1'b0;
+            // transmission FSM
+            case (core_tx_state)
+                CORE_TX_SIGNAL :
+                    case ({tx_complete, signals_byte_idx == SIGNALS_BYTE_CNT})
+                        2'b11  : begin
+                            core_tx_state        <= CORE_TX_IDLE;
 
-                    case (rx_byte)
-                        // receive additional data
-                        OP_RESUME  : begin
-                            core_rx_state = CORE_RX_PC;
+                            tx_start             <= 1'b0;
+                            signals_byte_idx     <= 1; // starts from 1 as the 0th byte will be sent when received opcode
                         end
-                        OP_PROGRAM : begin
-                            debug_pause   = 1'b1;
-                            core_rx_state = CORE_RX_PROGRAM;
+                        2'b10  : begin
+                            signals_byte_idx     <= signals_byte_idx + 1;
+                            tx_byte[1+:UART_LEN] <= signals[(signals_byte_idx * UART_LEN)+:UART_LEN];
                         end
-                        // send data back to PC
-                        OP_PING    : begin
-                            core_tx_state = CORE_TX_PING;
-                            core_tx_up    = 1'b1;
-                        end
-                        OP_PAUSE   : begin
-                            debug_pause   = 1'b1;
-                            core_tx_state = CORE_TX_SIGNAL;
-                            core_tx_up    = 1'b1;
-                        end
-                        // trigger breakpoint_reached in next cycle
-                        OP_NEXT    : begin
-                            breakpoint    = breakpoint + 4;
-                        end
-                        default    :
-                            if (breakpoint_reached) begin
-                                debug_pause   = 1'b1;
-                                core_tx_state = CORE_TX_SIGNAL;
-                                core_tx_up    = 1'b1;
-                            end else
-                                core_rx_state = core_rx_state; // prevent auto latches
+                        default:
+                            core_tx_state <= core_tx_state; // prevent auto latches
                     endcase
+                CORE_TX_PING   : begin
+                    if (tx_complete) begin
+                        core_tx_state <= CORE_TX_IDLE;
+
+                        tx_start      <= 1'b0;
+                    end else 
+                        core_tx_state <= core_tx_state; // prevent auto latches
                 end
-                CORE_RX_PROGRAM : begin
-                    /* 
-                        (2) positive-edge of the rx_complete signal for program
-                     */
-                    if (uart_complete) begin
-                        core_rx_state      = CORE_RX_OPCODE;
+                default        :
+                    casex ({breakpoint_reached & ~debug_pause, 
+                            rx_complete        & (core_rx_state == CORE_RX_OPCODE)})
+                        2'b1x  : begin // after reaching the breakpoint
+                            debug_pause          <= 1'b1;
+                            core_tx_state        <= CORE_TX_SIGNAL;
 
-                        uart_data          = 0;
-                        uart_addr          = 0;
-                        uart_byte_idx      = 0;
+                            tx_start             <= 1'b1;
+                            tx_byte[1+:UART_LEN] <= signals[0+:UART_LEN];
+                        end
+                        2'b01  : // after receiving the opcode
+                            case (rx_byte)
+                                // send data back to PC
+                                OP_PING    : begin
+                                    core_tx_state        <= CORE_TX_PING;
+                                    
+                                    tx_start             <= 1'b1;
+                                    tx_byte[1+:UART_LEN] <= OP_OK;
+                                end
+                                OP_PAUSE   : begin
+                                    debug_pause          <= 1'b1;
+                                    core_tx_state        <= CORE_TX_SIGNAL;
 
-                        debug_write_enable = 1'b0;
-                    end else if (uart_byte_idx == ISA_BYTE_CNT) begin
-                        uart_data[(uart_byte_idx * 8)+:8] = rx_byte;
-
-                        uart_addr          = uart_addr + 1;
-                        uart_byte_idx      = 0;
-
-                        debug_write_enable = 1'b1;
-                    end else begin
-                        uart_data[(uart_byte_idx * 8)+:8] = rx_byte;
-
-                        uart_byte_idx      = uart_byte_idx + 1;
-                    end
-                end
-                CORE_RX_PC      : begin
-                    if (uart_byte_idx == ISA_BYTE_CNT) begin
-                        core_rx_state = CORE_RX_OPCODE;
-
-                        breakpoint    = {rx_byte, uart_data[`ISA_WIDTH - 8:0]};
-
-                        uart_data     = 0;
-                        uart_byte_idx = 0;
-
-                        debug_pause   = 1'b0;
-                    end else begin
-                        uart_data[(uart_byte_idx * 8)+:8] = rx_byte;
-
-                        uart_byte_idx = uart_byte_idx + 1;
-                    end
-                end
-                default       : 
-                    core_rx_state = core_rx_state; // prevent auto latches
+                                    tx_start             <= 1'b1;
+                                    tx_byte[1+:UART_LEN] <= signals[0+:UART_LEN];
+                                end
+                                default    : 
+                                    core_tx_state <= CORE_TX_IDLE;
+                            endcase 
+                        default: 
+                            core_tx_state <= core_tx_state; // prevent auto latches
+                    endcase
             endcase
+            // reception FSM
+            if (rx_complete | uart_complete) // after receiving a byte or no additional bytes to be received
+                case (core_rx_state)
+                    CORE_RX_OPCODE  :
+                        case (rx_byte)
+                            // receive additional data
+                            OP_RESUME  : begin
+                                debug_pause   <= 1'b1;
+                                core_rx_state <= CORE_RX_PC;
+                            end
+                            OP_PROGRAM : begin
+                                debug_pause   <= 1'b1;
+                                core_rx_state <= CORE_RX_PROGRAM;
+                            end
+                            // trigger breakpoint_reached in next cycle
+                            OP_NEXT    : begin
+                                debug_pause   <= 1'b0;
+                                breakpoint    <= breakpoint + `INSTRUCTION_BYTES;
+                            end
+                            default    :
+                                core_rx_state <= core_rx_state; // prevent auto latches
+                        endcase
+                    CORE_RX_PROGRAM : begin
+                        if (uart_complete) begin
+                            core_rx_state      <= CORE_RX_OPCODE;
+
+                            uart_addr          <= -1;
+                            uart_data          <= 0;
+                        end else if (uart_byte_idx == ISA_BYTE_CNT) begin
+                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] <= rx_byte;
+
+                            uart_addr          <= uart_addr + 1;
+                            uart_byte_idx      <= 0;
+                            uart_write_enable  <= 1'b1; // only up for a single cycle
+                        end else begin
+                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] <= rx_byte;
+
+                            uart_byte_idx      <= uart_byte_idx + 1;
+                        end
+                    end
+                    CORE_RX_PC      : begin
+                        if (uart_byte_idx == ISA_BYTE_CNT) begin
+                            core_rx_state <= CORE_RX_OPCODE;
+
+                            breakpoint    <= {rx_byte, uart_data[`ISA_WIDTH - UART_LEN:0]};
+
+                            uart_data     <= 0;
+                            uart_byte_idx <= 0;
+
+                            debug_pause   <= 1'b0;
+                        end else begin
+                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] <= rx_byte;
+
+                            uart_byte_idx <= uart_byte_idx + 1;
+                        end
+                    end
+                    default       : 
+                        core_rx_state <= core_rx_state; // prevent auto latches
+                endcase
+            else
+                uart_write_enable <= 1'b0;
         end
     end
 

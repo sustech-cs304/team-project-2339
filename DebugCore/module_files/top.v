@@ -3,6 +3,9 @@
 
 module top (
     input  clk_raw, rst_n,
+
+    output [7:0] rx_light,
+
     input  [`SWITCH_CNT - 1:0] switch_map,      // 8 switches
     input  uart_rx,                             // for uart_unit
     input  [3:0] row_in,
@@ -181,7 +184,7 @@ module top (
             
 
     // LED
-    assign uart_in_progress = hazard_unit_uart_disable ? 1'b0 : 1'b1;
+    assign uart_in_progress = ~hazard_unit_uart_disable;
 
     //// module list
 
@@ -586,6 +589,8 @@ module top (
         .uart_addr              (debug_unit_write_address),
         .uart_data              (debug_unit_write_data),
         .uart_write_enable      (debug_unit_write_enable),
+
+        .rx_light                (rx_light),
 
         .debug_pause            (debug_unit_debug_pause),
         .uart_complete          (debug_unit_uart_complete)

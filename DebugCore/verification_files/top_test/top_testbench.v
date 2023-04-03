@@ -146,32 +146,34 @@ module top_testbench ();
         case (opcode)
                                  /* {STOP     BYTE     START} */
             OP_NONE   : serialize = {1'b1,  {8{1'b1}},  1'b1};
-            default   : serialize = {1'b1,  opcode,     1'b0};
+            default   : serialize = {1'b1,   opcode,    1'b0};
         endcase
     endfunction
 
     // simulate uart transmission
     initial begin
         for (i = 0; i < SIGNAL_CNT; i = i + 1) signals[i] = OP_NONE;
-        signals[1]  = OP_RESUME;
-        signals[2]  = 4;           // breakpoint at 2nd instruction
-        signals[3]  = 0;
-        signals[4]  = 0;
-        signals[5]  = 0;
-        signals[6]  = OP_NONE;
-        signals[7]  = OP_NEXT;
-        signals[8]  = OP_NEXT;
-        signals[9]  = OP_RESUME;
-        signals[10] = 220;          // breakpoint at 64th instruction
-        signals[11] = 0;
-        signals[12] = 0;
-        signals[13] = 0;
+        // signals[0]  = OP_PING;
+        // signals[1]  = OP_RESUME;
+        // signals[2]  = 4;           // breakpoint at 2nd instruction
+        // signals[3]  = 0;
+        // signals[4]  = 0;
+        // signals[5]  = 0;
+        // signals[6]  = OP_NONE;
+        // signals[7]  = OP_NEXT;
+        // signals[8]  = OP_NEXT;
+        // signals[9]  = OP_RESUME;
+        // signals[10] = 220;          // breakpoint at 64th instruction
+        // signals[11] = 0;
+        // signals[12] = 0;
+        // signals[13] = 0;
         signals[14] = OP_PAUSE;
-        signals[15] = OP_PROGRAM;
-        signals[16] = 1;
-        signals[17] = 1;
-        signals[18] = 1;
-        signals[19] = 1;
+        // signals[15] = OP_PROGRAM;
+        // signals[16] = 1;
+        // signals[17] = 1;
+        // signals[18] = 1;
+        // signals[19] = 1;
+        signals[20] = OP_PAUSE;
     end
 
     initial begin

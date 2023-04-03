@@ -101,7 +101,7 @@ module hazard_unit (
             wb_hazard_control  = `HAZD_CTL_NORMAL;
         end else begin
             case (cpu_state) 
-                EXECUTE: begin
+                EXECUTE  : begin
                     /*
                         step 1: cleanse the control signals if resuming from interrupt
                      */
@@ -173,7 +173,7 @@ module hazard_unit (
                     end else
                         cpu_state             = cpu_state; // prevent auto latches
                 end
-                HAZARD: 
+                HAZARD   : 
                     case (issue_type)
                         `ISSUE_DATA       : begin
                             /*
@@ -370,7 +370,7 @@ module hazard_unit (
                             cpu_state = cpu_state; // prevent auto latches
                     endcase
                 /* this is the IDLE state */
-                default: 
+                default  : 
                     cpu_state = EXECUTE;
             endcase   
         end

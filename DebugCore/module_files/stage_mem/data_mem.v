@@ -52,7 +52,7 @@ module data_mem (
     wire uart_instruction_write_enable = uart_write_enable & uart_addr[`ROM_DEPTH];
 
     RAM ram(
-        .ena    (~no_op), // disabled unpon no_op
+        .ena    (uart_instruction_write_enable | ~no_op), // disabled unpon no_op
         .clka   (~clk),
 
         .addra  (uart_disable ? mem_addr[`ROM_DEPTH + 1:2] : uart_addr[`ROM_DEPTH - 1:0]), // address unit in bytes

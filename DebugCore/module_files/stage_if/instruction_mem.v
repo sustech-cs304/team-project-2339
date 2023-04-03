@@ -44,7 +44,7 @@ module instruction_mem (
     reg [`ISA_WIDTH - 1:0] pc_next;
 
     ROM rom(
-        .ena    (~if_no_op), // disabled unpon no_op
+        .ena    (uart_instruction_write_enable | ~if_no_op), // disabled unpon no_op
         .clka   (~clk),
         
         .addra  (uart_disable ? pc[`ROM_DEPTH + 1:2] : uart_addr[`ROM_DEPTH - 1:0]), // pc address is in unit of words
@@ -59,7 +59,7 @@ module instruction_mem (
             3'b100 : pc_next = pc + (pc_offset_value << 2);
             3'b010 : pc_next = pc_overload_value;
             3'b001 : pc_next = 0;
-            default: pc_next = pc + 4;
+            default: pc_next = pc + `INSTRUCTION_BYTES;
         endcase
     end
     
