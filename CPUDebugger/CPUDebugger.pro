@@ -25,4 +25,5 @@ HEADERS += \
     File/AsmFile.h \
     File/CoeFile.h \
     File/DebugFile.h \
-    uart/UartSimulator.h
+    uart/UartSimulator.h \
+    utils/utils.h

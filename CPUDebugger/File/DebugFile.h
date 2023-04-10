@@ -9,9 +9,10 @@ private:
     std::vector<int> breakPoints;
     
 public:
-    void addBreakPoints();
-    std::vector<int> getBreakPoints();
-    std::vector<int> getNextBreakPoints();
+    DebugFile();
+    void addBreakPoints(int lineIdx);
+    std::vector<int>& getBreakPoints();
+    std::vector<int>& getNextBreakPoints();
 };
 
 #endif // DEBUGFILE_H

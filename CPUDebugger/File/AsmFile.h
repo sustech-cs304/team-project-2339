@@ -3,9 +3,10 @@
 #include <vector>
 #include <memory>
 #include <QMap>
+#include "DebugFile.h"
 
 class CoeFile;
-class AsmFile
+class AsmFile : public DebugFile
 {
 public:
     std::shared_ptr<CoeFile> coeFile;

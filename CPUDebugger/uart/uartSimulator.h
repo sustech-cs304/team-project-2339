@@ -1,14 +1,10 @@
 #ifndef UARTSIMULATOR_H
 #define UARTSIMULATOR_H
 
-#include <QString>
+#include <QtCore>
 #include <memory>
 
-struct PauseSignal
-{
-    std::shared_ptr<QString> stringPtr;
-    int lineNum;
-};
+#include "utils/utils.h"
 
 class UartSimulator
 {
