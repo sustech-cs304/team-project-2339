@@ -10,7 +10,10 @@ class AsmFile : public DebugFile
 {
 public:
     std::shared_ptr<CoeFile> coeFile;
-    std::shared_ptr< QMap< int, std::vector<int> > > asmToCoeMap;
+    QMap<int, std::shared_ptr<std::vector<int> > >  asmToCoeMap;
+
+    AsmFile();
+    void setCoeFile(std::shared_ptr<CoeFile> coeFile);
 };
 
 #endif // ASMFILE_H

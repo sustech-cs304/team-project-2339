@@ -1,6 +1,8 @@
 #include <QtCore>
 #include "Controllers/DebugController.h"
 #include "File/DebugFile.h"
+#include "File/AsmFile.h"
+#include "File/CoeFile.h"
 
 int main()
 {
@@ -15,12 +17,23 @@ int main()
     qDebug("%s Current line is %d", qPrintable(s), signal.lineNum);
 
 
-    DebugFile file;
-    file.addBreakPoints(1);
-    file.addBreakPoints(3);
-    file.addBreakPoints(2);
-    file.addBreakPoints(7);
-    file.addBreakPoints(11);
-    int next = file.getNextBreakPointDiff(8);
+    AsmFile asmFile;
+    asmFile.addBreakPoints(1);
+    asmFile.addBreakPoints(3);
+    asmFile.addBreakPoints(2);
+    asmFile.addBreakPoints(7);
+    asmFile.addBreakPoints(11);
+    int next = asmFile.getNextBreakPointDiff(8);
     qDebug("Next line is %d.", next);
+
+    CoeFile coeFile;
+    coeFile.setAsmFile(std::make_shared<AsmFile>(asmFile));
+    next = coeFile.asmFile->getNextBreakPointDiff(2);
+    qDebug("Next line is %d.", next);
+
+    asmFile.setCoeFile(std::make_shared<CoeFile>(coeFile));
+    next = asmFile.coeFile->asmFile->getNextBreakPointDiff(3);
+    qDebug("Next line is %d.", next);
+
+
 }

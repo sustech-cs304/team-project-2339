@@ -3,11 +3,14 @@
 #include "AsmFile.h"
 #include <memory>
 
-class CoeFile
+class CoeFile : public DebugFile
 {
 public:
     std::shared_ptr<AsmFile> asmFile;
-    std::shared_ptr< QMap< int, std::vector<int> > > coeToAsmMap;
+    QMap<int, std::shared_ptr<std::vector<int> > >  coeToAsmMap;
+
+    CoeFile();
+    void setAsmFile(std::shared_ptr<AsmFile> asmfile);
 };
 
 #endif // COEFILE_H
