@@ -3,6 +3,7 @@
 #include "File/DebugFile.h"
 #include "File/AsmFile.h"
 #include "File/CoeFile.h"
+#include "Stores/PreDebugStore.h"
 
 int main()
 {
@@ -35,5 +36,13 @@ int main()
     next = asmFile.coeFile->asmFile->getNextBreakPointDiff(3);
     qDebug("Next line is %d.", next);
 
+    std::shared_ptr<AsmFile> asmfile_ptr = std::make_shared<AsmFile>(asmFile);
+    std::shared_ptr<CoeFile> coefile_ptr = std::make_shared<CoeFile>(coeFile);
+
+    PreDebugStore::setAsmFile(asmfile_ptr);
+    PreDebugStore::setCoeFile(coefile_ptr);
+
+    next = PreDebugStore::getAsmFile()->getNextBreakPointDiff(8);
+    qDebug("Next line is %d.", next);
 
 }

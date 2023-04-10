@@ -6,6 +6,8 @@ SOURCES += \
         File/AsmFile.cpp \
         File/CoeFile.cpp \
         File/DebugFile.cpp \
+        Stores/DebugStore.cpp \
+        Stores/PreDebugStore.cpp \
         main.cpp \
         uart/UartSimulator.cpp
 
@@ -25,5 +27,7 @@ HEADERS += \
     File/AsmFile.h \
     File/CoeFile.h \
     File/DebugFile.h \
+    Stores/DebugStore.h \
+    Stores/PreDebugStore.h \
     uart/UartSimulator.h \
     utils/utils.h

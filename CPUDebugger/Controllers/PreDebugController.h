@@ -1,13 +1,15 @@
 #ifndef PREDEBUGCONTROLLER_H
 #define PREDEBUGCONTROLLER_H
-#include <QFile>
+#include <QtCore>
+#include <memory>
+
+#include "Stores/PreDebugStore.h"
 
 class PreDebugController
 {
-
 public:
-    static QFile uploadFile();
-    static int setBreakPoint();
+    static std::shared_ptr<QFile> uploadFile(QString filePath);
+    static void setBreakPoint(int lineIdx);
 };
 
 #endif // PREDEBUGCONTROLLER_H
