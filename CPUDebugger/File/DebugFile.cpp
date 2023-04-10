@@ -1,5 +1,7 @@
 #include "DebugFile.h"
 
+#include <algorithm>
+
 DebugFile::DebugFile()
 {
     breakPoints.clear();
@@ -14,7 +16,12 @@ std::vector<int>& DebugFile::getBreakPoints()
 {
     return breakPoints;
 }
-std::vector<int>& DebugFile::getNextBreakPoints()
-{
 
+int DebugFile::getNextBreakPointDiff(int curLine)
+{
+    std::sort(breakPoints.begin(), breakPoints.end());
+    for (int pointLineIdx : breakPoints)
+    {
+        if (pointLineIdx > curLine) return pointLineIdx - curLine;
+    }
 }

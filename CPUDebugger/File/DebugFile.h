@@ -12,7 +12,7 @@ public:
     DebugFile();
     void addBreakPoints(int lineIdx);
     std::vector<int>& getBreakPoints();
-    std::vector<int>& getNextBreakPoints();
+    int getNextBreakPointDiff(int curLine);
 };
 
 #endif // DEBUGFILE_H
