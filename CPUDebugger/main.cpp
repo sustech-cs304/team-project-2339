@@ -2,29 +2,20 @@
 #include <QQmlApplicationEngine>
 #include <QLocale>
 #include <QTranslator>
+#include <iostream>
+#include <QDebug>
+#include "uart/UartSimulator.h"
 
-int main(int argc, char *argv[])
+
+int main()
 {
-    QGuiApplication app(argc, argv);
+    QString s = *(UartSimulator::step(3));
+    qDebug("%s", qPrintable(s));
 
-    QTranslator translator;
-    const QStringList uiLanguages = QLocale::system().uiLanguages();
-    for (const QString &locale : uiLanguages) {
-        const QString baseName = "CPUDebugger_" + QLocale(locale).name();
-        if (translator.load(":/i18n/" + baseName)) {
-            app.installTranslator(&translator);
-            break;
-        }
-    }
+    s = *(UartSimulator::run());
+    qDebug("%s", qPrintable(s));
 
-    QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/CPUDebugger/main.qml"_qs);
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
-    engine.load(url);
-
-    return app.exec();
+    struct PauseSignal signal = *(UartSimulator::pause());
+    s = *(signal.stringPtr);
+    qDebug("%s Current line is %d", qPrintable(s), signal.lineNum);
 }

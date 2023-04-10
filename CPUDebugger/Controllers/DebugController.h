@@ -5,7 +5,9 @@
 class DebugController
 {
 public:
-    DebugController();
+    static void step();
+    static void run();
+    static void pause();
 };
 
 #endif // DEBUGCONTROLLER_H

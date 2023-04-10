@@ -6,8 +6,8 @@
 class CoeFile
 {
 public:
-    std::shared_ptr<> asmFile;
-    CoeFile();
+    std::shared_ptr<AsmFile> asmFile;
+    std::shared_ptr< QMap< int, std::vector<int> > > coeToAsmMap;
 };
 
 #endif // COEFILE_H

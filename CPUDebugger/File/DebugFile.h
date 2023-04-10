@@ -9,9 +9,9 @@ private:
     std::vector<int> breakPoints;
     
 public:
-    virtual void addBreakPoints() = 0;
-    virtual std::vector<int>& getBreakPoints() = 0;
-    virtual std::vector<int>& getNextBreakPoints() = 0;
+    void addBreakPoints();
+    std::vector<int> getBreakPoints();
+    std::vector<int> getNextBreakPoints();
 };
 
 #endif // DEBUGFILE_H

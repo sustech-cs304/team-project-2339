@@ -6,7 +6,8 @@ SOURCES += \
         File/AsmFile.cpp \
         File/CoeFile.cpp \
         File/DebugFile.cpp \
-        main.cpp
+        main.cpp \
+        uart/UartSimulator.cpp
 
 TRANSLATIONS += \
     CPUDebugger_zh_CN.ts
@@ -23,4 +24,5 @@ HEADERS += \
     Controllers/PreDebugController.h \
     File/AsmFile.h \
     File/CoeFile.h \
-    File/DebugFile.h
+    File/DebugFile.h \
+    uart/UartSimulator.h

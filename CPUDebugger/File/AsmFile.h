@@ -3,14 +3,13 @@
 #include <vector>
 #include <memory>
 #include <QMap>
-#include "CoeFile.h"
 
+class CoeFile;
 class AsmFile
 {
 public:
     std::shared_ptr<CoeFile> coeFile;
     std::shared_ptr< QMap< int, std::vector<int> > > asmToCoeMap;
-    AsmFile();
 };
 
 #endif // ASMFILE_H
