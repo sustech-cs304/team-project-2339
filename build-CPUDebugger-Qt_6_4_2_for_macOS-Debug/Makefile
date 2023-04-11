@@ -60,6 +60,7 @@ SOURCES       = ../CPUDebugger/Controllers/DebugController.cpp \
 		../CPUDebugger/Stores/DebugStore.cpp \
 		../CPUDebugger/Stores/PreDebugStore.cpp \
 		../CPUDebugger/main.cpp \
+		../CPUDebugger/test.cpp \
 		../CPUDebugger/uart/UartSimulator.cpp qrc_qmake_qmake_qm_files.cpp
 OBJECTS       = DebugController.o \
 		PreDebugController.o \
@@ -69,6 +70,7 @@ OBJECTS       = DebugController.o \
 		DebugStore.o \
 		PreDebugStore.o \
 		main.o \
+		test.o \
 		UartSimulator.o \
 		qrc_qmake_qmake_qm_files.o
 DIST          = /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/spec_pre.prf \
@@ -233,6 +235,7 @@ DIST          = /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/spec_pre.
 		../CPUDebugger/Stores/DebugStore.cpp \
 		../CPUDebugger/Stores/PreDebugStore.cpp \
 		../CPUDebugger/main.cpp \
+		../CPUDebugger/test.cpp \
 		../CPUDebugger/uart/UartSimulator.cpp
 QMAKE_TARGET  = CPUDebugger
 DESTDIR       = 
@@ -601,7 +604,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../CPUDebugger/CPUDebugger_zh_CN.ts $(DISTDIR)/
 	$(COPY_FILE) --parents qmake_qmake_qm_files.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../CPUDebugger/Controllers/DebugController.h ../CPUDebugger/Controllers/PreDebugController.h ../CPUDebugger/File/AsmFile.h ../CPUDebugger/File/CoeFile.h ../CPUDebugger/File/DebugFile.h ../CPUDebugger/Stores/DebugStore.h ../CPUDebugger/Stores/PreDebugStore.h ../CPUDebugger/uart/UartSimulator.h ../CPUDebugger/utils/utils.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../CPUDebugger/Controllers/DebugController.cpp ../CPUDebugger/Controllers/PreDebugController.cpp ../CPUDebugger/File/AsmFile.cpp ../CPUDebugger/File/CoeFile.cpp ../CPUDebugger/File/DebugFile.cpp ../CPUDebugger/Stores/DebugStore.cpp ../CPUDebugger/Stores/PreDebugStore.cpp ../CPUDebugger/main.cpp ../CPUDebugger/uart/UartSimulator.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../CPUDebugger/Controllers/DebugController.cpp ../CPUDebugger/Controllers/PreDebugController.cpp ../CPUDebugger/File/AsmFile.cpp ../CPUDebugger/File/CoeFile.cpp ../CPUDebugger/File/DebugFile.cpp ../CPUDebugger/Stores/DebugStore.cpp ../CPUDebugger/Stores/PreDebugStore.cpp ../CPUDebugger/main.cpp ../CPUDebugger/test.cpp ../CPUDebugger/uart/UartSimulator.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../CPUDebugger/CPUDebugger_zh_CN.ts $(DISTDIR)/
 
 
@@ -868,6 +871,12 @@ DebugController.o: ../CPUDebugger/Controllers/DebugController.cpp ../CPUDebugger
 		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qxmlstream.h \
 		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qxpfunctional.h \
 		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtcoreversion.h \
+		../CPUDebugger/Stores/PreDebugStore.h \
+		../CPUDebugger/File/AsmFile.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/QMap \
+		../CPUDebugger/File/DebugFile.h \
+		../CPUDebugger/File/CoeFile.h \
+		../CPUDebugger/Stores/DebugStore.h \
 		../CPUDebugger/uart/UartSimulator.h \
 		../CPUDebugger/utils/utils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DebugController.o ../CPUDebugger/Controllers/DebugController.cpp
@@ -1320,14 +1329,234 @@ main.o: ../CPUDebugger/main.cpp /Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore
 		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qxpfunctional.h \
 		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtcoreversion.h \
 		../CPUDebugger/Controllers/DebugController.h \
-		../CPUDebugger/uart/UartSimulator.h \
-		../CPUDebugger/utils/utils.h \
-		../CPUDebugger/File/DebugFile.h \
+		../CPUDebugger/Stores/PreDebugStore.h \
 		../CPUDebugger/File/AsmFile.h \
 		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/QMap \
+		../CPUDebugger/File/DebugFile.h \
 		../CPUDebugger/File/CoeFile.h \
-		../CPUDebugger/Stores/PreDebugStore.h
+		../CPUDebugger/Stores/DebugStore.h \
+		../CPUDebugger/uart/UartSimulator.h \
+		../CPUDebugger/utils/utils.h \
+		../CPUDebugger/Controllers/PreDebugController.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../CPUDebugger/main.cpp
+
+test.o: ../CPUDebugger/test.cpp /Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/QtCore \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qglobal.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/q20algorithm.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/q20functional.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/q20iterator.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/q23functional.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qabstractanimation.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qabstracteventdispatcher.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qabstractitemmodel.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qabstractnativeeventfilter.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qabstractproxymodel.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qalgorithms.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qanimationgroup.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qanystringview.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qapplicationstatic.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qarraydata.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qarraydataops.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qarraydatapointer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qassociativeiterable.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qatomic.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbasictimer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbindingstorage.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbitarray.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbuffer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbytearray.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbytearrayalgorithms.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbytearraylist.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbytearraymatcher.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qbytearrayview.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcache.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcalendar.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcborarray.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcborcommon.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcbormap.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcborstream.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcborstreamreader.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcborstreamwriter.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcborvalue.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qchar.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcollator.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcommandlineoption.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcommandlineparser.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcompare.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcompilerdetection.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qconcatenatetablesproxymodel.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcontainerfwd.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcontainerinfo.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcontiguouscache.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcoreapplication.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcoreevent.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qcryptographichash.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qdatastream.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qdatetime.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qdeadlinetimer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qdebug.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qdir.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qdiriterator.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qeasingcurve.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qelapsedtimer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qendian.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qeventloop.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qexception.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfactoryinterface.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfile.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfiledevice.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfileinfo.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfileselector.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfilesystemwatcher.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qflags.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qforeach.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfuture.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfutureinterface.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfuturesynchronizer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qfuturewatcher.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qgenericatomic.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qglobalstatic.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qhash.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qhashfunctions.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qidentityproxymodel.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qiodevice.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qiodevicebase.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qitemselectionmodel.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qiterable.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qiterator.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qjnienvironment.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qjniobject.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qjnitypes.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qjsonarray.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qjsondocument.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qjsonobject.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qjsonvalue.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qlibrary.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qlibraryinfo.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qline.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qlist.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qlocale.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qlockfile.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qloggingcategory.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmap.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmargins.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmath.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmessageauthenticationcode.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmetacontainer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmetaobject.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmetatype.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmimedata.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmimedatabase.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmimetype.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qmutex.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qnamespace.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qnativeinterface.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qnumeric.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qobject.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qobjectcleanuphandler.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qobjectdefs.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qoperatingsystemversion.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qpair.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qparallelanimationgroup.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qpauseanimation.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qplugin.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qpluginloader.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qpoint.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qpointer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qprocess.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qprocessordetection.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qpromise.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qproperty.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qpropertyanimation.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qpropertyprivate.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qqueue.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qrandom.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qreadwritelock.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qrect.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qrefcount.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qregularexpression.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qresource.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qresultstore.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qrunnable.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsavefile.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qscopedpointer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qscopedvaluerollback.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qscopeguard.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsemaphore.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsequentialanimationgroup.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsequentialiterable.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qset.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsettings.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qshareddata.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsharedmemory.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsharedpointer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsignalmapper.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsimd.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsize.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsocketnotifier.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsortfilterproxymodel.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstack.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstandardpaths.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstorageinfo.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstring.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringalgorithms.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringbuilder.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringconverter.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringfwd.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringlist.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringlistmodel.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringliteral.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringmatcher.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringtokenizer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qstringview.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsysinfo.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsystemdetection.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qsystemsemaphore.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtaggedpointer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtconfigmacros.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtemporarydir.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtemporaryfile.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtextboundaryfinder.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtextstream.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qthread.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qthreadpool.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qthreadstorage.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtimeline.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtimer.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtimezone.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtmetamacros.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtranslator.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtransposeproxymodel.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtypeinfo.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qurl.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qurlquery.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qutf8stringview.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/quuid.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qvariantanimation.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qvarianthash.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qvariantlist.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qvariantmap.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qvarlengtharray.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qvector.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qversionnumber.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qversiontagging.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qwaitcondition.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qwineventnotifier.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qxmlstream.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qxpfunctional.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/qtcoreversion.h \
+		../CPUDebugger/Controllers/DebugController.h \
+		../CPUDebugger/Stores/PreDebugStore.h \
+		../CPUDebugger/File/AsmFile.h \
+		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/QMap \
+		../CPUDebugger/File/DebugFile.h \
+		../CPUDebugger/File/CoeFile.h \
+		../CPUDebugger/Stores/DebugStore.h \
+		../CPUDebugger/uart/UartSimulator.h \
+		../CPUDebugger/utils/utils.h \
+		../CPUDebugger/Controllers/PreDebugController.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o test.o ../CPUDebugger/test.cpp
 
 UartSimulator.o: ../CPUDebugger/uart/UartSimulator.cpp ../CPUDebugger/uart/UartSimulator.h \
 		/Users/zitong/Software/Qt/6.4.2/macos/lib/QtCore.framework/Headers/QtCore \

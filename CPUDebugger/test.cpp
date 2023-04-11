@@ -1,11 +1,12 @@
 #include <QtCore>
 #include "Controllers/DebugController.h"
+#include "Controllers/PreDebugController.h"
 #include "File/DebugFile.h"
 #include "File/AsmFile.h"
 #include "File/CoeFile.h"
 #include "Stores/PreDebugStore.h"
 
-int main()
+int test()
 {
     QString s = *(DebugController::step(3));
     qDebug("%s", qPrintable(s));
@@ -45,4 +46,12 @@ int main()
     next = PreDebugStore::getAsmFile()->getNextBreakPointDiff(8);
     qDebug("Next line is %d.", next);
 
+    QString filePath = "/Users/zitong/Downloads/test.asm";
+    std::shared_ptr<QFile> file = PreDebugController::uploadFile(filePath);
+    // 打开文件
+    if (file->open(QIODevice::ReadOnly | QIODevice::Text)) {
+        // 读取第一行
+        QString firstLine = file->readLine();
+        qDebug() << firstLine;
+}
 }

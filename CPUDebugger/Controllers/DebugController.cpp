@@ -1,7 +1,14 @@
 #include "DebugController.h"
 
+std::shared_ptr<QString> DebugController::step()
+{
+    int diff = PreDebugStore::getAsmFile()->getNextBreakPointDiff(DebugStore::curLine);
+    return step(diff);
+}
+
 std::shared_ptr<QString> DebugController::step(int lineNum)
 {
+    DebugStore::curLine += lineNum;
     return UartSimulator::step(lineNum);
 }
 

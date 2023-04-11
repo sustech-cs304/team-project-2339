@@ -5,7 +5,7 @@
 class DebugStore
 {
 public:
-    DebugStore();
+    static int curLine;
 };
 
 #endif // DEBUGSTORE_H

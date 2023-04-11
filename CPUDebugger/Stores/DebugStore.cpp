@@ -1,6 +1,3 @@
 #include "DebugStore.h"
 
-DebugStore::DebugStore()
-{
-
-}
+int DebugStore::curLine = 0;
