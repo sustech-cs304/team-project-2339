@@ -2,9 +2,7 @@
 #include "QSerialPort"
 #include "QTime"
 
-SenderThread::SenderThread(QObject *parent) : QThread(parent){
-
-}
+SenderThread::SenderThread(QObject *parent) : QThread(parent){}
 
 void SenderThread::transaction(const QString &portName, int waitTimeout, const QByteArray &data, bool hasResponse)
 {
