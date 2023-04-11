@@ -26,5 +26,5 @@ ModuleData* TopVFileInputFactory::fileInput(QFile *file) {
     for (Token token: tokenList) {
         out << "Token: " << token.toStdString().c_str() << "\n";
     }
-    return ModuleData();
+    return nullptr;
 }

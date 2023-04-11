@@ -5,18 +5,6 @@ CONFIG += qmltypes
 QML_IMPORT_NAME = MyObj
 QML_IMPORT_MAJOR_VERSION = 1
 
-SOURCES += \
-        main.cpp
-
-
-resources.files = main.qml
-resources.prefix = /$${TARGET}
-RESOURCES += resources
-
-TRANSLATIONS += \
-        CPUDebugger_zh_CN.ts
-CONFIG += lrelease
-CONFIG += embed_translations
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -33,6 +21,10 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+<<<<<<< HEAD
+include(Debugger.pri)
+include(view.pri)
+=======
 INCLUDEPATH += \
     $$PWD/controller \
     $$PWD/view \
@@ -44,4 +36,4 @@ include($$PWD/controller/controller.pri)
 include($$PWD/view/view.pri)
 include($$PWD/uart/uart.pri)
 include($$PWD/model/model.pri)
-include($$PWD/Debugger.pri)
+>>>>>>> read_dev
