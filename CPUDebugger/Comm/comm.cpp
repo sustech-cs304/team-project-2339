@@ -22,6 +22,7 @@ bool UartCommunicator::connectCPU(const QString &portName){
     // Protocol down
     const QByteArray PING = QByteArray(1, 0x02);
     worker->transaction(portName, 1000, PING, true);
+
 }
 
 bool UartCommunicator::autoConnectCPU(){

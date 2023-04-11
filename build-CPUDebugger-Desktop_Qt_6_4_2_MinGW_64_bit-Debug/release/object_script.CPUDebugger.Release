@@ -1,4 +1,5 @@
 release/comm.o
+release/sender.o
 release/DebugController.o
 release/PreDebugController.o
 release/AsmFile.o
@@ -10,3 +11,4 @@ release/main.o
 release/test.o
 release/UartSimulator.o
 release/qrc_qmake_qmake_qm_files.o
+release/moc_sender.o

@@ -35,7 +35,7 @@ private:
     QWaitCondition cond;
 
     // Special flag controlling all started
-    bool quit = false;
+    bool stopFlag = false;
 };
 
 #endif // SENDER_H
