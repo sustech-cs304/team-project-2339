@@ -6,7 +6,7 @@ TopVFileInputFactory::TopVFileInputFactory() {
 
 }
 
-ModuleData TopVFileInputFactory::fileInput(QFile *file) {
+ModuleData* TopVFileInputFactory::fileInput(QFile *file) {
     QFile* f = file;
     std::cout << f->fileName().toStdString() << std::endl;
     f->open(QIODevice::ReadOnly);
@@ -26,5 +26,5 @@ ModuleData TopVFileInputFactory::fileInput(QFile *file) {
     for (Token token: tokenList) {
         out << "Token: " << token.toStdString().c_str() << "\n";
     }
-    return ModuleData();
+    return nullptr;
 }
