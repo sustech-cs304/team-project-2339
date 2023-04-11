@@ -9,7 +9,16 @@ DebugFile::DebugFile()
 
 void DebugFile::addBreakPoints(int lineIdx)
 {
-    breakPoints.push_back(lineIdx);
+    auto iter = std::find(breakPoints.begin(), breakPoints.end(), lineIdx);
+
+    if (iter != breakPoints.end()) {
+
+        auto new_end = std::remove(breakPoints.begin(), breakPoints.end(), lineIdx);
+        breakPoints.erase(new_end, breakPoints.end());
+
+    } else {
+        breakPoints.push_back(lineIdx);
+    }
 
 }
 std::vector<int>& DebugFile::getBreakPoints()
