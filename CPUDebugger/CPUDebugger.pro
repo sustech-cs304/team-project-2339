@@ -2,7 +2,7 @@ QT += quick
 QT += quickcontrols2
 
 CONFIG += qmltypes
-QML_IMPORT_NAME = Myobj
+QML_IMPORT_NAME = MyObj
 QML_IMPORT_MAJOR_VERSION = 1
 
 

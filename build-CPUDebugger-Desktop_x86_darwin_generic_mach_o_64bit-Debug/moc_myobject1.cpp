@@ -28,15 +28,20 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_MyObject1_t {
-    uint offsetsAndSizes[16];
+    uint offsetsAndSizes[26];
     char stringdata0[10];
     char stringdata1[12];
     char stringdata2[5];
     char stringdata3[13];
     char stringdata4[1];
     char stringdata5[14];
-    char stringdata6[6];
-    char stringdata7[7];
+    char stringdata6[11];
+    char stringdata7[15];
+    char stringdata8[8];
+    char stringdata9[7];
+    char stringdata10[9];
+    char stringdata11[6];
+    char stringdata12[7];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_MyObject1_t::offsetsAndSizes) + ofs), len 
@@ -48,8 +53,13 @@ Q_CONSTINIT static const qt_meta_stringdata_MyObject1_t qt_meta_stringdata_MyObj
         QT_MOC_LITERAL(27, 12),  // "valueChanged"
         QT_MOC_LITERAL(40, 0),  // ""
         QT_MOC_LITERAL(41, 13),  // "stringChanged"
-        QT_MOC_LITERAL(55, 5),  // "value"
-        QT_MOC_LITERAL(61, 6)   // "string"
+        QT_MOC_LITERAL(55, 10),  // "getAsmFile"
+        QT_MOC_LITERAL(66, 14),  // "makeBreakPoint"
+        QT_MOC_LITERAL(81, 7),  // "asmStep"
+        QT_MOC_LITERAL(89, 6),  // "asmRun"
+        QT_MOC_LITERAL(96, 8),  // "asmPause"
+        QT_MOC_LITERAL(105, 5),  // "value"
+        QT_MOC_LITERAL(111, 6)   // "string"
     },
     "MyObject1",
     "QML.Element",
@@ -57,6 +67,11 @@ Q_CONSTINIT static const qt_meta_stringdata_MyObject1_t qt_meta_stringdata_MyObj
     "valueChanged",
     "",
     "stringChanged",
+    "getAsmFile",
+    "makeBreakPoint",
+    "asmStep",
+    "asmRun",
+    "asmPause",
     "value",
     "string"
 };
@@ -69,8 +84,8 @@ Q_CONSTINIT static const uint qt_meta_data_MyObject1[] = {
       10,       // revision
        0,       // classname
        1,   14, // classinfo
-       2,   16, // methods
-       2,   30, // properties
+       7,   16, // methods
+       2,   65, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -80,16 +95,30 @@ Q_CONSTINIT static const uint qt_meta_data_MyObject1[] = {
        1,    2,
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    0,   28,    4, 0x06,    3 /* Public */,
-       5,    0,   29,    4, 0x06,    4 /* Public */,
+       3,    0,   58,    4, 0x06,    3 /* Public */,
+       5,    0,   59,    4, 0x06,    4 /* Public */,
+
+ // methods: name, argc, parameters, tag, flags, initial metatype offsets
+       6,    0,   60,    4, 0x02,    5 /* Public */,
+       7,    0,   61,    4, 0x02,    6 /* Public */,
+       8,    0,   62,    4, 0x02,    7 /* Public */,
+       9,    0,   63,    4, 0x02,    8 /* Public */,
+      10,    0,   64,    4, 0x02,    9 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void,
 
+ // methods: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+
  // properties: name, type, flags
-       6, QMetaType::Int, 0x00015103, uint(0), 0,
-       7, QMetaType::QString, 0x00015103, uint(1), 0,
+      11, QMetaType::Int, 0x00015103, uint(0), 0,
+      12, QMetaType::QString, 0x00015103, uint(1), 0,
 
        0        // eod
 };
@@ -110,6 +139,16 @@ Q_CONSTINIT const QMetaObject MyObject1::staticMetaObject = { {
         // method 'valueChanged'
         void,
         // method 'stringChanged'
+        void,
+        // method 'getAsmFile'
+        void,
+        // method 'makeBreakPoint'
+        void,
+        // method 'asmStep'
+        void,
+        // method 'asmRun'
+        void,
+        // method 'asmPause'
         void
     >,
     nullptr
@@ -123,6 +162,11 @@ void MyObject1::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         switch (_id) {
         case 0: _t->valueChanged(); break;
         case 1: _t->stringChanged(); break;
+        case 2: _t->getAsmFile(); break;
+        case 3: _t->makeBreakPoint(); break;
+        case 4: _t->asmStep(); break;
+        case 5: _t->asmRun(); break;
+        case 6: _t->asmPause(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -184,13 +228,13 @@ int MyObject1::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 7)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 7;
     }else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::BindableProperty
             || _c == QMetaObject::RegisterPropertyMetaType) {

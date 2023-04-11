@@ -3,6 +3,7 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Dialogs
+import MyObj 1.0
 
 Window {
     id: root
@@ -11,6 +12,16 @@ Window {
     height: 480
     title: qsTr("test")
     color:"lightgray"
+
+    MyObject1{
+        id:myobj
+        value: 10
+        string:"aaa"
+
+        Component.onCompleted:  {
+            console.log(value,string)
+        }
+    }
 
     TabBar {
         id: bar
@@ -763,6 +774,11 @@ Window {
                                         onClicked:  {
                                             button1.isClicked = !button1.isClicked
                                             button1.color = button1.isClicked ? "red" : "#555555"
+                                            myobj.value=index+1
+                                            console.log(myobj.value)
+                                            myobj.makeBreakPoint()
+
+                                            console.log(myobj.value)
                                         }
                                     }
                                 }
@@ -973,7 +989,8 @@ Window {
                                     title: "选择文件"
 
                                     onAccepted: {
-                                        console.log("已选择的文件：", currentFiles)
+                                        console.log("已选择的文件：", currentFile)
+                                        myobj.string=currentFile
                                     }
                                 }
 
@@ -1021,6 +1038,7 @@ Window {
                                     }
 
                                     onClicked: {
+                                        myobj.getAsmFile()
                                         console.log("update")
                                     }
                                 }

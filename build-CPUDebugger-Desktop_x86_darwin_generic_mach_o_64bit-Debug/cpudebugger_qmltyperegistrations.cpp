@@ -15,10 +15,10 @@
 #define Q_QMLTYPE_EXPORT
 #endif
 
-Q_QMLTYPE_EXPORT void qml_register_types_Myobj()
+Q_QMLTYPE_EXPORT void qml_register_types_MyObj()
 {
-    qmlRegisterTypesAndRevisions<MyObject1>("Myobj", 1);
-    qmlRegisterModule("Myobj", 1, 0);
+    qmlRegisterTypesAndRevisions<MyObject1>("MyObj", 1);
+    qmlRegisterModule("MyObj", 1, 0);
 }
 
-static const QQmlModuleRegistration registration("Myobj", qml_register_types_Myobj);
+static const QQmlModuleRegistration registration("MyObj", qml_register_types_MyObj);

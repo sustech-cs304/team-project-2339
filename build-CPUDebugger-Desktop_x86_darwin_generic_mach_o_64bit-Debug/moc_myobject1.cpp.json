@@ -8,6 +8,33 @@
                 }
             ],
             "className": "MyObject1",
+            "methods": [
+                {
+                    "access": "public",
+                    "name": "getAsmFile",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "makeBreakPoint",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "asmStep",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "asmRun",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "asmPause",
+                    "returnType": "void"
+                }
+            ],
             "object": true,
             "properties": [
                 {

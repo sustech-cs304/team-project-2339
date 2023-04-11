@@ -659,7 +659,7 @@ compiler_qmltyperegistrar_compiler_make_all: cpudebugger_qmltyperegistrations.cp
 compiler_qmltyperegistrar_compiler_clean:
 	-$(DEL_FILE) cpudebugger_qmltyperegistrations.cpp
 cpudebugger_qmltyperegistrations.cpp: cpudebugger_metatypes.json 
-	/Users/chenruiyao/Qt/6.4.2/macos/libexec/qmltyperegistrar --generate-qmltypes=cpudebugger.qmltypes --import-name=Myobj --major-version=1 --minor-version=0 --foreign-types= -o cpudebugger_qmltyperegistrations.cpp cpudebugger_metatypes.json
+	/Users/chenruiyao/Qt/6.4.2/macos/libexec/qmltyperegistrar --generate-qmltypes=cpudebugger.qmltypes --import-name=MyObj --major-version=1 --minor-version=0 --foreign-types= -o cpudebugger_qmltyperegistrations.cpp cpudebugger_metatypes.json
 
 compiler_qmltyperegistrar_qmltypes_make_all: cpudebugger.qmltypes
 compiler_qmltyperegistrar_qmltypes_clean:

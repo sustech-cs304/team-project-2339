@@ -10,7 +10,7 @@ Module {
         file: "myobject1.h"
         name: "MyObject1"
         accessSemantics: "reference"
-        exports: ["Myobj/MyObject1 1.0"]
+        exports: ["MyObj/MyObject1 1.0"]
         exportMetaObjectRevisions: [256]
         Property {
             name: "value"
@@ -30,5 +30,10 @@ Module {
         }
         Signal { name: "valueChanged" }
         Signal { name: "stringChanged" }
+        Method { name: "getAsmFile" }
+        Method { name: "makeBreakPoint" }
+        Method { name: "asmStep" }
+        Method { name: "asmRun" }
+        Method { name: "asmPause" }
     }
 }
