@@ -21,5 +21,14 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-include(Debugger.pri)
-include(view.pri)
+INCLUDEPATH += \
+    $$PWD/controller \
+    $$PWD/view \
+    $$PWD/uart \
+    $$PWD/model
+
+
+include($$PWD/controller/controller.pri)
+include($$PWD/view/view.pri)
+include($$PWD/uart/uart.pri)
+include($$PWD/model/model.pri)
