@@ -28,8 +28,17 @@ Module {
             notify: "stringChanged"
             index: 1
         }
+        Property {
+            name: "value1"
+            type: "int"
+            read: "value1"
+            write: "setValue1"
+            notify: "value1Changed"
+            index: 2
+        }
         Signal { name: "valueChanged" }
         Signal { name: "stringChanged" }
+        Signal { name: "value1Changed" }
         Method { name: "getAsmFile" }
         Method { name: "makeBreakPoint" }
         Method { name: "asmStep" }

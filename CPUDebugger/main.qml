@@ -17,6 +17,7 @@ Window {
         id:myobj
         value: 10
         string:"aaa"
+        value1: 0
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -775,10 +776,7 @@ Window {
                                             button1.isClicked = !button1.isClicked
                                             button1.color = button1.isClicked ? "red" : "#555555"
                                             myobj.value=index+1
-                                            console.log(myobj.value)
                                             myobj.makeBreakPoint()
-
-                                            console.log(myobj.value)
                                         }
                                     }
                                 }
@@ -814,7 +812,7 @@ Window {
                                 delegate: Rectangle {
                                     height: 20
                                     width: parent.width*6
-                                    color: "lightgray"
+                                    color: index+1 === myobj.value1 ? "lightblue":"lightgray"
                                     Text {
                                         id:text2
                                         text: context
@@ -958,6 +956,8 @@ Window {
 
                                     onClicked: {
                                         console.log("next")
+                                        myobj.asmStep()
+                                        notifyDataSetChanged()
                                     }
                                 }
 

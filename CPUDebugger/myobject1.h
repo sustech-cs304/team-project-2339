@@ -38,18 +38,25 @@ public:
 
     Q_INVOKABLE void asmPause();
 
+    int value1() const;
+    void setValue1(int newValue1);
+
 private:
     int m_value;
+    int m_value1;
     QString m_string;
     std::shared_ptr<QFile> file1;
     Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged)
 
     Q_PROPERTY(QString string READ string WRITE setString NOTIFY stringChanged)
 
+    Q_PROPERTY(int value1 READ value1 WRITE setValue1 NOTIFY value1Changed)
+
 signals:
 
     void valueChanged();
     void stringChanged();
+    void value1Changed();
 };
 
 #endif // MYOBJECT1_H

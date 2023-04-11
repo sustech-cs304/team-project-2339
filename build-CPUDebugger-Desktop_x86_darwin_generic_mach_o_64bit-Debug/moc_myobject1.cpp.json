@@ -66,6 +66,21 @@
                     "type": "QString",
                     "user": false,
                     "write": "setString"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 2,
+                    "name": "value1",
+                    "notify": "value1Changed",
+                    "read": "value1",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "int",
+                    "user": false,
+                    "write": "setValue1"
                 }
             ],
             "qualifiedClassName": "MyObject1",
@@ -78,6 +93,11 @@
                 {
                     "access": "public",
                     "name": "stringChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "value1Changed",
                     "returnType": "void"
                 }
             ],
