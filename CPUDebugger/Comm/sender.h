@@ -13,21 +13,28 @@ public:
     explicit SenderThread(QObject *parent = nullptr);
     ~SenderThread();
 
-    void transaction(const QString &portName, int waitTimeout, const char *data);
+    void transaction(const QString &portName, int waitTimeout, const QByteArray &data, bool hasResponse);
+    void stop();
 
 signals:
-    void response(const QString &s);
+    void response(const QByteArray &s);
     void error(const QString &s);
     void timeout(const QString &s);
 
 private:
     void run() override;
 
+    // Shared properties
     QString portName;
-    const char* data;
     int waitTimeout = 0;
+    QByteArray data;
+    bool hasResponse;
+
+    // Multithreading related
     QMutex mutex;
     QWaitCondition cond;
+
+    // Special flag controlling all started
     bool quit = false;
 };
 
