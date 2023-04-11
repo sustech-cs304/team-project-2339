@@ -1,0 +1,12 @@
+debug/comm.o
+debug/DebugController.o
+debug/PreDebugController.o
+debug/AsmFile.o
+debug/CoeFile.o
+debug/DebugFile.o
+debug/DebugStore.o
+debug/PreDebugStore.o
+debug/main.o
+debug/test.o
+debug/UartSimulator.o
+debug/qrc_qmake_qmake_qm_files.o

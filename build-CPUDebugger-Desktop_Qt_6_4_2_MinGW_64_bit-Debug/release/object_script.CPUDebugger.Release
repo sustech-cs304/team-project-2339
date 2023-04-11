@@ -1,0 +1,12 @@
+release/comm.o
+release/DebugController.o
+release/PreDebugController.o
+release/AsmFile.o
+release/CoeFile.o
+release/DebugFile.o
+release/DebugStore.o
+release/PreDebugStore.o
+release/main.o
+release/test.o
+release/UartSimulator.o
+release/qrc_qmake_qmake_qm_files.o

@@ -1,4 +1,6 @@
 SOURCES += \
+        $$PWD/Comm/comm.cpp \
+        $$PWD/Comm/sender.cpp \
         Controllers/DebugController.cpp \
         Controllers/PreDebugController.cpp \
         File/AsmFile.cpp \
@@ -11,6 +13,8 @@ SOURCES += \
         uart/UartSimulator.cpp
 
 HEADERS += \
+    $$PWD/Comm/comm.h \
+    $$PWD/Comm/sender.h \
     Controllers/DebugController.h \
     Controllers/PreDebugController.h \
     File/AsmFile.h \

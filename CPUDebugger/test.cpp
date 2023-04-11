@@ -53,5 +53,6 @@ int test()
         // 读取第一行
         QString firstLine = file->readLine();
         qDebug() << firstLine;
-}
+    }
+    return 0;
 }
