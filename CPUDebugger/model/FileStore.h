@@ -15,7 +15,6 @@ public:
     void deleteModuleData();
 private:
     QMap<QString, ModuleData> moduleMap;
-    QMap<QString, FFile> fileMap;
-
+    QMap<QString, FFile*> fileMap;
 };
 #endif // FILESTORE_H

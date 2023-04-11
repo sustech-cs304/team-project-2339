@@ -3,6 +3,7 @@
 #include "FFile.h"
 class VFile: public FFile {
 public:
+    VFile(QFile*);
     void Show();
 };
 

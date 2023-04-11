@@ -16,4 +16,5 @@ SOURCES += \
 
 DISTFILES += \
     ../README.md \
-    top.v
+    top.v \
+    top1.v

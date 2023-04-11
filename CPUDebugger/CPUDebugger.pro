@@ -29,6 +29,7 @@ INCLUDEPATH += \
     $$PWD/uart \
     $$PWD/model
 
+
 include($$PWD/controller/controller.pri)
 include($$PWD/view/view.pri)
 include($$PWD/uart/uart.pri)
