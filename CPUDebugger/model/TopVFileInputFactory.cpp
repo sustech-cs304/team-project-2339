@@ -1,12 +1,13 @@
 #include "TopVFileInputFactory.h"
 #include "compile/compiler.h"
+#include <iostream>
 
 TopVFileInputFactory::TopVFileInputFactory() {
 
 }
 
-ModuleData TopVFileInputFactory::fileInput(FFile *file) {
-    QFile* f = file->data;
+ModuleData TopVFileInputFactory::fileInput(QFile *file) {
+    QFile* f = file;
     std::cout << f->fileName().toStdString() << std::endl;
     f->open(QIODevice::ReadOnly);
     QTextStream in(f);
@@ -19,8 +20,11 @@ ModuleData TopVFileInputFactory::fileInput(FFile *file) {
     }
     Compiler compiler;
     QList<Token> tokenList = compiler.scan(lines);
+    QFile *of = new QFile("CDebuggerTest/out.txt");
+    of->open(QIODevice::WriteOnly);
+    QTextStream out(of);
     for (Token token: tokenList) {
-        std::cout << "Token: " << token.toStdString() << std::endl;
+        out << "Token: " << token.toStdString().c_str() << "\n";
     }
     return ModuleData();
 }

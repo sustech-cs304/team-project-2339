@@ -2,19 +2,23 @@
 #define FILESTORE_H
 #include "ModuleData.h"
 #include "QMap"
-#include "FFile.h"
+#include <QFile>
 class FileStore {
 public:
-    static FileStore *fileStore;
-    FileStore() {}
+    FileStore();
     ~FileStore() {}
-    FileStore instance();
-    void setSignal(QString key, QString moduleName, QString signalName, SignalState state);
-    void setFile(QString key, FFile file);
-    void setModuleData(ModuleData*);
+    static FileStore *instance() {
+        if (fileStore != nullptr)
+            fileStore = new FileStore();
+        return fileStore;
+    }
+    void setFile(QString key, QFile* value);
+    void setModuleData(QString key, ModuleData* value);
+    ModuleData* getModuleData(QString);
     void deleteModuleData();
 private:
-    QMap<QString, ModuleData> moduleMap;
-    QMap<QString, FFile*> fileMap;
+    static FileStore *fileStore;
+    QMap<QString, ModuleData*> moduleMap;
+    QMap<QString, QFile*> fileMap;
 };
 #endif // FILESTORE_H

@@ -34,7 +34,9 @@ void MAlex::read_line(Line line)
                 else if (is_number(s)) {
                     this->tokenList.append(Token(s, CONS));
                 } else {
-                    throw QException();
+                    QMessageLogger logger;
+                    logger.info("%s", s.toStdString().c_str());
+//                    throw QException();
                 }
                 s.clear();
             }

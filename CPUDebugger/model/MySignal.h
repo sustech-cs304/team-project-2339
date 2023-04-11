@@ -2,6 +2,10 @@
 #define MYSIGNAL_H
 #include <QString>
 #include <QBitArray>
+typedef int SType;
+#define SIG_IN 0
+#define SIG_OUT 1
+
 enum SignalState {
     ON=1, OFF=0
 };

@@ -1,10 +1,11 @@
 #ifndef FILEOUTPUTFACTORY_H
 #define FILEOUTPUTFACTORY_H
-#include "FFile.h"
 #include "ModuleData.h"
+
+#include <QFile>
 class FileOutputFactory {
 public:
-    virtual FFile exportUart(ModuleData);
+    virtual QFile exportUart(ModuleData);
 };
 
 #endif // FILEOUTPUTFACTORY_H

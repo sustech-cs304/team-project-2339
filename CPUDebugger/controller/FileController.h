@@ -2,9 +2,11 @@
 #define FILECONTROLLER_H
 #include "FileInputFactory.h"
 #include "FileOutputFactory.h"
+#include <TopVFileInputFactory.h>
 #include "QFile"
 class FileController {
 public:
+    FileController();
     void import(QFile file);
     void exportUart();
 private:

@@ -1,8 +1,7 @@
 #include <QtTest>
 #include <compile/MAlex.h>
+#include <iostream>
 #include "TopVFileInputFactory.h"
-#include "VFile.h"
-#include "FFile.h"
 #include "Module.h"
 // add necessary includes here
 
@@ -38,11 +37,10 @@ void model::test_case1()
 
 void model::test_case2()
 {
-    QFile *file = new QFile("CDebuggerTest/top1.v");
-    Module module;
+    QFile *file = new QFile("CDebuggerTest/top.v");
     TopVFileInputFactory *factory = new TopVFileInputFactory();
     std::cout << QDir::currentPath().toStdString() << std::endl;
-    factory->fileInput(new VFile(file));
+    factory->fileInput(file);
 }
 
 QTEST_APPLESS_MAIN(model)
