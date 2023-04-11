@@ -5,7 +5,7 @@ FileController::FileController() {
     inputFac = new TopVFileInputFactory();
 }
 
-void FileController::import(QFile file) {
+ModuleData* FileController::import(QFile file) {
     inputFac->fileInput(&file);
 }
 

@@ -8,6 +8,8 @@ class FileController {
 public:
     FileController();
     void import(QFile file);
+    QList<MySignal> getSignalList();
+    void setSignal(QString signalName);
     void exportUart();
 private:
     FileInputFactory *inputFac;

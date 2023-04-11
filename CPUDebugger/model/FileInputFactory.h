@@ -6,7 +6,7 @@
 
 class FileInputFactory {
 public:
-    virtual ModuleData fileInput(QFile *file)=0;
+    virtual ModuleData* fileInput(QFile *file)=0;
 };
 
 #endif // FILEINPUTFACTORY_H
