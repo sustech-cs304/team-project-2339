@@ -41,7 +41,7 @@ int main()
     qDebug() << DebugStore::asmCurLine;
 
     qDebug() << *(DebugController::run());
-    qDebug() << *(DebugController::pause()->stringPtr);
+    qDebug() << *(DebugController::pause());
     qDebug() << DebugStore::asmCurLine;
 
 }

@@ -7,7 +7,6 @@ SOURCES += \
         Stores/DebugStore.cpp \
         Stores/PreDebugStore.cpp \
         main.cpp \
-        test.cpp \
         uart/UartSimulator.cpp
 
 HEADERS += \

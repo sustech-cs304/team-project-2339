@@ -15,7 +15,7 @@ public:
     static std::shared_ptr<QString> step();
     static std::shared_ptr<QString> step(int lineNum);
     static std::shared_ptr<QString> run();
-    static std::shared_ptr<struct PauseSignal> pause();
+    static std::shared_ptr<QString> pause();
 };
 
 #endif // DEBUGCONTROLLER_H

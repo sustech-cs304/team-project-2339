@@ -18,11 +18,11 @@ std::shared_ptr<QString> DebugController::run()
     return UartSimulator::run();
 }
 
-std::shared_ptr<struct PauseSignal> DebugController::pause()
+std::shared_ptr<QString> DebugController::pause()
 {
     std::shared_ptr<struct PauseSignal> pauseSignal = UartSimulator::pause();
     DebugStore::coeCurLine = pauseSignal->lineIdx;
     DebugStore::asmCurLine = PreDebugStore::getCoeFile()->coeToAsmMap[DebugStore::coeCurLine];
-    return pauseSignal;
+    return pauseSignal->stringPtr;
 }
 
