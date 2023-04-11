@@ -5,7 +5,8 @@
 class DebugStore
 {
 public:
-    static int curLine;
+    static int coeCurLine;
+    static int asmCurLine;
 };
 
 #endif // DEBUGSTORE_H

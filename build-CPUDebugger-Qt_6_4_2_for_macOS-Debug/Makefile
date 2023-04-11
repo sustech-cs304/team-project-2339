@@ -197,6 +197,7 @@ DIST          = /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/spec_pre.
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/toolchain.prf \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/default_pre.prf \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/default_pre.prf \
+		../CPUDebugger/Debugger.pri \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/resolve_config.prf \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/default_post.prf \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/default_post.prf \
@@ -385,6 +386,7 @@ Makefile: ../CPUDebugger/CPUDebugger.pro /Users/zitong/Software/Qt/6.4.2/macos/m
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/toolchain.prf \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/default_pre.prf \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/default_pre.prf \
+		../CPUDebugger/Debugger.pri \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/resolve_config.prf \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/default_post.prf \
 		/Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/default_post.prf \
@@ -541,6 +543,7 @@ Makefile: ../CPUDebugger/CPUDebugger.pro /Users/zitong/Software/Qt/6.4.2/macos/m
 /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/toolchain.prf:
 /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/default_pre.prf:
 /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/default_pre.prf:
+../CPUDebugger/Debugger.pri:
 /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/resolve_config.prf:
 /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/default_post.prf:
 /Users/zitong/Software/Qt/6.4.2/macos/mkspecs/features/mac/default_post.prf:

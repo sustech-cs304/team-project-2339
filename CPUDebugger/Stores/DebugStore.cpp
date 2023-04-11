@@ -1,3 +1,4 @@
 #include "DebugStore.h"
 
-int DebugStore::curLine = 0;
+int DebugStore::coeCurLine = 0;
+int DebugStore::asmCurLine = 0;

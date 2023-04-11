@@ -16,7 +16,7 @@ int test()
 
     struct PauseSignal signal = *(DebugController::pause());
     s = *(signal.stringPtr);
-    qDebug("%s Current line is %d", qPrintable(s), signal.lineNum);
+    qDebug("%s Current line is %d", qPrintable(s), signal.lineIdx);
 
 
     AsmFile asmFile;

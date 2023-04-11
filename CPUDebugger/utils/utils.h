@@ -6,6 +6,6 @@
 struct PauseSignal
 {
     std::shared_ptr<QString> stringPtr;
-    int lineNum;
+    int lineIdx;
 };
 #endif // UTILS_H

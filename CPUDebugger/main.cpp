@@ -32,12 +32,16 @@ int main()
     PreDebugController::setBreakPoint(20);
 
     qDebug() << *(DebugController::step());
-    qDebug() << DebugStore::curLine;
+    qDebug() << DebugStore::asmCurLine;
     qDebug() << *(DebugController::step());
-    qDebug() << DebugStore::curLine;
+    qDebug() << DebugStore::asmCurLine;
     qDebug() << *(DebugController::step());
-    qDebug() << DebugStore::curLine;
+    qDebug() << DebugStore::asmCurLine;
     qDebug() << *(DebugController::step());
-    qDebug() << DebugStore::curLine;
+    qDebug() << DebugStore::asmCurLine;
+
+    qDebug() << *(DebugController::run());
+    qDebug() << *(DebugController::pause()->stringPtr);
+    qDebug() << DebugStore::asmCurLine;
 
 }
