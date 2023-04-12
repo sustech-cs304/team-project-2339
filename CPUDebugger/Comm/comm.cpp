@@ -9,10 +9,6 @@ UartCommunicator::UartCommunicator(QObject *parent) : QObject(parent){
 }
 
 UartCommunicator::~UartCommunicator(){
-    delete this->worker;
-    delete this->cpuPortName;
-    this->worker = nullptr;
-    this->cpuPortName = nullptr;
 }
 
 bool UartCommunicator::connectCPU(const QString &portName, double packetWaitingSeconds, double totWaitingSeconds, int pingNum){
@@ -21,18 +17,19 @@ bool UartCommunicator::connectCPU(const QString &portName, double packetWaitingS
     // Port down
     if (!serial.open(QIODevice::ReadWrite))
         return false;
+    serial.close();
     // Protocol down
     const QByteArray PING = QByteArray(1, 0x03);
     bool pingResult = false, packetTimeout = false, packetError = false;
     auto pingSlot = [&](const QByteArray& data) ->void {
-        if (data.size() == 1 && data.at(0) == 0x03)
+        if (data.size() == 1 && data.at(0) == 0x02)
             pingResult = true;
     };
     auto timeoutSlot = [&](const QString &msg) ->void {
-            packetTimeout = true;
+        packetTimeout = true;
     };
     auto errorSlot = [&](const QString &msg) ->void {
-            packetError = true;
+        packetError = true;
     };
     QMetaObject::Connection c1 = connect(worker, &SenderThread::response, pingSlot);
     QMetaObject::Connection c2 = connect(worker, &SenderThread::error, errorSlot);
@@ -41,7 +38,7 @@ bool UartCommunicator::connectCPU(const QString &portName, double packetWaitingS
     timer.start();
     for (int i = 0; i < pingNum; i++){
         worker->transaction(portName, (int)(packetWaitingSeconds*1000), PING, true);
-        while (timer.elapsed() < totWaitingSeconds){
+        while (timer.elapsed() < (int)(totWaitingSeconds*1000)){
             if (packetTimeout || packetError || pingResult){
                 packetTimeout = false;
                 packetError = false;
@@ -89,7 +86,7 @@ bool UartCommunicator::noResponseSend(const QByteArray &packet, double packetWai
     QElapsedTimer timer;
     timer.start();
     worker->transaction(*(this->cpuPortName), (int)(packetWaitingSeconds*1000), packet, false);
-    while (timer.elapsed() < totWaitingSeconds){
+    while (timer.elapsed() < (int)(totWaitingSeconds*1000)){
         if (finishSending || timeout || error)
             break;
         QCoreApplication::processEvents();

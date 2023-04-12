@@ -192,7 +192,6 @@ Makefile: ../CPUDebugger/CPUDebugger.pro D:/Qt/6.4.2/mingw_64/mkspecs/win32-g++/
 		D:/Qt/6.4.2/mingw_64/mkspecs/features/qt_config.prf \
 		D:/Qt/6.4.2/mingw_64/mkspecs/win32-g++/qmake.conf \
 		D:/Qt/6.4.2/mingw_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		D:/Qt/6.4.2/mingw_64/mkspecs/features/exclusive_builds.prf \
 		D:/Qt/6.4.2/mingw_64/mkspecs/features/toolchain.prf \
 		D:/Qt/6.4.2/mingw_64/mkspecs/features/default_pre.prf \
@@ -228,6 +227,7 @@ Makefile: ../CPUDebugger/CPUDebugger.pro D:/Qt/6.4.2/mingw_64/mkspecs/win32-g++/
 		D:/Qt/6.4.2/mingw_64/lib/Qt6SerialPort.prl \
 		D:/Qt/6.4.2/mingw_64/lib/Qt6Core.prl \
 		D:/Qt/6.4.2/mingw_64/lib/Qt6EntryPoint.prl \
+		.qmake.stash \
 		D:/Qt/6.4.2/mingw_64/mkspecs/features/build_pass.prf \
 		debug/qmake_qmake_qm_files.qrc \
 		release/qmake_qmake_qm_files.qrc
@@ -354,7 +354,6 @@ D:/Qt/6.4.2/mingw_64/mkspecs/features/qt_functions.prf:
 D:/Qt/6.4.2/mingw_64/mkspecs/features/qt_config.prf:
 D:/Qt/6.4.2/mingw_64/mkspecs/win32-g++/qmake.conf:
 D:/Qt/6.4.2/mingw_64/mkspecs/features/spec_post.prf:
-.qmake.stash:
 D:/Qt/6.4.2/mingw_64/mkspecs/features/exclusive_builds.prf:
 D:/Qt/6.4.2/mingw_64/mkspecs/features/toolchain.prf:
 D:/Qt/6.4.2/mingw_64/mkspecs/features/default_pre.prf:
@@ -390,6 +389,7 @@ D:/Qt/6.4.2/mingw_64/lib/Qt6Network.prl:
 D:/Qt/6.4.2/mingw_64/lib/Qt6SerialPort.prl:
 D:/Qt/6.4.2/mingw_64/lib/Qt6Core.prl:
 D:/Qt/6.4.2/mingw_64/lib/Qt6EntryPoint.prl:
+.qmake.stash:
 D:/Qt/6.4.2/mingw_64/mkspecs/features/build_pass.prf:
 debug/qmake_qmake_qm_files.qrc:
 release/qmake_qmake_qm_files.qrc:

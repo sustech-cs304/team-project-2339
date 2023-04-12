@@ -351,7 +351,35 @@ release/comm.o: ../CPUDebugger/Comm/comm.cpp ../CPUDebugger/Comm/comm.h \
 		D:/Qt/6.4.2/mingw_64/include/QtCore/qtsan_impl.h \
 		D:/Qt/6.4.2/mingw_64/include/QtCore/QWaitCondition \
 		D:/Qt/6.4.2/mingw_64/include/QtCore/qwaitcondition.h \
-		D:/Qt/6.4.2/mingw_64/include/QtCore/QDeadlineTimer
+		D:/Qt/6.4.2/mingw_64/include/QtCore/QDeadlineTimer \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/QCoreApplication \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qcoreapplication.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qeventloop.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qnativeinterface.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qdebug.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qtextstream.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qstringconverter_base.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qcontiguouscache.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qsharedpointer.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qshareddata.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qmap.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qshareddata_impl.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qset.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qhash.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qvarlengtharray.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qjnitypes.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qfuture.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qfutureinterface.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qresultstore.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qfuture_impl.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qthreadpool.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qrunnable.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qexception.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qpointer.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qpromise.h \
+		D:/Qt/6.4.2/mingw_64/include/QtCore/qvariant.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\comm.o ..\CPUDebugger\Comm\comm.cpp
 
 release/sender.o: ../CPUDebugger/Comm/sender.cpp ../CPUDebugger/Comm/sender.h \

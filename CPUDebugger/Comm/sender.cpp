@@ -36,23 +36,21 @@ void SenderThread::run(){
     }
 
     int currentWaitTimeout = waitTimeout;
-    const char* currentData = data;
+    QByteArray currentData = data;
     bool currentHasResponse = hasResponse;
-    bool currentQuit = stopFlag;
     mutex.unlock();
 
     QSerialPort serial;
-
     if (currentPortName.isEmpty()) {
         emit error(tr("No port name specified"));
         return;
     }
 
-    while (!currentQuit) {
+    while (!stopFlag) {
         if (currentPortNameChanged) {
             serial.close();
             serial.setPortName(currentPortName);
-
+            serial.setBaudRate(115200);
             if (!serial.open(QIODevice::ReadWrite)) {
                 emit error(tr("Can't open %1, error code %2").arg(currentPortName).arg(serial.error()));
                 return;
@@ -64,7 +62,6 @@ void SenderThread::run(){
         if (!serial.waitForBytesWritten(currentWaitTimeout))
             emit timeout(tr("Wait write request timeout %1").arg(QTime::currentTime().toString()));
         emit finishSending();
-
         if (currentHasResponse){
             // Read response
             if (serial.waitForReadyRead(currentWaitTimeout)) {
@@ -86,9 +83,10 @@ void SenderThread::run(){
         }
         currentWaitTimeout = waitTimeout;
         currentData = data;
-        currentQuit = stopFlag;
+        currentHasResponse = hasResponse;
         mutex.unlock();
     }
+    serial.close();
     quit();
 }
 
