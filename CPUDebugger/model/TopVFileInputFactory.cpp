@@ -16,7 +16,6 @@ ModuleData* TopVFileInputFactory::fileInput(QFile *file) {
     QString line;
     while (in.readLineInto(&line)) {
         lines.append(line);
-//        std::cout << line.toStdString() << std::endl;
     }
     Compiler compiler;
     QList<Token> tokenList = compiler.scan(lines);

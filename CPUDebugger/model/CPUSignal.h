@@ -1,5 +1,5 @@
-#ifndef MYSIGNAL_H
-#define MYSIGNAL_H
+#ifndef CPUSIGNAL_H
+#define CPUSIGNAL_H
 #include <QString>
 #include <QBitArray>
 typedef int SType;
@@ -10,11 +10,18 @@ enum SignalState {
     ON=1, OFF=0
 };
 
-class MySignal {
+class CPUSignal {
+public:
+    CPUSignal(QString signalName);
 private:
     QString name;
     QBitArray bitVal;
     bool isFlagged;
 };
 
-#endif // MYSIGNAL_H
+inline CPUSignal::CPUSignal(QString signalName)
+{
+    this->name = signalName;
+}
+
+#endif // CPUSIGNAL_H

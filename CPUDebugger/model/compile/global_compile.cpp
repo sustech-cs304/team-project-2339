@@ -3,9 +3,9 @@
 qsizetype TYPE_SIZE = 5;
 
 std::pair<qsizetype, qsizetype> global_type[] ={
-    std::pair(0, 12),
-    std::pair(13, 5),
-    std::pair(18, 7),
+    std::pair(0, 14),
+    std::pair(14, 5),
+    std::pair(19, 7),
 };
 
 QString global_data[] = {
@@ -22,11 +22,12 @@ QString global_data[] = {
     "10 ;",
     "11 _",
     "12 `",
-    "13 +",
-    "14 -",
-    "15 *",
-    "16 /",
-    "17 %",
+    "13 :",
+    "14 +",
+    "15 -",
+    "16 *",
+    "17 /",
+    "18 %",
     "31 module",
     "32 endmodule",
     "33 input",

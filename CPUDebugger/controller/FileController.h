@@ -4,11 +4,16 @@
 #include "FileOutputFactory.h"
 #include <TopVFileInputFactory.h>
 #include "QFile"
+#include "QtGui/private/qzipreader_p.h"
+#include <QDir>
+
+#define TMP_PATH "tmp/"
 class FileController {
 public:
     FileController();
-    void import(QFile file);
-    QList<MySignal> getSignalList();
+    ~FileController();
+    void import(QString& absolutePath);
+    QList<CPUSignal> getSignalList();
     void setSignal(QString signalName);
     void exportUart();
 private:

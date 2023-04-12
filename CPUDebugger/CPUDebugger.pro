@@ -1,5 +1,6 @@
 QT += quick
 QT += quickcontrols2
+QT += gui-private
 
 CONFIG += qmltypes
 QML_IMPORT_NAME = MyObj
