@@ -64,7 +64,7 @@ With the CPU debugger, we strive to enable the following to-go user journey:
 5. Select signals for debugging and then program the FPGA with VIVADO.
 6. Send instruction files directly to the CPU with the debugger.
 7. Execute the instructions with the ability to pause, execute the next instruction, and run until the next breakpoint, all while being able to check in with all the signals specified previously.
-8. Any bug can be identified through the signals and modules or instructions can be reexamined.
+8. For any bug identified through the signals, the corresponding modules or instructions can be easily identified and reexamined.
 
 No more slow simulation, blindly connecting modules, and unknown bugs in the CPU.
 
