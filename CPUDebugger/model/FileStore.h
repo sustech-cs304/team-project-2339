@@ -4,21 +4,25 @@
 #include "QMap"
 #include <QFile>
 class FileStore {
+private:
+    static FileStore *fs;
 public:
-    FileStore();
-    ~FileStore() {}
-    static FileStore *instance() {
-        if (fileStore != nullptr)
-            fileStore = new FileStore();
-        return fileStore;
+    static FileStore* getInstance() {
+        if (fs == nullptr)
+            fs = new FileStore();
+        return fs;
     }
     void setFile(QString key, QFile* value);
     void setModuleData(QString key, ModuleData* value);
     ModuleData* getModuleData(QString);
     void deleteModuleData();
 private:
-    static FileStore *fileStore;
+    FileStore();
+    ~FileStore() {}
+    FileStore(const FileStore&);
+    FileStore& operator=(const FileStore&);
     QMap<QString, ModuleData*> moduleMap;
     QMap<QString, QFile*> fileMap;
 };
+
 #endif // FILESTORE_H

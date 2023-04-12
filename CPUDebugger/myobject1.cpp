@@ -163,8 +163,7 @@ void MyObject1::setMyList41(const QList<QString> &newMyList41)
 
 void MyObject1::makeList1()
 {
-
-    myList1.insert(0, "Unselected signal");
+    myList1=fileContrl->getSignalList();
     qDebug()<<myList1;
 }
 
@@ -182,7 +181,7 @@ void MyObject1::addMyList1(QString string)
 
 void MyObject1::makeList2()
 {
-    m_myList2.insert(0, "Selected signal");
+    m_myList2.clear();
     qDebug()<<m_myList2;
 }
 

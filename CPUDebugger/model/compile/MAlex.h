@@ -13,6 +13,7 @@ public:
         this->s = s;
         this->t = t;
     }
+
     std::string toStdString() {
         std::string p;
         switch (t) {

@@ -36,13 +36,72 @@ Module {
             notify: "value1Changed"
             index: 2
         }
+        Property {
+            name: "items1"
+            type: "QVariantList"
+            read: "items1"
+            write: "setItems1"
+            notify: "items1Changed"
+            index: 3
+        }
+        Property {
+            name: "myList1"
+            type: "QString"
+            isList: true
+            read: "getMyList1"
+            write: "setMyList1"
+            notify: "myList1Changed"
+            index: 4
+        }
+        Property {
+            name: "myList2"
+            type: "QString"
+            isList: true
+            read: "myList2"
+            write: "setMyList2"
+            notify: "myList2Changed"
+            index: 5
+        }
+        Property {
+            name: "myList41"
+            type: "QString"
+            isList: true
+            read: "myList41"
+            write: "setMyList41"
+            notify: "myList41Changed"
+            index: 6
+        }
         Signal { name: "valueChanged" }
         Signal { name: "stringChanged" }
         Signal { name: "value1Changed" }
+        Signal { name: "items1Changed" }
+        Signal { name: "myList1Changed" }
+        Signal { name: "myList2Changed" }
+        Signal { name: "myList41Changed" }
         Method { name: "getAsmFile" }
+        Method { name: "loadFile1" }
         Method { name: "makeBreakPoint" }
         Method { name: "asmStep" }
         Method { name: "asmRun" }
         Method { name: "asmPause" }
+        Method { name: "makeList1" }
+        Method {
+            name: "removeMyList1"
+            Parameter { name: "index"; type: "int" }
+        }
+        Method {
+            name: "addMyList1"
+            Parameter { name: "string"; type: "QString" }
+        }
+        Method { name: "makeList2" }
+        Method {
+            name: "removeMyList2"
+            Parameter { name: "index"; type: "int" }
+        }
+        Method {
+            name: "addMyList2"
+            Parameter { name: "string"; type: "QString" }
+        }
+        Method { name: "makeList41" }
     }
 }

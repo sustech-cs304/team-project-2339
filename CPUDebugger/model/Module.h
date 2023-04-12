@@ -3,17 +3,23 @@
 #include <QString>
 #include <QList>
 #include <QException>
-#include "MySignal.h"
-class Module {
+#include "CPUSignal.h"
+class  Module {
 public:
-    void addSignal(MySignal sig, SType st);
+    Module(QString name);
+    void addSignal(CPUSignal sig, SType st);
 private:
     QString name;
-    QList<MySignal> inSignals;
-    QList<MySignal> outSignals;
+    QList<CPUSignal> inSignals;
+    QList<CPUSignal> outSignals;
 };
 
-inline void Module::addSignal(MySignal sig, SType st)
+inline Module::Module(QString name)
+{
+    this->name = name;
+}
+
+inline void Module::addSignal(CPUSignal sig, SType st)
 {
     if (st == SIG_IN) {
         inSignals.append(sig);

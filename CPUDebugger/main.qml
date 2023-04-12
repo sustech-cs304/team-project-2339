@@ -19,8 +19,8 @@ Window {
         value: 10
         string:"aaa"
         value1: 3
-        myList1: ["Apple", "Banana", "Cherry"]
-        myList2: ["Orange", "melon"]
+//        myList1: ["Apple", "Banana", "Cherry"]
+//        myList2: ["Orange", "melon"]
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -47,6 +47,9 @@ Window {
                 btn1.enabled=true
                 btn3.enabled=false
                 btn4.enabled=false
+
+                listView21.model=myobj.myList1
+                listView22.model=myobj.myList2
             }
         }
         TabButton {
@@ -356,7 +359,7 @@ Window {
                                     text: " "+index
                                     width:20
                                     anchors.verticalCenter: parent.verticalCenter
-                                    visible: index===0? false:true
+                                    visible: true
                                 }
 
                                 Text {
@@ -373,7 +376,7 @@ Window {
                                     height: text22.height*1.5
                                     anchors.right: parent.right
                                     anchors.verticalCenter: parent.verticalCenter
-                                    visible: index===0? false:true
+                                    visible: true
 
                                     contentItem: Image {
                                         source: "qrc:/images/image23.png"
@@ -421,7 +424,7 @@ Window {
                                     text: " "+index
                                     width:20
                                     anchors.verticalCenter: parent.verticalCenter
-                                    visible: index===0? false:true
+                                    visible: true
                                 }
 
                                 Text {
@@ -438,7 +441,7 @@ Window {
                                     height: text25.height*1.5
                                     anchors.right: parent.right
                                     anchors.verticalCenter: parent.verticalCenter
-                                    visible: index===0? false:true
+                                    visible: true
 
                                     contentItem: Image {
                                         source: "qrc:/images/image21.png"
@@ -936,6 +939,7 @@ Window {
 
                                 }
                             }
+
 
                             Rectangle {
                                 id:buttons4
