@@ -25,5 +25,19 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
+//    auto list = engine.rootObjects();
+//    auto objName = list.first()->objectName();
+//    qDebug()<<objName;
+//    auto model = list.first()->findChild<QObject *>("myModel41");
+
+//    QVariant myVariant = QVariant::fromValue(MyObject1::getInstance()->items1());
+
+//    qDebug()<<"a";
+
+//    qDebug()<<myVariant;
+//    model->setProperty("model", myVariant);
+
+
+
     return app.exec();
 }

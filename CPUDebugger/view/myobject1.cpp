@@ -47,6 +47,20 @@ void MyObject1::getAsmFile()
     qDebug() << __FUNCTION__;
 }
 
+void MyObject1::loadFile1()
+{
+    if (file1->open(QIODevice::ReadOnly | QIODevice::Text)) {
+        // 输出文件所有内容
+        QTextStream in(file1.get());
+        while (!in.atEnd())
+        {
+            QString line = in.readLine();
+            m_items1.append(line);
+            qDebug() << line;
+        }
+    }
+}
+
 void MyObject1::makeBreakPoint()
 {
 
@@ -82,4 +96,18 @@ void MyObject1::setValue1(int newValue1)
         return;
     m_value1 = newValue1;
     emit value1Changed();
+}
+
+QVariantList MyObject1::items1() const
+{
+    return m_items1;
+}
+
+
+void MyObject1::setItems1(const QVariantList &newItems1)
+{
+    if (m_items1 == newItems1)
+        return;
+    m_items1 = newItems1;
+    emit items1Changed();
 }

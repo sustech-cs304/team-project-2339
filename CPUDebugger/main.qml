@@ -7,6 +7,7 @@ import MyObj 1.0
 
 Window {
     id: root
+    objectName: window
     visible: true
     width: 640
     height: 480
@@ -323,7 +324,7 @@ Window {
 
                 Grid{
                     rows: 1
-                    columns: 2
+                    columns: 3
                     spacing: 0
                     anchors.fill: parent
 
@@ -333,7 +334,8 @@ Window {
                         width: parent.width/4
 
                         ListModel {
-                            id: myModel2
+                            id: myModel21
+                            ListElement { signal:"signal not chosen" }
                             ListElement { signal:"signal1" }
                             ListElement { signal:"signal2" }
                             ListElement { signal:"signal3" }
@@ -351,7 +353,7 @@ Window {
                             id: listView21
                             height: parent.height
                             width: parent.width
-                            model:myModel2
+                            model:myModel21
                             delegate: Rectangle {
                                 height: 30
                                 width: listView21.width
@@ -362,6 +364,7 @@ Window {
                                     text: " "+index
                                     width:20
                                     anchors.verticalCenter: parent.verticalCenter
+                                    visible: index===0? false:true
                                 }
 
                                 Text {
@@ -378,6 +381,76 @@ Window {
                                     height: text22.height*1.5
                                     anchors.right: parent.right
                                     anchors.verticalCenter: parent.verticalCenter
+                                    visible: index===0? false:true
+
+                                    contentItem: Image {
+                                        source: "qrc:/images/image23.png"
+                                        fillMode: Image.PreserveAspectFit
+                                    }
+
+                                    background: Rectangle {
+                                        color: "white"
+                                        radius: height/5
+                                    }
+
+                                    onClicked: {
+                                        console.log("delete"+index)
+                                        myModel22.append(myModel21.get(index))
+                                        myModel21.remove(index)
+                                    }
+                                }
+
+                            }
+
+                        }
+
+
+                    }
+
+                    Rectangle {
+                        id:middle2
+                        height: parent.height
+                        width: parent.width/4
+
+                        ListModel {
+                            id: myModel22
+
+                            ListElement { signal:"signal chosen" }
+                        }
+
+                        ListView {
+                            id: listView22
+                            height: parent.height
+                            width: parent.width
+                            model:myModel22
+                            delegate: Rectangle {
+                                height: 30
+                                width: listView21.width
+                                color: index % 2 === 0 ? "lightgray" : "white"
+
+                                Text {
+                                    id:text24
+                                    text: " "+index
+                                    width:20
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    visible: index===0? false:true
+                                }
+
+                                Text {
+                                    id:text25
+                                    text: signal
+                                    width:100
+                                    anchors.left: text24.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+
+                                Button {
+                                    id:button24
+                                    width: height
+                                    height: text25.height*1.5
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    visible: index===0? false:true
 
                                     contentItem: Image {
                                         source: "qrc:/images/image21.png"
@@ -391,7 +464,8 @@ Window {
 
                                     onClicked: {
                                         console.log("delete"+index)
-                                        myModel2.remove(index)
+                                        myModel21.append(myModel22.get(index))
+                                        myModel22.remove(index)
                                     }
                                 }
 
@@ -402,11 +476,12 @@ Window {
 
                     }
 
+
                     Rectangle {
                         color: "lightblue"
                         id:right2
                         height: parent.height
-                        width: parent.width-left2.width
+                        width: parent.width-left2.width-middle2.width
 
                         Button {
                             id:button22
@@ -710,34 +785,14 @@ Window {
 
                         ListModel {
                             id: myModel41
+                            objectName: myModel41
                             ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
                             ListElement { context:"Colomn 2" }
                             ListElement { context:"Colomn 3" }
                             ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
                             ListElement { context:"Colomn 5" }
                             ListElement { context:"Colomn 6" }
-                            ListElement { context:"Colomn 7 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 8" }
-                            ListElement { context:"Colomn 9" }
-                            ListElement { context:"Colomn 10 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 11" }
-                            ListElement { context:"Colomn 12" }
-                            ListElement { context:"Colomn 13 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 14" }
-                            ListElement { context:"Colomn 15" }
-                            ListElement { context:"Colomn 16 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 17" }
-                            ListElement { context:"Colomn 18" }
-                            ListElement { context:"Colomn 19 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 20" }
-                            ListElement { context:"Colomn 21" }
-                            ListElement { context:"Colomn 22 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 23" }
-                            ListElement { context:"Colomn 24" }
-                            ListElement { context:"Colomn 25 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 26" }
-                            ListElement { context:"Colomn 27" }
-                            ListElement { context:"Colomn 28" }
+
                         }
 
                         ListView {
@@ -1046,7 +1101,6 @@ Window {
                             }
 
                         }
-
 
                     }
 
