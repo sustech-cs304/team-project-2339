@@ -17,6 +17,7 @@ public:
     void stop();
 
 signals:
+    void finishSending();
     void response(const QByteArray &s);
     void error(const QString &s);
     void timeout(const QString &s);

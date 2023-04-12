@@ -45,6 +45,6 @@ int main()
 //    qDebug() << *(DebugController::pause()->stringPtr);
 //    qDebug() << DebugStore::asmCurLine;
     UartCommunicator uartCommunicator = UartCommunicator();
-    qDebug() << "uartCommunicator created";
+    qDebug() << uartCommunicator.autoConnectCPU();
 
 }

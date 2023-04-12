@@ -16,15 +16,13 @@ public:
     ~UartCommunicator();
     bool connectCPU(const QString &portName, double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
     bool autoConnectCPU(double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
-    bool disconnectCPU();
-    bool sendPacket(const unsigned char* packet, int length);
-    bool receivePacket(unsigned char* packet, int length);
-    bool sendPause();
+    bool sendPause(double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
     bool sendResume();
-    bool sendNext();
+    bool sendNext(double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
     bool sendProgram(const char* asmFile);
 
 private:
+    bool noResponseSend(const QByteArray &packet, double packetWaitingSeconds, double totWaitingSeconds);
     QString *cpuPortName;
     SenderThread *worker;
 };

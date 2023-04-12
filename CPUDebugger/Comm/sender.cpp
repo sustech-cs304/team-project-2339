@@ -54,18 +54,19 @@ void SenderThread::run(){
             serial.setPortName(currentPortName);
 
             if (!serial.open(QIODevice::ReadWrite)) {
-                emit error(tr("Can't open %1, error code %2").arg(portName).arg(serial.error()));
+                emit error(tr("Can't open %1, error code %2").arg(currentPortName).arg(serial.error()));
                 return;
             }
         }
 
-        // write request
+        // Write request
         serial.write(currentData);
-        if (!serial.waitForBytesWritten(waitTimeout))
+        if (!serial.waitForBytesWritten(currentWaitTimeout))
             emit timeout(tr("Wait write request timeout %1").arg(QTime::currentTime().toString()));
+        emit finishSending();
 
         if (currentHasResponse){
-            // read response
+            // Read response
             if (serial.waitForReadyRead(currentWaitTimeout)) {
                 QByteArray responseData = serial.readAll();
                 while (serial.waitForReadyRead(10))
