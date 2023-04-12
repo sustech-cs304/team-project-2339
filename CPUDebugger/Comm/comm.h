@@ -14,8 +14,8 @@ private:
 public:
     explicit UartCommunicator(QObject *parent = nullptr);
     ~UartCommunicator();
-    bool connectCPU(const QString &portName);
-    bool autoConnectCPU();
+    bool connectCPU(const QString &portName, double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
+    bool autoConnectCPU(double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
     bool disconnectCPU();
     bool sendPacket(const unsigned char* packet, int length);
     bool receivePacket(unsigned char* packet, int length);
@@ -25,7 +25,7 @@ public:
     bool sendProgram(const char* asmFile);
 
 private:
-    QString cpuPortName;
+    QString *cpuPortName;
     SenderThread *worker;
 };
 

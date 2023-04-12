@@ -19,8 +19,10 @@ void SenderThread::transaction(const QString &portName, int waitTimeout, const Q
 }
 
 void SenderThread::stop(){
+    mutex.lock();
     stopFlag = true;
-    cond.wakeAll();
+    cond.wakeOne();
+    mutex.unlock();
 }
 
 void SenderThread::run(){
