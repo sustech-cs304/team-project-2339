@@ -16,6 +16,7 @@ public:
 private slots:
     void test_case1();
     void test_case2();
+    void test_case3();
 };
 
 model::model()
@@ -36,6 +37,14 @@ void model::test_case1()
 }
 
 void model::test_case2()
+{
+    QFile *file = new QFile("CDebuggerTest/top.v");
+    TopVFileInputFactory *factory = new TopVFileInputFactory();
+    std::cout << QDir::currentPath().toStdString() << std::endl;
+    factory->fileInput(file);
+}
+
+void model::test_case3()
 {
     QFile *file = new QFile("CDebuggerTest/top.v");
     TopVFileInputFactory *factory = new TopVFileInputFactory();
