@@ -18,7 +18,9 @@ Window {
         id:myobj
         value: 10
         string:"aaa"
-        value1: 0
+        value1: 3
+        myList1: ["Apple", "Banana", "Cherry"]
+        myList2: ["Orange", "melon"]
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -177,6 +179,10 @@ Window {
                                         btn2.enabled=true
                                         bar.currentIndex=1
                                         console.log("Comfirm1")
+                                        myobj.makeList1()
+                                        myobj.makeList2()
+                                        listView21.model=myobj.myList1
+                                        listView22.model=myobj.myList2
                                     }
                                 }
 
@@ -333,27 +339,11 @@ Window {
                         height: parent.height
                         width: parent.width/4
 
-                        ListModel {
-                            id: myModel21
-                            ListElement { signal:"signal not chosen" }
-                            ListElement { signal:"signal1" }
-                            ListElement { signal:"signal2" }
-                            ListElement { signal:"signal3" }
-                            ListElement { signal:"signal4" }
-                            ListElement { signal:"signal5" }
-                            ListElement { signal:"signal6" }
-                            ListElement { signal:"signal7" }
-                            ListElement { signal:"signal8" }
-                            ListElement { signal:"signal9" }
-                            ListElement { signal:"signal10" }
-
-                        }
-
                         ListView {
                             id: listView21
                             height: parent.height
                             width: parent.width
-                            model:myModel21
+                            model:myobj.myList1
                             delegate: Rectangle {
                                 height: 30
                                 width: listView21.width
@@ -369,7 +359,7 @@ Window {
 
                                 Text {
                                     id:text22
-                                    text: signal
+                                    text: modelData
                                     width:100
                                     anchors.left: text21.right
                                     anchors.verticalCenter: parent.verticalCenter
@@ -394,9 +384,11 @@ Window {
                                     }
 
                                     onClicked: {
-                                        console.log("delete"+index)
-                                        myModel22.append(myModel21.get(index))
-                                        myModel21.remove(index)
+                                        console.log("add"+modelData)
+                                        myobj.addMyList2(modelData)
+                                        listView22.model=myobj.myList2
+                                        myobj.removeMyList1(index)
+                                        listView21.model=myobj.myList1
                                     }
                                 }
 
@@ -412,17 +404,11 @@ Window {
                         height: parent.height
                         width: parent.width/4
 
-                        ListModel {
-                            id: myModel22
-
-                            ListElement { signal:"signal chosen" }
-                        }
-
                         ListView {
                             id: listView22
                             height: parent.height
                             width: parent.width
-                            model:myModel22
+                            model:myobj.myList2
                             delegate: Rectangle {
                                 height: 30
                                 width: listView21.width
@@ -438,7 +424,7 @@ Window {
 
                                 Text {
                                     id:text25
-                                    text: signal
+                                    text: modelData
                                     width:100
                                     anchors.left: text24.right
                                     anchors.verticalCenter: parent.verticalCenter
@@ -463,17 +449,15 @@ Window {
                                     }
 
                                     onClicked: {
-                                        console.log("delete"+index)
-                                        myModel21.append(myModel22.get(index))
-                                        myModel22.remove(index)
+                                        console.log("delete"+modelData)
+                                        myobj.myList1.push(modelData)
+                                        myobj.removeMyList2(index)
+                                        listView21.model=myobj.myList1
+                                        listView22.model=myobj.myList2
                                     }
                                 }
-
                             }
-
                         }
-
-
                     }
 
 
@@ -792,14 +776,37 @@ Window {
                             ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
                             ListElement { context:"Colomn 5" }
                             ListElement { context:"Colomn 6" }
-
+                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
+                            ListElement { context:"Colomn 2" }
+                            ListElement { context:"Colomn 3" }
+                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
+                            ListElement { context:"Colomn 5" }
+                            ListElement { context:"Colomn 6" }
+                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
+                            ListElement { context:"Colomn 2" }
+                            ListElement { context:"Colomn 3" }
+                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
+                            ListElement { context:"Colomn 5" }
+                            ListElement { context:"Colomn 6" }
+                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
+                            ListElement { context:"Colomn 2" }
+                            ListElement { context:"Colomn 3" }
+                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
+                            ListElement { context:"Colomn 5" }
+                            ListElement { context:"Colomn 6" }
+                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
+                            ListElement { context:"Colomn 2" }
+                            ListElement { context:"Colomn 3" }
+                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
+                            ListElement { context:"Colomn 5" }
+                            ListElement { context:"Colomn 6" }
                         }
 
                         ListView {
                             id: listView1
                             height: parent.height
                             width: 60
-                            model:myModel41
+                            model:myobj.myList41
                             anchors.verticalCenter: parent.verticalCenter
                             delegate: Rectangle {
                                 height: 20
@@ -863,14 +870,15 @@ Window {
                                 id: listView2
                                 height: window4.height
                                 width: window4.width /3*2
-                                model: myModel41
+                                model: myobj.myList41
                                 delegate: Rectangle {
+                                    id:rect1
                                     height: 20
                                     width: parent.width*6
                                     color: index+1 === myobj.value1 ? "lightblue":"lightgray"
                                     Text {
                                         id:text2
-                                        text: context
+                                        text: modelData
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
                                 }
@@ -988,6 +996,7 @@ Window {
 
                                     onClicked: {
                                         console.log("play")
+                                        myobj.asmRun()
                                     }
                                 }
 
@@ -1012,7 +1021,7 @@ Window {
                                     onClicked: {
                                         console.log("next")
                                         myobj.asmStep()
-                                        notifyDataSetChanged()
+                                        console.log(myobj.value1)
                                     }
                                 }
 
@@ -1036,6 +1045,7 @@ Window {
 
                                     onClicked: {
                                         console.log("pause")
+                                        myobj.asmPause()
                                     }
                                 }
 
@@ -1094,6 +1104,8 @@ Window {
 
                                     onClicked: {
                                         myobj.getAsmFile()
+                                        listView1.model=myobj.myList41
+                                        listView2.model=myobj.myList41
                                         console.log("update")
                                     }
                                 }

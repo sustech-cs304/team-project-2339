@@ -11,6 +11,7 @@
 #include "File/CoeFile.h"
 #include "Stores/PreDebugStore.h"
 #include "Stores/DebugStore.h"
+#include "FileController.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -44,11 +45,34 @@ public:
 
     Q_INVOKABLE void asmPause();
 
+    Q_INVOKABLE void makeList1();
+
+    Q_INVOKABLE void removeMyList1(int index);
+
+    Q_INVOKABLE void addMyList1(QString string);
+
+    Q_INVOKABLE void makeList2();
+
+    Q_INVOKABLE void removeMyList2(int index);
+
+    Q_INVOKABLE void addMyList2(QString string);
+
+    Q_INVOKABLE void makeList41();
+
     int value1() const;
     void setValue1(int newValue1);
 
     QVariantList items1() const;
     void setItems1(const QVariantList &newItems1);
+
+    QList<QString> getMyList1() const;
+    void setMyList1(const QList<QString> &newMyList1);
+
+    QList<QString> myList2() const;
+    void setMyList2(const QList<QString> &newMyList2);
+
+    QList<QString> myList41() const;
+    void setMyList41(const QList<QString> &newMyList41);
 
 private:
     int m_value;
@@ -56,6 +80,9 @@ private:
     QString m_string;
     std::shared_ptr<QFile> file1;
     QVariantList m_items1;
+    QList<QString> myList1;
+    QList<QString> m_myList2;
+    QList<QString> m_myList41;
 
 
     Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged)
@@ -66,12 +93,21 @@ private:
 
     Q_PROPERTY(QVariantList items1 READ items1 WRITE setItems1 NOTIFY items1Changed)
 
+    Q_PROPERTY(QList<QString> myList1 READ getMyList1 WRITE setMyList1 NOTIFY myList1Changed)
+
+    Q_PROPERTY(QList<QString> myList2 READ myList2 WRITE setMyList2 NOTIFY myList2Changed)
+
+    Q_PROPERTY(QList<QString> myList41 READ myList41 WRITE setMyList41 NOTIFY myList41Changed)
+
 signals:
 
     void valueChanged();
     void stringChanged();
     void value1Changed();
     void items1Changed();
+    void myList1Changed();
+    void myList2Changed();
+    void myList41Changed();
 };
 
 #endif // MYOBJECT1_H

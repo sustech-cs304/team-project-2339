@@ -44,6 +44,16 @@ void MyObject1::getAsmFile()
     QString filePath = m_string.mid(7);
     qDebug()<<filePath;
     file1 = PreDebugController::uploadFile(filePath);
+    if (file1->open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QTextStream in(file1.get());
+            while (!in.atEnd())
+            {
+                QString line = in.readLine();
+                m_myList41.append(line);
+            }
+        }
+    qDebug()<<m_myList41;
     qDebug() << __FUNCTION__;
 }
 
@@ -111,3 +121,86 @@ void MyObject1::setItems1(const QVariantList &newItems1)
     m_items1 = newItems1;
     emit items1Changed();
 }
+
+QList<QString> MyObject1::getMyList1() const
+{
+    return myList1;
+}
+
+void MyObject1::setMyList1(const QList<QString> &newMyList1)
+{
+    if (myList1 == newMyList1)
+        return;
+    myList1 = newMyList1;
+    emit myList1Changed();
+}
+
+QList<QString> MyObject1::myList2() const
+{
+    return m_myList2;
+}
+
+void MyObject1::setMyList2(const QList<QString> &newMyList2)
+{
+    if (m_myList2 == newMyList2)
+        return;
+    m_myList2 = newMyList2;
+    emit myList2Changed();
+}
+
+QList<QString> MyObject1::myList41() const
+{
+    return m_myList41;
+}
+
+void MyObject1::setMyList41(const QList<QString> &newMyList41)
+{
+    if (m_myList41 == newMyList41)
+        return;
+    m_myList41 = newMyList41;
+    emit myList41Changed();
+}
+
+void MyObject1::makeList1()
+{
+
+    myList1.insert(0, "Unselected signal");
+    qDebug()<<myList1;
+}
+
+void MyObject1::removeMyList1(int index)
+{
+    if (index >= 0 && index < myList1.count()) {
+        myList1.removeAt(index);
+    }
+}
+
+void MyObject1::addMyList1(QString string)
+{
+
+}
+
+void MyObject1::makeList2()
+{
+    m_myList2.insert(0, "Selected signal");
+    qDebug()<<m_myList2;
+}
+
+void MyObject1::removeMyList2(int index)
+{
+    if (index >= 0 && index < m_myList2.count()) {
+        m_myList2.removeAt(index);
+    }
+}
+
+void MyObject1::addMyList2(QString string)
+{
+    m_myList2.append(string);
+}
+
+void MyObject1::makeList41()
+{
+
+
+}
+
