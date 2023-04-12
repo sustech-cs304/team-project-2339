@@ -79,6 +79,7 @@ private:
     int m_value1;
     QString m_string;
     std::shared_ptr<QFile> file1;
+    FileController *fileContrl;
     QVariantList m_items1;
     QList<QString> myList1;
     QList<QString> m_myList2;

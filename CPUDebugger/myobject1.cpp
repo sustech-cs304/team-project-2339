@@ -3,7 +3,7 @@
 MyObject1::MyObject1(QObject *parent)
     : QObject{parent}
 {
-
+    fileContrl = new FileController();
 }
 
 MyObject1 *MyObject1::getInstance()

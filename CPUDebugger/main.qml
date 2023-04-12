@@ -154,6 +154,7 @@ Window {
                                     onClicked: {
                                         console.log("Select Top")
                                         fileDialog11.open()
+                                        button12.enabled=true
                                     }
                                 }
 
@@ -162,6 +163,7 @@ Window {
                                     width: height*3
                                     height: parent.height/4
                                     x:button11.width+10
+                                    enabled: false
 
                                     anchors.verticalCenter: parent.verticalCenter
 
@@ -767,41 +769,6 @@ Window {
                         flickableDirection: Flickable.VerticalFlick
                         clip: true
 
-                        ListModel {
-                            id: myModel41
-                            objectName: myModel41
-                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
-                            ListElement { context:"Colomn 2" }
-                            ListElement { context:"Colomn 3" }
-                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 5" }
-                            ListElement { context:"Colomn 6" }
-                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
-                            ListElement { context:"Colomn 2" }
-                            ListElement { context:"Colomn 3" }
-                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 5" }
-                            ListElement { context:"Colomn 6" }
-                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
-                            ListElement { context:"Colomn 2" }
-                            ListElement { context:"Colomn 3" }
-                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 5" }
-                            ListElement { context:"Colomn 6" }
-                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
-                            ListElement { context:"Colomn 2" }
-                            ListElement { context:"Colomn 3" }
-                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 5" }
-                            ListElement { context:"Colomn 6" }
-                            ListElement { context:"Colomn 1 123456789012345678901234567890123456789012345678901234567890" }
-                            ListElement { context:"Colomn 2" }
-                            ListElement { context:"Colomn 3" }
-                            ListElement { context:"Colomn 4 dweffwekhrwkejfhkwjefkjwbekfdbwkejbfkwjebfkwbekfbwkefjbwkejbfkwejbf" }
-                            ListElement { context:"Colomn 5" }
-                            ListElement { context:"Colomn 6" }
-                        }
-
                         ListView {
                             id: listView1
                             height: parent.height
@@ -849,7 +816,6 @@ Window {
                                     anchors.right: parent.right
 
                                 }
-
 
                             }
                             onContentYChanged: {
