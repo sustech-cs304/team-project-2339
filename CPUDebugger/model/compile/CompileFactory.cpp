@@ -7,7 +7,8 @@ CompileFactory::CompileFactory(MAlex *alex)
 
 void CompileFactory::addTopModule(QList<Token> &tokenList, qsizetype index)
 {
-    ModuleData *md = FileStore::instance()->getModuleData("top");
+//    FileStore *fs = FileStore::getInstance();
+//    ModuleData *md = fs->getModuleData("top");
     int p = 0;
     Module *m;
     while (p < tokenList.length()) {
