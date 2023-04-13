@@ -29,10 +29,10 @@ void FileController::import(QString &absolutePath) {
     dirInfo->removeRecursively();
 }
 
-QList<CPUSignal> FileController::getSignalList()
+QList<QString> FileController::getSignalList()
 {
-    QList<CPUSignal> sigList;
-    sigList.append(CPUSignal("instruction_mem_instruction"));
+    QList<QString> sigList;
+    sigList.append("instruction_mem_instruction");
     return sigList;
 }
 

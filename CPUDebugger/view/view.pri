@@ -1,11 +1,11 @@
 SOURCES += \
-    $$PWD/myobject1.cpp
+    $$PWD/../myobject1.cpp
 
 RESOURCES += qml.qrc \
     resourse.qrc
 
 HEADERS += \
-    $$PWD/myobject1.h
+    $$PWD/../myobject1.h
 
 DISTFILES += \
     $$PWD/../images/image1.png \
