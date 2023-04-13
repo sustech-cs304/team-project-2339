@@ -1,0 +1,5 @@
+/Users/mac/Documents/SUStech/Homework/Software Engineering/project/team-2339/cmake-build-debug/config.tests/static_link_order/CMakeFiles/rebuild_cache.dir
+/Users/mac/Documents/SUStech/Homework/Software Engineering/project/team-2339/cmake-build-debug/config.tests/static_link_order/CMakeFiles/edit_cache.dir
+/Users/mac/Documents/SUStech/Homework/Software Engineering/project/team-2339/cmake-build-debug/config.tests/static_link_order/CMakeFiles/static_link_order_test.dir
+/Users/mac/Documents/SUStech/Homework/Software Engineering/project/team-2339/cmake-build-debug/config.tests/static_link_order/CMakeFiles/staticLib.dir
+/Users/mac/Documents/SUStech/Homework/Software Engineering/project/team-2339/cmake-build-debug/config.tests/static_link_order/CMakeFiles/objLib.dir
