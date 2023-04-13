@@ -1,6 +1,7 @@
 QT += quick
 QT += quickcontrols2
 QT += gui-private
+QT += serialport
 
 CONFIG += qmltypes
 QML_IMPORT_NAME = MyObj
@@ -28,7 +29,6 @@ QML_IMPORT_PATH =
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
-QT += serialport
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
