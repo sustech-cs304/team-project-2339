@@ -734,7 +734,6 @@ Window {
                                     console.log("Comfirm3")
                                     btn4.enabled=true
                                     bar.currentIndex=3
-                                    listView3.model=myobj.myList2
                                 }
                             }
 
@@ -882,34 +881,34 @@ Window {
                             ListModel {
                                 id: myModel42
                                 ListElement { signal:"s1" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s2" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s3" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s4" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s5" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s6" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s7" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s8" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s9" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s10" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s11" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s1" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s2" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s3" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s4" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s5" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s6" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s7" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s8" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s9" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s10" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s11" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s2" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s3" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s4" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s5" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s6" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s7" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s8" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s9" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s10" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s11" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s1" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s2" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s3" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s4" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s5" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s6" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s7" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s8" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s9" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s10" ;value:"1100 1100 0011 0011"}
+                                ListElement { signal:"s11" ;value:"1100 1100 0011 0011"}
                             }
 
                             ListView {
                                 id: listView3
                                 height: parent.height-buttons4.height
-                                width: parent.width-125
-                                model:myobj.myList2
+                                width: parent.width
+                                model:myModel42
                                 delegate: Rectangle {
                                     height: 20
                                     width: parent.width
@@ -924,26 +923,11 @@ Window {
 
                                     Text {
                                         id:text4
-                                        text: modelData
+                                        text: signal
                                         anchors.verticalCenter: parent.verticalCenter
                                         anchors.left: text3.right
                                         width:100
                                     }
-
-                                }
-                            }
-
-                            ListView {
-                                id: listView4
-                                height: listView3.height
-                                width: 125
-                                model:myModel42
-                                anchors.right: parent.right
-                                anchors.top:parent.top
-                                delegate: Rectangle {
-                                    height: 20
-                                    width: parent.width
-                                    color: "white"
 
                                     Text {
                                         id:text5
@@ -956,12 +940,12 @@ Window {
                                 }
                             }
 
+
                             Rectangle {
                                 id:buttons4
                                 height: parent.height/10
                                 width: parent.width
                                 color: "lightgray"
-                                anchors.bottom: parent.bottom
 
                                 Button {
                                     id:button41
@@ -1007,8 +991,6 @@ Window {
                                     onClicked: {
                                         console.log("next")
                                         myobj.asmStep()
-                                        listView2.model = null
-                                        listView2.model = myobj.myList41
                                         console.log(myobj.value1)
                                     }
                                 }
