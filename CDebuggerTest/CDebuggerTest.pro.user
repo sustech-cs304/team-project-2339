@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 9.0.2, 2023-04-12T20:56:10. -->
+<!-- Written by QtCreator 9.0.2, 2023-04-13T10:31:18. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -72,6 +72,7 @@
     <value type="Qt::CheckState" key="1@D:/work_qt/team-project-2339/CDebuggerTest/tst_model.cpp:model">Checked</value>
     <value type="Qt::CheckState" key="1@D:/work_qt/team-project-2339/CDebuggerTest/tst_model.cpp:test_case1">Checked</value>
     <value type="Qt::CheckState" key="1@D:/work_qt/team-project-2339/CDebuggerTest/tst_model.cpp:test_case2">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/work_qt/team-project-2339/CDebuggerTest/tst_model.cpp:test_case3">Checked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
@@ -84,6 +85,9 @@
     <valuelist type="QVariantList" key="ClangTools.SelectedFiles"/>
     <valuelist type="QVariantList" key="ClangTools.SuppressedDiagnostics"/>
     <value type="bool" key="ClangTools.UseGlobalSettings">true</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="CppEditor.QuickFix">
+    <value type="bool" key="UseGlobalSettings">true</value>
    </valuemap>
   </valuemap>
  </data>
