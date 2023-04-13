@@ -14,7 +14,8 @@ public:
     ~FileController();
     void import(QString& absolutePath);
     QList<CPUSignal> getSignalList();
-    void setSignal(QString signalName);
+    void
+    setSignal(QString signalName);
     void exportUart();
 private:
     FileInputFactory *inputFac;
