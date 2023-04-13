@@ -1,4 +1,3 @@
-#include <CPUDebugger/controller/FileController.h>
 #include <QtTest>
 #include <compile/MAlex.h>
 #include <iostream>

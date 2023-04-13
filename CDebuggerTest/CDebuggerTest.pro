@@ -9,8 +9,10 @@ TEMPLATE = app
 
 INCLUDEPATH += \
     ../CPUDebugger/model
+    ../CPUDebugger/controller
 
 include(../CPUDebugger/model/model.pri)
+include(../CPUDebugger/controller/controller.pri)
 
 SOURCES += \
     tst_model.cpp\

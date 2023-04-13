@@ -3,9 +3,13 @@
 #include <QQmlContext>
 #include <QScreen>
 #include "myobject1.h"
-
+#include "Comm/comm.h"
 int main(int argc, char *argv[])
 {
+    UartCommunicator* communicator = new UartCommunicator();
+    qDebug() << communicator->autoConnectCPU();
+//    qDebug() << communicator->sendPause();
+    qDebug() << communicator->sendNext();
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif

@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/CPUDebugger">
+<file alias="main.qml">D:/team-project-2339/CPUDebugger/main.qml</file>
+</qresource>
+</RCC>

@@ -98,11 +98,13 @@ bool UartCommunicator::noResponseSend(const QByteArray &packet, double packetWai
 }
 
 bool UartCommunicator::sendPause(double packetWaitingSeconds, double totWaitingSeconds){
+    if (this->cpuPortName == nullptr) return false;
     const QByteArray PAUSE = QByteArray(1, 0x04);
     return this->noResponseSend(PAUSE, packetWaitingSeconds, totWaitingSeconds);
 }
 
 bool UartCommunicator::sendNext(double packetWaitingSeconds, double totWaitingSeconds){
+    if (this->cpuPortName == nullptr) return false;
     const QByteArray NEXT = QByteArray(1, 0x06);
     return this->noResponseSend(NEXT, packetWaitingSeconds, totWaitingSeconds);
 }
