@@ -1,0 +1,6 @@
+/DebugCore/.gitattributes
+/DebugCore/.gitignore
+/DebugCore/.git
+
+/cmake-build-debug/
+/.idea
