@@ -584,14 +584,13 @@ module top (
         .uart_tx                (uart_tx),
 
         .pc                     (instruction_mem_pc),
-		.signal_0               (instruction_1),
-		.signal_1               (another_instruction),
+        .instruction            (instruction_mem_instruction),
 
         .uart_addr              (debug_unit_write_address),
         .uart_data              (debug_unit_write_data),
         .uart_write_enable      (debug_unit_write_enable),
 
-        .rx_light               (rx_light),
+        .rx_light                (rx_light),
 
         .debug_pause            (debug_unit_debug_pause),
         .uart_complete          (debug_unit_uart_complete)
