@@ -156,27 +156,29 @@
 
 Each team member’s contribution is shown below:
 
+![Untitled](resources/Untitled%207.png)
+
 The team collaborated by utilizing `branch`es which provide code isolation functionality, this helps the team when each member is working independently on their components. But while this provides isolation, it also introduces an additional step when consolidating the project. Overall, the `branch`es provide more pros than cons. 
 
 - `main` branch
     
-    ![Untitled](resources/Untitled%207.png)
+    ![Untitled](resources/Untitled%208.png)
     
 - `backend` branch
     
-    ![Untitled](resources/Untitled%208.png)
+    ![Untitled](resources/Untitled%209.png)
     
 - `debug_core` branch
     
-    ![Untitled](resources/Untitled%209.png)
+    ![Untitled](resources/Untitled%2010.png)
     
 - `feature` feature branch
     
-    ![Untitled](resources/Untitled%2010.png)
+    ![Untitled](resources/Untitled%2011.png)
     
 - `frontend` frontend
     
-    ![Untitled](resources/Untitled%2011.png)
+    ![Untitled](resources/Untitled%2012.png)
     
 
 ## Deliverables
@@ -195,10 +197,10 @@ The team collaborated by utilizing `branch`es which provide code isolation funct
 
 **Directory structure**: the code is structured in two main directory, `DebugCore` for the FPGA files, and `CPUDebugger` for the Qt related files. Below are the two main branches’ directory structure:
 
-![`debug_core`](resources/Untitled%2012.png)
+![`debug_core`](resources/Untitled%2013.png)
 
 `debug_core`
 
-![`main`](resources/Untitled%2013.png)
+![`main`](resources/Untitled%2014.png)
 
 `main`
