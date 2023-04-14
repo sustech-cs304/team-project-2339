@@ -4,11 +4,11 @@
 
 - Use case diagram:
     
-    ![Untitled](illustrations/Untitled.png)
+    ![Untitled](resources/Untitled.png)
     
 - Swim lane diagram:
     
-    ![Untitled](illustrations/Untitled%201.png)
+    ![Untitled](resources/Untitled%201.png)
     
 - Language description:
     
@@ -41,7 +41,7 @@
         - user in any steps after 4 can be interrupted by jumping straight to step 5
 - Class diagram:
     
-    ![Untitled](illustrations/Untitled%202.png)
+    ![Untitled](resources/Untitled%202.png)
     
 - Data design: as the only input from the user are the `.v` and `.asm` files, the data captured will be structured using two classes
     
@@ -72,19 +72,19 @@
 - UI design:
     1. select `top.v`'s directory
         
-        ![Untitled](illustrations/Untitled%203.png)
+        ![Untitled](resources/Untitled%203.png)
         
     2. select signals directly on a diagram automatically generated
         
-        ![Untitled](illustrations/Untitled%204.png)
+        ![Untitled](resources/Untitled%204.png)
         
     3. select the output directory for the debug core, and generate the bitstream using VIVADO (the `top.v` file will be automatically updated to instantiate and connect the correct wires)
         
-        ![Untitled](illustrations/Untitled%205.png)
+        ![Untitled](resources/Untitled%205.png)
         
     4. the CPU will halt at be start, breakpoints can be then selected and then the CPU will be remote controlled (there is also an option to load a `.asm` file to the CPU through UART)
         
-        ![Untitled](illustrations/Untitled%206.png)
+        ![Untitled](resources/Untitled%206.png)
         
 - Protocol design:
     - From CPU
@@ -139,7 +139,7 @@
         
         `PROGRAM`: send the ASM file through UART to the CPU’s RAM and ROM, the ASM file should be 64K with the following memory arrangement:
         
-        ![ASM file memory arrangement](illustrations/UART_Address.png)
+        ![ASM file memory arrangement](resources/UART_Address.png)
         
         ASM file memory arrangement
         
@@ -151,3 +151,54 @@
         `RESET`: reset the program counter to 0 and restarts the program again
         
         - Byte 1: opcode `0x08`
+
+## Collaborations
+
+Each team member’s contribution is shown below:
+
+The team collaborated by utilizing `branch`es which provide code isolation functionality, this helps the team when each member is working independently on their components. But while this provides isolation, it also introduces an additional step when consolidating the project. Overall, the `branch`es provide more pros than cons. 
+
+- `main` branch
+    
+    ![Untitled](resources/Untitled%207.png)
+    
+- `backend` branch
+    
+    ![Untitled](resources/Untitled%208.png)
+    
+- `debug_core` branch
+    
+    ![Untitled](resources/Untitled%209.png)
+    
+- `feature` feature branch
+    
+    ![Untitled](resources/Untitled%2010.png)
+    
+- `frontend` frontend
+    
+    ![Untitled](resources/Untitled%2011.png)
+    
+
+## Deliverables
+
+**Functionalities implemented**
+
+- remotely control the CPU using the UART protocol defined above
+- analyze the input directory of `.v` Verilog files and generates corresponding tokens
+- automatically generate `uart_unit.v` and alter `top.v` file to instantiate the debug core
+- analyze the `.asm` file provided during debug stage
+
+**Deliverables**
+
+- working frontend
+- partial backend with auto code generation
+
+**Directory structure**: the code is structured in two main directory, `DebugCore` for the FPGA files, and `CPUDebugger` for the Qt related files. Below are the two main branches’ directory structure:
+
+![`debug_core`](resources/Untitled%2012.png)
+
+`debug_core`
+
+![`main`](resources/Untitled%2013.png)
+
+`main`
