@@ -4,10 +4,10 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Dialogs
 import MyObj 1.0
+import Qt.labs.platform 1.0
 
 Window {
     id: root
-    objectName: window
     visible: true
     width: 640
     height: 480
@@ -18,9 +18,10 @@ Window {
         id:myobj
         value: 10
         string:"aaa"
-        value1: 3
+        value1: 0
 //        myList1: ["Apple", "Banana", "Cherry"]
 //        myList2: ["Orange", "melon"]
+        myList41:["1","0","1","0"]
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -122,7 +123,6 @@ Window {
                             }
 
                             Rectangle{
-                                id:buttons1
                                 width: parent.width-text12.width-10
                                 height: parent.height
                                 anchors.verticalCenter: parent.verticalCenter
@@ -134,6 +134,11 @@ Window {
 
                                     onAccepted: {
                                         console.log("已选择的文件：", currentFiles)
+                                        if (currentFile!==null){
+                                            console.log("fileDialog11: "+currentFile)
+                                            button11.isSelected = true
+                                            console.log(button11.isSelected)
+                                        }
                                     }
                                 }
 
@@ -154,10 +159,11 @@ Window {
                                         radius: height/5
                                     }
 
+                                    property bool isSelected: false
+
                                     onClicked: {
                                         console.log("Select Top")
                                         fileDialog11.open()
-                                        button12.enabled=true
                                     }
                                 }
 
@@ -166,7 +172,7 @@ Window {
                                     width: height*3
                                     height: parent.height/4
                                     x:button11.width+10
-                                    enabled: false
+                                    enabled: button11.isSelected
 
                                     anchors.verticalCenter: parent.verticalCenter
 
@@ -176,19 +182,21 @@ Window {
                                     }
 
                                     background: Rectangle {
-                                        color: "yellow"
+                                        color: button11.isSelected?"yellow":"lightgrey"
                                         radius: height/5
                                     }
 
                                     onClicked: {
                                         btn2.enabled=true
                                         bar.currentIndex=1
-                                        console.log("Comfirm1")
+                                        console.log("Confirm1")
                                         myobj.makeList1()
                                         myobj.makeList2()
                                         listView21.model=myobj.myList1
                                         listView22.model=myobj.myList2
                                     }
+
+
                                 }
 
 
@@ -268,11 +276,18 @@ Window {
 
                             Text {
                                 id:text13
-                                text: "top.v"
-                                font.pixelSize: 16
-                                font.bold: false
+                                anchors.fill: parent
                                 anchors.centerIn: parent
+                                anchors.verticalCenter: parent.verticalCenter
+                                x:width/4
+                                y:height/3
+                                text: (button11.isSelected?"top.v: "+fileDialog11.currentFile:"Please choose top.v")+"\n"+
+                                      (button13.isSelected?"def: "+fileDialog12.currentFile:"")
+                                font.pixelSize: 16
+//                                anchors.centerIn: parent
+                                wrapMode: Text.Wrap
                             }
+
 
                             FileDialog {
                                 id: fileDialog12
@@ -280,6 +295,10 @@ Window {
 
                                 onAccepted: {
                                     console.log("已选择的文件：", currentFiles)
+                                    if (currentFile!==null){
+                                        console.log(fileDialog12.currentFile)
+                                        button13.isSelected = true
+                                    }
                                 }
                             }
 
@@ -301,10 +320,13 @@ Window {
                                     radius: height/5
                                 }
 
+                                property bool isSelected: false
+
                                 onClicked: {
                                     console.log("Select Def")
                                     fileDialog12.open()
                                 }
+
                             }
 
 
@@ -319,9 +341,6 @@ Window {
 
 
             }
-
-
-
         }
 
         Item {
@@ -491,7 +510,7 @@ Window {
                             }
 
                             onClicked: {
-                                console.log("Comfirm2")
+                                console.log("Confirm2")
                                 btn3.enabled=true
                                 bar.currentIndex=2
                             }
@@ -610,16 +629,99 @@ Window {
                                 }
 
                                 Rectangle {
-                                    id: piece3
+                                    id: piece31
                                     anchors.top: text32.bottom
                                     height: 20
                                     anchors.right: parent.right
+                                }
 
+                                Rectangle{
+                                    id: folderChoose
+                                    width: text32.width
+                                    height: button31.height
+                                    anchors.left: text31.left
+                                    anchors.top: piece31.bottom
+
+                                    Rectangle {
+                                        id:rect31
+                                        width: parent.width-button31.width+10
+                                        height: parent.height
+                                        color: "#F3F6FA"
+                                        clip: true
+                                        border.width: 1
+                                        border.color: "#DFE0E4"
+                                        radius: 5
+
+                                        Flickable {
+                                            anchors.fill: parent
+                                            contentWidth: inputBoxInput.width
+                                            clip: true
+                                            interactive: true
+
+
+                                        TextInput {
+                                            id: inputBoxInput
+                                            text:folderDialog.folder
+                                            color: "#707070"
+                                            font.pixelSize: 16
+                                            activeFocusOnTab: true
+                                            selectByMouse: true //是否可以选择文本
+                                            selectedTextColor: "white" //设置选择文本的字体颜色
+                                            selectionColor: "#4A6DBC" //设置选择框的颜色
+                                            verticalAlignment: TextInput.AlignVCenter
+                                            horizontalAlignment: TextInput.AlignLeft
+                                            leftPadding: 3
+                                            rightPadding: 3
+                                            anchors.centerIn:parent
+                                        }
+                                        }
+                                    }
+
+                                    Button{
+                                        id:button35
+                                        height: button31.height
+                                        width: button31.width/2
+                                        anchors.left: rect31.right
+
+                                        contentItem: Text {
+                                            text: qsTr("Path")
+                                            anchors.centerIn: parent
+                                            color: "white"
+                                            font.pixelSize: 13
+                                        }
+
+                                        background: Rectangle {
+                                            color: "grey"
+                                            radius: height/5
+                                        }
+
+                                        MouseArea{
+                                            anchors.fill: parent
+                                            onClicked: {
+                                                folderDialog.open()
+                                                console.log(inputBoxInput.text)
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                FolderDialog {
+                                    id: folderDialog
+                                    folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0] //默认打开Pictures文件夹
+                                }
+
+
+                                Rectangle {
+                                    id: piece32
+                                    anchors.top: folderChoose.bottom
+                                    height: 20
+                                    anchors.right: parent.right
                                 }
 
                                 Image {
                                     id:image32
-                                    anchors.top: piece3.bottom
+                                    anchors.top: piece32.bottom
                                     x:10
                                     source: "qrc:/images/image32.png"
                                     width: 25
@@ -629,7 +731,7 @@ Window {
 
                                 Text {
                                     id:text33
-                                    anchors.top: piece3.bottom
+                                    anchors.top: piece32.bottom
                                     x:20+image32.width
                                     width: parent.width-image32.width
                                     text: "Burn to Board"
@@ -662,7 +764,7 @@ Window {
                                 width:  parent.width/2+3
                                 height: width/3+2
                                 x:20
-                                y:40
+                                y:109
 
                                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -688,7 +790,7 @@ Window {
                                 width:  parent.width/2+4
                                 height: width/3+2
                                 x:20
-                                y:120
+                                y:170
 
                                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -714,12 +816,41 @@ Window {
                                 width:  parent.width/2+4
                                 height: width/3+2
                                 x:20
-                                y:220
+                                y:230
 
                                 anchors.horizontalCenter: parent.horizontalCenter
 
                                 contentItem: Text {
-                                    text: qsTr(" Compfirm")
+                                    text: qsTr("   Detect")
+                                    anchors.centerIn: parent
+                                    color: "white"
+                                    font.pixelSize: 13
+                                }
+
+                                background: Rectangle {
+                                    color: "light blue"
+                                    radius: height/5
+                                }
+
+                                onClicked: {
+                                    console.log("detect")
+                                    btn4.enabled=true
+                                    bar.currentIndex=3
+                                    listView3.model=myobj.myList2
+                                }
+                            }
+
+                            Button {
+                                id:button34
+                                width:  parent.width/2+4
+                                height: width/3+2
+                                x:20
+                                y:290
+
+                                anchors.horizontalCenter: parent.horizontalCenter
+
+                                contentItem: Text {
+                                    text: qsTr("  Confirm")
                                     anchors.centerIn: parent
                                     color: "white"
                                     font.pixelSize: 13
@@ -731,20 +862,15 @@ Window {
                                 }
 
                                 onClicked: {
-                                    console.log("Comfirm3")
+                                    console.log("Confirm3")
                                     btn4.enabled=true
                                     bar.currentIndex=3
                                     listView3.model=myobj.myList2
                                 }
                             }
-
                         }
-
-
                     }
-
                 }
-
 
             }
         }
@@ -797,6 +923,7 @@ Window {
                                     height: text1.width/2
                                     anchors.verticalCenter: parent.verticalCenter
                                     anchors.right: piece1.left
+                                    visible: modelData==="1"? true:false
 
                                     radius: width/2
                                     color: "#555555"
@@ -882,27 +1009,6 @@ Window {
                             ListModel {
                                 id: myModel42
                                 ListElement { signal:"s1" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s2" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s3" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s4" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s5" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s6" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s7" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s8" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s9" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s10" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s11" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s1" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s2" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s3" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s4" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s5" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s6" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s7" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s8" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s9" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s10" ;value:"1100 1100 0011 0011"}
-//                                ListElement { signal:"s11" ;value:"1100 1100 0011 0011"}
                             }
 
                             ListView {
