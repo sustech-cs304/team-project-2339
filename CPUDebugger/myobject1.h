@@ -65,8 +65,8 @@ public:
     QVariantList items1() const;
     void setItems1(const QVariantList &newItems1);
 
-    QList<QString> getMyList1() const;
-    void setMyList1(const QList<QString> &newMyList1);
+    QList<QString> getmyList1() const;
+    void setmyList1(const QList<QString> &newmyList1);
 
     QList<QString> myList2() const;
     void setMyList2(const QList<QString> &newMyList2);
@@ -81,7 +81,7 @@ private:
     std::shared_ptr<QFile> file1;
     FileController *fileContrl;
     QVariantList m_items1;
-    QList<QString> myList1;
+    QList<QString> m_myList1;
     QList<QString> m_myList2;
     QList<QString> m_myList41;
 
@@ -94,7 +94,7 @@ private:
 
     Q_PROPERTY(QVariantList items1 READ items1 WRITE setItems1 NOTIFY items1Changed)
 
-    Q_PROPERTY(QList<QString> myList1 READ getMyList1 WRITE setMyList1 NOTIFY myList1Changed)
+    Q_PROPERTY(QList<QString> myList1 READ getmyList1 WRITE setmyList1 NOTIFY myList1Changed)
 
     Q_PROPERTY(QList<QString> myList2 READ myList2 WRITE setMyList2 NOTIFY myList2Changed)
 
