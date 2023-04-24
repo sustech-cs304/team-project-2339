@@ -13,7 +13,7 @@ public:
     explicit SenderThread(QObject *parent = nullptr);
     ~SenderThread();
 
-    void transaction(const QString &portName, int waitTimeout, const QByteArray &data, bool hasResponse);
+    void transaction(const QString &portName, int baudRate, int waitTimeout, const QByteArray &data, bool hasResponse);
     void stop();
 
 signals:
@@ -27,8 +27,9 @@ private:
 
     // Shared properties
     QString portName;
-    int waitTimeout = 0;
     QByteArray data;
+    int waitTimeout = 0;
+    int baudRate = 0;
     bool hasResponse;
 
     // Multithreading related

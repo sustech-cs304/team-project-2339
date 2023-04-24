@@ -16,14 +16,17 @@ public:
     ~UartCommunicator();
     bool connectCPU(const QString &portName, double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
     bool autoConnectCPU(double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
-    bool sendPause(double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
+    bool sendPause(QByteArray& cpuResponse, double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
     bool sendResume();
-    bool sendNext(double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
+    bool sendNext(QByteArray& cpuResponse, double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
     bool sendProgram(const char* asmFile);
+
+    void setBaudRate(int baudRate);
 
 private:
     bool noResponseSend(const QByteArray &packet, double packetWaitingSeconds, double totWaitingSeconds);
     QString *cpuPortName;
+    int serialBaudRate = 115200;
     SenderThread *worker;
 };
 

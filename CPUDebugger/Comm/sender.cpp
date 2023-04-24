@@ -4,10 +4,11 @@
 
 SenderThread::SenderThread(QObject *parent) : QThread(parent){}
 
-void SenderThread::transaction(const QString &portName, int waitTimeout, const QByteArray &data, bool hasResponse)
+void SenderThread::transaction(const QString &portName, int baudRate, int waitTimeout, const QByteArray &data, bool hasResponse)
 {
     const QMutexLocker locker(&mutex);
     this->portName = portName;
+    this->baudRate = baudRate;
     this->waitTimeout = waitTimeout;
     this->data = data;
     this->hasResponse = hasResponse;
@@ -34,7 +35,7 @@ void SenderThread::run(){
         currentPortName = portName;
         currentPortNameChanged = true;
     }
-
+    int currentBaudRate = baudRate;
     int currentWaitTimeout = waitTimeout;
     QByteArray currentData = data;
     bool currentHasResponse = hasResponse;
@@ -50,7 +51,7 @@ void SenderThread::run(){
         if (currentPortNameChanged) {
             serial.close();
             serial.setPortName(currentPortName);
-            serial.setBaudRate(115200);
+            serial.setBaudRate(currentBaudRate);
             if (!serial.open(QIODevice::ReadWrite)) {
                 emit error(tr("Can't open %1, error code %2").arg(currentPortName).arg(serial.error()));
                 return;
@@ -82,6 +83,7 @@ void SenderThread::run(){
         } else {
             currentPortNameChanged = false;
         }
+        currentBaudRate = baudRate;
         currentWaitTimeout = waitTimeout;
         currentData = data;
         currentHasResponse = hasResponse;

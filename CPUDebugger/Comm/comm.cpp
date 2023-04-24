@@ -37,7 +37,7 @@ bool UartCommunicator::connectCPU(const QString &portName, double packetWaitingS
     QElapsedTimer timer;
     timer.start();
     for (int i = 0; i < pingNum; i++){
-        worker->transaction(portName, (int)(packetWaitingSeconds*1000), PING, true);
+        worker->transaction(portName, this->serialBaudRate, (int)(packetWaitingSeconds*1000), PING, true);
         while (timer.elapsed() < (int)(totWaitingSeconds*1000)){
             if (packetTimeout || packetError || pingResult){
                 packetTimeout = false;
@@ -85,7 +85,7 @@ bool UartCommunicator::noResponseSend(const QByteArray &packet, double packetWai
     QMetaObject::Connection c3 = connect(worker, &SenderThread::timeout, timeoutSlot);
     QElapsedTimer timer;
     timer.start();
-    worker->transaction(*(this->cpuPortName), (int)(packetWaitingSeconds*1000), packet, false);
+    worker->transaction(*(this->cpuPortName), this->serialBaudRate, (int)(packetWaitingSeconds*1000), packet, false);
     while (timer.elapsed() < (int)(totWaitingSeconds*1000)){
         if (finishSending || timeout || error)
             break;
@@ -97,12 +97,100 @@ bool UartCommunicator::noResponseSend(const QByteArray &packet, double packetWai
     return finishSending;
 }
 
-bool UartCommunicator::sendPause(double packetWaitingSeconds, double totWaitingSeconds){
+//bool UartCommunicator::sendPause(double packetWaitingSeconds, double totWaitingSeconds){
+//    const QByteArray PAUSE = QByteArray(1, 0x04);
+//    return this->noResponseSend(PAUSE, packetWaitingSeconds, totWaitingSeconds);
+//}
+
+bool UartCommunicator::sendPause(QByteArray& cpuResponse, double packetWaitingSeconds, double totWaitingSeconds){
+    QSerialPort serial;
+    serial.setPortName(*(this->cpuPortName));
+    // Port down
+    if (!serial.open(QIODevice::ReadWrite))
+        return false;
+    serial.close();
+    // Protocol down
     const QByteArray PAUSE = QByteArray(1, 0x04);
-    return this->noResponseSend(PAUSE, packetWaitingSeconds, totWaitingSeconds);
+    bool responseResult, packetTimeout = false, packetError = false;
+    auto responseSlot = [&](const QByteArray& data) ->void {
+        if(data.size() >= 1 && data.at(0) == 0x01){
+            cpuResponse.clear();
+            if (data.size() > 1)
+                cpuResponse.append(data.mid(1));
+            responseResult = true;
+        }
+    };
+    auto timeoutSlot = [&](const QString &msg) ->void {
+        packetTimeout = true;
+    };
+    auto errorSlot = [&](const QString &msg) ->void {
+        packetError = true;
+    };
+    QMetaObject::Connection c1 = connect(worker, &SenderThread::response, responseSlot);
+    QMetaObject::Connection c2 = connect(worker, &SenderThread::error, errorSlot);
+    QMetaObject::Connection c3 = connect(worker, &SenderThread::timeout, timeoutSlot);
+    QElapsedTimer timer;
+    timer.start();
+    worker->transaction(*(this->cpuPortName), this->serialBaudRate, (int)(packetWaitingSeconds*1000), PAUSE, true);
+    while (timer.elapsed() < (int)(totWaitingSeconds*1000)){
+        if (packetTimeout || packetError || responseResult)
+            break;
+        QCoreApplication::processEvents();
+    }
+    // Diconnect the signals.
+    disconnect(c1);
+    disconnect(c2);
+    disconnect(c3);
+    return responseResult;
 }
 
-bool UartCommunicator::sendNext(double packetWaitingSeconds, double totWaitingSeconds){
+//bool UartCommunicator::sendNext(double packetWaitingSeconds, double totWaitingSeconds){
+//    const QByteArray NEXT = QByteArray(1, 0x06);
+//    return this->noResponseSend(NEXT, packetWaitingSeconds, totWaitingSeconds);
+//}
+
+bool UartCommunicator::sendNext(QByteArray& cpuResponse, double packetWaitingSeconds, double totWaitingSeconds){
+    QSerialPort serial;
+    serial.setPortName(*(this->cpuPortName));
+    // Port down
+    if (!serial.open(QIODevice::ReadWrite))
+        return false;
+    serial.close();
+    // Protocol down
     const QByteArray NEXT = QByteArray(1, 0x06);
-    return this->noResponseSend(NEXT, packetWaitingSeconds, totWaitingSeconds);
+    bool responseResult, packetTimeout = false, packetError = false;
+    auto responseSlot = [&](const QByteArray& data) ->void {
+        if(data.size() >= 1 && data.at(0) == 0x01){
+            cpuResponse.clear();
+            if (data.size() > 1)
+                cpuResponse.append(data.mid(1));
+            responseResult = true;
+        }
+    };
+    auto timeoutSlot = [&](const QString &msg) ->void {
+        packetTimeout = true;
+    };
+    auto errorSlot = [&](const QString &msg) ->void {
+        packetError = true;
+    };
+    QMetaObject::Connection c1 = connect(worker, &SenderThread::response, responseSlot);
+    QMetaObject::Connection c2 = connect(worker, &SenderThread::error, errorSlot);
+    QMetaObject::Connection c3 = connect(worker, &SenderThread::timeout, timeoutSlot);
+    QElapsedTimer timer;
+    timer.start();
+    worker->transaction(*(this->cpuPortName), this->serialBaudRate, (int)(packetWaitingSeconds*1000), NEXT, true);
+    while (timer.elapsed() < (int)(totWaitingSeconds*1000)){
+        if (packetTimeout || packetError || responseResult)
+            break;
+        QCoreApplication::processEvents();
+    }
+    // Diconnect the signals.
+    disconnect(c1);
+    disconnect(c2);
+    disconnect(c3);
+    return responseResult;
+}
+
+void UartCommunicator::setBaudRate(int baudRate){
+    this->serialBaudRate = baudRate;
 }
