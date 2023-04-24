@@ -18,8 +18,8 @@ public:
     bool autoConnectCPU(double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
     bool sendPause(QByteArray& cpuResponse, double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
     bool sendResume();
-    bool sendNext(QByteArray& cpuResponse, double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
-    bool sendProgram(const char* asmFile);
+    bool sendStep(QByteArray& cpuResponse, double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
+    bool sendProgram(const QByteArray& asmFile, double packetWaitingSeconds=2.0, double totWaitingSeconds=3.0);
 
     void setBaudRate(int baudRate);
 

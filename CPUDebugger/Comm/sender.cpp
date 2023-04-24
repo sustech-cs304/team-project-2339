@@ -20,10 +20,10 @@ void SenderThread::transaction(const QString &portName, int baudRate, int waitTi
 }
 
 void SenderThread::stop(){
-    mutex.lock();
+    const QMutexLocker locker(&mutex);
     stopFlag = true;
-    cond.wakeOne();
-    mutex.unlock();
+    if(isRunning())
+        cond.wakeOne();
 }
 
 void SenderThread::run(){

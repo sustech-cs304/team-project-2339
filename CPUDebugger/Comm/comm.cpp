@@ -149,7 +149,7 @@ bool UartCommunicator::sendPause(QByteArray& cpuResponse, double packetWaitingSe
 //    return this->noResponseSend(NEXT, packetWaitingSeconds, totWaitingSeconds);
 //}
 
-bool UartCommunicator::sendNext(QByteArray& cpuResponse, double packetWaitingSeconds, double totWaitingSeconds){
+bool UartCommunicator::sendStep(QByteArray& cpuResponse, double packetWaitingSeconds, double totWaitingSeconds){
     QSerialPort serial;
     serial.setPortName(*(this->cpuPortName));
     // Port down
@@ -189,6 +189,11 @@ bool UartCommunicator::sendNext(QByteArray& cpuResponse, double packetWaitingSec
     disconnect(c2);
     disconnect(c3);
     return responseResult;
+}
+
+bool UartCommunicator::sendProgram(const QByteArray& asmFile, double packetWaitingSeconds, double totWaitingSeconds){
+    const QByteArray ASM = QByteArray(1, 0x07).append(asmFile);
+    return this->noResponseSend(ASM, packetWaitingSeconds, totWaitingSeconds);
 }
 
 void UartCommunicator::setBaudRate(int baudRate){
