@@ -8,8 +8,6 @@ typedef int SType;
 
 class CPUSignal {
 public:
-    CPUSignal(QString signalName);
-private:
     QString   name;         // name of the CPU's signal
     size_t    width;        // the width after byte alignment
     size_t    rawWidth;     // the original width without byte alignment
@@ -17,9 +15,13 @@ private:
     bool      isFlagged;
 };
 
-inline CPUSignal::CPUSignal(QString signalName)
-{
-    this->name = signalName;
-}
+
+class ASMLine {
+    size_t  index;          // index of the instruction in the program
+    QString line;           // the instruction line
+    bool    isCurrent;      // whether the CPU paused on this instruction
+    bool    isBreakPoint;   // whether the this is a breakpoint
+    bool    isInstruction;  // false for any labels or data
+};
 
 #endif // CPUSIGNAL_H

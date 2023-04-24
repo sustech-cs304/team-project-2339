@@ -1,0 +1,14 @@
+/DebugCore/.gitattributes
+/DebugCore/.gitignore
+/DebugCore/.git
+/DebugCore/.idea
+/DebugCore/vivado/
+
+/cmake-build-debug/
+/.idea
+/.history
+
+**/._.DS_Store
+**/.DS_Store
+._.DS_Store
+.DS_Store
