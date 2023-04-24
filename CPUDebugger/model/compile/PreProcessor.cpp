@@ -36,7 +36,14 @@ void PreProcessor::replace(QString path, QString dest)
     QList<Token> tokens = c->scan(FileUtil::getTextStreams(f));
     QStringList lines;
     QString ss;
+
+    bool detectModule = false;
     for (int i = 0; i < tokens.size(); i++) {
+        if (tokens[i].s == "module") {
+            detectModule = true;
+        }
+        if (!detectModule)
+            continue;
         if (tokens[i].s == '`') {
             if (c->isMacro(i, tokens)) {
                 i += 3;

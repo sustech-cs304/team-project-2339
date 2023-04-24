@@ -30,8 +30,6 @@ public:
     void deleteModuleData();
 
 private:
-    QMap<QString, ModuleData> moduleMap;
-    QMap<QString, FFile *>    fileMap;
     FileStore();
     ~FileStore() {}
     FileStore(const FileStore&);

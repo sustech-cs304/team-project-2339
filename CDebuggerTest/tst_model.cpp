@@ -137,6 +137,7 @@ void model::test_case4()
     qDebug() << std::filesystem::current_path();
     QStringList entries = FileUtil::getDirList(destPath+"/pre");
     for (const QString &entry: entries) {
+        qDebug() << entry;
         parser.read(entry.toStdString());
     }
 }
