@@ -41,7 +41,7 @@ void MyObject1::setString(const QString &newString)
 
 void MyObject1::getAsmFile()
 {
-    QString filePath = m_string.mid(7);
+    QString filePath = m_string.mid(8);
     qDebug()<<filePath;
     file1 = PreDebugController::uploadFile(filePath);
     if (file1->open(QIODevice::ReadOnly | QIODevice::Text))

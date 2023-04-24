@@ -18,7 +18,7 @@ Window {
         id:myobj
         value: 10
         string:"aaa"
-        value1: 3
+        value1: 0
 //        myList1: ["Apple", "Banana", "Cherry"]
 //        myList2: ["Orange", "melon"]
 
