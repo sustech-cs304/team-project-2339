@@ -3,7 +3,7 @@
 #include <iostream>
 
 TopVFileInputFactory::TopVFileInputFactory() {
-
+    prePro = new PreProcessor();
 }
 
 ModuleData* TopVFileInputFactory::fileInput(QFile *file) {

@@ -1,4 +1,5 @@
 #include "MAlex.h"
+#include <iostream>
 
 void init(std::pair<qsizetype, qsizetype> p, QStringList &ss) {
     int l, r;
@@ -19,11 +20,13 @@ MAlex::MAlex()
 void MAlex::read_line(Line line)
 {
     line = pre_check(line);
+//    std::cout << line.toStdString() << std::endl;
     QString s;
 
     for (QChar c: qAsConst(line)) {
-        if (is_alpha(c) || is_number(c) || c == '_') {
+        if (is_alpha(c) || is_number(c) || c == '_' || c == '\'') {
             s.append(c);
+//            std::cout << s.toStdString() << " ";
             continue;
         } else {
             if (!s.isEmpty()) {
@@ -36,9 +39,9 @@ void MAlex::read_line(Line line)
                 } else {
                     QMessageLogger logger;
                     logger.info("%s", s.toStdString().c_str());
-//                    throw QException();
                 }
                 s.clear();
+//                std::cout << std::endl;
             }
         }
         if (is_range(c)) {
@@ -73,12 +76,12 @@ bool MAlex::is_number(QChar c)
 }
 
 bool MAlex::is_number(QString s)
-{
-    for (QChar c: s) {
-        if (!is_number(c))
-            return false;
-    }
-    return true;
+{    
+//    for (QChar c: s) {
+//        if (!is_number(c))
+//            return false;
+//    }
+    return is_number(s[0]);
 }
 
 bool MAlex::is_key(QString s)
@@ -100,6 +103,7 @@ Line MAlex::pre_check(Line line)
         new_line.append(c);
         las = c;
     }
+    new_line.append(' ');
     return new_line;
 }
 

@@ -2,8 +2,6 @@
 #define MODULE_H
 #include <QString>
 #include <QList>
-#include "CPUSignal.h"
-class Module {
 #include <QException>
 #include "CPUSignal.h"
 class  Module {
