@@ -8,12 +8,21 @@ QML_IMPORT_NAME = MyObj
 QML_IMPORT_MAJOR_VERSION = 1
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        parse-verilog/lex.yy.cc \
+        parse-verilog/verilog_parser.tab.cc
 
 
 resources.files = main.qml
 resources.prefix = /$${TARGET}
 RESOURCES += resources
+
+#LEXSOURCES = verilog_lexer.l
+
+#YACCSOURCES = verilog_parser.yy
+
+#QMAKE_EXT_LEX = flex
+#QMAKE_EXT_YACC = bison
 
 TRANSLATIONS += \
         CPUDebugger_zh_CN.ts
@@ -48,4 +57,18 @@ include($$PWD/uart/uart.pri)
 include($$PWD/model/model.pri)
 include($$PWD/Debugger.pri)
 
-HEADERS +=
+DISTFILES += \
+    parse-verilog/verilog_lexer.l \
+    parse-verilog/verilog_parser.yy
+
+HEADERS += \
+    parse-verilog/FlexLexer.h \
+    parse-verilog/location.hh \
+    parse-verilog/position.hh \
+    parse-verilog/stack.hh \
+    parse-verilog/verilog_data.hpp \
+    parse-verilog/verilog_data.hpp \
+    parse-verilog/verilog_driver.hpp \
+    parse-verilog/verilog_driver.hpp \
+    parse-verilog/verilog_parser.tab.hh \
+    parse-verilog/verilog_scanner.hpp

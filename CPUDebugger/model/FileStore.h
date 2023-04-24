@@ -4,7 +4,6 @@
 #include "ModuleData.h"
 #include <QFile>
 #include "QMap"
-#include "FFile.h"
 
 class FileStore {
 private:
@@ -12,15 +11,11 @@ private:
 public:
     static FileStore *fileStore;
 
-    FileStore() {}
-
-    ~FileStore() {}
-
     FileStore instance();
 
-    void setSignal(QString key, QString moduleName, QString signalName, SignalType state);
+    void setSignal(QString key, QString moduleName, QString signalName, SType state);
 
-    void setFile(QString key, FFile file);
+    void setFile(QString key, QFile file);
 
     void setModuleData(ModuleData *);
 
