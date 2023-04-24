@@ -2,14 +2,16 @@
 #define MODULE_H
 #include <QString>
 #include <QList>
-#include "CPUSignal.h"
 #include <QException>
+#include "CPUSignal.h"
 class  Module {
 public:
     Module(QString name);
     void addSignal(CPUSignal sig, SType st);
 private:
     QString name;
+    QList<CPUSignal> inputSignals;
+    QList<CPUSignal> outputSignals;
     QList<CPUSignal> inSignals;
     QList<CPUSignal> outSignals;
 };
