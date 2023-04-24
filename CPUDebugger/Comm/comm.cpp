@@ -9,6 +9,9 @@ UartCommunicator::UartCommunicator(QObject *parent) : QObject(parent){
 }
 
 UartCommunicator::~UartCommunicator(){
+    delete worker;
+    if (cpuPortName != NULL)
+        delete cpuPortName;
 }
 
 bool UartCommunicator::connectCPU(const QString &portName, double packetWaitingSeconds, double totWaitingSeconds, int pingNum){
@@ -98,7 +101,7 @@ bool UartCommunicator::noResponseSend(const QByteArray &packet, double packetWai
 }
 
 //bool UartCommunicator::sendPause(double packetWaitingSeconds, double totWaitingSeconds){
-//    const QByteArray PAUSE = QByteArray(1, 0x04);
+//    const QByteArrays PAUSE = QByteArray(1, 0x04);
 //    return this->noResponseSend(PAUSE, packetWaitingSeconds, totWaitingSeconds);
 //}
 

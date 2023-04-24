@@ -1,0 +1,57 @@
+{
+    "classes": [
+        {
+            "className": "SenderThread",
+            "object": true,
+            "qualifiedClassName": "SenderThread",
+            "signals": [
+                {
+                    "access": "public",
+                    "name": "finishSending",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "s",
+                            "type": "QByteArray"
+                        }
+                    ],
+                    "name": "response",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "s",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "error",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "s",
+                            "type": "QString"
+                        }
+                    ],
+                    "name": "timeout",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QThread"
+                }
+            ]
+        }
+    ],
+    "inputFile": "sender.h",
+    "outputRevision": 68
+}
