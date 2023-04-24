@@ -13,7 +13,6 @@ PreProcessor::PreProcessor()
 void PreProcessor::process(QString path)
 {
     QFile *f = FileUtil::importFile(path);
-//    f->open(QIODevice::ReadOnly);
     QList<Token> tokens = c->scan(FileUtil::getTextStreams(f));
     QFile of("E:/d.v");
     of.open(QIODevice::WriteOnly);
@@ -41,11 +40,9 @@ void PreProcessor::replace(QString path, QString dest)
         if (tokens[i].s == '`') {
             if (c->isMacro(i, tokens)) {
                 i += 3;
-//                tokens.remove(i, 3);
             } else {
                 Token t = tokens[i+1];
                 i += 1;
-//                tokens.remove(i, 2);
                 ss.append(marcoMap->value(t.s)+' ');
             }
         } else {

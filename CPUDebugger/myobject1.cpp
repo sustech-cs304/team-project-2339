@@ -41,7 +41,8 @@ void MyObject1::setString(const QString &newString)
 
 void MyObject1::getAsmFile()
 {
-    QString filePath = m_string.mid(8);
+    m_myList41.clear();
+    QString filePath = m_string.mid(7);
     qDebug()<<filePath;
     file1 = PreDebugController::uploadFile(filePath);
     if (file1->open(QIODevice::ReadOnly | QIODevice::Text))
@@ -122,16 +123,16 @@ void MyObject1::setItems1(const QVariantList &newItems1)
     emit items1Changed();
 }
 
-QList<QString> MyObject1::getMyList1() const
+QList<QString> MyObject1::getmyList1() const
 {
-    return myList1;
+    return m_myList1;
 }
 
-void MyObject1::setMyList1(const QList<QString> &newMyList1)
+void MyObject1::setmyList1(const QList<QString> &newmyList1)
 {
-    if (myList1 == newMyList1)
+    if (m_myList1 == newmyList1)
         return;
-    myList1 = newMyList1;
+    m_myList1 = newmyList1;
     emit myList1Changed();
 }
 
@@ -163,14 +164,15 @@ void MyObject1::setMyList41(const QList<QString> &newMyList41)
 
 void MyObject1::makeList1()
 {
-    myList1=fileContrl->getSignalList();
-    qDebug()<<myList1;
+    m_myList1=fileContrl->getSignalList();
+    qDebug()<<m_myList1;
 }
 
 void MyObject1::removeMyList1(int index)
 {
-    if (index >= 0 && index < myList1.count()) {
-        myList1.removeAt(index);
+    if (index >= 0 && index < m_myList1.count()) {
+        m_myList1.removeAt(index);
+        qDebug()<<m_myList1;
     }
 }
 

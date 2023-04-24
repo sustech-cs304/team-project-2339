@@ -2,8 +2,8 @@
 #define MODULE_H
 #include <QString>
 #include <QList>
-#include <QException>
 #include "CPUSignal.h"
+#include <QException>
 class  Module {
 public:
     Module(QString name);

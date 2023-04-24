@@ -3,8 +3,7 @@
 #include <iostream>
 #include <private/qzipreader_p.h>
 #include "FileUtil.h"
-#include "TopVFileInputFactory.h"
-#include "Module.h"
+#include "compile/PreProcessor.h"
 #include "verilog_driver.hpp"
 // add necessary includes here
 
@@ -48,11 +47,13 @@ class model : public QObject
 
 public:
     QMessageLogger *logger;
+    QString dirPath;
+    QString destPath;
     model();
     ~model();
 
 private slots:
-    void test_case1();
+    void test_preprocess();
     void test_case2();
     void test_case3();
     void test_case4();
@@ -61,6 +62,8 @@ private slots:
 model::model()
 {
     logger = new QMessageLogger();
+    dirPath = "E:/DebugCore/module_files";
+    destPath = "E:/";
 }
 
 model::~model()
@@ -68,10 +71,8 @@ model::~model()
 
 }
 
-void model::test_case1()
+void model::test_preprocess()
 {
-    QString dirPath = "E:/DebugCore/module_files";
-    QString destPath = "E:/";
     QDir dir(destPath);
     if (!dir.exists()) {
         bool ismkdir = dir.mkpath(destPath);
@@ -134,7 +135,10 @@ void model::test_case4()
 {
     SampleParser parser;
     qDebug() << std::filesystem::current_path();
-    parser.read("CDebuggerTest/top.v");
+    QStringList entries = FileUtil::getDirList(destPath+"/pre");
+    for (const QString &entry: entries) {
+        parser.read(entry.toStdString());
+    }
 }
 
 QTEST_APPLESS_MAIN(model)

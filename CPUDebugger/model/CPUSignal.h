@@ -6,15 +6,17 @@ typedef int SType;
 #define SIG_IN 0
 #define SIG_OUT 1
 
+enum SignalState {
+    ON=1, OFF=0
+};
+
 class CPUSignal {
 public:
     CPUSignal(QString signalName);
 private:
-    QString   name;         // name of the CPU's signal
-    size_t    width;        // the width after byte alignment
-    size_t    rawWidth;     // the original width without byte alignment
-    QBitArray bitVal;       // value of the signal
-    bool      isFlagged;
+    QString name;
+    QBitArray bitVal;
+    bool isFlagged;
 };
 
 inline CPUSignal::CPUSignal(QString signalName)
