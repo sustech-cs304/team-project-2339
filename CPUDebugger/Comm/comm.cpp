@@ -64,7 +64,7 @@ bool UartCommunicator::autoConnectCPU(double packetWaitingSeconds, double totWai
     for (const QSerialPortInfo &port : ports) {
         portFound = connectCPU(port.portName(), packetWaitingSeconds, totWaitingSeconds, pingNum);
         if(portFound)
-            return portFound;
+            return true;
     }
     return false;
 }
@@ -98,13 +98,11 @@ bool UartCommunicator::noResponseSend(const QByteArray &packet, double packetWai
 }
 
 bool UartCommunicator::sendPause(double packetWaitingSeconds, double totWaitingSeconds){
-    if (this->cpuPortName == nullptr) return false;
     const QByteArray PAUSE = QByteArray(1, 0x04);
     return this->noResponseSend(PAUSE, packetWaitingSeconds, totWaitingSeconds);
 }
 
 bool UartCommunicator::sendNext(double packetWaitingSeconds, double totWaitingSeconds){
-    if (this->cpuPortName == nullptr) return false;
     const QByteArray NEXT = QByteArray(1, 0x06);
     return this->noResponseSend(NEXT, packetWaitingSeconds, totWaitingSeconds);
 }

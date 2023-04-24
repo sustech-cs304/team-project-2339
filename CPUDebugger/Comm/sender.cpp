@@ -73,6 +73,7 @@ void SenderThread::run(){
                 emit timeout(tr("Wait read response timeout %1").arg(QTime::currentTime().toString()));
             }
         }
+        serial.close();
         mutex.lock();
         cond.wait(&mutex);
         if (currentPortName != portName) {
@@ -86,7 +87,6 @@ void SenderThread::run(){
         currentHasResponse = hasResponse;
         mutex.unlock();
     }
-    serial.close();
     quit();
 }
 
