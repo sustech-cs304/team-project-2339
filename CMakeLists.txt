@@ -3,18 +3,19 @@ project(team_2339)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(CDebuggerTest)
-include_directories(codes)
-include_directories(codes/CPU_Debugger)
-include_directories(codes/CPU_Debugger/Controllers)
-include_directories(codes/CPU_Debugger/Lib_Comm)
-include_directories(codes/CPU_Debugger/States)
-include_directories(codes/view)
+#include_directories(CDebuggerTest)
+#include_directories(codes)
+#include_directories(codes/CPU_Debugger)
+#include_directories(codes/CPU_Debugger/Controllers)
+#include_directories(codes/CPU_Debugger/Lib_Comm)
+#include_directories(codes/CPU_Debugger/States)
+#include_directories(codes/view)
 include_directories(CPUDebugger)
-include_directories(CPUDebugger/controller)
-include_directories(CPUDebugger/model)
-include_directories(CPUDebugger/model/compile)
-include_directories(CPUDebugger/uart)
+#include_directories(CPUDebugger/File)
+#include_directories(CPUDebugger/controller)
+#include_directories(CPUDebugger/model)
+#include_directories(CPUDebugger/model/compile)
+#include_directories(CPUDebugger/uart)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_PREFIX_PATH "/Applications/Qt/6.4.2/macos/lib/cmake")
@@ -47,9 +48,13 @@ add_executable(team_2339
 #        CPUDebugger/model/compile/global_compile.h
 #        CPUDebugger/model/compile/MAlex.cpp
 #        CPUDebugger/model/compile/MAlex.h
-#        CPUDebugger/model/ASMFile.cpp
-#        CPUDebugger/model/ASMFile.h
-#        CPUDebugger/model/FFile.cpp
+        CPUDebugger/File/AsmFile.h
+        CPUDebugger/File/AsmFile.cpp
+        CPUDebugger/File/DebugFile.h
+        CPUDebugger/File/DebugFile.cpp
+        CPUDebugger/File/CoeFile.h
+        CPUDebugger/File/CoeFile.cpp
+        #        CPUDebugger/model/FFile.cpp
 #        CPUDebugger/model/FFile.h
 #        CPUDebugger/model/FileInputFactory.cpp
 #        CPUDebugger/model/FileInputFactory.h
@@ -66,8 +71,8 @@ add_executable(team_2339
 #        CPUDebugger/uart/CoreGenerator.cpp
 #        CPUDebugger/uart/CoreGenerator.h
 #        CPUDebugger/main.cpp
-        CPUDebugger/uart/CoreGenerator.cpp
-        CPUDebugger/uart/CoreGenerator.h
+#        CPUDebugger/uart/CoreGenerator.cpp
+#        CPUDebugger/uart/CoreGenerator.h
         )
 
 target_link_libraries(team_2339 Qt6::Core)
