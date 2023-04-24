@@ -48,14 +48,12 @@ void SenderThread::run(){
     }
 
     while (!stopFlag) {
-        if (currentPortNameChanged) {
-            serial.close();
-            serial.setPortName(currentPortName);
-            serial.setBaudRate(currentBaudRate);
-            if (!serial.open(QIODevice::ReadWrite)) {
-                emit error(tr("Can't open %1, error code %2").arg(currentPortName).arg(serial.error()));
-                return;
-            }
+        mutex.lock();
+        serial.setPortName(currentPortName);
+        serial.setBaudRate(currentBaudRate);
+        if (!serial.open(QIODevice::ReadWrite)) {
+            emit error(tr("Can't open %1, error code %2").arg(currentPortName).arg(serial.error()));
+            return;
         }
 
         // Write request
@@ -75,14 +73,7 @@ void SenderThread::run(){
             }
         }
         serial.close();
-        mutex.lock();
         cond.wait(&mutex);
-        if (currentPortName != portName) {
-            currentPortName = portName;
-            currentPortNameChanged = true;
-        } else {
-            currentPortNameChanged = false;
-        }
         currentBaudRate = baudRate;
         currentWaitTimeout = waitTimeout;
         currentData = data;
