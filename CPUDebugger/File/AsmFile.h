@@ -11,38 +11,52 @@
 #define DATA_MEM_SIZE 0x3FFF
 #define TEXT_MEM_SIZE 0x3FFF
 
+#define BYTE_LEN 8
+#define WORD_LEN 32
+#define ADDR_LEN 20
+#define FUNC_LEN 6
+#define REG_LEN 5
+#define SHAMT_LEN 5
+#define IMME_LEN 16
+#define OFFS_LEN 26
+
 class AsmFile {
 public:
     explicit AsmFile(QFile &asmFile);
 
+    explicit AsmFile();
+
     ~AsmFile();
 
-    QString loadAsmFile(QFile &asmFile);
+    QString loadAsmFile(QFile &newAsmFile);
 
-    QString updateAsmFile(QString &asmString);
+    QByteArray updateAsmFile(QString &asmString);
 
     QByteArray getBin();
 
-    int getBinAddress(int asmLine);
+    int getPC(int asmLine);
+
+    int getAsmLine(int binLine);
 
 private:
-    QFile &asmFile;
+    QFile *asmFile{};
 
-    unsigned int       programCounter{};
+    unsigned int programCounter{};
+    int          asmLine{};
+
     QMap<QString, int> labelMap;
     QByteArray         bin;
-    QString            hexString;
 
-    QMap<int, int> asmToBinMap;
-    QList<int>     breakpoints;
+    QMap<int, unsigned int> asmToPCMap;
+    QMap<unsigned int, int> PCToAsmMap;
 
     enum OpType {
         O_Type, R_Type, I_Type, J_Type, P_Type
     };
 
-    QByteArray preprocess(QString &asmString);
+    void preprocess(QString &asmString);
 
-    void parseAsm(QString &asmString);
+    void parseAsm(QString asmString);
 
     static QByteArray asciiData(QString data, int *wordCnt);
 
@@ -52,11 +66,11 @@ private:
 
     static int getOpType(const QString &op);
 
-    void binAppend(int word);
+    void binAppend(uint32_t word);
 
-    static int zeroExtend(const QString &word);
+    static uint32_t zeroExtend(const QString &word, int length);
 
-    static int signExtend(const QString &word, int length);
+    static uint32_t signExtend(const QString &word, int length);
 
     void O_TypeProcess(QStringList::const_iterator &wordIter);
 

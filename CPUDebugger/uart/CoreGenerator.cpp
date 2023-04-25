@@ -156,6 +156,7 @@ bool generateCore(QFile &topFile,
         }
         out << line << "\n";
     }
+    coreTemplate.close();
     outputFile.close();
     // read all text from top module
     QString            topText   = topFile.readAll();

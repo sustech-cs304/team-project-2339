@@ -1,47 +1,85 @@
 #include <QDir>
 #include "AsmFile.h"
 
-AsmFile::AsmFile(QFile &asmFile) : asmFile(asmFile) {
-    if (!asmFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
-        qDebug("Asm file not found\n");
-    }
-    // generate the input streams
-    QTextStream in(&asmFile);
-    QString     file = in.readAll();
-    // get binary and asm -> bin map
-    parseAsm(file);
+AsmFile::AsmFile(QFile &asmFile) : asmFile(&asmFile) {
+    loadAsmFile(asmFile);
 }
+
+AsmFile::AsmFile() = default;
 
 AsmFile::~AsmFile() = default;
 
-void AsmFile::parseAsm(QString &asmString) {
+QString AsmFile::loadAsmFile(QFile &newAsmFile) {
+    if (!newAsmFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qDebug("Asm file not found\n");
+    }
+    asmFile                  = &newAsmFile;
+    // generate the input streams
+    QTextStream in(&newAsmFile);
+    QString     fileContents = in.readAll();
+    // close the file
+    newAsmFile.close();
+    // get binary and asm -> bin map
+    parseAsm(fileContents);
+    return fileContents;
+}
+
+QByteArray AsmFile::updateAsmFile(QString &asmString) {
+    if (!asmFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+        qDebug("Not able to find Asm file\n");
+    }
+    // generate output streams
+    QTextStream out(asmFile);
+    out << asmString;
+    // close the file
+    asmFile->close();
+    // get binary and asm -> bin map
+    parseAsm(asmString);
+    return bin;
+}
+
+QByteArray AsmFile::getBin() {
+    return bin;
+}
+
+int AsmFile::getPC(int asmLine) {
+    return asmToPCMap.value(asmLine);
+}
+
+int AsmFile::getAsmLine(int PC) {
+    return PCToAsmMap.value(PC);
+}
+
+void AsmFile::parseAsm(QString asmString) {
     programCounter = 0;
     bin.clear();
     labelMap.clear();
 
-    QByteArray data = preprocess(asmString);
+    preprocess(asmString);
+
+    // cache the .data section
+    QByteArray data = bin;
+    bin.clear();
 
     QStringList                 instructions = asmString.split(QRegularExpression("[ ,:;\n\t]"),
                                                                Qt::SkipEmptyParts);
     QStringList::const_iterator instruction  = instructions.constBegin();
 
+    asmLine = 0;
+
     while ((++instruction) != instructions.constEnd()) {
         switch (getOpType(*instruction)) {
             case O_Type:
                 O_TypeProcess(instruction);
-                programCounter += 4;
                 break;
             case R_Type:
                 R_TypeProcess(instruction);
-                programCounter += 4;
                 break;
             case I_Type:
                 I_TypeProcess(instruction);
-                programCounter += 4;
                 break;
             case J_Type:
                 J_TypeProcess(instruction);
-                programCounter += 4;
                 break;
             case P_Type:
                 P_TypeProcess(instruction);
@@ -49,21 +87,34 @@ void AsmFile::parseAsm(QString &asmString) {
             default:
                 break;
         }
-    }
-    qDebug() << bin.toHex();
-    qDebug() << data.toHex();
 
+        PCToAsmMap.insert(programCounter, asmLine);
+        asmToPCMap.insert(asmLine, programCounter);
+
+        programCounter += 4;
+        ++asmLine;
+    }
+
+    // pad the .text section with 0s for a total of 64KB (14-bit address width)
     bin = bin.append(TEXT_MEM_SIZE - bin.length(), '\x00').append(data);
 
+    qDebug() << bin.toHex();
 }
 
-QByteArray AsmFile::preprocess(QString &asmString) {
+void printByte(char byte) {
+    QString  result;
+    for (int i = 7; i >= 0; --i) {
+        result.append(QString::number((byte >> i) & 1));
+    }
+    qDebug("0b%s", qPrintable(result));
+}
+
+void AsmFile::preprocess(QString &asmString) {
     // remove comments
     asmString.replace(QRegularExpression("#[^\n]*"), "");
 
-    int        asmLine;
-    bool       dataSection = true;
-    QByteArray dataBytes;
+    int  asmLine;
+    bool dataSection = true;
 
     QStringList                 words    = asmString.prepend("prefix ")
                                                     .split(QRegularExpression("[ ,;\n\t]"),
@@ -80,7 +131,7 @@ QByteArray AsmFile::preprocess(QString &asmString) {
             dataSection = false;
             asmLine     = 0;
             // pad the data section with 0s
-            dataBytes.append(DATA_MEM_SIZE - dataBytes.length(), '\x00');
+            bin.append(DATA_MEM_SIZE - bin.length(), '\x00');
         } else if (dataSection) {
             // insert into data section
             if (wordIter->endsWith(":")) {
@@ -88,13 +139,13 @@ QByteArray AsmFile::preprocess(QString &asmString) {
                 wordIter++;
                 if (*wordIter == ".asciiz") {
                     ++wordIter;
-                    // get ascii bytes
-                    dataBytes.append(asciiData(*wordIter, &asmLine));
+                    // append all ascii bytes with byte array
+                    bin.append(asciiData(*wordIter, &asmLine));
                 } else if (*wordIter == ".word") {
                     while ((++wordIter) != words.constEnd()) {
                         if (wordIter->left(1) <= "9" && wordIter->left(1) >= "0") {
                             // append value of the current word
-                            binAppend(zeroExtend(*wordIter));
+                            binAppend(zeroExtend(*wordIter, WORD_LEN));
                             ++asmLine;
                         } else {
                             // rollback as the iterator will be incremented later
@@ -113,11 +164,8 @@ QByteArray AsmFile::preprocess(QString &asmString) {
             else if (wordIter->right(1) == ":")
                 labelMap.insert(wordIter->chopped(1), asmLine * 4);
         }
-
-        qDebug() << *wordIter << dataSection << asmLine << Qt::endl;
+//        qDebug() << *wordIter << dataSection << asmLine;
     }
-
-    return dataBytes;
 }
 
 QByteArray AsmFile::asciiData(QString data, int *wordCnt) {
@@ -156,24 +204,26 @@ QByteArray AsmFile::asciiData(QString data, int *wordCnt) {
     return ascii;
 }
 
-void AsmFile::binAppend(int word) {
+void AsmFile::binAppend(uint32_t word) {
     bin.append(reinterpret_cast<const char *>(&word), 4);
 }
 
-int AsmFile::zeroExtend(const QString &word) {
-    static bool ok;
-    static int  mask = (1 << word.length()) - 1;
-    return word.toUInt(&ok, 2 < word.length()
-                            && (word.left(2) == "0x" || word.left(2) == "0X")
-                            ? 16 : 10) & mask;
+uint32_t AsmFile::zeroExtend(const QString &word, int length) {
+    static bool     valid;
+    static uint64_t mask = ((uint64_t) 1 << length) - 1;
+
+    return word.toUInt(&valid, 2 < word.length()
+                               && (word.left(2) == "0x" || word.left(2) == "0X")
+                               ? 16 : 10) & mask;
 }
 
-int AsmFile::signExtend(const QString &word, int length) {
-    static bool ok;
-    static int  mask = (1 << length) - 1;
-    return word.toUInt(&ok, 2 < word.length()
-                            && (word.left(2) == "0x" || word.left(2) == "0X")
-                            ? 16 : 10) & mask;
+uint32_t AsmFile::signExtend(const QString &word, int length) {
+    static bool     valid;
+    static uint64_t mask = (1 << length) - 1;
+
+    return word.toInt(&valid, 2 < word.length()
+                              && (word.left(2) == "0x" || word.left(2) == "0X")
+                              ? 16 : 10) & mask;
 }
 
 int AsmFile::getOpType(const QString &op) {
@@ -210,10 +260,12 @@ void AsmFile::O_TypeProcess(QStringList::const_iterator &instruction) {
     else if (*instruction == "syscall")
         bin.append(reinterpret_cast<char *>(syscall), 4);
     else if (*instruction == "break") {
-        int address = zeroExtend(*(++instruction));
-        address = (address << 6) | 0b001101;
+        int address = zeroExtend(*(++instruction), ADDR_LEN);
+        address = (address << FUNC_LEN) | 0b001101;
         bin.append(reinterpret_cast<char *>(address), 4);
     }
+
+    qDebug() << "O_Type: " << bin.right(4).toHex();
 }
 
 void AsmFile::R_TypeProcess(QStringList::const_iterator &instruction) {
@@ -283,7 +335,7 @@ void AsmFile::R_TypeProcess(QStringList::const_iterator &instruction) {
         dReg = getRegCode(*(++instruction));
         tReg = getRegCode(*(++instruction));
 
-        shAmt = zeroExtend(*(++instruction));
+        shAmt = zeroExtend(*(++instruction), SHAMT_LEN);
 
         if (op == "sll") func = 0b000000;
         else if (op == "sra") func = 0b000011;
@@ -314,18 +366,20 @@ void AsmFile::R_TypeProcess(QStringList::const_iterator &instruction) {
     } else return;
 
     word = opCode;
-    word = (word << 5) | sReg;
-    word = (word << 5) | tReg;
-    word = (word << 5) | dReg;
-    word = (word << 5) | shAmt;
-    word = (word << 6) | func;
+    word = (word << REG_LEN) | sReg;
+    word = (word << REG_LEN) | tReg;
+    word = (word << REG_LEN) | dReg;
+    word = (word << SHAMT_LEN) | shAmt;
+    word = (word << FUNC_LEN) | func;
 
     binAppend(word);
+
+    qDebug() << "R_Type: " << bin.right(4).toHex();
 }
 
 void AsmFile::I_TypeProcess(QStringList::const_iterator &instruction) {
-    int     opCode = 0b000000, sReg, tReg = 0b00000, imme, word;
-    QString op     = *instruction;
+    int          opCode = 0b000000, sReg, tReg = 0b00000, imme, word;
+    QString      op     = *instruction;
     unsigned int addr;
 
     // format: op rs rt imme
@@ -348,9 +402,9 @@ void AsmFile::I_TypeProcess(QStringList::const_iterator &instruction) {
         sReg = getRegCode(*(++instruction));
 
         if (op == "addi" || op == "slti" || op == "sltiu" || op == "addiu")
-            imme = signExtend(*(++instruction), 16);
+            imme = signExtend(*(++instruction), IMME_LEN);
         else
-            imme = zeroExtend(*(++instruction));
+            imme = zeroExtend(*(++instruction), IMME_LEN);
 
         if (op == "addi") opCode = 0b001000;
         else if (op == "addiu") opCode = 0b001001;
@@ -417,14 +471,16 @@ void AsmFile::I_TypeProcess(QStringList::const_iterator &instruction) {
             opCode = 0b000001;
             tReg   = 0b00000;
         }
-    }  else return;
+    } else return;
 
     word = opCode;
-    word = (word << 5) | sReg;
-    word = (word << 5) | tReg;
-    word = (word << 16) | imme;
+    word = (word << REG_LEN) | sReg;
+    word = (word << REG_LEN) | tReg;
+    word = (word << IMME_LEN) | imme;
 
     binAppend(word);
+
+    qDebug() << "I_Type: " << bin.right(4).toHex();
 }
 
 void AsmFile::J_TypeProcess(QStringList::const_iterator &instruction) {
@@ -438,9 +494,11 @@ void AsmFile::J_TypeProcess(QStringList::const_iterator &instruction) {
     offset = signExtend(QString::number(addr), 26);
 
     word = opCode;
-    word = (word << 26) | offset;
+    word = (word << OFFS_LEN) | offset;
 
     binAppend(word);
+
+    qDebug() << "J_Type: " << bin.right(4).toHex();
 }
 
 void AsmFile::P_TypeProcess(QStringList::const_iterator &instruction) {
@@ -461,34 +519,36 @@ void AsmFile::P_TypeProcess(QStringList::const_iterator &instruction) {
         sReg = 0b00000; // instruction 1
 
         word = opCode; // instruction 1
-        word = (word << 5) | sReg; // instruction 1
-        word = (word << 5) | tReg; // instruction 1
+        word = (word << REG_LEN) | sReg; // instruction 1
+        word = (word << REG_LEN) | tReg; // instruction 1
 
         tReg = getRegCode(*(++instruction)); // instruction 2
 
         addr = labelMap.value(*(++instruction)); // instruction 1 and 2
 
-        imme = zeroExtend(QString::number(addr >> 16)); // instruction 1
+        imme = zeroExtend(QString::number(addr >> 16), IMME_LEN); // instruction 1
 
-        word = (word << 16) | imme; // instruction 1
+        word = (word << IMME_LEN) | imme; // instruction 1
 
         binAppend(word); // instruction 1
+        PCToAsmMap.insert(programCounter, asmLine);
         programCounter += 4;
 
         opCode = 0b001101; // instruction 2
         sReg   = 0b00001; // instruction 2
 
-        addr = addr & ((1 << 16) - 1); // instruction 2
+        addr = addr & ((1 << IMME_LEN) - 1); // instruction 2
 
-        imme = zeroExtend(QString::number(addr)); // instruction 2
+        imme = zeroExtend(QString::number(addr), IMME_LEN); // instruction 2
 
         word = opCode; // instruction 2
-        word = (word << 5) | sReg; // instruction 2
-        word = (word << 5) | tReg; // instruction 2
-        word = (word << 16) | imme; // instruction 2
+        word = (word << REG_LEN) | sReg; // instruction 2
+        word = (word << REG_LEN) | tReg; // instruction 2
+        word = (word << IMME_LEN) | imme; // instruction 2
 
         binAppend(word); // instruction 2
-        programCounter += 4;
+
+        qDebug() << "P_Type: " << bin.right(8).toHex();
     } else if (op == "move") {
         opCode = 0b000000;
 
@@ -501,14 +561,15 @@ void AsmFile::P_TypeProcess(QStringList::const_iterator &instruction) {
         func = 0b100101;
 
         word = opCode;
-        word = (word << 5) | sReg;
-        word = (word << 5) | tReg;
-        word = (word << 5) | dReg;
-        word = (word << 5) | shAmt;
-        word = (word << 6) | func;
+        word = (word << REG_LEN) | sReg;
+        word = (word << REG_LEN) | tReg;
+        word = (word << REG_LEN) | dReg;
+        word = (word << SHAMT_LEN) | shAmt;
+        word = (word << FUNC_LEN) | func;
 
         binAppend(word);
-        programCounter += 4;
+
+        qDebug() << "P_Type: " << bin.right(4).toHex();
     } else if (op == "li") {
         // format: li $rt imme
         // expand: (1) lui $at imme[high]
@@ -519,30 +580,32 @@ void AsmFile::P_TypeProcess(QStringList::const_iterator &instruction) {
         tReg   = 0b00001;  // (1)
 
         word = opCode;             // (1)
-        word = (word << 5) | sReg; // (1)
-        word = (word << 5) | tReg; // (1)
+        word = (word << REG_LEN) | sReg; // (1)
+        word = (word << REG_LEN) | tReg; // (1)
 
         tReg = getRegCode(*(++instruction)); // (2)
 
-        addr = zeroExtend(*(++instruction)); // (1) and (2)
-        imme = addr >> 16; // (1)
+        addr = zeroExtend(*(++instruction), IMME_LEN); // (1) and (2)
+        imme = addr >> IMME_LEN; // (1)
 
-        word = (word << 16) | imme; // (1)
+        word = (word << IMME_LEN) | imme; // (1)
 
         binAppend(word); // (1)
+        PCToAsmMap.insert(programCounter, asmLine);
         programCounter += 4;
 
         opCode = 0b001101;                // (2)
         sReg   = 0b00001;                 // (2)
-        imme   = addr & ((1 << 16) - 1);  // (2)
+        imme   = addr & ((1 << IMME_LEN) - 1);  // (2)
 
         word = opCode;              // (2)
-        word = (word << 5) | sReg;  // (2)
-        word = (word << 5) | tReg;  // (2)
-        word = (word << 16) | imme; // (2)
+        word = (word << REG_LEN) | sReg;  // (2)
+        word = (word << REG_LEN) | tReg;  // (2)
+        word = (word << IMME_LEN) | imme; // (2)
 
         binAppend(word);
-        programCounter += 4;
+
+        qDebug() << "P_Type: " << bin.right(8).toHex();
     }
 }
 
@@ -608,11 +671,11 @@ void AsmFile::pseudoCompare(QStringList::const_iterator &instruction) {
     func  = 0b101010;
 
     word = opCode;
-    word = (word << 5) | sReg;
-    word = (word << 5) | tReg;
-    word = (word << 5) | dReg;
-    word = (word << 5) | shAmt;
-    word = (word << 6) | func;
+    word = (word << REG_LEN) | sReg;
+    word = (word << REG_LEN) | tReg;
+    word = (word << REG_LEN) | dReg;
+    word = (word << SHAMT_LEN) | shAmt;
+    word = (word << FUNC_LEN) | func;
 
     binAppend(word);
     programCounter += 4;
@@ -634,9 +697,9 @@ void AsmFile::pseudoCompare(QStringList::const_iterator &instruction) {
     imme = signExtend(QString::number(addr), 16);
 
     word = opCode;
-    word = (word << 5) | sReg;
-    word = (word << 5) | tReg;
-    word = (word << 16) | imme;
+    word = (word << REG_LEN) | sReg;
+    word = (word << REG_LEN) | tReg;
+    word = (word << IMME_LEN) | imme;
 
     binAppend(word);
     programCounter += 4;
