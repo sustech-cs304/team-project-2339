@@ -1,6 +1,5 @@
 release/FileInputFactory.o
 release/FileStore.o
-release/FileUtil.o
 release/TopVFileInputFactory.o
 release/CompileFactory.o
 release/MAlex.o

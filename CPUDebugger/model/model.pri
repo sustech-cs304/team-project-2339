@@ -19,7 +19,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/FileInputFactory.cpp \
     $$PWD/FileStore.cpp \
-    $$PWD/FileUtil.cpp \
     $$PWD/TopVFileInputFactory.cpp \
     $$PWD/compile/CompileFactory.cpp \
     $$PWD/compile/MAlex.cpp \
