@@ -4,9 +4,9 @@
 #include <QScreen>
 #include "myobject1.h"
 #include "Comm/comm.h"
-int main(int argc, char *argv[])
-{
-    UartCommunicator* communicator = new UartCommunicator();
+
+int main(int argc, char *argv[]) {
+    UartCommunicator *communicator = new UartCommunicator();
     qDebug() << communicator->autoConnectCPU();
 //    qDebug() << communicator->sendPause();
     qDebug() << communicator->sendNext();
@@ -17,16 +17,16 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    QQmlContext* context = engine.rootContext();
+    QQmlContext *context = engine.rootContext();
 //    QScreen *screen = QGuiApplication::primaryScreen();
 //    context->setContextProperty("MyObject1",MyObject1::getInstance());
-    qmlRegisterType<MyObject1>("MyObj",1,0,"MyObject1");
+    qmlRegisterType<MyObject1>("MyObj", 1, 0, "MyObject1");
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
+                if (!obj && url == objUrl)
+                    QCoreApplication::exit(-1);
+            }, Qt::QueuedConnection);
 
 
     engine.load(url);
