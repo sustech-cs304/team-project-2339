@@ -73,6 +73,10 @@ model::~model()
 
 void model::test_preprocess()
 {
+    Compiler c;
+    QString s = QString::fromStdString(c.infixToPostfix("32 - 6 - ( 3 * 5 ) - 1"));
+    qDebug() << s;
+    qDebug() << c.evaluatePostfix(s);
     QDir dir(destPath);
     if (!dir.exists()) {
         bool ismkdir = dir.mkpath(destPath);
@@ -90,24 +94,27 @@ void model::test_preprocess()
     }
     for (QString entryPath: entries) {
         QFileInfo info(entryPath);
-        p->replace(entryPath, destPath+info.fileName());
+        if (!info.fileName().compare("top.v"))
+            p->replace(entryPath, destPath+"ddd/"+info.fileName(), false);
+        else
+            p->replace(entryPath, destPath+"ddd/"+info.fileName(), true);
     }
 }
 
 void model::test_case2()
 {
-    QSKIP("Skip this case now");
-    QString path = "E:/DebugCore/module_files/definitions.v";
-    QString path1 = "E:/DebugCore/module_files/top.v";
-    QString dest = "E:/dest.v";
-    std::cout << QDir::currentPath().toStdString() << std::endl;
-    PreProcessor *p = new PreProcessor();
-    p->process(path);
-    p->replace(path1, dest);
+    SampleParser parser;
+    qDebug() << std::filesystem::current_path();
+    QStringList entries = FileUtil::getDirList(destPath+"/pre");
+    for (const QString &entry: entries) {
+        qDebug() << entry;
+        parser.read(entry.toStdString());
+    }
 }
 
 void model::test_case3()
 {
+    QSKIP("Skip this case now");
     QString absolutePath = "file:///E:/zlib1213.zip";
     QString TMP = "tmp/";
     QString cleanPath = QUrl(absolutePath).toLocalFile();
@@ -133,13 +140,6 @@ void model::test_case3()
 
 void model::test_case4()
 {
-    SampleParser parser;
-    qDebug() << std::filesystem::current_path();
-    QStringList entries = FileUtil::getDirList(destPath+"/pre");
-    for (const QString &entry: entries) {
-        qDebug() << entry;
-        parser.read(entry.toStdString());
-    }
 }
 
 QTEST_APPLESS_MAIN(model)

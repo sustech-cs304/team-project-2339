@@ -20,13 +20,11 @@ MAlex::MAlex()
 void MAlex::read_line(Line line)
 {
     line = pre_check(line);
-//    std::cout << line.toStdString() << std::endl;
     QString s;
 
     for (QChar c: qAsConst(line)) {
         if (is_alpha(c) || is_number(c) || c == '_' || c == '\'') {
             s.append(c);
-//            std::cout << s.toStdString() << " ";
             continue;
         } else {
             if (!s.isEmpty()) {
@@ -41,7 +39,6 @@ void MAlex::read_line(Line line)
                     logger.info("%s", s.toStdString().c_str());
                 }
                 s.clear();
-//                std::cout << std::endl;
             }
         }
         if (is_range(c)) {
