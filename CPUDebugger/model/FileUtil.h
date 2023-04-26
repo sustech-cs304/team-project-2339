@@ -2,6 +2,7 @@
 #ifndef FILEUTIL_H
 #define FILEUTIL_H
 
+#include "compile/MAlex.h"
 #include "qurl.h"
 #include <QDebug>
 #include <QDir>
@@ -11,10 +12,10 @@
 class FileUtil
 {
 public:
-    FileUtil();
     static QStringList getTextStreams(QFile *f);
     static void exportFile(QString path, QString ss);
     static void exportFile(QString path, QStringList lines);
+    static void exportFile(QString path, QList<Token> tokens);
     static void exportFile(QString dirPath, QString filename, QStringList lines);
     static QFile* importFile(QString path, bool isUrl=false);
     static QStringList getDirList(QString dirPath, QString filter="v");
@@ -51,6 +52,23 @@ inline void FileUtil::exportFile(QString path, QStringList lines)
         out.flush();
     }
     f.close();
+}
+
+inline void FileUtil::exportFile(QString path, QList<Token> tokens)
+{
+    QStringList lines;
+    QString s;
+    for (Token &t: tokens) {
+        s.append(t.s+' ');
+        if (t.s == ';' || t.s == ',') {
+            lines.append(s);
+            s.clear();
+        }
+    }
+    if (!s.isEmpty()) {
+        lines.append(s);
+    }
+    exportFile(path, lines);
 }
 
 inline void FileUtil::exportFile(QString dirPath, QString filename, QStringList lines)
