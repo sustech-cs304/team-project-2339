@@ -9,4 +9,6 @@ release/global_compile.o
 release/FileController.o
 release/lex.yy.o
 release/verilog_parser.tab.o
+release/tst_compile.o
+release/tst_main.o
 release/tst_model.o
