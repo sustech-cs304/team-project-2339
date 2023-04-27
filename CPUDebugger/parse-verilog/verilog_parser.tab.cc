@@ -1134,19 +1134,19 @@ namespace verilog {
           switch (yyn)
             {
   case 2: // valid_name: NAME
-#line 95 "verilog_parser.yy"
+#line 97 "verilog_parser.yy"
          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
 #line 1140 "verilog_parser.tab.cc"
     break;
 
   case 3: // valid_name: ESCAPED_NAME
-#line 96 "verilog_parser.yy"
+#line 98 "verilog_parser.yy"
                  { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
 #line 1146 "verilog_parser.tab.cc"
     break;
 
   case 7: // $@1: %empty
-#line 109 "verilog_parser.yy"
+#line 111 "verilog_parser.yy"
     { 
       driver->add_module(std::move(yystack_[1].value.as < std::string > ()));
     }
@@ -1154,7 +1154,7 @@ namespace verilog {
     break;
 
   case 9: // $@2: %empty
-#line 114 "verilog_parser.yy"
+#line 116 "verilog_parser.yy"
     {
       driver->add_module(std::move(yystack_[3].value.as < std::string > ()));
     }
@@ -1162,7 +1162,7 @@ namespace verilog {
     break;
 
   case 11: // $@3: %empty
-#line 119 "verilog_parser.yy"
+#line 121 "verilog_parser.yy"
     {
       driver->add_module(std::move(yystack_[4].value.as < std::string > ()));
     }
@@ -1170,7 +1170,7 @@ namespace verilog {
     break;
 
   case 13: // $@4: %empty
-#line 124 "verilog_parser.yy"
+#line 126 "verilog_parser.yy"
     { 
       driver->add_module(std::move(yystack_[1].value.as < std::string > ())); 
     }
@@ -1178,7 +1178,7 @@ namespace verilog {
     break;
 
   case 14: // $@5: %empty
-#line 128 "verilog_parser.yy"
+#line 130 "verilog_parser.yy"
     { 
       driver->add_port(std::move(yystack_[1].value.as < verilog::Port > ())); 
     }
@@ -1186,61 +1186,61 @@ namespace verilog {
     break;
 
   case 16: // port_names: valid_name
-#line 136 "verilog_parser.yy"
+#line 138 "verilog_parser.yy"
                { }
 #line 1192 "verilog_parser.tab.cc"
     break;
 
   case 17: // port_names: port_names ',' valid_name
-#line 137 "verilog_parser.yy"
+#line 139 "verilog_parser.yy"
                                { }
 #line 1198 "verilog_parser.tab.cc"
     break;
 
   case 18: // port_type: INPUT
-#line 142 "verilog_parser.yy"
+#line 144 "verilog_parser.yy"
                { yylhs.value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > () = std::make_pair(verilog::PortDirection::INPUT, verilog::ConnectionType::NONE); }
 #line 1204 "verilog_parser.tab.cc"
     break;
 
   case 19: // port_type: INPUT WIRE
-#line 143 "verilog_parser.yy"
+#line 145 "verilog_parser.yy"
                { yylhs.value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > () = std::make_pair(verilog::PortDirection::INPUT, verilog::ConnectionType::WIRE); }
 #line 1210 "verilog_parser.tab.cc"
     break;
 
   case 20: // port_type: OUTPUT
-#line 144 "verilog_parser.yy"
+#line 146 "verilog_parser.yy"
                { yylhs.value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > () = std::make_pair(verilog::PortDirection::OUTPUT,verilog::ConnectionType::NONE); }
 #line 1216 "verilog_parser.tab.cc"
     break;
 
   case 21: // port_type: OUTPUT REG
-#line 145 "verilog_parser.yy"
+#line 147 "verilog_parser.yy"
                { yylhs.value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > () = std::make_pair(verilog::PortDirection::OUTPUT,verilog::ConnectionType::REG);  }
 #line 1222 "verilog_parser.tab.cc"
     break;
 
   case 22: // port_type: INOUT
-#line 146 "verilog_parser.yy"
+#line 148 "verilog_parser.yy"
                { yylhs.value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > () = std::make_pair(verilog::PortDirection::INOUT, verilog::ConnectionType::NONE); }
 #line 1228 "verilog_parser.tab.cc"
     break;
 
   case 23: // port_type: INOUT WIRE
-#line 147 "verilog_parser.yy"
+#line 149 "verilog_parser.yy"
                { yylhs.value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > () = std::make_pair(verilog::PortDirection::INOUT, verilog::ConnectionType::WIRE); }
 #line 1234 "verilog_parser.tab.cc"
     break;
 
   case 24: // port_type: INOUT REG
-#line 148 "verilog_parser.yy"
+#line 150 "verilog_parser.yy"
                { yylhs.value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > () = std::make_pair(verilog::PortDirection::INOUT, verilog::ConnectionType::REG);  }
 #line 1240 "verilog_parser.tab.cc"
     break;
 
   case 25: // port_declarations: port_decl
-#line 154 "verilog_parser.yy"
+#line 156 "verilog_parser.yy"
     {
       yylhs.value.as < verilog::Port > () = yystack_[0].value.as < verilog::Port > ();
     }
@@ -1248,7 +1248,7 @@ namespace verilog {
     break;
 
   case 26: // port_declarations: port_declarations ',' port_decl
-#line 158 "verilog_parser.yy"
+#line 160 "verilog_parser.yy"
     {
       driver->add_port(std::move(yystack_[2].value.as < verilog::Port > ()));
       yylhs.value.as < verilog::Port > () = yystack_[0].value.as < verilog::Port > ();
@@ -1257,7 +1257,7 @@ namespace verilog {
     break;
 
   case 27: // port_declarations: port_declarations ',' valid_name
-#line 163 "verilog_parser.yy"
+#line 165 "verilog_parser.yy"
     {
       yystack_[2].value.as < verilog::Port > ().names.emplace_back(std::move(yystack_[0].value.as < std::string > ()));    
       yylhs.value.as < verilog::Port > () = yystack_[2].value.as < verilog::Port > ();
@@ -1266,7 +1266,7 @@ namespace verilog {
     break;
 
   case 28: // port_decl: port_type valid_name
-#line 171 "verilog_parser.yy"
+#line 173 "verilog_parser.yy"
     {
       yylhs.value.as < verilog::Port > ().dir  = std::get<0>(yystack_[1].value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > ());
       yylhs.value.as < verilog::Port > ().type = std::get<1>(yystack_[1].value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > ());
@@ -1276,7 +1276,7 @@ namespace verilog {
     break;
 
   case 29: // port_decl: port_type '[' INTEGER ':' INTEGER ']' valid_name
-#line 177 "verilog_parser.yy"
+#line 179 "verilog_parser.yy"
     {
       yylhs.value.as < verilog::Port > ().dir  = std::get<0>(yystack_[6].value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > ());
       yylhs.value.as < verilog::Port > ().type = std::get<1>(yystack_[6].value.as < std::pair<verilog::PortDirection, verilog::ConnectionType> > ());
@@ -1288,19 +1288,19 @@ namespace verilog {
     break;
 
   case 35: // declaration: port_decl_statements ';'
-#line 199 "verilog_parser.yy"
+#line 201 "verilog_parser.yy"
                              { driver->add_port(std::move(yystack_[1].value.as < verilog::Port > ())); }
 #line 1294 "verilog_parser.tab.cc"
     break;
 
   case 36: // declaration: net_decl_statements ';'
-#line 200 "verilog_parser.yy"
+#line 202 "verilog_parser.yy"
                              { driver->add_net(std::move(yystack_[1].value.as < verilog::Net > ())); }
 #line 1300 "verilog_parser.tab.cc"
     break;
 
   case 37: // port_decl_statements: port_decl
-#line 206 "verilog_parser.yy"
+#line 208 "verilog_parser.yy"
     {
       yylhs.value.as < verilog::Port > () = yystack_[0].value.as < verilog::Port > ();
     }
@@ -1308,7 +1308,7 @@ namespace verilog {
     break;
 
   case 38: // port_decl_statements: port_decl_statements ',' valid_name
-#line 210 "verilog_parser.yy"
+#line 212 "verilog_parser.yy"
     {
       yystack_[2].value.as < verilog::Port > ().names.emplace_back(std::move(yystack_[0].value.as < std::string > ()));    
       yylhs.value.as < verilog::Port > () = yystack_[2].value.as < verilog::Port > ();
@@ -1317,55 +1317,55 @@ namespace verilog {
     break;
 
   case 39: // net_type: WIRE
-#line 218 "verilog_parser.yy"
+#line 220 "verilog_parser.yy"
              { yylhs.value.as < verilog::NetType > () = verilog::NetType::WIRE;    }
 #line 1323 "verilog_parser.tab.cc"
     break;
 
   case 40: // net_type: WAND
-#line 219 "verilog_parser.yy"
+#line 221 "verilog_parser.yy"
              { yylhs.value.as < verilog::NetType > () = verilog::NetType::WAND;    }
 #line 1329 "verilog_parser.tab.cc"
     break;
 
   case 41: // net_type: WOR
-#line 220 "verilog_parser.yy"
+#line 222 "verilog_parser.yy"
              { yylhs.value.as < verilog::NetType > () = verilog::NetType::WOR;     }
 #line 1335 "verilog_parser.tab.cc"
     break;
 
   case 42: // net_type: TRI
-#line 221 "verilog_parser.yy"
+#line 223 "verilog_parser.yy"
              { yylhs.value.as < verilog::NetType > () = verilog::NetType::TRI;     }
 #line 1341 "verilog_parser.tab.cc"
     break;
 
   case 43: // net_type: TRIOR
-#line 222 "verilog_parser.yy"
+#line 224 "verilog_parser.yy"
              { yylhs.value.as < verilog::NetType > () = verilog::NetType::TRIOR;   }
 #line 1347 "verilog_parser.tab.cc"
     break;
 
   case 44: // net_type: TRIAND
-#line 223 "verilog_parser.yy"
+#line 225 "verilog_parser.yy"
              { yylhs.value.as < verilog::NetType > () = verilog::NetType::TRIAND;  }
 #line 1353 "verilog_parser.tab.cc"
     break;
 
   case 45: // net_type: SUPPLY0
-#line 224 "verilog_parser.yy"
+#line 226 "verilog_parser.yy"
              { yylhs.value.as < verilog::NetType > () = verilog::NetType::SUPPLY0; }
 #line 1359 "verilog_parser.tab.cc"
     break;
 
   case 46: // net_type: SUPPLY1
-#line 225 "verilog_parser.yy"
+#line 227 "verilog_parser.yy"
              { yylhs.value.as < verilog::NetType > () = verilog::NetType::SUPPLY1; }
 #line 1365 "verilog_parser.tab.cc"
     break;
 
   case 47: // net_decl_statements: net_decl
-#line 230 "verilog_parser.yy"
+#line 232 "verilog_parser.yy"
     {
       yylhs.value.as < verilog::Net > () = yystack_[0].value.as < verilog::Net > ();
     }
@@ -1373,7 +1373,7 @@ namespace verilog {
     break;
 
   case 48: // net_decl_statements: net_decl_statements ',' valid_name
-#line 234 "verilog_parser.yy"
+#line 236 "verilog_parser.yy"
     {
       yystack_[2].value.as < verilog::Net > ().names.push_back(std::move(yystack_[0].value.as < std::string > ()));
       yylhs.value.as < verilog::Net > () = yystack_[2].value.as < verilog::Net > ();
@@ -1382,7 +1382,7 @@ namespace verilog {
     break;
 
   case 49: // net_decl: net_type valid_name
-#line 242 "verilog_parser.yy"
+#line 244 "verilog_parser.yy"
     {
       yylhs.value.as < verilog::Net > ().type = yystack_[1].value.as < verilog::NetType > ();
       yylhs.value.as < verilog::Net > ().names.push_back(std::move(yystack_[0].value.as < std::string > ())); 
@@ -1391,7 +1391,7 @@ namespace verilog {
     break;
 
   case 50: // net_decl: net_type '[' INTEGER ':' INTEGER ']' valid_name
-#line 247 "verilog_parser.yy"
+#line 249 "verilog_parser.yy"
     {
       yylhs.value.as < verilog::Net > ().type = yystack_[6].value.as < verilog::NetType > ();
       yylhs.value.as < verilog::Net > ().beg = std::stoi(yystack_[4].value.as < verilog::Constant > ().value);
@@ -1402,49 +1402,49 @@ namespace verilog {
     break;
 
   case 54: // assignment: lhs '=' rhs
-#line 265 "verilog_parser.yy"
+#line 267 "verilog_parser.yy"
                 { yylhs.value.as < verilog::Assignment > ().lhs = yystack_[2].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > (); yylhs.value.as < verilog::Assignment > ().rhs = yystack_[0].value.as < std::vector<verilog::NetConcat> > (); driver->add_assignment(std::move(yylhs.value.as < verilog::Assignment > ())); }
 #line 1408 "verilog_parser.tab.cc"
     break;
 
   case 55: // lhs: valid_name
-#line 271 "verilog_parser.yy"
+#line 273 "verilog_parser.yy"
                { yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().push_back(std::move(yystack_[0].value.as < std::string > ())); }
 #line 1414 "verilog_parser.tab.cc"
     break;
 
   case 56: // lhs: valid_name '[' INTEGER ']'
-#line 273 "verilog_parser.yy"
+#line 275 "verilog_parser.yy"
     { yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().emplace_back(verilog::NetBit(std::move(yystack_[3].value.as < std::string > ()), std::stoi(yystack_[1].value.as < verilog::Constant > ().value))); }
 #line 1420 "verilog_parser.tab.cc"
     break;
 
   case 57: // lhs: valid_name '[' INTEGER ':' INTEGER ']'
-#line 275 "verilog_parser.yy"
+#line 277 "verilog_parser.yy"
     { yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().emplace_back(verilog::NetRange(std::move(yystack_[5].value.as < std::string > ()), std::stoi(yystack_[3].value.as < verilog::Constant > ().value), std::stoi(yystack_[1].value.as < verilog::Constant > ().value))); }
 #line 1426 "verilog_parser.tab.cc"
     break;
 
   case 58: // lhs: lhs_concat
-#line 276 "verilog_parser.yy"
+#line 278 "verilog_parser.yy"
                { yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > () = yystack_[0].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > (); }
 #line 1432 "verilog_parser.tab.cc"
     break;
 
   case 59: // lhs_concat: '{' lhs_exprs '}'
-#line 280 "verilog_parser.yy"
+#line 282 "verilog_parser.yy"
                       { std::move(yystack_[1].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().begin(), yystack_[1].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().end(), std::back_inserter(yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ())); }
 #line 1438 "verilog_parser.tab.cc"
     break;
 
   case 60: // lhs_exprs: lhs_expr
-#line 284 "verilog_parser.yy"
+#line 286 "verilog_parser.yy"
              { std::move(yystack_[0].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().begin(), yystack_[0].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().end(), std::back_inserter(yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ())); }
 #line 1444 "verilog_parser.tab.cc"
     break;
 
   case 61: // lhs_exprs: lhs_exprs ',' lhs_expr
-#line 286 "verilog_parser.yy"
+#line 288 "verilog_parser.yy"
     { 
       std::move(yystack_[2].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().begin(), yystack_[2].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().end(), std::back_inserter(yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ()));
       std::move(yystack_[0].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().begin(), yystack_[0].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().end(), std::back_inserter(yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ()));
@@ -1453,115 +1453,115 @@ namespace verilog {
     break;
 
   case 62: // lhs_expr: valid_name
-#line 293 "verilog_parser.yy"
+#line 295 "verilog_parser.yy"
                { yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().push_back(std::move(yystack_[0].value.as < std::string > ())); }
 #line 1459 "verilog_parser.tab.cc"
     break;
 
   case 63: // lhs_expr: valid_name '[' INTEGER ']'
-#line 295 "verilog_parser.yy"
+#line 297 "verilog_parser.yy"
     { yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().emplace_back(verilog::NetBit(std::move(yystack_[3].value.as < std::string > ()), std::stoi(yystack_[1].value.as < verilog::Constant > ().value))); }
 #line 1465 "verilog_parser.tab.cc"
     break;
 
   case 64: // lhs_expr: valid_name '[' INTEGER ':' INTEGER ']'
-#line 297 "verilog_parser.yy"
+#line 299 "verilog_parser.yy"
     { yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().emplace_back(verilog::NetRange(std::move(yystack_[5].value.as < std::string > ()), std::stoi(yystack_[3].value.as < verilog::Constant > ().value), std::stoi(yystack_[1].value.as < verilog::Constant > ().value))); }
 #line 1471 "verilog_parser.tab.cc"
     break;
 
   case 65: // lhs_expr: lhs_concat
-#line 299 "verilog_parser.yy"
+#line 301 "verilog_parser.yy"
     { std::move(yystack_[0].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().begin(), yystack_[0].value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ().end(), std::back_inserter(yylhs.value.as < std::vector<std::variant<std::string, verilog::NetBit, verilog::NetRange>> > ())); }
 #line 1477 "verilog_parser.tab.cc"
     break;
 
   case 66: // constant: INTEGER
-#line 305 "verilog_parser.yy"
+#line 307 "verilog_parser.yy"
              { yylhs.value.as < verilog::Constant > ()=yystack_[0].value.as < verilog::Constant > (); }
 #line 1483 "verilog_parser.tab.cc"
     break;
 
   case 67: // constant: BINARY
-#line 306 "verilog_parser.yy"
+#line 308 "verilog_parser.yy"
            { yylhs.value.as < verilog::Constant > ()=yystack_[0].value.as < verilog::Constant > (); }
 #line 1489 "verilog_parser.tab.cc"
     break;
 
   case 68: // constant: OCTAL
-#line 307 "verilog_parser.yy"
+#line 309 "verilog_parser.yy"
           { yylhs.value.as < verilog::Constant > ()=yystack_[0].value.as < verilog::Constant > (); }
 #line 1495 "verilog_parser.tab.cc"
     break;
 
   case 69: // constant: DECIMAL
-#line 308 "verilog_parser.yy"
+#line 310 "verilog_parser.yy"
             { yylhs.value.as < verilog::Constant > ()=yystack_[0].value.as < verilog::Constant > (); }
 #line 1501 "verilog_parser.tab.cc"
     break;
 
   case 70: // constant: HEX
-#line 309 "verilog_parser.yy"
+#line 311 "verilog_parser.yy"
         { yylhs.value.as < verilog::Constant > ()=yystack_[0].value.as < verilog::Constant > (); }
 #line 1507 "verilog_parser.tab.cc"
     break;
 
   case 71: // constant: REAL
-#line 310 "verilog_parser.yy"
+#line 312 "verilog_parser.yy"
          { yylhs.value.as < verilog::Constant > ()=yystack_[0].value.as < verilog::Constant > (); }
 #line 1513 "verilog_parser.tab.cc"
     break;
 
   case 72: // constant: EXP
-#line 311 "verilog_parser.yy"
+#line 313 "verilog_parser.yy"
          { yylhs.value.as < verilog::Constant > ()=yystack_[0].value.as < verilog::Constant > (); }
 #line 1519 "verilog_parser.tab.cc"
     break;
 
   case 73: // rhs: valid_name
-#line 315 "verilog_parser.yy"
+#line 317 "verilog_parser.yy"
                { yylhs.value.as < std::vector<verilog::NetConcat> > ().emplace_back(yystack_[0].value.as < std::string > ()); }
 #line 1525 "verilog_parser.tab.cc"
     break;
 
   case 74: // rhs: valid_name '[' INTEGER ']'
-#line 317 "verilog_parser.yy"
+#line 319 "verilog_parser.yy"
     { yylhs.value.as < std::vector<verilog::NetConcat> > ().emplace_back(verilog::NetBit(std::move(yystack_[3].value.as < std::string > ()), std::stoi(yystack_[1].value.as < verilog::Constant > ().value))); }
 #line 1531 "verilog_parser.tab.cc"
     break;
 
   case 75: // rhs: valid_name '[' INTEGER ':' INTEGER ']'
-#line 319 "verilog_parser.yy"
+#line 321 "verilog_parser.yy"
     { yylhs.value.as < std::vector<verilog::NetConcat> > ().emplace_back(verilog::NetRange(std::move(yystack_[5].value.as < std::string > ()), std::stoi(yystack_[3].value.as < verilog::Constant > ().value), std::stoi(yystack_[1].value.as < verilog::Constant > ().value))); }
 #line 1537 "verilog_parser.tab.cc"
     break;
 
   case 76: // rhs: constant
-#line 320 "verilog_parser.yy"
+#line 322 "verilog_parser.yy"
              { yylhs.value.as < std::vector<verilog::NetConcat> > ().push_back(std::move(yystack_[0].value.as < verilog::Constant > ())); }
 #line 1543 "verilog_parser.tab.cc"
     break;
 
   case 77: // rhs: rhs_concat
-#line 321 "verilog_parser.yy"
+#line 323 "verilog_parser.yy"
                { yylhs.value.as < std::vector<verilog::NetConcat> > () = yystack_[0].value.as < std::vector<verilog::NetConcat> > (); }
 #line 1549 "verilog_parser.tab.cc"
     break;
 
   case 78: // rhs_concat: '{' rhs_exprs '}'
-#line 325 "verilog_parser.yy"
+#line 327 "verilog_parser.yy"
                       { std::move(yystack_[1].value.as < std::vector<verilog::NetConcat> > ().begin(), yystack_[1].value.as < std::vector<verilog::NetConcat> > ().end(), std::back_inserter(yylhs.value.as < std::vector<verilog::NetConcat> > ())); }
 #line 1555 "verilog_parser.tab.cc"
     break;
 
   case 79: // rhs_exprs: rhs_expr
-#line 329 "verilog_parser.yy"
+#line 331 "verilog_parser.yy"
              { std::move(yystack_[0].value.as < std::vector<verilog::NetConcat> > ().begin(), yystack_[0].value.as < std::vector<verilog::NetConcat> > ().end(), std::back_inserter(yylhs.value.as < std::vector<verilog::NetConcat> > ())); }
 #line 1561 "verilog_parser.tab.cc"
     break;
 
   case 80: // rhs_exprs: rhs_exprs ',' rhs_expr
-#line 331 "verilog_parser.yy"
+#line 333 "verilog_parser.yy"
     { 
       std::move(yystack_[2].value.as < std::vector<verilog::NetConcat> > ().begin(), yystack_[2].value.as < std::vector<verilog::NetConcat> > ().end(), std::back_inserter(yylhs.value.as < std::vector<verilog::NetConcat> > ()));
       std::move(yystack_[0].value.as < std::vector<verilog::NetConcat> > ().begin(), yystack_[0].value.as < std::vector<verilog::NetConcat> > ().end(), std::back_inserter(yylhs.value.as < std::vector<verilog::NetConcat> > ()));
@@ -1570,37 +1570,37 @@ namespace verilog {
     break;
 
   case 81: // rhs_expr: valid_name
-#line 338 "verilog_parser.yy"
+#line 340 "verilog_parser.yy"
                { yylhs.value.as < std::vector<verilog::NetConcat> > ().push_back(std::move(yystack_[0].value.as < std::string > ())); }
 #line 1576 "verilog_parser.tab.cc"
     break;
 
   case 82: // rhs_expr: valid_name '[' INTEGER ']'
-#line 340 "verilog_parser.yy"
+#line 342 "verilog_parser.yy"
     { yylhs.value.as < std::vector<verilog::NetConcat> > ().emplace_back(verilog::NetBit(std::move(yystack_[3].value.as < std::string > ()), std::stoi(yystack_[1].value.as < verilog::Constant > ().value))); }
 #line 1582 "verilog_parser.tab.cc"
     break;
 
   case 83: // rhs_expr: valid_name '[' INTEGER ':' INTEGER ']'
-#line 342 "verilog_parser.yy"
+#line 344 "verilog_parser.yy"
     { yylhs.value.as < std::vector<verilog::NetConcat> > ().emplace_back(verilog::NetRange(std::move(yystack_[5].value.as < std::string > ()), std::stoi(yystack_[3].value.as < verilog::Constant > ().value), std::stoi(yystack_[1].value.as < verilog::Constant > ().value))); }
 #line 1588 "verilog_parser.tab.cc"
     break;
 
   case 84: // rhs_expr: constant
-#line 343 "verilog_parser.yy"
+#line 345 "verilog_parser.yy"
              { yylhs.value.as < std::vector<verilog::NetConcat> > ().push_back(std::move(yystack_[0].value.as < verilog::Constant > ())); }
 #line 1594 "verilog_parser.tab.cc"
     break;
 
   case 85: // rhs_expr: rhs_concat
-#line 345 "verilog_parser.yy"
+#line 347 "verilog_parser.yy"
     { std::move(yystack_[0].value.as < std::vector<verilog::NetConcat> > ().begin(), yystack_[0].value.as < std::vector<verilog::NetConcat> > ().end(), std::back_inserter(yylhs.value.as < std::vector<verilog::NetConcat> > ())); }
 #line 1600 "verilog_parser.tab.cc"
     break;
 
   case 86: // instance: valid_name valid_name '(' inst_pins ')' ';'
-#line 354 "verilog_parser.yy"
+#line 356 "verilog_parser.yy"
     { 
       std::swap(yylhs.value.as < verilog::Instance > ().module_name, yystack_[5].value.as < std::string > ()); 
       std::swap(yylhs.value.as < verilog::Instance > ().inst_name, yystack_[4].value.as < std::string > ()); 
@@ -1612,7 +1612,7 @@ namespace verilog {
     break;
 
   case 87: // instance: valid_name parameters valid_name '(' inst_pins ')' ';'
-#line 362 "verilog_parser.yy"
+#line 364 "verilog_parser.yy"
     { 
       std::swap(yylhs.value.as < verilog::Instance > ().module_name, yystack_[6].value.as < std::string > ()); 
       std::swap(yylhs.value.as < verilog::Instance > ().inst_name, yystack_[4].value.as < std::string > ()); 
@@ -1624,19 +1624,19 @@ namespace verilog {
     break;
 
   case 88: // inst_pins: %empty
-#line 372 "verilog_parser.yy"
+#line 374 "verilog_parser.yy"
     { }
 #line 1630 "verilog_parser.tab.cc"
     break;
 
   case 89: // inst_pins: nets_by_position
-#line 373 "verilog_parser.yy"
+#line 375 "verilog_parser.yy"
                      { std::swap(std::get<1>(yylhs.value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ()), yystack_[0].value.as < std::vector<std::vector<verilog::NetConcat>> > ()); }
 #line 1636 "verilog_parser.tab.cc"
     break;
 
   case 90: // inst_pins: nets_by_name
-#line 375 "verilog_parser.yy"
+#line 377 "verilog_parser.yy"
     {
       std::swap(std::get<0>(yylhs.value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ()), std::get<0>(yystack_[0].value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ()));
       std::swap(std::get<1>(yylhs.value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ()), std::get<1>(yystack_[0].value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ()));
@@ -1645,13 +1645,13 @@ namespace verilog {
     break;
 
   case 91: // nets_by_position: rhs
-#line 382 "verilog_parser.yy"
+#line 384 "verilog_parser.yy"
         { yylhs.value.as < std::vector<std::vector<verilog::NetConcat>> > ().emplace_back(std::move(yystack_[0].value.as < std::vector<verilog::NetConcat> > ())); }
 #line 1651 "verilog_parser.tab.cc"
     break;
 
   case 92: // nets_by_position: nets_by_position ',' rhs
-#line 384 "verilog_parser.yy"
+#line 386 "verilog_parser.yy"
     { 
       std::move(yystack_[2].value.as < std::vector<std::vector<verilog::NetConcat>> > ().begin(), yystack_[2].value.as < std::vector<std::vector<verilog::NetConcat>> > ().end(), std::back_inserter(yylhs.value.as < std::vector<std::vector<verilog::NetConcat>> > ()));   
       yylhs.value.as < std::vector<std::vector<verilog::NetConcat>> > ().push_back(std::move(yystack_[0].value.as < std::vector<verilog::NetConcat> > ()));
@@ -1660,7 +1660,7 @@ namespace verilog {
     break;
 
   case 93: // nets_by_name: net_by_name
-#line 393 "verilog_parser.yy"
+#line 395 "verilog_parser.yy"
     { 
       std::get<0>(yylhs.value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ()).push_back(std::move(std::get<0>(yystack_[0].value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()))); 
       std::get<1>(yylhs.value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ()).push_back(std::move(std::get<1>(yystack_[0].value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()))); 
@@ -1669,7 +1669,7 @@ namespace verilog {
     break;
 
   case 94: // nets_by_name: nets_by_name ',' net_by_name
-#line 398 "verilog_parser.yy"
+#line 400 "verilog_parser.yy"
     { 
       auto &pin_names = std::get<0>(yystack_[2].value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ());
       auto &net_names = std::get<1>(yystack_[2].value.as < std::pair<std::vector<std::variant<std::string, NetBit, NetRange>>, std::vector<std::vector<verilog::NetConcat>>> > ());
@@ -1683,13 +1683,13 @@ namespace verilog {
     break;
 
   case 95: // net_by_name: '.' valid_name '(' ')'
-#line 412 "verilog_parser.yy"
+#line 414 "verilog_parser.yy"
     { std::get<0>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = yystack_[2].value.as < std::string > (); }
 #line 1689 "verilog_parser.tab.cc"
     break;
 
   case 96: // net_by_name: '.' valid_name '(' valid_name ')'
-#line 414 "verilog_parser.yy"
+#line 416 "verilog_parser.yy"
     { 
        std::get<0>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = yystack_[3].value.as < std::string > (); 
        std::get<1>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()).push_back(std::move(yystack_[1].value.as < std::string > ())); 
@@ -1698,7 +1698,7 @@ namespace verilog {
     break;
 
   case 97: // net_by_name: '.' valid_name '(' valid_name '[' INTEGER ']' ')'
-#line 419 "verilog_parser.yy"
+#line 421 "verilog_parser.yy"
     { 
       std::get<0>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = yystack_[6].value.as < std::string > (); 
       std::get<1>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()).emplace_back(verilog::NetBit(std::move(yystack_[4].value.as < std::string > ()), std::stoi(yystack_[2].value.as < verilog::Constant > ().value))); 
@@ -1707,7 +1707,7 @@ namespace verilog {
     break;
 
   case 98: // net_by_name: '.' valid_name '(' rhs ')'
-#line 425 "verilog_parser.yy"
+#line 427 "verilog_parser.yy"
     { 
       std::get<0>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = yystack_[3].value.as < std::string > (); 
       std::get<1>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = yystack_[1].value.as < std::vector<verilog::NetConcat> > (); 
@@ -1716,7 +1716,7 @@ namespace verilog {
     break;
 
   case 99: // net_by_name: '.' valid_name '[' INTEGER ']' '(' ')'
-#line 431 "verilog_parser.yy"
+#line 433 "verilog_parser.yy"
     {
       std::get<0>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = verilog::NetBit(std::move(yystack_[5].value.as < std::string > ()), std::stoi(yystack_[3].value.as < verilog::Constant > ().value)); 
     }
@@ -1724,7 +1724,7 @@ namespace verilog {
     break;
 
   case 100: // net_by_name: '.' valid_name '[' INTEGER ']' '(' rhs ')'
-#line 435 "verilog_parser.yy"
+#line 437 "verilog_parser.yy"
     {
       std::get<0>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = verilog::NetBit(std::move(yystack_[6].value.as < std::string > ()), std::stoi(yystack_[4].value.as < verilog::Constant > ().value)); 
       std::get<1>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = yystack_[1].value.as < std::vector<verilog::NetConcat> > (); 
@@ -1733,7 +1733,7 @@ namespace verilog {
     break;
 
   case 101: // net_by_name: '.' valid_name '[' INTEGER ':' INTEGER ']' '(' ')'
-#line 441 "verilog_parser.yy"
+#line 443 "verilog_parser.yy"
     {
       std::get<0>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = verilog::NetRange(std::move(yystack_[7].value.as < std::string > ()), std::stoi(yystack_[5].value.as < verilog::Constant > ().value), std::stoi(yystack_[3].value.as < verilog::Constant > ().value)); 
     }
@@ -1741,7 +1741,7 @@ namespace verilog {
     break;
 
   case 102: // net_by_name: '.' valid_name '[' INTEGER ':' INTEGER ']' '(' rhs ')'
-#line 445 "verilog_parser.yy"
+#line 447 "verilog_parser.yy"
     {
       std::get<0>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = verilog::NetRange(std::move(yystack_[8].value.as < std::string > ()), std::stoi(yystack_[6].value.as < verilog::Constant > ().value), std::stoi(yystack_[4].value.as < verilog::Constant > ().value)); 
       std::get<1>(yylhs.value.as < std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>> > ()) = yystack_[1].value.as < std::vector<verilog::NetConcat> > (); 
@@ -2356,18 +2356,18 @@ namespace verilog {
   const short
   VerilogParser::yyrline_[] =
   {
-       0,    95,    95,    96,   100,   103,   104,   109,   108,   114,
-     113,   119,   118,   124,   128,   123,   136,   137,   142,   143,
-     144,   145,   146,   147,   148,   153,   157,   162,   170,   176,
-     187,   188,   189,   193,   194,   199,   200,   205,   209,   218,
-     219,   220,   221,   222,   223,   224,   225,   229,   233,   241,
-     246,   257,   260,   261,   265,   271,   272,   274,   276,   280,
-     284,   285,   293,   294,   296,   298,   305,   306,   307,   308,
-     309,   310,   311,   315,   316,   318,   320,   321,   325,   329,
-     330,   338,   339,   341,   343,   344,   353,   361,   372,   373,
-     374,   382,   383,   392,   397,   411,   413,   418,   424,   430,
-     434,   440,   444,   454,   458,   459,   463,   464,   465,   466,
-     467,   468,   469,   470,   471
+       0,    97,    97,    98,   102,   105,   106,   111,   110,   116,
+     115,   121,   120,   126,   130,   125,   138,   139,   144,   145,
+     146,   147,   148,   149,   150,   155,   159,   164,   172,   178,
+     189,   190,   191,   195,   196,   201,   202,   207,   211,   220,
+     221,   222,   223,   224,   225,   226,   227,   231,   235,   243,
+     248,   259,   262,   263,   267,   273,   274,   276,   278,   282,
+     286,   287,   295,   296,   298,   300,   307,   308,   309,   310,
+     311,   312,   313,   317,   318,   320,   322,   323,   327,   331,
+     332,   340,   341,   343,   345,   346,   355,   363,   374,   375,
+     376,   384,   385,   394,   399,   413,   415,   420,   426,   432,
+     436,   442,   446,   456,   460,   461,   465,   466,   467,   468,
+     469,   470,   471,   472,   473
   };
 
   void
@@ -2451,7 +2451,7 @@ namespace verilog {
 } // verilog
 #line 2453 "verilog_parser.tab.cc"
 
-#line 475 "verilog_parser.yy"
+#line 486 "verilog_parser.yy"
 
 
 void verilog::VerilogParser::error(const location_type &l, const std::string &err_message) {
@@ -2460,5 +2460,3 @@ void verilog::VerilogParser::error(const location_type &l, const std::string &er
             << "  end   at line " << l.end.line <<  " col " << l.end.column << "\n";
   std::abort();
 }
-
-

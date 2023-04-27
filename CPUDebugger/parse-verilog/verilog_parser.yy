@@ -452,7 +452,7 @@ net_by_name
 
 
 // parameters are ignored for now
-parameters 
+parameters
   : '#' '(' param_exprs ')'
   ;
 

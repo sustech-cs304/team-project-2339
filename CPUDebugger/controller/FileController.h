@@ -4,7 +4,6 @@
 #include "FileOutputFactory.h"
 #include <TopVFileInputFactory.h>
 #include "QFile"
-#include "QtGui/private/qzipreader_p.h"
 #include <QDir>
 
 #define TMP_PATH "tmp/"

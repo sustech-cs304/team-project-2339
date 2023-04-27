@@ -48,7 +48,8 @@ INCLUDEPATH += \
     $$PWD/controller \
     $$PWD/view \
     $$PWD/uart \
-    $$PWD/model
+    $$PWD/model \
+    $$PWD/parse-verilog
 
 
 include($$PWD/controller/controller.pri)
@@ -56,6 +57,7 @@ include($$PWD/view/view.pri)
 include($$PWD/uart/uart.pri)
 include($$PWD/model/model.pri)
 include($$PWD/Debugger.pri)
+include($$PWD/parse-verilog/parse-verilog.pri)
 
 DISTFILES += \
     parse-verilog/verilog_lexer.l \
@@ -63,6 +65,7 @@ DISTFILES += \
 
 HEADERS += \
     parse-verilog/FlexLexer.h \
+    parse-verilog/TestSuite.h \
     parse-verilog/location.hh \
     parse-verilog/position.hh \
     parse-verilog/stack.hh \
