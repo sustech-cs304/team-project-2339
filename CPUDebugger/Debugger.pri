@@ -1,24 +1,24 @@
 SOURCES += \
         $$PWD/Comm/comm.cpp \
         $$PWD/Comm/sender.cpp \
-        Controllers/DebugController.cpp \
-        Controllers/PreDebugController.cpp \
-        File/AsmFile.cpp \
-        File/CoeFile.cpp \
-        File/DebugFile.cpp \
-        Stores/DebugStore.cpp \
-        Stores/PreDebugStore.cpp \
-        uart/UartSimulator.cpp
+        $$PWD/Controllers/DebugController.cpp \
+        $$PWD/Controllers/PreDebugController.cpp \
+        $$PWD/File/AsmFile.cpp \
+        $$PWD/File/CoeFile.cpp \
+        $$PWD/File/DebugFile.cpp \
+        $$PWD/Stores/DebugStore.cpp \
+        $$PWD/Stores/PreDebugStore.cpp \
+        $$PWD/uart/UartSimulator.cpp
 
 HEADERS += \
     $$PWD/Comm/comm.h \
     $$PWD/Comm/sender.h \
-    Controllers/DebugController.h \
-    Controllers/PreDebugController.h \
-    File/AsmFile.h \
-    File/CoeFile.h \
-    File/DebugFile.h \
-    Stores/DebugStore.h \
-    Stores/PreDebugStore.h \
-    uart/UartSimulator.h \
-    utils/utils.h
+    $$PWD/Controllers/DebugController.h \
+    $$PWD/Controllers/PreDebugController.h \
+    $$PWD/File/AsmFile.h \
+    $$PWD/File/CoeFile.h \
+    $$PWD/File/DebugFile.h \
+    $$PWD/Stores/DebugStore.h \
+    $$PWD/Stores/PreDebugStore.h \
+    $$PWD/uart/UartSimulator.h \
+    $$PWD/utils/utils.h

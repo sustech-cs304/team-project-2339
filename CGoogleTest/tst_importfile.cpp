@@ -41,29 +41,40 @@ struct SampleParser : public verilog::ParserVerilogInterface {
     std::vector<verilog::Instance> insts;
 };
 
-namespace model {
-    QString dirPath = "E:/DebugCore/module_files";
-    QString destPath = "E:/";
-}
+class CompilerTest : public ::testing::Test
+{
+protected:
+
+    virtual void setUp() {
+        dirPath = "E:/DebugCore/module_files";
+        destPath = "E:/";
+    }
+
+    virtual void TearDown() {
+        qDebug() << "Compiler test end";
+    }
+public:
+    QString dirPath;
+    QString destPath;
+};
 
 
-
-TEST(CompilerTest, ImportFile)
+TEST_F(CompilerTest, ImportFile)
 {
     Compiler c;
     QString s = QString::fromStdString(c.infixToPostfix("32 - 6 - ( 3 * 5 ) - 1"));
     qDebug() << s;
     qDebug() << c.evaluatePostfix(s);
-    QDir dir(model::destPath);
+    QDir dir(destPath);
     if (!dir.exists()) {
-        bool ismkdir = dir.mkpath(model::destPath);
+        bool ismkdir = dir.mkpath(destPath);
         if (!ismkdir) {
             qDebug() << "Create directory fail";
         }else
             qDebug() << "Create directory success";
     }
-    qDebug() << "Directory: " << FileUtil::getDirList(model::dirPath);
-    QStringList entries = FileUtil::getDirList(model::dirPath);
+    qDebug() << "Directory: " << FileUtil::getDirList(dirPath);
+    QStringList entries = FileUtil::getDirList(dirPath);
     PreProcessor *p = new PreProcessor();
     for (const QString &entryPath: entries) {
         p->process(entryPath);
@@ -71,20 +82,23 @@ TEST(CompilerTest, ImportFile)
     for (const QString &entryPath: entries) {
         QFileInfo info(entryPath);
         if (!info.fileName().compare("top.v"))
-            p->replace(entryPath, model::destPath+"ddd/"+info.fileName(), false);
+            p->replace(entryPath, destPath+"ddd/"+info.fileName(), false);
         else
-            p->replace(entryPath, model::destPath+"ddd/"+info.fileName(), true);
+            p->replace(entryPath, destPath+"ddd/"+info.fileName(), true);
     }
     EXPECT_EQ(1, 1);
     ASSERT_THAT(0, Eq(0));
 }
 
-TEST(CompilerTest, Parser) {
+TEST_F(CompilerTest, Parser) {
     SampleParser parser;
     qDebug() << std::filesystem::current_path();
-    QStringList entries = FileUtil::getDirList(model::destPath+"/pre");
+    QStringList entries = FileUtil::getDirList(destPath+"/pre");
     for (const QString &entry: entries) {
-        qDebug() << entry;
-        parser.read(entry.toStdString());
+        QFileInfo info(entry);
+        if (!info.fileName().compare("top1.v")) {
+            qDebug() << entry;
+            parser.read(entry.toStdString());
+        }
     }
 }

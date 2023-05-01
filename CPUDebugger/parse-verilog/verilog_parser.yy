@@ -86,8 +86,6 @@
 
 %type<std::pair<std::variant<std::string, NetBit, NetRange>, std::vector<verilog::NetConcat>>> net_by_name
 
-%type<verilog::Equation> eq_rhs
-
 %locations 
 %start design
 
@@ -237,6 +235,11 @@ net_decl_statements
       $1.names.push_back(std::move($3));
       $$ = $1;
     }
+  | net_decl_statements ',' assignment
+    {
+      $1.names.push_back(std::move(std::get<std::string>($3.lhs[0])));
+      $$ = $1;
+    }
   ;
 
 net_decl 
@@ -252,6 +255,18 @@ net_decl
       $$.end = std::stoi($5.value);
       $$.names.push_back(std::move($7)); 
     }
+  | net_type assignment
+    {
+      $$.type = $1;
+      $$.names.push_back(std::move(std::get<std::string>($2.lhs[0])));
+    }
+  | net_type '[' INTEGER ':' INTEGER ']' assignment
+    {
+      $$.type = $1;
+      $$.beg = std::stoi($3.value);
+      $$.end = std::stoi($5.value);
+      $$.names.push_back(std::move(std::get<std::string>($7.lhs[0])));
+    }
   ;
 
 
@@ -264,7 +279,13 @@ assignments
   ;
 
 assignment
-  : lhs '=' rhs { $$.lhs = $1; $$.rhs = $3; driver->add_assignment(std::move($$)); }
+  : lhs '=' rhs 
+    {
+      $$.lhs = $1; 
+      $$.rhs = $3;
+      driver->add_assignment(std::move($$));
+      $$.lhs = $1;
+    }
   ;
 
 
@@ -471,17 +492,6 @@ param_expr
   | param_expr '*' param_expr
   | param_expr '/' param_expr
   | '(' param_expr ')'
-  ;
-
-// equations: 1+2*(3/4)
-eq_rhs
-  : constant
-  | '-' eq_rhs %prec UMINUS
-  | eq_rhs '+' eq_rhs
-  | eq_rhs '-' eq_rhs
-  | eq_rhs '*' eq_rhs
-  | eq_rhs '/' eq_rhs
-  | '(' eq_rhs ')'
   ;
 %%
 

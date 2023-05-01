@@ -1800,7 +1800,7 @@ switch (yykind)
     // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
     // positive, shift that token.  If negative, reduce the rule whose
     // number is the opposite.  If YYTABLE_NINF, syntax error.
-    static const unsigned char yytable_[];
+    static const short yytable_[];
 
     static const short yycheck_[];
 
@@ -2044,7 +2044,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 371,     ///< Last index in yytable_.
+      yylast_ = 343,     ///< Last index in yytable_.
       yynnts_ = 41,  ///< Number of nonterminal symbols.
       yyfinal_ = 3 ///< Termination state number.
     };

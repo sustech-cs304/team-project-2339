@@ -774,9 +774,3 @@ bool AsmFile::isDoubleLine(QStringList::const_iterator &wordIter) {
            *wordIter == "la" ||
            *wordIter == "li";
 }
-
-int main() {
-    QFile   top(QDir::currentPath().append("/test.asm"));
-    AsmFile asmFile(top);
-    return 0;
-}

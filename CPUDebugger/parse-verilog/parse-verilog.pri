@@ -1,6 +1,5 @@
 HEADERS += \
     $$PWD/FlexLexer.h \
-    $$PWD/TestSuite.h \
     $$PWD/location.hh \
     $$PWD/position.hh \
     $$PWD/stack.hh \
