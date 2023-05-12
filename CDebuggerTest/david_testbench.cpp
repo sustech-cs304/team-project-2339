@@ -4,18 +4,19 @@
 
 #include <QtTest>
 #include <iostream>
+#include <CPUDebugger/File/AsmFile.h>
 // add necessary includes here
 
 class Testbench : public QObject {
 Q_OBJECT
 private slots:
 
-    void toUpper();
+    void parseASM();
 };
 
-void Testbench::toUpper() {
-    QString str = "Hello";
-    QCOMPARE(str.toUpper(), QString("HELLO"));
+void Testbench::parseASM() {
+    QFile   top(QDir::currentPath().append("/test.asm"));
+    AsmFile asmFile(top);
 }
 
 //class Testbench : public QObject {

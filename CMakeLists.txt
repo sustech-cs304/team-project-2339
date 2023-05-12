@@ -54,8 +54,8 @@ add_executable(
 #        CPUDebugger/model/compile/global_compile.h
 #        CPUDebugger/model/compile/MAlex.cpp
 #        CPUDebugger/model/compile/MAlex.h
-#        CPUDebugger/File/AsmFile.h
-#        CPUDebugger/File/AsmFile.cpp
+        CPUDebugger/File/AsmFile.h
+        CPUDebugger/File/AsmFile.cpp
 #        CPUDebugger/File/DebugFile.h
 #        CPUDebugger/File/DebugFile.cpp
 #        CPUDebugger/File/CoeFile.h
