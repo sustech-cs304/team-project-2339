@@ -75,7 +75,8 @@ module debug_unit (
                 SIGNALS_BYTE_CNT_WIDTH = [BYTES]; // ceil(sqrt(SIGNALS_WIDTH / 8)): has to be calculated TODO
     reg  [SIGNALS_BYTE_CNT_WIDTH - 1:0] signals_byte_idx;
     wire [SIGNALS_WIDTH - 1:0]          signals = {
-                                                      [SIGNALS]pc
+                                                      [SIGNALS]pc,
+                                                      OP_SIGNAL
                                                   }; // TODO
 
     reg                        rx_bit_buffer, rx_bit;

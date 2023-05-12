@@ -5,13 +5,15 @@
 #ifndef COREGENERATOR_H
 #define COREGENERATOR_H
 
-#include <CPUSignal.h>
 #include <QFile>
 #include <QDir>
 #include <QDebug>
 #include <QDirIterator>
 #include <QCoreApplication>
 #include <QRegularExpression>
+#include <CPUDebugger/model/CPUSignal.h>
+
+#define OPCODE_WIDTH 8
 
 bool generateCore(QFile &topFile,
                   QDir &outputDir,

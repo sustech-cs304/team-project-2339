@@ -77,8 +77,8 @@ add_executable(
 #        CPUDebugger/uart/CoreGenerator.cpp
 #        CPUDebugger/uart/CoreGenerator.h
 #        CPUDebugger/main.cpp
-#        CPUDebugger/uart/CoreGenerator.cpp
-#        CPUDebugger/uart/CoreGenerator.h
+        CPUDebugger/uart/CoreGenerator.cpp
+        CPUDebugger/uart/CoreGenerator.h
         CDebuggerTest/david_testbench.cpp
 )
 

@@ -57,7 +57,8 @@ int setISAWidth(int ISAWidth) {
 }
 
 int sumWidth(const QList<CPUSignal> &selectedSignals) {
-    return std::accumulate(selectedSignals.cbegin(), selectedSignals.cend(), coreWidth,
+    return std::accumulate(selectedSignals.cbegin(), selectedSignals.cend(),
+                           coreWidth /* PC_WIDTH */ + OPCODE_WIDTH,
                            [](int acc, const CPUSignal &signal) {
                                return acc + signal.rawWidth;
                            });
@@ -85,9 +86,9 @@ QString insertWidth(const QList<CPUSignal> &selectedSignals) {
 }
 
 QString insertBytes(const QList<CPUSignal> &selectedSignals) {
-    return QString::number(static_cast<int>(
-                                   ceil(sqrt(sumWidth(selectedSignals) / 8))
-                           ));
+    return QString::number(static_cast<int>(ceil(sqrt(
+            (sumWidth(selectedSignals)) / 8
+    ))));
 }
 
 QString insertSignals(const QList<CPUSignal> &selectedSignals) {
@@ -155,6 +156,8 @@ bool generateCore(QFile &topFile,
             ++iterator;
         }
         out << line << "\n";
+
+//        qDebug() << line;
     }
     coreTemplate.close();
     outputFile.close();
@@ -165,31 +168,32 @@ bool generateCore(QFile &topFile,
     if (topText.contains(coreRegex))
         topText.replace(coreRegex,
                         QString::asprintf(moduleSection, qPrintable(insertModule(selectedSignals))));
-    else topText.replace("endmodule",
-                         QString::asprintf(moduleComplete, qPrintable(insertModule(selectedSignals))));
+    else
+        topText.replace("endmodule",
+                        QString::asprintf(moduleComplete, qPrintable(insertModule(selectedSignals))));
     // write back to top module
     topFile.seek(0);
     topFile.write(topText.toUtf8());
     return true;
 }
 
-int main() {
-    QList<CPUSignal> list{
-            CPUSignal{"instruction_1", 32, 32, QBitArray(), false},
-            CPUSignal{"another_instruction", 32, 32, QBitArray(), false}
-    };
-//    qDebug("%s", insertInput(list).toLocal8Bit().constData());
-//    qDebug("%s", insertBytes(list).toLocal8Bit().constData());
-//    qDebug("%s", insertWidth(list).toLocal8Bit().constData());
-//    qDebug("%s", insertSignals(list).toLocal8Bit().constData());
-
-    QFile top(QDir::currentPath().append("/top.v"));
-    QDir  output(QDir::currentPath());
-
-    top.open(QIODevice::ReadWrite | QIODevice::Text);
-
-    generateCore(top, output, list);
-
-    top.close();
-    return 0;
-}
+//int main() {
+//    QList<CPUSignal> list{
+//            CPUSignal{"instruction_1", 32, 32, QBitArray(), false},
+//            CPUSignal{"another_instruction", 32, 32, QBitArray(), false}
+//    };
+////    qDebug("%s", insertInput(list).toLocal8Bit().constData());
+////    qDebug("%s", insertBytes(list).toLocal8Bit().constData());
+////    qDebug("%s", insertWidth(list).toLocal8Bit().constData());
+////    qDebug("%s", insertSignals(list).toLocal8Bit().constData());
+//
+//    QFile top(QDir::currentPath().append("/top.v"));
+//    QDir  output(QDir::currentPath());
+//
+//    top.open(QIODevice::ReadWrite | QIODevice::Text);
+//
+//    generateCore(top, output, list);
+//
+//    top.close();
+//    return 0;
+//}
