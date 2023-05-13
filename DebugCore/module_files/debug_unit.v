@@ -73,13 +73,14 @@ module debug_unit (
                 CORE_TX_PING        = 2'b10;    // respond ok to ping
     reg [CORE_TX_STATE_WIDTH - 1:0] core_tx_state;
     
-    localparam  SIGNALS_WIDTH          = `ISA_WIDTH * 2,            //// [TODO] demo only !!! ////
+    localparam  SIGNALS_WIDTH          = `ISA_WIDTH * 2 + 8,        //// [TODO] demo only !!! ////
                 SIGNALS_BYTE_CNT       = SIGNALS_WIDTH / 8,
                 SIGNALS_BYTE_CNT_WIDTH = 4;                         // ceil(sqrt(SIGNALS_WIDTH / 8)): has to be calculated [TODO]
     reg  [SIGNALS_BYTE_CNT_WIDTH - 1:0] signals_byte_idx;
     wire [SIGNALS_WIDTH - 1:0]          signals = {
                                                       instruction,
-                                                      pc
+                                                      pc,
+                                                      OP_SIGNAL
                                                   };                //// [TODO] demo only !!! ////
     
     reg                        rx_bit_buffer, rx_bit;
