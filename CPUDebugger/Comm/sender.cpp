@@ -13,6 +13,7 @@ void SenderThread::transaction(const QString &portName, int baudRate, int waitTi
     this->data = data;
     this->hasResponse = hasResponse;
     this->stopFlag = false;
+    this->pauseFlag = false;
     if (!isRunning())
         start();
     else
@@ -24,6 +25,14 @@ void SenderThread::stop(){
     stopFlag = true;
     if(isRunning())
         cond.wakeOne();
+}
+
+void SenderThread::pause(){
+    pauseFlag = true;
+}
+
+bool SenderThread::isPaused(){
+    return pauseFlag;
 }
 
 void SenderThread::run(){
@@ -63,8 +72,17 @@ void SenderThread::run(){
         emit finishSending();
         if (currentHasResponse){
             // Read response
-            if (serial.waitForReadyRead(currentWaitTimeout)) {
-                QByteArray responseData = serial.readAll();
+            QElapsedTimer timer;
+            bool first_receivable = false;
+            QByteArray responseData;
+            timer.start();
+            while (timer.elapsed() < currentWaitTimeout && !pauseFlag){
+                if (!serial.waitForReadyRead(10)) continue;
+                first_receivable = true;
+                responseData = serial.readAll();
+                break;
+            }
+            if (first_receivable){
                 while (serial.waitForReadyRead(10))
                     responseData += serial.readAll();
                 emit this->response(responseData);
@@ -84,6 +102,7 @@ void SenderThread::run(){
 }
 
 SenderThread::~SenderThread(){
+    pause();
     stop();
     wait();
 }

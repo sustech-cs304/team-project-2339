@@ -1,5 +1,6 @@
 #include "Comm/comm.h"
 #include "QCoreApplication"
+
 QList<QSerialPortInfo> UartCommunicator::getAvailableSerialPorts(){
     return QSerialPortInfo::availablePorts();
 }
@@ -100,18 +101,8 @@ bool UartCommunicator::noResponseSend(const QByteArray &packet, double packetWai
     return finishSending;
 }
 
-//bool UartCommunicator::sendPause(double packetWaitingSeconds, double totWaitingSeconds){
-//    const QByteArrays PAUSE = QByteArray(1, 0x04);
-//    return this->noResponseSend(PAUSE, packetWaitingSeconds, totWaitingSeconds);
-//}
-
 bool UartCommunicator::sendPause(QByteArray& cpuResponse, double packetWaitingSeconds, double totWaitingSeconds){
-    QSerialPort serial;
-    serial.setPortName(*(this->cpuPortName));
-    // Port down
-    if (!serial.open(QIODevice::ReadWrite))
-        return false;
-    serial.close();
+    this->worker->pause();
     // Protocol down
     const QByteArray PAUSE = QByteArray(1, 0x04);
     bool responseResult, packetTimeout = false, packetError = false;
@@ -147,18 +138,7 @@ bool UartCommunicator::sendPause(QByteArray& cpuResponse, double packetWaitingSe
     return responseResult;
 }
 
-//bool UartCommunicator::sendNext(double packetWaitingSeconds, double totWaitingSeconds){
-//    const QByteArray NEXT = QByteArray(1, 0x06);
-//    return this->noResponseSend(NEXT, packetWaitingSeconds, totWaitingSeconds);
-//}
-
 bool UartCommunicator::sendStep(QByteArray& cpuResponse, double packetWaitingSeconds, double totWaitingSeconds){
-    QSerialPort serial;
-    serial.setPortName(*(this->cpuPortName));
-    // Port down
-    if (!serial.open(QIODevice::ReadWrite))
-        return false;
-    serial.close();
     // Protocol down
     const QByteArray NEXT = QByteArray(1, 0x06);
     bool responseResult, packetTimeout = false, packetError = false;
@@ -191,6 +171,36 @@ bool UartCommunicator::sendStep(QByteArray& cpuResponse, double packetWaitingSec
     disconnect(c1);
     disconnect(c2);
     disconnect(c3);
+    return responseResult;
+}
+
+bool UartCommunicator::sendResume(QByteArray& cpuResponse, int nextPC){
+    // Protocol down
+    QByteArray RESUME;
+    QDataStream stream(&RESUME, QIODevice::WriteOnly);
+    stream << quint8(0x05) << quint32(nextPC);
+    bool responseResult, packetError = false;
+    auto responseSlot = [&](const QByteArray& data) ->void {
+        if(data.size() >= 1 && data.at(0) == 0x01){
+            cpuResponse.clear();
+            if (data.size() > 1)
+                cpuResponse.append(data.mid(1));
+            responseResult = true;
+        }
+    };
+    auto errorSlot = [&](const QString &msg) ->void {
+        packetError = true;
+    };
+    QMetaObject::Connection c1 = connect(worker, &SenderThread::response, responseSlot);
+    QMetaObject::Connection c2 = connect(worker, &SenderThread::error, errorSlot);
+    // Should wait infinitely when `sendResume(.)` is called
+    worker->transaction(*(this->cpuPortName), this->serialBaudRate, -1, RESUME, true);
+    while (!packetError || !responseResult || !this->worker->isPaused()){
+        QCoreApplication::processEvents();
+    }
+    // Diconnect the signals.
+    disconnect(c1);
+    disconnect(c2);
     return responseResult;
 }
 
