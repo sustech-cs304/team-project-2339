@@ -15,6 +15,10 @@ public:
 
     void transaction(const QString &portName, int baudRate, int waitTimeout, const QByteArray &data, bool hasResponse);
     void stop();
+    void pause();
+
+    bool getPause();
+    bool isPaused();
 
 signals:
     void finishSending();
@@ -38,6 +42,9 @@ private:
 
     // Special flag controlling all started
     bool stopFlag = false;
+
+    // Special f
+    bool pauseFlag = false;
 };
 
 #endif // SENDER_H

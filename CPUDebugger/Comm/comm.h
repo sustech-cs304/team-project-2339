@@ -17,7 +17,7 @@ public:
     bool connectCPU(const QString &portName, double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
     bool autoConnectCPU(double packetWaitingSeconds=1.0, double totWaitingSeconds=3.0, int pingNum=3);
     bool sendPause(QByteArray& cpuResponse, double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
-    bool sendResume();
+    bool sendResume(QByteArray& cpuResponse, int nextPC);
     bool sendStep(QByteArray& cpuResponse, double packetWaitingSeconds=1.0, double totWaitingSeconds=1.5);
     bool sendProgram(const QByteArray& asmFile, double packetWaitingSeconds=2.0, double totWaitingSeconds=3.0);
 

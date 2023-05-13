@@ -177,7 +177,7 @@ bool UartCommunicator::sendStep(QByteArray& cpuResponse, double packetWaitingSec
 bool UartCommunicator::sendResume(QByteArray& cpuResponse, int nextPC){
     // Protocol down
     QByteArray RESUME;
-    QDataStream stream(&RESUME, QIODevice::WriteOnly);
+    QDataStream stream(&RESUME, QIODevice::ReadWrite);
     stream << quint8(0x05) << quint32(nextPC);
     bool responseResult, packetError = false;
     auto responseSlot = [&](const QByteArray& data) ->void {
