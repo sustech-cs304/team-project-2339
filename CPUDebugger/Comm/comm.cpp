@@ -209,7 +209,7 @@ bool UartCommunicator::sendResume(QByteArray& cpuResponse, int nextPC){
     QMetaObject::Connection c2 = connect(worker, &SenderThread::error, errorSlot);
     // Should wait infinitely when `sendResume(.)` is called
     worker->transaction(*(this->cpuPortName), this->serialBaudRate, -1, RESUME, true);
-    while (!packetError || responseResult != 0 || !this->worker->isPaused()){
+    while (!packetError && responseResult == 0 && !this->worker->isPaused()){
         QCoreApplication::processEvents();
     }
     // Diconnect the signals.
