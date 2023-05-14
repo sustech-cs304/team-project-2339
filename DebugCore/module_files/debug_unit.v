@@ -93,7 +93,7 @@ module debug_unit (
     reg                        tx_start, tx_complete;
 
     reg [`ISA_WIDTH - 1:0] breakpoint;
-    wire                   breakpoint_reached = (breakpoint == pc);
+    wire                   breakpoint_reached = (breakpoint <= pc);
 
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
@@ -213,7 +213,7 @@ module debug_unit (
         end
     end
 
-    assign rx_light = {breakpoint[6:0], debug_pause};
+    assign rx_light = {debug_pause, 5'b0, core_tx_state};
 
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
