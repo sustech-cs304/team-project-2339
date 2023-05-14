@@ -12,6 +12,7 @@
 #include "Stores/PreDebugStore.h"
 #include "Stores/DebugStore.h"
 #include "FileController.h"
+#include "Comm/comm.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -117,6 +118,8 @@ signals:
     void myList2Changed();
     void myList41Changed();
 };
+
+UartCommunicator* uartCommunicator = new UartCommunicator();
 
 #endif // MYOBJECT1_H
 
