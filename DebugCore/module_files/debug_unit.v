@@ -213,7 +213,7 @@ module debug_unit (
         end
     end
 
-    assign rx_light = rx_byte;
+    assign rx_light = {breakpoint[6:0], debug_pause};
 
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
@@ -230,7 +230,7 @@ module debug_unit (
             }                  <= 0;
             uart_addr          <= -1;
             uart_write_enable  <= 1'b0;
-            breakpoint         <= 64;
+            breakpoint         <= 0;
             debug_pause        <= 1'b0;
             core_rx_state      <= CORE_RX_OPCODE;
         end else begin
