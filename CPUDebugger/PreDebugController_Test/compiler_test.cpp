@@ -4,11 +4,12 @@
 
 using namespace testing;
 
-QString file_path = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test.asm";
-QString new_file_path = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test2.asm";
+QString file_path = "test.asm";
+QString new_file_path = "test2.asm";
+QString out_file = "result.txt";
 
 // 是否可以正常编译
-TEST(compiler_test, case1)
+TEST(work_test, case1)
 {
     PreDebugController::uploadFile(file_path);
     ASSERT_FALSE(PreDebugController::getFile() == nullptr);
@@ -24,10 +25,21 @@ TEST(null_compiler_test, case1)
     EXPECT_THROW(PreDebugController::compileAsm(), std::invalid_argument);
 }
 
-//TEST(null_compiler_test, case2)
-//{
-//    PreDebugController::uploadFile(file_path);
-//    PreDebugController::compileAsm();
-//    PreDebugController::clear();
-//    PreDebugController::uploadFile(new_file_path);
-//}
+
+// 检查输出的QByteArray
+TEST(correction_test, case1)
+{
+    PreDebugController::uploadFile(file_path);
+    PreDebugController::compileAsm();
+    QByteArray byteArray = PreDebugController::getAsm()->getBin();
+    ASSERT_FALSE(byteArray == nullptr);
+    QFile file(out_file);
+    qDebug() << byteArray.toHex();
+    if (file.open(QIODevice::WriteOnly))
+    {
+        // 将 QByteArray 内容写入文件
+        file.write(byteArray);
+        // 关闭文件
+        file.close();
+    }
+}
