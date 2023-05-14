@@ -56,11 +56,11 @@ QByteArray AsmFile::getBin() {
     return bin;
 }
 
-int AsmFile::getPC(int asmLine) {
+unsigned int AsmFile::getPC(int asmLine) {
     return asmToPCMap.value(asmLine);
 }
 
-int AsmFile::getAsmLine(int PC) {
+int AsmFile::getAsmLine(unsigned int PC) {
     return PCToAsmMap.value(PC);
 }
 

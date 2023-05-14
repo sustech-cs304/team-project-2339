@@ -1,12 +1,12 @@
 #ifndef ASMFILE_H
 #define ASMFILE_H
 
-#include "DebugFile.h"
 #include <vector>
 #include <memory>
 #include <QMap>
 #include <QFile>
 #include <QRegularExpression>
+#include <set>
 
 #define DATA_MEM_SIZE 0x3FFF
 #define TEXT_MEM_SIZE 0x3FFF
