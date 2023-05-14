@@ -6,14 +6,8 @@
 #include <QtCore>
 #include "Controllers/DebugController.h"
 #include "Controllers/PreDebugController.h"
-#include "File/DebugFile.h"
-#include "File/AsmFile.h"
-#include "File/CoeFile.h"
-#include "Stores/PreDebugStore.h"
-#include "Stores/DebugStore.h"
 #include "FileController.h"
 #include "Comm/comm.h"
-
 #include <QFile>
 #include <QTextStream>
 #include <QVariantList>
@@ -39,12 +33,6 @@ public:
     Q_INVOKABLE void loadFile1();
 
     Q_INVOKABLE void makeBreakPoint();
-
-    Q_INVOKABLE void asmStep();
-
-    Q_INVOKABLE void asmRun();
-
-    Q_INVOKABLE void asmPause();
 
     Q_INVOKABLE void makeList1();
 
@@ -119,7 +107,7 @@ signals:
     void myList41Changed();
 };
 
-UartCommunicator* uartCommunicator = new UartCommunicator();
+static UartCommunicator* uartCommunicator = new UartCommunicator();
 
 #endif // MYOBJECT1_H
 

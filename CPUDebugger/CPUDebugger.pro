@@ -9,8 +9,6 @@ QML_IMPORT_MAJOR_VERSION = 1
 
 SOURCES += \
         main.cpp \
-        parse-verilog/lex.yy.cc \
-        parse-verilog/verilog_parser.tab.cc
 
 
 resources.files = main.qml
@@ -62,16 +60,3 @@ include($$PWD/parse-verilog/parse-verilog.pri)
 DISTFILES += \
     parse-verilog/verilog_lexer.l \
     parse-verilog/verilog_parser.yy
-
-HEADERS += \
-    parse-verilog/FlexLexer.h \
-    parse-verilog/TestSuite.h \
-    parse-verilog/location.hh \
-    parse-verilog/position.hh \
-    parse-verilog/stack.hh \
-    parse-verilog/verilog_data.hpp \
-    parse-verilog/verilog_data.hpp \
-    parse-verilog/verilog_driver.hpp \
-    parse-verilog/verilog_driver.hpp \
-    parse-verilog/verilog_parser.tab.hh \
-    parse-verilog/verilog_scanner.hpp

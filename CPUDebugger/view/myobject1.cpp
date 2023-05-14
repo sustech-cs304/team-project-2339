@@ -79,23 +79,6 @@ void MyObject1::makeBreakPoint()
     qDebug() << m_value;
 }
 
-void MyObject1::asmStep()
-{
-//    qDebug() << *(DebugController::step());
-//    m_value1=DebugStore::asmCurLine;
-//    qDebug() << m_value1;
-}
-
-void MyObject1::asmRun()
-{
-//    DebugController::run();
-}
-
-void MyObject1::asmPause()
-{
-    DebugController::pause();
-}
-
 int MyObject1::value1() const
 {
     return m_value1;
