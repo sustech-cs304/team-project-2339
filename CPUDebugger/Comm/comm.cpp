@@ -111,7 +111,6 @@ void UartCommunicator::sendPause(){
 }
 
 bool UartCommunicator::sendPausePacket(QByteArray& cpuResponse, double packetWaitingSeconds, double totWaitingSeconds){
-    // Protocol down
     const QByteArray PAUSE = QByteArray(1, 0x04);
     // 0 -> no Response, 1 -> success, -1 -> format failed
     int responseResult = 0;
@@ -150,7 +149,6 @@ bool UartCommunicator::sendPausePacket(QByteArray& cpuResponse, double packetWai
 }
 
 bool UartCommunicator::sendStep(QByteArray& cpuResponse, double packetWaitingSeconds, double totWaitingSeconds){
-    // Protocol down
     const QByteArray NEXT = QByteArray(1, 0x06);
     // 0 -> no Response, 1 -> success, -1 -> format failed
     int responseResult = 0;
@@ -189,7 +187,6 @@ bool UartCommunicator::sendStep(QByteArray& cpuResponse, double packetWaitingSec
 }
 
 bool UartCommunicator::sendResume(QByteArray& cpuResponse, int nextPC, double packetWaitingSeconds, double totWaitingSeconds){
-    // Protocol down
     const QByteArray PAUSE = QByteArray(1, 0x04);
     QByteArray RESUME;
     QDataStream stream(&RESUME, QIODevice::ReadWrite);
@@ -239,6 +236,7 @@ bool UartCommunicator::sendResume(QByteArray& cpuResponse, int nextPC, double pa
     // Diconnect the signals.
     disconnect(c1);
     disconnect(c2);
+    disconnect(c3);
     return responseResult == 1;
 }
 
