@@ -21,7 +21,7 @@ Window {
         value1: 0
 //        myList1: ["Apple", "Banana", "Cherry"]
 //        myList2: ["Orange", "melon"]
-        myList41:["1","0","1","0"]
+        //myList41:["1","0","1","0"]
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -1085,7 +1085,7 @@ Window {
 
                                     onClicked: {
                                         console.log("play")
-                                        myobj.asmRun()
+                                        myobj.sendResume()
                                     }
                                 }
 
@@ -1109,7 +1109,7 @@ Window {
 
                                     onClicked: {
                                         console.log("next")
-                                        myobj.asmStep()
+                                        myobj.sendStep()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
                                         console.log(myobj.value1)
@@ -1136,7 +1136,7 @@ Window {
 
                                     onClicked: {
                                         console.log("pause")
-                                        myobj.asmPause()
+                                        myobj.sendPause()
                                     }
                                 }
 
