@@ -18,6 +18,7 @@ CONFIG += qmltypes
 SOURCES += \
         main.cpp \
         tst_importfile.cpp \
+        tst_render.cpp \
         tst_uart.cpp
 
 INCLUDEPATH += \
@@ -33,3 +34,8 @@ include(../CPUDebugger/controller/controller.pri)
 include(../CPUDebugger/parse-verilog/parse-verilog.pri)
 include(../CPUDebugger/view/view.pri)
 include(../CPUDebugger/Debugger.pri)
+
+unix|win32: LIBS += -L$$PWD/'../../../Program Files/Graphviz/lib/' -lgvc -lcdt -lcgraph -lgvplugin_core -lgvplugin_dot_layout -lgvplugin_gdiplus -lgvplugin_neato_layout -lgvplugin_pango -lpathplan -lxdot
+
+INCLUDEPATH += $$PWD/'../../../Program Files/Graphviz/include'
+DEPENDPATH += $$PWD/'../../../Program Files/Graphviz/include'

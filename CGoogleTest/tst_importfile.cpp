@@ -45,9 +45,11 @@ class CompilerTest : public ::testing::Test
 {
 protected:
 
-    virtual void setUp() {
+    virtual void SetUp() {
         dirPath = "E:/DebugCore/module_files";
         destPath = "E:/";
+        tokenPath = "E:/token.txt";
+        qDebug() << "Compiler test begin";
     }
 
     virtual void TearDown() {
@@ -56,15 +58,18 @@ protected:
 public:
     QString dirPath;
     QString destPath;
+    QString tokenPath;
 };
 
+TEST_F(CompilerTest, GenTokens)
+{
+    PreProcessor p;
+    p.process("E:/alu.v", tokenPath);
+}
 
 TEST_F(CompilerTest, ImportFile)
 {
     Compiler c;
-    QString s = QString::fromStdString(c.infixToPostfix("32 - 6 - ( 3 * 5 ) - 1"));
-    qDebug() << s;
-    qDebug() << c.evaluatePostfix(s);
     QDir dir(destPath);
     if (!dir.exists()) {
         bool ismkdir = dir.mkpath(destPath);
@@ -73,13 +78,15 @@ TEST_F(CompilerTest, ImportFile)
         }else
             qDebug() << "Create directory success";
     }
-    qDebug() << "Directory: " << FileUtil::getDirList(dirPath);
-    QStringList entries = FileUtil::getDirList(dirPath);
+
+    QStringList entries = FileUtil::getDirList(dirPath, "v", true);
     PreProcessor *p = new PreProcessor();
     for (const QString &entryPath: entries) {
-        p->process(entryPath);
+        qDebug() << "Process file: " << entryPath;
+        p->process(entryPath, "E:/d.v");
     }
     for (const QString &entryPath: entries) {
+        qDebug() << "Replace file: " << entryPath;
         QFileInfo info(entryPath);
         if (!info.fileName().compare("top.v"))
             p->replace(entryPath, destPath+"ddd/"+info.fileName(), false);
