@@ -83,7 +83,7 @@ TEST_F(CompilerTest, ImportFile)
     PreProcessor *p = new PreProcessor();
     for (const QString &entryPath: entries) {
         qDebug() << "Process file: " << entryPath;
-        p->process(entryPath, "E:/d.v");
+        p->process(entryPath, std::nullopt);
     }
     for (const QString &entryPath: entries) {
         qDebug() << "Replace file: " << entryPath;

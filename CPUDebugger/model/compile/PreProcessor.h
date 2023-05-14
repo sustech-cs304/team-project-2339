@@ -13,7 +13,7 @@ class PreProcessor
 {
 public:
     PreProcessor();
-    void process(QString path, QString dest);
+    void process(QString path, std::optional<QString> dest);
     void replace(QString path, QString dest, bool ignoreStatement);
     void filter(QList<Token>&, FilterType fType);
 private:

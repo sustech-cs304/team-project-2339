@@ -10,23 +10,27 @@ PreProcessor::PreProcessor()
     marcoMap = new QMap<QString, QString>();
 }
 
-void PreProcessor::process(QString path, QString dest)
+void PreProcessor::process(QString path, std::optional<QString> dest)
 {
     QFile *f = FileUtil::importFile(path);
     QList<Token> tokens = c->scan(FileUtil::getTextStreams(f));
-    QFile of(dest);
-    of.open(QIODevice::WriteOnly);
-    QTextStream out(&of);
-    for (Token token: tokens) {
-        out << "Token: " << token.toStdString().c_str() << "\n";
+
+    if (dest.has_value()) {
+        QFile of(dest.value());
+        of.open(QIODevice::WriteOnly);
+        QTextStream out(&of);
+        for (Token token: tokens) {
+            out << "Token: " << token.toStdString().c_str() << "\n";
+        }
+        of.close();
     }
+
     for (int i = 0; i < tokens.size(); i++) {
         if (c->isMacro(i, tokens)) {
             marcoMap->insert(tokens[i+2].s, tokens[i+3].s);
         }
     }
     f->close();
-    of.close();
     delete f;
 }
 
