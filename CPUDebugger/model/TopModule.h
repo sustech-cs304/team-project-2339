@@ -1,16 +1,16 @@
-#ifndef MODULEDATA_H
-#define MODULEDATA_H
+#ifndef TOPMODULE_H
+#define TOPMODULE_H
 #include "QString"
 #include <QList>
 #include "Module.h"
-class ModuleData {
+class TopModule {
 public:
-    void addModule(Module*);
-    void removeModule(QString moduleName);
+    void setModule(Module&&);
+    void setSignalMap(QString moduleToSignal);
     void flagSignal(QString moduleName, QString signalName);
 private:
     QString name;
-    QList<Module> modules;
+    QList<Module> subModules;
 };
 
-#endif // MODULEDATA_H
+#endif // TOPMODULE_H

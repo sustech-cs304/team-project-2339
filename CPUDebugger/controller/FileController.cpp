@@ -36,6 +36,11 @@ QList<QString> FileController::getSignalList()
     return sigList;
 }
 
+void FileController::genGraph(QString path)
+{
+
+}
+
 void FileController::exportUart() {
 
 }

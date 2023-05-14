@@ -9,7 +9,7 @@ Compiler::Compiler()
 
 QList<Token> Compiler::scan(QList<QString> lines)
 {
-    alex->tokenList.clear();
+    alex->clear();
     for (QString line: lines) {
         alex->read_line(line);
     }

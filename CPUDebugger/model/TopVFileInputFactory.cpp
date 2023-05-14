@@ -6,9 +6,8 @@ TopVFileInputFactory::TopVFileInputFactory() {
     prePro = new PreProcessor();
 }
 
-ModuleData* TopVFileInputFactory::fileInput(QFile *file) {
+TopModule* TopVFileInputFactory::fileInput(QFile *file) {
     QFile* f = file;
-    std::cout << f->fileName().toStdString() << std::endl;
     f->open(QIODevice::ReadOnly);
     QTextStream in(f);
     QList<QString> lines;

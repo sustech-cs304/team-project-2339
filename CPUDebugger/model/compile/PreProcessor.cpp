@@ -10,11 +10,11 @@ PreProcessor::PreProcessor()
     marcoMap = new QMap<QString, QString>();
 }
 
-void PreProcessor::process(QString path)
+void PreProcessor::process(QString path, QString dest)
 {
     QFile *f = FileUtil::importFile(path);
     QList<Token> tokens = c->scan(FileUtil::getTextStreams(f));
-    QFile of("E:/d.v");
+    QFile of(dest);
     of.open(QIODevice::WriteOnly);
     QTextStream out(&of);
     for (Token token: tokens) {

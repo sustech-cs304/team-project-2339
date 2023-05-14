@@ -46,6 +46,11 @@ public:
     QStringList key;
     QList<Token> tokenList;
     MAlex();
+    void clear()
+    {
+        tokenList.clear();
+        is_annotated = false;
+    }
     void read_line(Line);
     int next_c(QChar);
     bool is_range(QChar);
@@ -56,6 +61,7 @@ public:
     bool is_key(QString);
 private:
     Line pre_check(Line);
+    bool is_annotated;
 };
 
 #endif // MALEX_H

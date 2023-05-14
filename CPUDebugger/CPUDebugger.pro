@@ -75,3 +75,10 @@ HEADERS += \
     parse-verilog/verilog_driver.hpp \
     parse-verilog/verilog_parser.tab.hh \
     parse-verilog/verilog_scanner.hpp
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files/Graphviz/lib/' -lgvc++
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files/Graphviz/lib/' -lgvc++d
+else:unix: LIBS += -L$$PWD/'../../../Program Files/Graphviz/lib/' -lgvc++
+
+INCLUDEPATH += $$PWD/'../../../Program Files/Graphviz/include'
+DEPENDPATH += $$PWD/'../../../Program Files/Graphviz/include'
