@@ -3,9 +3,13 @@
 #include <QtCore>
 #include <memory>
 
-struct PauseSignal
+struct UartSignal
 {
     std::shared_ptr<QString> stringPtr;
     int lineIdx;
 };
+
+
+
+
 #endif // UTILS_H

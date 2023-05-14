@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.24"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "CPU_Debugger",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "CPU_Debugger::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CPU_Debugger-Debug-868fa938e609000db67b.json",
+					"name" : "CPU_Debugger",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/zitong/Library/CloudStorage/OneDrive-\u4e2a\u4eba/2023_Spring/CS304 Software Engineering/CPU_Debugger/cmake-build-debug",
+		"source" : "/Users/zitong/Library/CloudStorage/OneDrive-\u4e2a\u4eba/2023_Spring/CS304 Software Engineering/CPU_Debugger"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

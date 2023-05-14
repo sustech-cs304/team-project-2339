@@ -1,29 +1,81 @@
 #include "DebugController.h"
 
-std::shared_ptr<QString> DebugController::step()
+int DebugController::step()
 {
-    int diff = PreDebugStore::getCoeFile()->getNextBreakPointDiff(DebugStore::coeCurLine);
-    return step(diff);
+    checkStore();
+    QByteArray cpuResponse;
+//    UartSimulator::sendStep(cpuResponse);
+
+    //获取cpuResponse的前4个Byte，将他们右移两位之后转为int返回
+//    int PC = DebugController::extractPC(cpuResponse);
+//    DebugController::setPC(FileType::Bin, PC);
+    
+//    return PC;
 }
 
-std::shared_ptr<QString> DebugController::step(int lineNum)
+int DebugController::next()
 {
-    DebugStore::coeCurLine += lineNum;
-    DebugStore::asmCurLine = PreDebugStore::getCoeFile()->coeToAsmMap[DebugStore::coeCurLine];
-    return UartSimulator::step(lineNum);
+    checkStore();
+    qWarning() << "next is not implement now";
+    return 1;
 }
 
-std::shared_ptr<QString> DebugController::run()
+int DebugController::pause()
 {
-    return UartSimulator::run();
+//    checkStore();
+//    QByteArray cpuResponse;
+//    UartSimulator::sendPause(cpuResponse);
+//    int PC = DebugController::extractPC(cpuResponse);
+//    DebugController::setPC(FileType::Bin, PC);
+//    return PC;
 }
 
-std::shared_ptr<QString> DebugController::pause()
+// TODO: Delete it4
+QByteArray DebugController::getBin()
 {
-    std::shared_ptr<struct PauseSignal> pauseSignal = UartSimulator::pause();
-    DebugStore::coeCurLine = pauseSignal->lineIdx;
-    DebugStore::asmCurLine = PreDebugStore::getCoeFile()->coeToAsmMap[DebugStore::coeCurLine];
-    qDebug() << pauseSignal->lineIdx;
-    return pauseSignal->stringPtr;
+    checkStore();
+    return DebugStore::asmFilePtr->getBin();
 }
 
+void DebugController::checkStore()
+{
+    if (DebugStore::asmFilePtr == nullptr)
+    {
+        throw std::invalid_argument("compile your asm file first");
+    }
+}
+
+void DebugController::initialize(std::shared_ptr<AsmFile> asmFilePtr)
+{
+    DebugStore::asmFilePtr = asmFilePtr;
+    DebugStore::asmCurLine = 0;
+    DebugStore::binCurLine = 0;
+}
+
+void DebugController::clear()
+{
+    DebugStore::asmFilePtr = nullptr;
+    DebugStore::asmCurLine = 0;
+    DebugStore::binCurLine = 0;
+}
+
+int DebugController::extractPC(QByteArray& cpuResponse)
+{
+    QByteArray responseCopy = cpuResponse;
+    return ((responseCopy[0] << 24) | (responseCopy[1] << 16) | (responseCopy[2] << 8) | responseCopy[3]) >> 2;
+}
+
+int DebugController::setPC(FileType fileType, int PC)
+{
+    switch (fileType) {
+    case FileType::Asm:
+        break;
+    case FileType::Bin:
+        DebugStore::binCurLine = PC;
+        DebugStore::asmCurLine = DebugStore::asmFilePtr->getAsmLine(PC);
+        break;
+    default:
+        break;
+    }
+    return 0;
+}

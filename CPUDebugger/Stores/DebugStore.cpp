@@ -1,4 +1,5 @@
-#include "DebugStore.h"
+#include "Stores/DebugStore.h"
 
-int DebugStore::coeCurLine = 0;
+int DebugStore::binCurLine = 0;
 int DebugStore::asmCurLine = 0;
+std::shared_ptr<AsmFile> DebugStore::asmFilePtr = nullptr;
