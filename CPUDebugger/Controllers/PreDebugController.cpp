@@ -37,7 +37,7 @@ int PreDebugController::compileAsm()
         throw std::invalid_argument("Select .asm file first!");
     std::shared_ptr<AsmFile> asmFilePtr = std::make_shared<AsmFile>(*filePtr);
     PreDebugStore::asmFile = asmFilePtr;
-    asmFilePtr->setBreakPoints(PreDebugStore::breakPoints);
+//    asmFilePtr->setBreakPoints(PreDebugStore::breakPoints);
     DebugController::initialize(asmFilePtr);
     return 0;
 }

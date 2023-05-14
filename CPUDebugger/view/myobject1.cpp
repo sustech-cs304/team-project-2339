@@ -81,14 +81,14 @@ void MyObject1::makeBreakPoint()
 
 void MyObject1::asmStep()
 {
-    qDebug() << *(DebugController::step());
-    m_value1=DebugStore::asmCurLine;
-    qDebug() << m_value1;
+//    qDebug() << *(DebugController::step());
+//    m_value1=DebugStore::asmCurLine;
+//    qDebug() << m_value1;
 }
 
 void MyObject1::asmRun()
 {
-    DebugController::run();
+//    DebugController::run();
 }
 
 void MyObject1::asmPause()
