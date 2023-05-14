@@ -8,7 +8,7 @@ using namespace testing;
 //是否可以上传
 TEST(uploadTest_Test, case1)
 {
-    QString filePath = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test.asm";
+    QString filePath = "test.asm";
     PreDebugController::uploadFile(filePath);
     ASSERT_FALSE(PreDebugController::getFile() == nullptr);
     PreDebugController::clear();
@@ -18,7 +18,7 @@ TEST(uploadTest_Test, case1)
 // 上传的结果是否正确
 TEST(uploadTest_Test, case2)
 {
-    QString filePath = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test.asm";
+    QString filePath = "test.asm";
     PreDebugController::uploadFile(filePath);
     QFile file2(filePath);
     std::shared_ptr<QFile> file_ptr = PreDebugController::getFile();
@@ -37,10 +37,10 @@ TEST(uploadTest_Test, case2)
 // 上传后clear，再次上传是否正确
 TEST(uploadTest_Test, case3)
 {
-    QString old_filePath = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test.asm";
+    QString old_filePath = "test.asm";
     PreDebugController::uploadFile(old_filePath);
     PreDebugController::clear();
-    QString filePath = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test2.asm";
+    QString filePath = "test2.asm";
     PreDebugController::uploadFile(filePath);
     QFile file2(filePath);
     std::shared_ptr<QFile> file_ptr = PreDebugController::getFile();

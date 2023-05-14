@@ -34,7 +34,7 @@ TEST(correction_test, case1)
     QByteArray byteArray = PreDebugController::getAsm()->getBin();
     ASSERT_FALSE(byteArray == nullptr);
     QFile file(out_file);
-    qDebug() << byteArray.toHex();
+//    qDebug() << byteArray.toHex();
     if (file.open(QIODevice::WriteOnly))
     {
         // 将 QByteArray 内容写入文件
