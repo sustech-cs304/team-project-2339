@@ -1,3 +1,0 @@
-/Users/zitong/Library/CloudStorage/OneDrive-个人/2023_Spring/CS304 Software Engineering/CPU_Debugger/cmake-build-debug/CMakeFiles/CPU_Debugger.dir
-/Users/zitong/Library/CloudStorage/OneDrive-个人/2023_Spring/CS304 Software Engineering/CPU_Debugger/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/zitong/Library/CloudStorage/OneDrive-个人/2023_Spring/CS304 Software Engineering/CPU_Debugger/cmake-build-debug/CMakeFiles/rebuild_cache.dir

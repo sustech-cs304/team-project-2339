@@ -68,6 +68,8 @@ googletest*/
 /DebugCore/.idea
 /DebugCore/vivado/
 
+release/
+
 /cmake-build-debug/
 /.idea
 /.history
