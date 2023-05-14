@@ -58,6 +58,12 @@ public:
     Q_INVOKABLE void addMyList2(QString string);
 
     Q_INVOKABLE void makeList41();
+    
+    Q_INVOKABLE void sendResume();
+    
+    Q_INVOKABLE void sendPause();
+    
+    Q_INVOKABLE void sendStep();
 
     int value1() const;
     void setValue1(int newValue1);
@@ -84,6 +90,7 @@ private:
     QList<QString> m_myList1;
     QList<QString> m_myList2;
     QList<QString> m_myList41;
+    
 
 
     Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged)
