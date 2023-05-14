@@ -18,7 +18,9 @@ public:
     static void exportFile(QString path, QList<Token> tokens);
     static void exportFile(QString dirPath, QString filename, QStringList lines);
     static QFile* importFile(QString path, bool isUrl=false);
-    static QStringList getDirList(QString dirPath, QString filter="v");
+    static QStringList getDirList(QString dirPath, QString filter="v", bool recursively=false);
+private:
+    static int findFile(const QString &filePath, QString &filter, QStringList &result, bool recursively);
 };
 
 inline QStringList FileUtil::getTextStreams(QFile *f)
@@ -86,17 +88,34 @@ inline QFile *FileUtil::importFile(QString path, bool isUrl)
         return new QFile(path);
 }
 
-inline QStringList FileUtil::getDirList(QString dirPath, QString filter)
+inline QStringList FileUtil::getDirList(QString dirPath, QString filter, bool recursively)
 {
-    QDir dirInfo(dirPath);
+    QDir dir(dirPath);
     QStringList result;
-    QStringList entries = dirInfo.entryList();
-    for (const QString &d: entries) {
-        QFileInfo fInfo(dirPath+d);
-        if (!fInfo.suffix().compare(filter))
-            result.append(QDir::fromNativeSeparators(dirPath+'/'+d));
-    }
+    findFile(dirPath, filter, result, recursively);
     return result;
+}
+
+inline int FileUtil::findFile(const QString &filePath, QString &filter, QStringList &result, bool recursively)
+{
+    QDir dir(filePath);
+    if (!dir.exists()) {
+        return -1;
+    }
+
+    dir.setFilter(QDir::Dirs|QDir::Files|QDir::NoDotAndDotDot);
+    dir.setSorting(QDir::DirsFirst);
+    QFileInfoList infos = dir.entryInfoList();
+    for (const QFileInfo &info: infos) {
+        if (info.isDir() && recursively) {
+            findFile(info.filePath(), filter, result, recursively);
+        } else {
+            if (info.fileName().endsWith(filter)) {
+                result.append(QDir::fromNativeSeparators(filePath+'/'+info.fileName()));
+            }
+        }
+    }
+    return 0;
 }
 
 #endif // FILEUTIL_H
