@@ -128,19 +128,19 @@ Window {
                                 anchors.verticalCenter: parent.verticalCenter
                                 x:text11.width+10
 
-                                FileDialog {
-                                    id: fileDialog11
-                                    title: "选择文件"
+                                FolderDialog {
+                                    id: folderDialog1
+                                    folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0] //默认打开Pictures文件夹
 
                                     onAccepted: {
-                                        console.log("已选择的文件：", currentFiles)
-                                        if (currentFile!==null){
-                                            console.log("fileDialog11: "+currentFile)
+                                        console.log("已选择的文件：", folder)
+                                        if (folder!==null){
+                                            console.log("fileDialog11: "+folder)
                                             button11.isSelected = true
                                             console.log(button11.isSelected)
                                         }
                                     }
-                                }
+                                    }
 
                                 Button {
                                     id:button11
@@ -163,7 +163,7 @@ Window {
 
                                     onClicked: {
                                         console.log("Select Top")
-                                        fileDialog11.open()
+                                        folderDialog1.open()
                                     }
                                 }
 
@@ -281,55 +281,52 @@ Window {
                                 anchors.verticalCenter: parent.verticalCenter
                                 x:width/4
                                 y:height/3
-                                text: (button11.isSelected?"top.v: "+fileDialog11.currentFile:"Please choose top.v")+"\n"+
-                                      (button13.isSelected?"def: "+fileDialog12.currentFile:"")
+                                text: (button11.isSelected?"filefolder: "+folderDialog1.folder:"Please choose filefolder")
                                 font.pixelSize: 16
 //                                anchors.centerIn: parent
                                 wrapMode: Text.Wrap
                             }
 
 
-                            FileDialog {
-                                id: fileDialog12
-                                title: "选择文件"
+//                            FileDialog {
+//                                id: fileDialog12
+//                                title: "选择文件"
 
-                                onAccepted: {
-                                    console.log("已选择的文件：", currentFiles)
-                                    if (currentFile!==null){
-                                        console.log(fileDialog12.currentFile)
-                                        button13.isSelected = true
-                                    }
-                                }
-                            }
-
-
-                            Button {
-                                id:button13
-                                width: height*3
-                                height: parent.height/12
-                                x:parent.width-width-10
-                                y:parent.height-height-10
-
-                                contentItem: Text {
-                                    text: qsTr("Select Def")
-                                    anchors.centerIn: parent
-                                }
-
-                                background: Rectangle {
-                                    color: "lightgrey"
-                                    radius: height/5
-                                }
-
-                                property bool isSelected: false
-
-                                onClicked: {
-                                    console.log("Select Def")
-                                    fileDialog12.open()
-                                }
-
-                            }
+//                                onAccepted: {
+//                                    console.log("已选择的文件：", currentFiles)
+//                                    if (currentFile!==null){
+//                                        console.log(fileDialog12.currentFile)
+//                                        button13.isSelected = true
+//                                    }
+//                                }
+//                            }
 
 
+//                            Button {
+//                                id:button13
+//                                width: height*3
+//                                height: parent.height/12
+//                                x:parent.width-width-10
+//                                y:parent.height-height-10
+
+//                                contentItem: Text {
+//                                    text: qsTr("Select Def")
+//                                    anchors.centerIn: parent
+//                                }
+
+//                                background: Rectangle {
+//                                    color: "lightgrey"
+//                                    radius: height/5
+//                                }
+
+//                                property bool isSelected: false
+
+//                                onClicked: {
+//                                    console.log("Select Def")
+//                                    fileDialog12.open()
+//                                }
+
+//                            }
 
                         }
 
