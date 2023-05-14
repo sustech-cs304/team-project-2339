@@ -197,11 +197,24 @@ void MyObject1::removeMyList2(int index)
 void MyObject1::addMyList2(QString string)
 {
     m_myList2.append(string);
+    
 }
 
 void MyObject1::makeList41()
 {
 
 
+}
+
+void MyObject1::sendResume(){
+    
+}
+
+void MyObject1::sendPause(){
+    
+}
+
+void MyObject1::sendStep(){
+    
 }
 
