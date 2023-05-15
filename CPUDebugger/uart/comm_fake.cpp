@@ -1,8 +1,8 @@
 
-#include "comm_fake.h"
+//#include "comm_fake.h"
 
-comm_fake::comm_fake()
-{
+//comm_fake::comm_fake()
+//{
 
-}
+//}
 
