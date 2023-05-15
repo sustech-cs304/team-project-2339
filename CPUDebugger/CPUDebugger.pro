@@ -5,6 +5,8 @@ TRANSLATIONS += \
     CPUDebugger_zh_CN.ts
 CONFIG += lrelease
 CONFIG += embed_translations
+CONFIG += c++17
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
