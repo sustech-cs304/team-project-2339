@@ -10,8 +10,6 @@ public:
     void addSignal(CPUSignal sig, SType st);
 private:
     QString name;
-    QList<CPUSignal> inputSignals;
-    QList<CPUSignal> outputSignals;
     QList<CPUSignal> inSignals;
     QList<CPUSignal> outSignals;
 };

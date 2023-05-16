@@ -97,7 +97,15 @@ Line MAlex::pre_check(Line line)
             new_line.remove(new_line.size()-1, 1);
             break;
         }
-        new_line.append(c);
+        if (c == '*' && las == '/' && !is_annotated) {
+            new_line.remove(new_line.size()-1, 1);
+            is_annotated = true;
+        }
+        if (!is_annotated)
+            new_line.append(c);
+        if (c == '/' && las == '*' && is_annotated) {
+            is_annotated = false;
+        }
         las = c;
     }
     new_line.append(' ');

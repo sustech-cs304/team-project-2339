@@ -60,3 +60,11 @@ include($$PWD/parse-verilog/parse-verilog.pri)
 DISTFILES += \
     parse-verilog/verilog_lexer.l \
     parse-verilog/verilog_parser.yy
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files/Graphviz/lib/' -lgvc++
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files/Graphviz/lib/' -lgvc++d
+else:unix: LIBS += -L$$PWD/'../../../Program Files/Graphviz/lib/' -lgvc++
+
+INCLUDEPATH += $$PWD/'../../../Program Files/Graphviz/include'
+DEPENDPATH += $$PWD/'../../../Program Files/Graphviz/include'

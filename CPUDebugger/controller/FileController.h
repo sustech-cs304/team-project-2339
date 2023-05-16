@@ -14,6 +14,7 @@ public:
     void import(QString& absolutePath);
     QList<QString> getSignalList();
     void setSignal(QString signalName);
+    void genGraph(QString path);
     void exportUart();
 private:
     FileInputFactory *inputFac;

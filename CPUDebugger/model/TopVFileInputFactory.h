@@ -7,7 +7,7 @@
 class TopVFileInputFactory: public FileInputFactory {
 public:
     TopVFileInputFactory();
-    virtual ModuleData* fileInput(QFile *file);
+    virtual TopModule* fileInput(QFile *file);
 private:
     PreProcessor *prePro;
 };

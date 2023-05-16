@@ -1,7 +1,7 @@
 #ifndef FILESTORE_H
 #define FILESTORE_H
 
-#include "ModuleData.h"
+#include "TopModule.h"
 #include <QFile>
 #include "QMap"
 
@@ -17,7 +17,7 @@ public:
 
     void setFile(QString key, QFile file);
 
-    void setModuleData(ModuleData *);
+    void setModuleData(TopModule *);
 
     static FileStore* getInstance() {
         if (fs == nullptr)
@@ -25,8 +25,8 @@ public:
         return fs;
     }
     void setFile(QString key, QFile* value);
-    void setModuleData(QString key, ModuleData* value);
-    ModuleData* getModuleData(QString);
+    void setModuleData(QString key, TopModule* value);
+    TopModule* getModuleData(QString);
     void deleteModuleData();
 
 private:
@@ -34,7 +34,7 @@ private:
     ~FileStore() {}
     FileStore(const FileStore&);
     FileStore& operator=(const FileStore&);
-    QMap<QString, ModuleData*> moduleMap;
+    QMap<QString, TopModule*> moduleMap;
     QMap<QString, QFile*> fileMap;
 };
 
