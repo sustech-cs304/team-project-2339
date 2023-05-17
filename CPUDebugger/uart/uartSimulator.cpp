@@ -14,8 +14,9 @@ std::shared_ptr<QString> UartSimulator::run()
 
 std::shared_ptr<struct PauseSignal> UartSimulator::pause()
 {
-    std::shared_ptr<struct PauseSignal> signal = std::make_shared<struct PauseSignal>();
-    signal->stringPtr = std::make_shared<QString>("Pause.");
-    signal->lineIdx = 15;
-    return signal;
+//    std::shared_ptr<struct PauseSignal> signal = std::make_shared<struct PauseSignal>();
+//    signal->stringPtr = std::make_shared<QString>("Pause.");
+//    signal->lineIdx = 15;
+//    return signal;
+    return nullptr;
 }

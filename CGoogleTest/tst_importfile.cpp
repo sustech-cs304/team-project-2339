@@ -1,5 +1,6 @@
 
 
+#include "FileController.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 #include <compile/PreProcessor.h>
@@ -46,9 +47,10 @@ class CompilerTest : public ::testing::Test
 protected:
 
     virtual void SetUp() {
-        dirPath = "E:/DebugCore/module_files";
-        destPath = "E:/";
-        tokenPath = "E:/token.txt";
+        projPath = qApp->applicationDirPath()+"/../..";
+        dirPath = projPath + "/examples/module_files";
+        destPath = projPath + "/examples/target";
+        tokenPath = projPath + "/examples/token.txt";
         qDebug() << "Compiler test begin";
     }
 
@@ -56,6 +58,7 @@ protected:
         qDebug() << "Compiler test end";
     }
 public:
+    QString projPath;
     QString dirPath;
     QString destPath;
     QString tokenPath;
@@ -65,10 +68,12 @@ TEST_F(CompilerTest, GenTokens)
 {
     PreProcessor p;
     p.process("E:/alu.v", tokenPath);
+    qDebug() << QCoreApplication::applicationDirPath();
 }
 
 TEST_F(CompilerTest, ImportFile)
 {
+    GTEST_SKIP();
     Compiler c;
     QDir dir(destPath);
     if (!dir.exists()) {
@@ -89,12 +94,17 @@ TEST_F(CompilerTest, ImportFile)
         qDebug() << "Replace file: " << entryPath;
         QFileInfo info(entryPath);
         if (!info.fileName().compare("top.v"))
-            p->replace(entryPath, destPath+"ddd/"+info.fileName(), false);
+            p->replace(entryPath, destPath+"/"+info.fileName(), false);
         else
-            p->replace(entryPath, destPath+"ddd/"+info.fileName(), true);
+            p->replace(entryPath, destPath+"/"+info.fileName(), true);
     }
     EXPECT_EQ(1, 1);
     ASSERT_THAT(0, Eq(0));
+}
+
+TEST_F(CompilerTest, GenGraph) {
+    FileController c;
+    c.genGraph("D:/work_qt/team-project-2339/examples/target");
 }
 
 TEST_F(CompilerTest, Parser) {

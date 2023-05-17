@@ -18,6 +18,7 @@ public:
     static void exportFile(QString path, QList<Token> tokens);
     static void exportFile(QString dirPath, QString filename, QStringList lines);
     static QFile* importFile(QString path, bool isUrl=false);
+    static QString convert(QString url);
     static QStringList getDirList(QString dirPath, QString filter="v", bool recursively=false);
 private:
     static int findFile(const QString &filePath, QString &filter, QStringList &result, bool recursively);
@@ -81,11 +82,14 @@ inline void FileUtil::exportFile(QString dirPath, QString filename, QStringList 
 inline QFile *FileUtil::importFile(QString path, bool isUrl)
 {
     if (isUrl) {
-        QString absolutePath = path;
-        QString cleanPath = QUrl(absolutePath).toLocalFile();
-        return new QFile(cleanPath);
+        return new QFile(convert(path));
     } else
         return new QFile(path);
+}
+
+inline QString FileUtil::convert(QString url)
+{
+    return QUrl(url).toLocalFile();
 }
 
 inline QStringList FileUtil::getDirList(QString dirPath, QString filter, bool recursively)

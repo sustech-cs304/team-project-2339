@@ -13,6 +13,12 @@ class PreProcessor
 {
 public:
     PreProcessor();
+    ~PreProcessor()
+    {
+        delete marcoMap;
+        delete c;
+    }
+    void clear();
     void process(QString path, std::optional<QString> dest);
     void replace(QString path, QString dest, bool ignoreStatement);
     void filter(QList<Token>&, FilterType fType);

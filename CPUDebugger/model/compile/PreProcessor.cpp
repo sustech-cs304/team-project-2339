@@ -10,6 +10,11 @@ PreProcessor::PreProcessor()
     marcoMap = new QMap<QString, QString>();
 }
 
+void PreProcessor::clear()
+{
+    marcoMap->clear();
+}
+
 void PreProcessor::process(QString path, std::optional<QString> dest)
 {
     QFile *f = FileUtil::importFile(path);

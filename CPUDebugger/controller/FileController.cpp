@@ -1,10 +1,10 @@
 #include "FileController.h"
-
+#include "FileUtil.h"
 #include <QDebug>
 #include <QUrl>
 
 FileController::FileController() {
-    inputFac = new TopVFileInputFactory();
+    tmpPath = "";
 }
 
 FileController::~FileController()
@@ -12,21 +12,20 @@ FileController::~FileController()
 }
 
 void FileController::import(QString &absolutePath) {
-    QString cleanPath = QUrl(absolutePath).toLocalFile();
-//    QZipReader r(cleanPath);
-    QFileInfo *fileInfo = new QFileInfo(cleanPath);
-    QString tmpPath = fileInfo->path()+TMP_PATH;
-    QDir *dirInfo = new QDir(tmpPath);
-//    r.extractAll(tmpPath);
-    QStringList dirList = dirInfo->entryList(QDir::Dirs);
-    for (const QString &d: dirList) {
-        QFile f(tmpPath+d);
-        QFileInfo fInfo(tmpPath+d);
-        if (!fInfo.suffix().compare(".v")) {
-            inputFac->fileInput(&f);
-        }
+    QString dirPath = FileUtil::convert(absolutePath);
+    tmpPath = dirPath+TMP_PATH;
+//    QDir *dirInfo = new QDir(tmpPath);
+    QStringList entries = FileUtil::getDirList(dirPath, "v", true);
+    for (const QString &entryPath: entries) {
+        p.process(entryPath, std::nullopt);
     }
-    dirInfo->removeRecursively();
+    for (const QString &entryPath: entries) {
+        QFileInfo info(entryPath);
+        if (!info.fileName().compare("top.v"))
+            p.replace(entryPath, tmpPath+"/"+info.fileName(), false);
+        else
+            p.replace(entryPath, tmpPath+"/"+info.fileName(), true);
+    }
 }
 
 QList<QString> FileController::getSignalList()
@@ -38,6 +37,25 @@ QList<QString> FileController::getSignalList()
 
 void FileController::genGraph(QString path)
 {
+    QProcess process;
+    QString yosysPath = PROJ_PATH+YOSYS_PATH;
+    process.setProgram(yosysPath);
+    QStringList arguments;
+    QStringList entries = FileUtil::getDirList(path, "v", true);
+    QString f;
+    for (QString &s: entries) {
+        f.append(s+" ");
+    }
+    arguments << "-p" << QString("read_verilog %1").arg(f) << "-p" << QString(path+"/show");
+    process.setArguments(arguments);
+    process.start();
+    process.waitForFinished();
+    QString output = process.readAllStandardOutput();
+    QString error = process.readAllStandardError();
+    qDebug() << output;
+    qDebug() << error;
+
+    QString graphvizPath = PROJ_PATH+GRAPHVIZ_PATH;
 
 }
 

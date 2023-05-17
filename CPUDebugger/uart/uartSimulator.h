@@ -4,8 +4,6 @@
 #include <QtCore>
 #include <memory>
 
-#include "utils/utils.h"
-
 class UartSimulator
 {
 public:

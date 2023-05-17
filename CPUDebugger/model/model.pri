@@ -10,7 +10,6 @@ HEADERS += \
     $$PWD/TopModule.h \
     $$PWD/TopVFileInputFactory.h \
     $$PWD/compile/CParser.h \
-    $$PWD/compile/CompileFactory.h \
     $$PWD/compile/MAlex.h \
     $$PWD/compile/PreProcessor.h \
     $$PWD/compile/compiler.h \
@@ -22,7 +21,6 @@ SOURCES += \
     $$PWD/FileStore.cpp \
     $$PWD/TopVFileInputFactory.cpp \
     $$PWD/compile/CParser.cpp \
-    $$PWD/compile/CompileFactory.cpp \
     $$PWD/compile/MAlex.cpp \
     $$PWD/compile/PreProcessor.cpp \
     $$PWD/compile/compiler.cpp \
