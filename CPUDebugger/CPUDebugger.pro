@@ -6,6 +6,7 @@ QT += serialport
 CONFIG += qmltypes
 QML_IMPORT_NAME = MyObj
 QML_IMPORT_MAJOR_VERSION = 1
+QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
         main.cpp \
