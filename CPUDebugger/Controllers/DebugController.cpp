@@ -1,7 +1,24 @@
 #include "DebugController.h"
+
+int DebugController::resume()
+{
+    //    checkStore();
+    //    UartCommunicator uartCommunicator;
+    //    QByteArray cpuResponse;
+    //    bool result = uartCommunicator->sendResume(cpuResponse, 40);
+    //    if (result){
+
+    //    }else{
+
+    //    }
+    //    return 1;
+    qDebug() << "resume" << Qt::endl;
+    return 0;
+}
+
 int DebugController::step()
 {
-    checkStore();
+//    checkStore();
 
 //    UartCommunicator uartCommunicator;
 //    QByteArray cpuResponse;
@@ -14,28 +31,12 @@ int DebugController::step()
     qDebug() << "step" << Qt::endl;
     return 0;
 }
-
-int DebugController::resume()
-{
-//    checkStore();
-//    UartCommunicator uartCommunicator;
-//    QByteArray cpuResponse;
-//    bool result = uartCommunicator->sendResume(cpuResponse, 40);
-//    if (result){
-
-//    }else{
-
-//    }
-//    return 1;
-    qDebug() << "resume" << Qt::endl;
-
-}
-
 int DebugController::pause()
 {
 //    UartCommunicator uartCommunicator;
 //    uartCommunicator->sendPause();
     qDebug() << "pause" << Qt::endl;
+    return 0;
 }
 
 // TODO: Delete it4

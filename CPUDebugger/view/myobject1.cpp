@@ -198,6 +198,6 @@ void MyObject1::sendPause(){
 }
 
 void MyObject1::sendStep(){
-    DebugController::resume();
+    DebugController::step();
 }
 

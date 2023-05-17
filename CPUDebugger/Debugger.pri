@@ -4,7 +4,6 @@ SOURCES += \
         $$PWD/File/AsmFile.cpp \
         $$PWD/Stores/DebugStore.cpp \
         $$PWD/Stores/PreDebugStore.cpp \
-        $$PWD/uart/UartSimulator.cpp
 
 HEADERS += \
     $$PWD/Controllers/DebugController.h \
@@ -12,5 +11,3 @@ HEADERS += \
     $$PWD/File/AsmFile.h \
     $$PWD/Stores/DebugStore.h \
     $$PWD/Stores/PreDebugStore.h \
-    $$PWD/uart/UartSimulator.h \
-    $$PWD/utils/utils.h

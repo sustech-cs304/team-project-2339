@@ -6,7 +6,7 @@
 #include <QtCore>
 #include "Controllers/DebugController.h"
 #include "Controllers/PreDebugController.h"
-#include "FileController.h"
+#include "controller/FileController.h"
 #include "Comm/comm.h"
 #include <QFile>
 #include <QTextStream>

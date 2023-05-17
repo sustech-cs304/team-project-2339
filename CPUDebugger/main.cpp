@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QScreen>
-#include "myobject1.h"
+#include "view/myobject1.h"
 #include "Comm/comm.h"
 
 int main(int argc, char *argv[]) {
