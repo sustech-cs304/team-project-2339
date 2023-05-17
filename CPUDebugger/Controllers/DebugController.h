@@ -17,14 +17,13 @@ public:
     static QByteArray getBin();
     friend class PreDebugController;
 
-
-
 private:
     enum FileType
     {
         Asm,
         Bin
     };
+
     static void checkStore();
     static void initialize(std::shared_ptr<AsmFile> asmFilePtr);
     static void clear();
