@@ -9,7 +9,7 @@ QString filePath = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Sp
 QString new_filePath = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test2.asm";
 
 //是否可以上传
-TEST(uploadTest_Test, case1)
+TEST(upload, case1)
 {
     PreDebugController::uploadFile(filePath);
     ASSERT_FALSE(PreDebugController::getFile() == nullptr);
@@ -18,7 +18,7 @@ TEST(uploadTest_Test, case1)
 }
 
 // 上传的结果是否正确
-TEST(uploadTest_Test, case2)
+TEST(upload, case2)
 {
     PreDebugController::uploadFile(filePath);
     QFile file2(filePath);
@@ -36,7 +36,7 @@ TEST(uploadTest_Test, case2)
 }
 
 // 上传后clear，再次上传是否正确
-TEST(uploadTest_Test, case3)
+TEST(upload, case3)
 {
     PreDebugController::uploadFile(filePath);
     PreDebugController::clear();
@@ -56,7 +56,7 @@ TEST(uploadTest_Test, case3)
 }
 
 // 错误路径能否正确处理
-TEST(upload_null_test, case1)
+TEST(upload, case4)
 {
     QString strange_path = "???";
     EXPECT_THROW(PreDebugController::uploadFile(strange_path), std::invalid_argument);

@@ -15,4 +15,3 @@ HEADERS += \
 
 DISTFILES += \
     $$PWD/CodeDetails.md \
-    $$PWD/test.asm

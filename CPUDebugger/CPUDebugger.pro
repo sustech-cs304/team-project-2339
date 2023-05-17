@@ -19,9 +19,17 @@ include (uart.pri)
 
 SOURCES += \
     PreDebugController_Test/compiler_test.cpp \
+    PreDebugController_Test/work_test.cpp \
     main.cpp \
     test.cpp \
     tst_case1.cpp \
     PreDebugController_Test/upload_test.cpp
+
+DISTFILES += \
+    $$PWD/CodeDetails.md \
+    $$PWD/test.asm \
+    $$PWD/test2.asm \
+    $$PWD/result.txt \
+    CPUDebugger.pdocconf
 
 

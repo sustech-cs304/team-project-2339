@@ -9,7 +9,7 @@ QString new_file_path = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/20
 QString out_file = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/result.txt";
 
 // 是否可以正常编译
-TEST(work_test, case1)
+TEST(compile, case1)
 {
     PreDebugController::uploadFile(file_path);
     ASSERT_FALSE(PreDebugController::getFile() == nullptr);
@@ -18,7 +18,7 @@ TEST(work_test, case1)
 }
 
 // 上传文件后clear，进行编译是否可以正常抛出异常
-TEST(null_compiler_test, case1)
+TEST(compile, case2)
 {
     PreDebugController::uploadFile(file_path);
     PreDebugController::clear();
@@ -27,7 +27,7 @@ TEST(null_compiler_test, case1)
 
 
 // 检查输出的QByteArray
-TEST(correction_test, case1)
+TEST(compile, case3)
 {
     PreDebugController::uploadFile(file_path);
     PreDebugController::compileAsm();
@@ -42,4 +42,12 @@ TEST(correction_test, case1)
         // 关闭文件
         file.close();
     }
+}
+
+// 检查断点能否做出映射
+TEST(compile, case4)
+{
+    PreDebugController::uploadFile(file_path);
+    PreDebugController::compileAsm();
+    QByteArray QByteArray = PreDebugController::getAsm().getBin();
 }
