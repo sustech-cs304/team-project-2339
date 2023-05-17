@@ -7,6 +7,7 @@
 #include <iostream>
 #include <variant>
 #include <experimental/filesystem>
+#include <vector>
 
 
 namespace verilog {
