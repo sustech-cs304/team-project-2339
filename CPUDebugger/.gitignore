@@ -163,3 +163,5 @@ CMakeLists.txt.user*
 >>>>>>> feature-debugger
 *.stash
 .DS_Store
+*.json
+*.qmltypes
