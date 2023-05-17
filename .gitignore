@@ -73,3 +73,6 @@ release/
 /cmake-build-debug/
 /.idea
 /.history
+
+# yosys
+yosys*/
