@@ -41,7 +41,6 @@ INCLUDEPATH += \
     $$PWD/view \
     $$PWD/uart \
     $$PWD/model \
-    $$PWD/parse-verilog
 
 
 include($$PWD/controller/controller.pri)
@@ -49,8 +48,3 @@ include($$PWD/view/view.pri)
 include($$PWD/uart/uart.pri)
 include($$PWD/model/model.pri)
 include($$PWD/Debugger.pri)
-include($$PWD/parse-verilog/parse-verilog.pri)
-
-DISTFILES += \
-    parse-verilog/verilog_lexer.l \
-    parse-verilog/verilog_parser.yy
