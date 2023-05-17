@@ -5,8 +5,8 @@
 
 using namespace testing;
 
-QString filePath = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test.asm";
-QString new_filePath = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test2.asm";
+QString filePath = "C:/Users/50164/OneDrive/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test.asm";
+QString new_filePath = "C:/Users/50164/OneDrive/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test2.asm";
 
 //是否可以上传
 TEST(upload, case1)

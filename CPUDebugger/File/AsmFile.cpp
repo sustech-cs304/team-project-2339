@@ -13,7 +13,7 @@ QString AsmFile::loadAsmFile(QFile &file) {
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
         qDebug("Asm file not found\n");
     }
-    asmFile                  = &file;
+    asmFile = &file;
     // generate the input streams
     QTextStream in(&file);
     QString     fileContents = in.readAll();
@@ -50,6 +50,11 @@ int AsmFile::setBreakPoints(std::set<int>& breakPoints)
     }
 
     return 0;
+}
+
+std::set<int>& AsmFile::getBreakPoints()
+{
+    return this->breakPoints;
 }
 
 QByteArray AsmFile::getBin() {

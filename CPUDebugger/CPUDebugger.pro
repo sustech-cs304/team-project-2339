@@ -19,6 +19,7 @@ include (uart.pri)
 
 SOURCES += \
     PreDebugController_Test/compiler_test.cpp \
+    PreDebugController_Test/generalTest.cpp \
     PreDebugController_Test/work_test.cpp \
     main.cpp \
     test.cpp \

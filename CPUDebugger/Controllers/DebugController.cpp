@@ -2,22 +2,18 @@
 
 int DebugController::step()
 {
-    checkStore();
-    QByteArray cpuResponse;
-//    UartSimulator::sendStep(cpuResponse);
-
-    //获取cpuResponse的前4个Byte，将他们右移两位之后转为int返回
-//    int PC = DebugController::extractPC(cpuResponse);
-//    DebugController::setPC(FileType::Bin, PC);
-    
-//    return PC;
+    qDebug() << "step" <<Qt::endl;
+    return 0;
 }
+
 
 int DebugController::next()
 {
-    checkStore();
-    qWarning() << "next is not implement now";
-    return 1;
+//    checkStore();
+//    qWarning() << "next is not implement now";
+//    return 1;
+    qDebug() << "step" <<Qt::endl;
+    return 0;
 }
 
 int DebugController::pause()
@@ -28,6 +24,9 @@ int DebugController::pause()
 //    int PC = DebugController::extractPC(cpuResponse);
 //    DebugController::setPC(FileType::Bin, PC);
 //    return PC;
+    qDebug() << "step" <<Qt::endl;
+    return 0;
+
 }
 
 // TODO: Delete it4
