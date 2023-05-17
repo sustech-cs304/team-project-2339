@@ -1,6 +1,5 @@
 #include "uart/sender.h"
-#include "QSerialPort"
-#include "QTime"
+
 
 SenderThread::SenderThread(QObject *parent) : QThread(parent){}
 

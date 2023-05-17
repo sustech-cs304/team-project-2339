@@ -80,6 +80,5 @@ DISTFILES += \
 
 include($$PWD/controller/controller.pri)
 include($$PWD/view/view.pri)
-include($$PWD/uart/uart.pri)
 include($$PWD/model/model.pri)
 include($$PWD/Debugger.pri)

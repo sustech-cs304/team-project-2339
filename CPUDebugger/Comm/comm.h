@@ -1,10 +1,10 @@
+#ifndef COMM_H
+#define COMM_H
+
 #include "QSerialPort"
 #include "QSerialPortInfo"
 #include "QObject"
 #include "Comm/sender.h"
-
-#ifndef COMM_H
-#define COMM_H
 
 class UartCommunicator : public QObject{
 

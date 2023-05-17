@@ -107,7 +107,6 @@ signals:
     void myList41Changed();
 };
 
-static UartCommunicator* uartCommunicator = new UartCommunicator();
 
 #endif // MYOBJECT1_H
 

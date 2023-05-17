@@ -162,4 +162,4 @@ CMakeLists.txt.user*
 .vscode/*
 >>>>>>> feature-debugger
 *.stash
-*.DS_Store
+.DS_Store

@@ -1,33 +1,41 @@
 #include "DebugController.h"
-
 int DebugController::step()
 {
     checkStore();
-    QByteArray cpuResponse;
-//    UartSimulator::sendStep(cpuResponse);
 
-    //获取cpuResponse的前4个Byte，将他们右移两位之后转为int返回
-//    int PC = DebugController::extractPC(cpuResponse);
-//    DebugController::setPC(FileType::Bin, PC);
-    
-//    return PC;
+//    UartCommunicator uartCommunicator;
+//    QByteArray cpuResponse;
+//    bool result = uartCommunicator->sendStep(cpuResponse);
+//    if (result){
+
+//    }else{
+
+//    }
+    qDebug() << "step" << Qt::endl;
+    return 0;
 }
 
-int DebugController::next()
+int DebugController::resume()
 {
-    checkStore();
-    qWarning() << "next is not implement now";
-    return 1;
+//    checkStore();
+//    UartCommunicator uartCommunicator;
+//    QByteArray cpuResponse;
+//    bool result = uartCommunicator->sendResume(cpuResponse, 40);
+//    if (result){
+
+//    }else{
+
+//    }
+//    return 1;
+    qDebug() << "resume" << Qt::endl;
+
 }
 
 int DebugController::pause()
 {
-//    checkStore();
-//    QByteArray cpuResponse;
-//    UartSimulator::sendPause(cpuResponse);
-//    int PC = DebugController::extractPC(cpuResponse);
-//    DebugController::setPC(FileType::Bin, PC);
-//    return PC;
+//    UartCommunicator uartCommunicator;
+//    uartCommunicator->sendPause();
+    qDebug() << "pause" << Qt::endl;
 }
 
 // TODO: Delete it4

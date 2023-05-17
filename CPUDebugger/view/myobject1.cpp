@@ -190,26 +190,14 @@ void MyObject1::makeList41()
 }
 
 void MyObject1::sendResume(){
-    QByteArray cpuResponse;
-    bool result = uartCommunicator->sendResume(cpuResponse, 40);
-    if (result){
-
-    }else{
-
-    }
+    DebugController::resume();
 }
 
 void MyObject1::sendPause(){
-    uartCommunicator->sendPause();
+    DebugController::pause();
 }
 
 void MyObject1::sendStep(){
-    QByteArray cpuResponse;
-    bool result = uartCommunicator->sendStep(cpuResponse);
-    if (result){
-
-    }else{
-
-    }
+    DebugController::resume();
 }
 

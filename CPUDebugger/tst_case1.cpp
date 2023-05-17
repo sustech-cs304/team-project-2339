@@ -1,12 +1,12 @@
 
-#include <gtest/gtest.h>
-#include <gmock/gmock-matchers.h>
+//#include <gtest/gtest.h>
+//#include <gmock/gmock-matchers.h>
 
-using namespace testing;
+//using namespace testing;
 
-TEST(sampleClass, case1)
-{
-    EXPECT_EQ(1, 1);
-    ASSERT_THAT(0, Eq(0));
-}
+//TEST(sampleClass, case1)
+//{
+//    EXPECT_EQ(1, 1);
+//    ASSERT_THAT(0, Eq(0));
+//}
 
