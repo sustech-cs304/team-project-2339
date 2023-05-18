@@ -167,13 +167,12 @@ module top_testbench ();
         // signals[11] = 0;
         // signals[12] = 0;
         // signals[13] = 0;
-        signals[14] = OP_PAUSE;
+        // signals[14] = OP_PAUSE;
         // signals[15] = OP_PROGRAM;
         // signals[16] = 1;
         // signals[17] = 1;
         // signals[18] = 1;
-        // signals[19] = 1;
-        signals[20] = OP_PAUSE;
+        signals[19] = OP_NEXT;
     end
 
     initial begin

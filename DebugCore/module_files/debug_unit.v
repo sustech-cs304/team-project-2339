@@ -261,8 +261,8 @@ module debug_unit (
                         core_tx_state <= core_tx_state; // prevent auto latches
                 end
                 default        :
-                    casex ({breakpoint_reached & ~debug_pause, 
-                            rx_complete        & (core_rx_state == CORE_RX_OPCODE)})
+                    casex ({(breakpoint_reached | (core_rx_state == CORE_RX_NEXT)) & ~debug_pause, 
+                            rx_complete         & (core_rx_state == CORE_RX_OPCODE)})
                         2'b1x  : begin // after reaching the breakpoint
                             debug_pause          <= 1'b1;
                             core_tx_state        <= CORE_TX_SIGNAL;
@@ -350,7 +350,6 @@ module debug_unit (
                             // will be back to this state after the next cycle
                             OP_NEXT    : begin
                                 debug_pause   <= 1'b0;
-                                breakpoint    <= breakpoint + `INSTRUCTION_BYTES;
                                 core_rx_state <= CORE_RX_NEXT;
                             end
                             default    :
