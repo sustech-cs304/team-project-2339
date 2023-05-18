@@ -64,7 +64,8 @@ module debug_unit (
     localparam  CORE_RX_STATE_WIDTH = 2,
                 CORE_RX_OPCODE      = 2'b00,    // analyze opcode
                 CORE_RX_PROGRAM     = 2'b01,    // receive program
-                CORE_RX_PC          = 2'b10;    // receive breakpoint pc
+                CORE_RX_PC          = 2'b10,    // receive breakpoint pc
+                CORE_RX_NEXT        = 2'b11;    // execute next instruction
     reg [CORE_RX_STATE_WIDTH - 1:0] core_rx_state;
 
     localparam  CORE_TX_STATE_WIDTH = 2,
@@ -293,27 +294,9 @@ module debug_unit (
                     endcase
             endcase
             // reception FSM
-            if (rx_complete | uart_complete) // after receiving a byte or no additional bytes to be received
-                case (core_rx_state)
-                    CORE_RX_OPCODE  :
-                        case (rx_byte)
-                            // receive additional data
-                            OP_RESUME  : begin
-                                debug_pause   <= 1'b1;
-                                core_rx_state <= CORE_RX_PC;
-                            end
-                            OP_PROGRAM : begin
-                                debug_pause   <= 1'b1;
-                                core_rx_state <= CORE_RX_PROGRAM;
-                            end
-                            // trigger breakpoint_reached in next cycle
-                            OP_NEXT    : begin
-                                debug_pause   <= 1'b0;
-                                breakpoint    <= breakpoint + `INSTRUCTION_BYTES;
-                            end
-                            default    :
-                                core_rx_state <= core_rx_state; // prevent auto latches
-                        endcase
+            if (rx_complete | uart_complete |   // after receiving a byte or no additional bytes to be received
+                core_rx_state == CORE_RX_NEXT)  // takes care of the next instruction
+                case (core_rx_state)                        
                     CORE_RX_PROGRAM : begin
                         if (uart_complete) begin
                             core_rx_state      <= CORE_RX_OPCODE;
@@ -348,8 +331,31 @@ module debug_unit (
                             uart_byte_idx <= uart_byte_idx + 1;
                         end
                     end
-                    default       : 
-                        core_rx_state <= core_rx_state; // prevent auto latches
+                    CORE_RX_NEXT    : begin
+                        debug_pause   <= 1'b1;
+                        core_rx_state <= CORE_RX_OPCODE;
+                    end
+                    /* CORE_RX_OPCODE */
+                    default         :
+                        case (rx_byte)
+                            // receive additional data
+                            OP_RESUME  : begin
+                                debug_pause   <= 1'b1;
+                                core_rx_state <= CORE_RX_PC;
+                            end
+                            OP_PROGRAM : begin
+                                debug_pause   <= 1'b1;
+                                core_rx_state <= CORE_RX_PROGRAM;
+                            end
+                            // will be back to this state after the next cycle
+                            OP_NEXT    : begin
+                                debug_pause   <= 1'b0;
+                                breakpoint    <= breakpoint + `INSTRUCTION_BYTES;
+                                core_rx_state <= CORE_RX_NEXT;
+                            end
+                            default    :
+                                core_rx_state <= core_rx_state; // prevent auto latches
+                        endcase
                 endcase
             else
                 uart_write_enable <= 1'b0;

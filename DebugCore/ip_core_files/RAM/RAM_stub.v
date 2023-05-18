@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-// Date        : Sun Apr  2 00:56:42 2023
+// Date        : Thu May 18 09:18:49 2023
 // Host        : MAC running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub -rename_top RAM -prefix
-//               RAM_ RAM_stub.v
+// Command     : write_verilog -force -mode synth_stub {Z:/Documents/SUStech/Homework/Software
+//               Engineering/project/team-2339/DebugCore/ip_core_files/RAM/RAM_stub.v}
 // Design      : RAM
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tfgg484-1
