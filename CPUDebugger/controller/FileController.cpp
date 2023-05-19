@@ -14,25 +14,32 @@ FileController::~FileController()
 void FileController::import(QString &absolutePath) {
     QString dirPath = FileUtil::convert(absolutePath);
     tmpPath = dirPath+TMP_PATH;
-//    QDir *dirInfo = new QDir(tmpPath);
+    QDir *dir = new QDir(tmpPath);
+    if (!dir->exists()) {
+        if (dir->mkpath(tmpPath))
+            qDebug() << "Folder created successfully";
+        else
+            qDebug() << "Failed to create folder";
+    }
     QStringList entries = FileUtil::getDirList(dirPath, "v", true);
     for (const QString &entryPath: entries) {
         p.process(entryPath, std::nullopt);
     }
     for (const QString &entryPath: entries) {
         QFileInfo info(entryPath);
-        if (!info.fileName().compare("top.v"))
+        if (!info.fileName().compare("top.v")) {
             p.replace(entryPath, tmpPath+"/"+info.fileName(), false);
-        else
+            topPath = tmpPath+"/"+info.fileName();
+        }
+        else {
             p.replace(entryPath, tmpPath+"/"+info.fileName(), true);
+        }
     }
 }
 
-QList<QString> FileController::getSignalList()
+QList<CPUSignal> FileController::getSignalList()
 {
-    QList<QString> sigList;
-    sigList.append("instruction_mem_instruction");
-    return sigList;
+    return p.genSignals(topPath);
 }
 
 void FileController::genGraph(QString path)

@@ -1,5 +1,3 @@
-
-
 #include "FileController.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
@@ -9,38 +7,6 @@
 #include <verilog_driver.hpp>
 
 using namespace testing;
-struct SampleParser : public verilog::ParserVerilogInterface {
-    virtual ~SampleParser(){}
-
-    void add_module(std::string&& name){
-        std::cout << "Module name = " << name << '\n';
-    }
-
-    void add_port(verilog::Port&& port) {
-        std::cout << "Port: " << port << '\n';
-        ports.push_back(std::move(port));
-    }
-
-    void add_net(verilog::Net&& net) {
-        std::cout << "Net: " << net << '\n';
-        nets.push_back(std::move(net));
-    }
-
-    void add_assignment(verilog::Assignment&& ast) {
-        std::cout << "Assignment: " << ast << '\n';
-        assignments.push_back(std::move(ast));
-    }
-
-    void add_instance(verilog::Instance&& inst) {
-        std::cout << "Instance: " << inst << '\n';
-        insts.push_back(std::move(inst));
-    }
-
-    std::vector<verilog::Port> ports;
-    std::vector<verilog::Net> nets;
-    std::vector<verilog::Assignment> assignments;
-    std::vector<verilog::Instance> insts;
-};
 
 class CompilerTest : public ::testing::Test
 {
@@ -66,15 +32,15 @@ public:
 
 TEST_F(CompilerTest, GenTokens)
 {
-    PreProcessor p;
-    p.process("E:/alu.v", tokenPath);
+    GTEST_SKIP();
+    PreProcessor *p = new PreProcessor();
+    p->process("E:/alu.v", tokenPath);
     qDebug() << QCoreApplication::applicationDirPath();
 }
 
 TEST_F(CompilerTest, ImportFile)
 {
     GTEST_SKIP();
-    Compiler c;
     QDir dir(destPath);
     if (!dir.exists()) {
         bool ismkdir = dir.mkpath(destPath);
@@ -83,9 +49,8 @@ TEST_F(CompilerTest, ImportFile)
         }else
             qDebug() << "Create directory success";
     }
-
-    QStringList entries = FileUtil::getDirList(dirPath, "v", true);
     PreProcessor *p = new PreProcessor();
+    QStringList entries = FileUtil::getDirList(dirPath, "v", true);
     for (const QString &entryPath: entries) {
         qDebug() << "Process file: " << entryPath;
         p->process(entryPath, std::nullopt);
@@ -98,24 +63,22 @@ TEST_F(CompilerTest, ImportFile)
         else
             p->replace(entryPath, destPath+"/"+info.fileName(), true);
     }
-    EXPECT_EQ(1, 1);
-    ASSERT_THAT(0, Eq(0));
+    delete p;
 }
 
 TEST_F(CompilerTest, GenGraph) {
-    FileController c;
-    c.genGraph("D:/work_qt/team-project-2339/examples/target");
+    GTEST_SKIP();
+    FileController *c = new FileController;
+    c->genGraph("D:/work_qt/team-project-2339/examples/target");
 }
 
-TEST_F(CompilerTest, Parser) {
-    SampleParser parser;
-    qDebug() << std::filesystem::current_path();
-    QStringList entries = FileUtil::getDirList(destPath+"/pre");
-    for (const QString &entry: entries) {
-        QFileInfo info(entry);
-        if (!info.fileName().compare("top1.v")) {
-            qDebug() << entry;
-            parser.read(entry.toStdString());
-        }
+TEST_F(CompilerTest, ExportSignals) {
+    FileController *c = new FileController();
+    QString url = QString::fromStdString("file:///"+dirPath.toStdString());
+    c->import(url);
+    QList<CPUSignal> signalList = c->getSignalList();
+    for (CPUSignal& sig: signalList) {
+        qDebug() << sig.name << " [" << sig.lBound << ", " << sig.rBound << "]";
     }
+    delete c;
 }

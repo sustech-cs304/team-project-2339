@@ -147,8 +147,8 @@ void MyObject1::setMyList41(const QList<QString> &newMyList41)
 
 void MyObject1::makeList1()
 {
-    m_myList1=fileContrl->getSignalList();
-    qDebug()<<m_myList1;
+//    m_myList1=fileContrl->getSignalList();
+//    qDebug()<<m_myList1;
 }
 
 void MyObject1::removeMyList1(int index)

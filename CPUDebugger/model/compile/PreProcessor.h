@@ -2,6 +2,7 @@
 #ifndef PREPROCESSOR_H
 #define PREPROCESSOR_H
 
+#include "compile/CParser.h"
 #include "compile/compiler.h"
 #include <QString>
 #define FilterType int
@@ -22,6 +23,7 @@ public:
     void process(QString path, std::optional<QString> dest);
     void replace(QString path, QString dest, bool ignoreStatement);
     void filter(QList<Token>&, FilterType fType);
+    QList<CPUSignal> genSignals(QString &path);
 private:
     void replaceMarco(QList<Token>&);
     void filterIgnoreBeforeModule(QList<Token>&);
@@ -29,6 +31,7 @@ private:
     void filterEquationCompution(QList<Token>&);
     QMap<QString, QString> *marcoMap;
     Compiler *c;
+    CParser *parser;
 };
 
 #endif // PREPROCESSOR_H

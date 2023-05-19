@@ -13,13 +13,14 @@ public:
     FileController();
     ~FileController();
     void import(QString& absolutePath);
-    QList<QString> getSignalList();
+    QList<CPUSignal> getSignalList();
     void setSignal(QString signalName);
     void genGraph(QString path);
     void exportUart();
 private:
     PreProcessor p;
     QString tmpPath;
+    QString topPath;
 };
 
 #endif // FILECONTROLLER_H

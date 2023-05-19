@@ -7,6 +7,7 @@
 PreProcessor::PreProcessor()
 {
     c = new Compiler();
+    parser = new CParser();
     marcoMap = new QMap<QString, QString>();
 }
 
@@ -62,6 +63,12 @@ void PreProcessor::filter(QList<Token> &tokens, int fType)
     } else if (fType == FILTER_EQUATION_COMPUTION) {
         filterEquationCompution(tokens);
     }
+}
+
+QList<CPUSignal> PreProcessor::genSignals(QString &path)
+{
+    parser->read(path.toStdString());
+    return parser->export_signals();
 }
 
 void PreProcessor::replaceMarco(QList<Token> &tokens)
