@@ -1125,6 +1125,7 @@ Window {
 
                                 onClicked: {
                                     console.log("detect")
+                                    myobj.detect()
                                     button34.isClicked=true
                                 }
                             }

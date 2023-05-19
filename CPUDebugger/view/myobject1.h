@@ -54,6 +54,8 @@ public:
     
     Q_INVOKABLE void sendStep();
 
+    Q_INVOKABLE void detect();
+
     int value1() const;
     void setValue1(int newValue1);
 

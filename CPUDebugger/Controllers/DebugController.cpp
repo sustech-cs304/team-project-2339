@@ -1,41 +1,42 @@
 #include "DebugController.h"
 
+extern UartCommunicator uartCommunicator;
 int DebugController::resume()
 {
-    //    checkStore();
-    //    UartCommunicator uartCommunicator;
-    //    QByteArray cpuResponse;
-    //    bool result = uartCommunicator->sendResume(cpuResponse, 40);
-    //    if (result){
+    //checkStore();
 
-    //    }else{
-
-    //    }
-    //    return 1;
-    qDebug() << "resume" << Qt::endl;
+    QByteArray cpuResponse;
+    bool result = uartCommunicator.sendResume(cpuResponse, 40);
+    qDebug() << cpuResponse << Qt::endl;
     return 0;
 }
 
 int DebugController::step()
 {
-//    checkStore();
+    //checkStore();
+    QByteArray cpuResponse;
+    bool result = uartCommunicator.sendStep(cpuResponse);
+    if (result){
 
-//    UartCommunicator uartCommunicator;
-//    QByteArray cpuResponse;
-//    bool result = uartCommunicator->sendStep(cpuResponse);
-//    if (result){
+    }else{
 
-//    }else{
-
-//    }
-    qDebug() << "step" << Qt::endl;
+    }
+    qDebug() << cpuResponse << Qt::endl;
     return 0;
 }
 int DebugController::pause()
 {
-//    UartCommunicator uartCommunicator;
-//    uartCommunicator->sendPause();
+    //checkStore();
+    uartCommunicator.sendPause();
     qDebug() << "pause" << Qt::endl;
+    return 0;
+}
+
+int DebugController::detect()
+{
+    //checkStore();
+    uartCommunicator.autoConnectCPU();
+    qDebug() << "HA" << Qt::endl;
     return 0;
 }
 

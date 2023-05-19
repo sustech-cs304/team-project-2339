@@ -59,6 +59,7 @@ void SenderThread::run(){
         mutex.lock();
         serial.setPortName(currentPortName);
         serial.setBaudRate(currentBaudRate);
+        serial.close();
         if (!serial.open(QIODevice::ReadWrite)) {
             emit error(tr("Can't open %1, error code %2").arg(currentPortName).arg(serial.error()));
             return;
@@ -85,7 +86,7 @@ void SenderThread::run(){
                 while (serial.waitForReadyRead(10))
                     responseData += serial.readAll();
                 emit this->response(responseData);
-            } else {
+            } else if (!pauseFlag){
                 emit timeout(tr("Wait read response timeout %1").arg(QTime::currentTime().toString()));
             }
         }

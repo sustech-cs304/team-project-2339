@@ -831,6 +831,7 @@ Window {
 
                                 onClicked: {
                                     console.log("detect")
+                                    myobj.detect()
                                     btn4.enabled=true
                                     bar.currentIndex=3
                                     listView3.model=myobj.myList2
