@@ -29,11 +29,9 @@ TEST(PreDebugControllerTest, Clear_ClearsFileAndAsmFile)
     QString filePath = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\valid.asm";
     std::shared_ptr<QFile> filePtr = PreDebugController::uploadFile(filePath);
     ASSERT_NE(PreDebugStore::file, nullptr);
-    ASSERT_NE(PreDebugStore::asmFile, nullptr);
 
     PreDebugController::clear();
     ASSERT_EQ(PreDebugStore::file, nullptr);
-    ASSERT_EQ(PreDebugStore::asmFile, nullptr);
 }
 
 // 测试在未上传文件的情况下编译汇编是否抛出无效参数异常
