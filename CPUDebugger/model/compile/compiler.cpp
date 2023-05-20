@@ -7,7 +7,7 @@ Compiler::Compiler()
     alex = new MAlex();
 }
 
-QList<Token> Compiler::scan(QList<QString> lines)
+QList<Token> Compiler::scan(QList<QString>& lines)
 {
     alex->clear();
     for (QString line: lines) {
@@ -16,7 +16,7 @@ QList<Token> Compiler::scan(QList<QString> lines)
     return alex->tokenList;
 }
 
-bool Compiler::isMacro(int index, QList<Token> tokens)
+bool Compiler::isMacro(int index, QList<Token> &tokens)
 {
     if (index+3 >= tokens.size())
         return false;
@@ -29,7 +29,7 @@ bool Compiler::isMacro(int index, QList<Token> tokens)
     return false;
 }
 
-int Compiler::getEquation(QList<Token> tokens)
+int Compiler::getEquation(QList<Token>& tokens)
 {
     QString expr;
     for (int i = 0; i < tokens.size(); i++) {

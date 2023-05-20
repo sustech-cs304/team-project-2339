@@ -19,7 +19,8 @@ void PreProcessor::clear()
 void PreProcessor::process(QString path, std::optional<QString> dest)
 {
     QFile *f = FileUtil::importFile(path);
-    QList<Token> tokens = c->scan(FileUtil::getTextStreams(f));
+    QStringList lines = FileUtil::getTextStreams(f);
+    QList<Token> tokens = c->scan(lines);
 
     if (dest.has_value()) {
         QFile of(dest.value());
@@ -43,7 +44,8 @@ void PreProcessor::process(QString path, std::optional<QString> dest)
 void PreProcessor::replace(QString path, QString dest, bool ignoreStatement)
 {
     QFile *f = FileUtil::importFile(path);
-    QList<Token> tokens = c->scan(FileUtil::getTextStreams(f));
+    QStringList lines = FileUtil::getTextStreams(f);
+    QList<Token> tokens = c->scan(lines);
     filter(tokens, FILTER_IGNORE_BEFORE_MODULE);
     replaceMarco(tokens);
     if (ignoreStatement)
