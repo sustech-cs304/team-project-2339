@@ -1,6 +1,7 @@
 #include "DebugController.h"
 
-extern UartCommunicator uartCommunicator;
+static UartCommunicator uartCommunicator;
+
 int DebugController::resume()
 {
     //checkStore();

@@ -17,9 +17,6 @@ public:
     static int detect();
     static QByteArray getBin();
     friend class PreDebugController;
-
-
-
 private:
     enum FileType
     {
@@ -33,7 +30,6 @@ private:
     inline static int extractPC(QByteArray& cpuResponse);
 
     inline static int setPC(FileType fileType, int PC);
-
 };
 
 #endif // DEBUGCONTROLLER_H
