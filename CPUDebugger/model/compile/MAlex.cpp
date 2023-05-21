@@ -33,7 +33,7 @@ void MAlex::read_line(Line line)
                 else if (is_alpha(s[0]) || s[0] == '_')
                     this->tokenList.append(Token(s, ID));
                 else if (is_number(s)) {
-                    this->tokenList.append(Token(s, CONS));
+                    this->tokenList.append(Token(filter(s, '_'), CONS));
                 } else {
                     QMessageLogger logger;
                     logger.info("%s", s.toStdString().c_str());
@@ -84,6 +84,11 @@ bool MAlex::is_number(QString s)
 bool MAlex::is_key(QString s)
 {
     return this->key.contains(s);
+}
+
+QString MAlex::filter(QString s, QChar c)
+{
+    return s.remove(c);
 }
 
 Line MAlex::pre_check(Line line)

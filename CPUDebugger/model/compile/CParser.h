@@ -2,6 +2,9 @@
 #ifndef CPARSER_H
 #define CPARSER_H
 
+#include "CPUSignal.h"
+#include <QList>
+#include <QString>
 #include <verilog_driver.hpp>
 
 
@@ -31,9 +34,9 @@ class CParser: public verilog::ParserVerilogInterface {
         std::cout << "Instance: " << inst << '\n';
         insts.push_back(std::move(inst));
     }
-
-    void export_signals();
-
+public:
+    QList<CPUSignal> export_signals();
+private:
     std::vector<verilog::Port> ports;
     std::vector<verilog::Net> nets;
     std::vector<verilog::Assignment> assignments;

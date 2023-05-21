@@ -4,6 +4,7 @@ HEADERS += \
     $$PWD/FileOutputFactory.h \
     $$PWD/FileStore.h \
     $$PWD/FileUtil.h \
+    $$PWD/Generator.h \
     $$PWD/Module.h \
     $$PWD/CPUSignal.h \
     $$PWD/QProcessingException.h \
@@ -18,6 +19,7 @@ HEADERS += \
 SOURCES += \
     $$PWD/FileInputFactory.cpp \
     $$PWD/FileStore.cpp \
+    $$PWD/Generator.cpp \
     $$PWD/TopVFileInputFactory.cpp \
     $$PWD/compile/MAlex.cpp \
     $$PWD/compile/PreProcessor.cpp \
