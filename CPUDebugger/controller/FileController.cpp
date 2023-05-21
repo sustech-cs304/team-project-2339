@@ -42,28 +42,11 @@ QList<CPUSignal> FileController::getSignalList()
     return p.genSignals(topPath);
 }
 
-void FileController::genGraph(QString path)
+void FileController::genGraph(QString dirPath)
 {
-    QProcess process;
-    QString yosysPath = PROJ_PATH+YOSYS_PATH;
-    process.setProgram(yosysPath);
-    QStringList arguments;
-    QStringList entries = FileUtil::getDirList(path, "v", true);
-    QString f;
-    for (QString &s: entries) {
-        f.append(s+" ");
-    }
-    arguments << "-p" << QString("read_verilog %1").arg(f) << "-p" << QString(path+"/show");
-    process.setArguments(arguments);
-    process.start();
-    process.waitForFinished();
-    QString output = process.readAllStandardOutput();
-    QString error = process.readAllStandardError();
-    qDebug() << output;
-    qDebug() << error;
-
-    QString graphvizPath = PROJ_PATH+GRAPHVIZ_PATH;
-
+//    g.genSvg(PROJ_PATH+YOSYS_PATH, dirPath);
+    g.genDot(PROJ_PATH+YOSYS_PATH, dirPath);
+    g.genSvg(PROJ_PATH+GV_PATH, dirPath, "show.dot");
 }
 
 void FileController::exportUart() {

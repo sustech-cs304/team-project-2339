@@ -17,6 +17,7 @@ public:
     static void exportFile(QString path, QStringList lines);
     static void exportFile(QString path, QList<Token> tokens);
     static void exportFile(QString dirPath, QString filename, QStringList lines);
+    static QString execute(QString binPath, QString workDir, QStringList &arguments);
     static QFile* importFile(QString path, bool isUrl=false);
     static QString convert(QString url);
     static QStringList getDirList(QString dirPath, QString filter="v", bool recursively=false);
@@ -77,6 +78,19 @@ inline void FileUtil::exportFile(QString path, QList<Token> tokens)
 inline void FileUtil::exportFile(QString dirPath, QString filename, QStringList lines)
 {
     exportFile(dirPath+filename, lines);
+}
+
+inline QString FileUtil::execute(QString binPath, QString workDir, QStringList &arguments)
+{
+    QProcess process;
+    process.setProgram(binPath);
+    process.setWorkingDirectory(workDir);
+    process.setArguments(arguments);
+    process.start();
+    process.waitForFinished();
+    QString output = process.readAllStandardOutput();
+    QString error = process.readAllStandardError();
+    return output + "\n" + error;
 }
 
 inline QFile *FileUtil::importFile(QString path, bool isUrl)

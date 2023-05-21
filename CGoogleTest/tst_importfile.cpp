@@ -67,12 +67,13 @@ TEST_F(CompilerTest, ImportFile)
 }
 
 TEST_F(CompilerTest, GenGraph) {
-    GTEST_SKIP();
     FileController *c = new FileController;
-    c->genGraph("D:/work_qt/team-project-2339/examples/target");
+    c->genGraph(destPath);
+    delete c;
 }
 
 TEST_F(CompilerTest, ExportSignals) {
+    GTEST_SKIP();
     FileController *c = new FileController();
     QString url = QString::fromStdString("file:///"+dirPath.toStdString());
     c->import(url);
