@@ -16,8 +16,10 @@ public:
     ~FileController();
     void import(QString& absolutePath);
     QList<CPUSignal> getSignalList();
+    QList<QString> getSignals();
     void setSignal(QString signalName);
     void genGraph(QString path);
+    void genGraph();
     void exportUart();
 private:
     PreProcessor p;
