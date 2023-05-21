@@ -328,6 +328,7 @@ Window {
                                             myobj.makeList2()
                                             listView21.model=myobj.myList1
                                             listView22.model=myobj.myList2
+
                                         }else{
                                             text14.show=true
                                         }
