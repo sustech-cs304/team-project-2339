@@ -47,9 +47,9 @@ void PreProcessor::replace(QString path, QString dest, bool ignoreStatement)
     QStringList lines = FileUtil::getTextStreams(f);
     QList<Token> tokens = c->scan(lines);
     filter(tokens, FILTER_IGNORE_BEFORE_MODULE);
-    replaceMarco(tokens);
     if (ignoreStatement)
         filter(tokens, FILTER_IGNORE_STATEMENT);
+    replaceMarco(tokens);
     filter(tokens, FILTER_EQUATION_COMPUTION);
     FileUtil::exportFile(dest, tokens);
     f->close();
@@ -107,16 +107,20 @@ void PreProcessor::filterIgnoreStatement(QList<Token> &tokens)
 {
     int p = 0;
     bool isState = false;
+    int f;
     while (p <tokens.size()) {
         Token &t = tokens[p];
-        if (t.s == "endmodule")
+        if (t.s == "endmodule") {
             isState = false;
+            tokens.remove(f, p-f);
+            break;
+        }
         if (isState) {
-            tokens.remove(p);
+            p++;
         } else {
             if (t.s == ';')
                 isState = true;
-            p++;
+            f = ++p;
         }
     }
 }

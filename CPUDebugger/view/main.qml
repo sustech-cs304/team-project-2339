@@ -323,11 +323,14 @@ Window {
                                         if(button11.isSelected){
                                             btn2.enabled=true
                                             bar.currentIndex=1
+                                            myobj.confirm1()
                                             console.log("Confirm1")
                                             myobj.makeList1()
                                             myobj.makeList2()
                                             listView21.model=myobj.myList1
                                             listView22.model=myobj.myList2
+                                            myobj.string=folderDialog1.folder
+
                                         }else{
                                             text14.show=true
                                         }

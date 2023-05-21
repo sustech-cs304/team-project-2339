@@ -38,7 +38,7 @@ public:
 
     Q_INVOKABLE void removeMyList1(int index);
 
-    Q_INVOKABLE void addMyList1(QString string);
+    Q_INVOKABLE void addMyList1();
 
     Q_INVOKABLE void makeList2();
 
@@ -55,6 +55,8 @@ public:
     Q_INVOKABLE void sendStep();
 
     Q_INVOKABLE void detect();
+
+    Q_INVOKABLE void confirm1();
 
     int value1() const;
     void setValue1(int newValue1);

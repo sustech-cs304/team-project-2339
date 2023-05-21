@@ -159,7 +159,7 @@ void MyObject1::removeMyList1(int index)
     }
 }
 
-void MyObject1::addMyList1(QString string)
+void MyObject1::addMyList1()
 {
 
 }
@@ -203,5 +203,15 @@ void MyObject1::sendStep(){
 
 void MyObject1::detect(){
     
+}
+
+void MyObject1::confirm1()
+{
+    fileContrl->import(m_string);
+
+    m_myList1 = fileContrl->getSignals();
+
+    fileContrl->genGraph();
+
 }
 

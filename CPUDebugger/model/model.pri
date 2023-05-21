@@ -9,17 +9,18 @@ HEADERS += \
     $$PWD/CPUSignal.h \
     $$PWD/TopModule.h \
     $$PWD/TopVFileInputFactory.h \
+    $$PWD/compile/CParser.h \
     $$PWD/compile/MAlex.h \
     $$PWD/compile/PreProcessor.h \
     $$PWD/compile/compiler.h \
     $$PWD/compile/global_compile.h \
-    $$PWD/render/GraphRender.h
 
 SOURCES += \
     $$PWD/FileInputFactory.cpp \
     $$PWD/FileStore.cpp \
     $$PWD/Generator.cpp \
     $$PWD/TopVFileInputFactory.cpp \
+    $$PWD/compile/CParser.cpp \
     $$PWD/compile/MAlex.cpp \
     $$PWD/compile/PreProcessor.cpp \
     $$PWD/compile/compiler.cpp \

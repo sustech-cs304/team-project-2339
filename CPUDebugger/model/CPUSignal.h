@@ -44,6 +44,16 @@ public:
             return CPUSignal("NULL", -1, -1);
         }
     }
+    QString toString() {
+//        QString s = name;
+        if (lBound == -1 && rBound == -1) {
+            return name;
+        } else if (lBound == rBound) {
+            return name+"["+QString::number(lBound)+"]";
+        } else {
+            return name+"["+QString::number(lBound)+", "+QString::number(rBound)+"]";
+        }
+    }
     QString   name;         // name of the CPU's signal
     int    lBound;       // left bound of signal
     int    rBound;       // right bound of signal
