@@ -7,7 +7,6 @@ HEADERS += \
     $$PWD/Generator.h \
     $$PWD/Module.h \
     $$PWD/CPUSignal.h \
-    $$PWD/QProcessingException.h \
     $$PWD/TopModule.h \
     $$PWD/TopVFileInputFactory.h \
     $$PWD/compile/MAlex.h \
