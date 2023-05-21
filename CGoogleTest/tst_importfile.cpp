@@ -83,3 +83,8 @@ TEST_F(CompilerTest, ExportSignals) {
     }
     delete c;
 }
+
+TEST_F(CompilerTest, Convert) {
+    qDebug() << "Destination path: " << destPath;
+    qDebug() << QUrl::fromLocalFile(destPath);
+}
