@@ -11,9 +11,10 @@
 class DebugController
 {
 public:
+    static int resume();
     static int step();
-    static int next();
     static int pause();
+    static int detect();
     static QByteArray getBin();
     friend class PreDebugController;
 

@@ -6,7 +6,7 @@
 #include <QtCore>
 #include "Controllers/DebugController.h"
 #include "Controllers/PreDebugController.h"
-#include "FileController.h"
+#include "controller/FileController.h"
 #include "Comm/comm.h"
 #include <QFile>
 #include <QTextStream>
@@ -53,6 +53,8 @@ public:
     Q_INVOKABLE void sendPause();
     
     Q_INVOKABLE void sendStep();
+
+    Q_INVOKABLE void detect();
 
     int value1() const;
     void setValue1(int newValue1);
@@ -107,7 +109,6 @@ signals:
     void myList41Changed();
 };
 
-static UartCommunicator* uartCommunicator = new UartCommunicator();
 
 #endif // MYOBJECT1_H
 

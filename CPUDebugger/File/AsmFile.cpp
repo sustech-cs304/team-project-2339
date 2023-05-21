@@ -42,8 +42,8 @@ QByteArray AsmFile::getBin() {
     return bin;
 }
 
-unsigned int AsmFile::getPC(int line) {
-    return asmToPCMap.value(line);
+unsigned int AsmFile::getPC(int asmLine) {
+    return asmToPCMap.value(asmLine);
 }
 
 int AsmFile::getAsmLine(unsigned int PC) {
@@ -61,8 +61,8 @@ void AsmFile::parseAsm(QString asmString) {
     QByteArray data = bin;
     bin.clear();
 
-    QStringList                 instructions = asmString.split(QRegularExpression("(?=\n)|(?<=\n)|[ \t,:;]"),
-                                                               Qt::SkipEmptyParts);
+    QStringList instructions = asmString.split(QRegularExpression("(?=\n)|(?<=\n)|[ \t,:;]"),
+                                               Qt::SkipEmptyParts);
     QStringList::const_iterator instruction  = instructions.constBegin();
 
     qDebug() << instructions.toList();
@@ -262,7 +262,7 @@ int AsmFile::getOpType(const QString &op) {
 
 void AsmFile::O_TypeProcess(QStringList::const_iterator &instruction) {
     static uint32_t syscall = 0b00000000000000000000000000001100,
-                    eret    = 0b01000010000000000000000000011000;
+            eret    = 0b01000010000000000000000000011000;
 
     if (*instruction == "nop")
         bin.append(4, '\x00');
@@ -613,9 +613,9 @@ void AsmFile::P_TypeProcess(QStringList::const_iterator &instruction) {
 
         binAppend(word);
 
-        qDebug() << "P_Type: " << bin.right(8).toHex();
+//        qDebug() << "P_Type: " << bin.right(8).toHex();
     } else {
-        qDebug() << "Skip  : " << op;
+//        qDebug() << "Skip  : " << op;
     }
 }
 

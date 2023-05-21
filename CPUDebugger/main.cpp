@@ -2,9 +2,10 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QScreen>
-#include "myobject1.h"
+#include "view/myobject1.h"
 #include "Comm/comm.h"
 
+UartCommunicator uartCommunicator;
 int main(int argc, char *argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

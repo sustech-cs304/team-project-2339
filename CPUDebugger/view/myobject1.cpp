@@ -42,7 +42,7 @@ void MyObject1::setString(const QString &newString)
 void MyObject1::getAsmFile()
 {
     m_myList41.clear();
-    QString filePath = m_string.mid(7);
+    QString filePath = m_string.mid(8);
     qDebug()<<filePath;
     file1 = PreDebugController::uploadFile(filePath);
     if (file1->open(QIODevice::ReadOnly | QIODevice::Text))
@@ -190,26 +190,18 @@ void MyObject1::makeList41()
 }
 
 void MyObject1::sendResume(){
-    QByteArray cpuResponse;
-    bool result = uartCommunicator->sendResume(cpuResponse, 40);
-    if (result){
-
-    }else{
-
-    }
+    DebugController::resume();
 }
 
 void MyObject1::sendPause(){
-    uartCommunicator->sendPause();
+    DebugController::pause();
 }
 
 void MyObject1::sendStep(){
-    QByteArray cpuResponse;
-    bool result = uartCommunicator->sendStep(cpuResponse);
-    if (result){
+    DebugController::step();
+}
 
-    }else{
-
-    }
+void MyObject1::detect(){
+    
 }
 

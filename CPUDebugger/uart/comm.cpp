@@ -1,5 +1,4 @@
 #include "uart/comm.h"
-#include "QCoreApplication"
 
 QList<QSerialPortInfo> UartCommunicator::getAvailableSerialPorts(){
     return QSerialPortInfo::availablePorts();
