@@ -8,6 +8,9 @@ QT += serialport
 QML_IMPORT_NAME = MyObj
 QML_IMPORT_MAJOR_VERSION = 1
 
+QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+QMAKE_LFLAGS += -fprofile-arcs -ftest-coverage
+
 TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle
@@ -18,7 +21,6 @@ CONFIG += qmltypes
 SOURCES += \
         main.cpp \
         tst_importfile.cpp \
-        tst_render.cpp \
         tst_uart.cpp
 
 INCLUDEPATH += \
@@ -26,7 +28,7 @@ INCLUDEPATH += \
     ../CPUDebugger/controller \
     ../CPUDebugger/parse-verilog \
     ../CPUDebugger/view \
-    ../CPUDebugger
+    ../CPUDebugger \
 
 
 include(../CPUDebugger/model/model.pri)
@@ -34,8 +36,4 @@ include(../CPUDebugger/controller/controller.pri)
 include(../CPUDebugger/parse-verilog/parse-verilog.pri)
 include(../CPUDebugger/view/view.pri)
 include(../CPUDebugger/Debugger.pri)
-
-unix|win32: LIBS += -L$$PWD/'../../../Program Files/Graphviz/lib/' -lgvc -lcdt -lcgraph -lgvplugin_core -lgvplugin_dot_layout -lgvplugin_gdiplus -lgvplugin_neato_layout -lgvplugin_pango -lpathplan -lxdot
-
-INCLUDEPATH += $$PWD/'../../../Program Files/Graphviz/include'
-DEPENDPATH += $$PWD/'../../../Program Files/Graphviz/include'
+include(../CPUDebugger/uart.pri)
