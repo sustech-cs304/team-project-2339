@@ -43,9 +43,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-include(gtest_dependency.pri)
-include(uart.pri)
-
+#include(gtest_dependency.pri)
+include($$PWD/uart/uart.pri)
+include($$PWD/parse-verilog/parse-verilog.pri)
 include($$PWD/controller/controller.pri)
 include($$PWD/view/view.pri)
 include($$PWD/model/model.pri)
@@ -58,6 +58,8 @@ INCLUDEPATH += \
     $$PWD/controller \
     $$PWD/view \
     $$PWD/model \
+    $$PWD/uart \
+    $$PWD/parse-verilog
 
 DISTFILES += \
     $$PWD/CodeDetails.md \
