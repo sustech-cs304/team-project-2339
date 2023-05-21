@@ -486,407 +486,484 @@ Window {
             Rectangle{
                 anchors.fill: parent
 
-                Grid{
-                    rows: 1
-                    columns: 3
-                    spacing: 0
-                    anchors.fill: parent
+                Rectangle {
+                    id:left2
+                    height: parent.height
+                    width: middle2.x
+                    visible: right2.showSignals
 
                     Rectangle {
-                        id:left2
-                        height: parent.height
-                        width: 280
+                        id:left20
+                        height: 30
+                        width: left2.width
                         visible: right2.showSignals
 
                         Rectangle {
-                            id:left20
+                            id:rect23
+                            width: left2-60
                             height: 30
-                            width: 280
-                            visible: right2.showSignals
+                            color: "white"
+                            border.color: "lightgrey"
+                            border.width: 3
+                            radius: 10
 
-                            Rectangle {
-                                id:rect23
-                                width: 220
-                                height: 30
-                                color: "white"
-                                border.color: "lightgrey"
-                                border.width: 3
-                                radius: 10
+                            TextInput {
+                                id:ti2
+                                x:10
+                                y:5
+                                anchors.margins: 2
+                                font.pointSize: 15
+                                focus: true
+                                font.pixelSize: 16
+                                activeFocusOnTab: true
+                                selectByMouse: true
+                                selectedTextColor: "white" //设置选择文本的字体颜色
+                                selectionColor: "#4A6DBC" //设置选择框的颜色
+                                verticalAlignment: TextInput.AlignVCenter
+                                horizontalAlignment: TextInput.AlignLeft
+                                leftPadding: 3
+                                rightPadding: 3
+                                maximumLength: 21
 
-                                TextInput {
-                                    id:ti2
-                                    x:10
-                                    y:5
-                                    anchors.margins: 2
-                                    font.pointSize: 15
-                                    focus: true
-                                    font.pixelSize: 16
-                                    activeFocusOnTab: true
-                                    selectByMouse: true
-                                    selectedTextColor: "white" //设置选择文本的字体颜色
-                                    selectionColor: "#4A6DBC" //设置选择框的颜色
-                                    verticalAlignment: TextInput.AlignVCenter
-                                    horizontalAlignment: TextInput.AlignLeft
-                                    leftPadding: 3
-                                    rightPadding: 3
-                                    maximumLength: 21
-
-                                    onEditingFinished: {
-                                        console.log(ti2.text)
-                                    }
-                                }
-
-                            }
-
-                            Button {
-                                id:button26
-                                width: 30
-                                height: width
-                                x:220
-
-                                background: Rectangle {
-                                    color: "white"
-                                    radius: 5
-                                    Image {
-                                        source: "qrc:/images/image26.svg"
-                                        fillMode: Image.PreserveAspectCrop
-                                        anchors.fill: parent
-                                    }
-                                }
-
-                                onClicked: {
-                                    ti2.clear()
-                                }
-                            }
-
-                            Button {
-                                id:button27
-                                width: 30
-                                height: width
-                                x:250
-
-                                background: Rectangle {
-                                    color: "white"
-                                    radius: 5
-                                    Image {
-                                        source: "qrc:/images/image27.svg"
-                                        fillMode: Image.PreserveAspectCrop
-                                        anchors.fill: parent
-                                    }
-                                }
-
-                                onClicked: {
+                                onEditingFinished: {
                                     console.log(ti2.text)
                                 }
                             }
 
-
                         }
-
-                        Rectangle {
-                            id:left21
-                            height: parent.height-left20.height
-                            width: 140
-                            y:left20.height
-
-                            Rectangle {
-                                id:rect21
-                                height: 30
-                                width: listView21.width
-                                color: "white"
-                                border.color: "#AA008000"
-                                border.width: 2
-                                radius:1
-
-                                Text {
-                                    id:text26
-                                    text: "signal not chosen"
-                                    visible: true
-                                    font.pixelSize: 15
-                                    font.bold: true
-                                    anchors.centerIn: parent
-                                }
-                            }
-
-                            ListView {
-                                id: listView21
-                                y:rect21.height
-                                height: parent.height-rect21.height
-                                width: parent.width
-                                model:myobj.myList1
-                                delegate: Rectangle {
-                                    height: 30
-                                    width: listView21.width
-                                    color: index % 2 === 0 ? "lightgray" : "white"
-
-                                    Text {
-                                        id:text21
-                                        text: " "+index
-                                        width:20
-                                        anchors.verticalCenter: parent.verticalCenter
-                                        visible: true
-                                    }
-
-                                    Text {
-                                        id:text22
-                                        text: modelData
-                                        width:100
-                                        anchors.left: text21.right
-                                        anchors.verticalCenter: parent.verticalCenter
-                                    }
-
-                                    Button {
-                                        id:button21
-                                        width: height
-                                        height: text22.height*1.5
-                                        anchors.right: parent.right
-                                        anchors.verticalCenter: parent.verticalCenter
-                                        visible: true
-
-                                        contentItem: Image {
-                                            source: "qrc:/images/image23.png"
-                                            fillMode: Image.PreserveAspectFit
-                                        }
-
-                                        background: Rectangle {
-                                            color: "white"
-                                            radius: height/5
-                                        }
-
-                                        onClicked: {
-                                            console.log("add"+modelData)
-                                            myobj.addMyList2(modelData)
-                                            listView22.model=myobj.myList2
-                                            myobj.removeMyList1(index)
-                                            listView21.model=myobj.myList1
-                                            console.log(root.width+" "+root.height)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        Rectangle {
-                            id:middle21
-                            height: parent.height-left20.height
-                            width: 140
-                            x:left21.width
-                            y:left20.height
-
-                            Rectangle {
-                                id:rect22
-                                height: rect21.height
-                                width: listView21.width
-                                color: "white"
-                                border.color: "#AA008080"
-                                border.width: 2
-                                radius:2
-
-                                Text {
-                                    id:text27
-                                    text: "signal chosen"
-                                    visible: true
-                                    font.pixelSize: 15
-                                    font.bold: true
-                                    anchors.centerIn: parent
-                                }
-                            }
-
-
-                            ListView {
-                                id: listView22
-                                y:rect22.height
-                                height: parent.height-rect22.height
-                                width: parent.width
-                                model:myobj.myList2
-
-                                delegate: Rectangle {
-                                    height: 30
-                                    width: listView21.width
-                                    color: index % 2 === 0 ? "lightgray" : "white"
-
-                                    Text {
-                                        id:text24
-                                        text: " "+index
-                                        width:20
-                                        anchors.verticalCenter: parent.verticalCenter
-                                        visible: true
-                                    }
-
-                                    Text {
-                                        id:text25
-                                        text: modelData
-                                        width:100
-                                        anchors.left: text24.right
-                                        anchors.verticalCenter: parent.verticalCenter
-                                    }
-
-                                    Button {
-                                        id:button24
-                                        width: height
-                                        height: text25.height*1.5
-                                        anchors.right: parent.right
-                                        anchors.verticalCenter: parent.verticalCenter
-                                        visible: true
-
-                                        contentItem: Image {
-                                            source: "qrc:/images/image21.png"
-                                            fillMode: Image.PreserveAspectFit
-                                        }
-
-                                        background: Rectangle {
-                                            color: "white"
-                                            radius: height/5
-                                        }
-
-                                        onClicked: {
-                                            console.log("delete"+modelData)
-                                            myobj.myList1.push(modelData)
-                                            myobj.removeMyList2(index)
-                                            listView21.model=myobj.myList1
-                                            listView22.model=myobj.myList2
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-
-                    Rectangle {
-                        color: "lightblue"
-                        id:right2
-                        height: parent.height
-                        width: right2.showSignals?parent.width-left2.width:parent.width
-                        clip: true
-
-                        property bool showSignals: true
-
-                        Image {
-                            id: image
-                            source: "qrc:/images/aabb.svg"
-                            fillMode: Image.PreserveAspectFit
-                            clip: true
-
-
-                            property real scale: 1.0
-                            property real offsetX: 0.0
-                            property real offsetY: 0.0
-
-                            MouseArea {
-                                anchors.fill: parent
-                                drag.target: image
-                                onPositionChanged: {
-                                    image.offsetX += drag.x / image.scale;
-                                    image.offsetY += drag.y / image.scale;
-                                    image.x = image.offsetX;
-                                    image.y = image.offsetY;
-                                }
-                            }
-
-                            PinchArea {
-                                anchors.fill: parent
-                                onPinchUpdated: {
-                                    image.scale *= ((pinch.scale-1)/4+1);
-                                    image.width = image.sourceSize.width * image.scale;
-                                    image.height = image.sourceSize.height * image.scale;
-                                    console.log(pinch.scale)
-                                }
-                            }
-                        }
-
 
                         Button {
-                            id:button25
-                            width: rect21.height
+                            id:button26
+                            width: 30
                             height: width
-                            anchors.left:parent.left
-                            anchors.top:parent.top
+                            x:left2.width-60
 
                             background: Rectangle {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: right2.showSignals?"qrc:/images/image25.svg":"qrc:/images/image24.svg"
+                                    source: "qrc:/images/image26.svg"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
                             }
 
                             onClicked: {
-                                right2.showSignals=!right2.showSignals
+                                ti2.clear()
                             }
                         }
 
                         Button {
-                            id:button22
-                            width: 70
-                            height: 25
-                            x:parent.width-width-50
-                            y:20
-                            z:1
-
-                            contentItem: Text {
-                                text: qsTr("Confirm")
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                            }
-
-                            background: Rectangle {
-                                color: "orange"
-                                radius: height/5
-                            }
-
-                            onClicked: {
-                                console.log("Confirm2")
-                                btn3.enabled=true
-                                bar.currentIndex=2
-                            }
-                        }
-
-                        Button {
-                            id:button23
-                            width: button22.height
+                            id:button27
+                            width: 30
                             height: width
-                            x:parent.width-45
-                            anchors.verticalCenter: button22.verticalCenter
-
-                            contentItem: Image {
-                                source: "qrc:/images/image22.png"
-                                fillMode: Image.PreserveAspectFit
-                            }
+                            x:left2.width-30
 
                             background: Rectangle {
                                 color: "white"
-                                radius: height/5
+                                radius: 5
+                                Image {
+                                    source: "qrc:/images/image27.svg"
+                                    fillMode: Image.PreserveAspectCrop
+                                    anchors.fill: parent
+                                }
                             }
 
                             onClicked: {
-                                console.log(text23.infoV)
-                                text23.infoV = !text23.infoV
-                                text23.visible = text23.infoV
+                                console.log(ti2.text)
                             }
-
                         }
 
-                        Text {
-                            z:1
-                            id: text23
-                            y: button22.height+30
-                            anchors.right: button23.right
-                            width: 300
-                            text: qsTr("infomations Yesterday was a beautiful day with clear blue skies and a gentle breeze. I went for a walk in the park and enjoyed the colorful flowers and green trees. As I strolled, I listened to the birds chirping and watched children playing. ")
-                            wrapMode: Text.WordWrap
-                            visible: false
-                            property bool infoV: false
 
-                            Rectangle {
-                                color: "lightgrey"
-                                radius: 5
-                                anchors.fill: parent
-                                opacity:0.5
-                                z:-1
+                    }
+
+                    Rectangle {
+                        id:left21
+                        height: parent.height-left20.height
+                        width: left2.width/2
+                        y:left20.height
+
+                        visible: right2.showSignals
+
+                        Rectangle {
+                            id:rect21
+                            height: 30
+                            width: listView21.width
+                            color: "white"
+                            border.color: "#AA008000"
+                            border.width: 2
+                            radius:1
+
+                            Text {
+                                id:text26
+                                text: "signal not chosen"
+                                visible: true
+                                font.pixelSize: 15
+                                font.bold: true
+                                anchors.centerIn: parent
                             }
+                        }
+
+                        ListView {
+                            id: listView21
+                            y:rect21.height
+                            height: parent.height-rect21.height
+                            width: parent.width
+                            model:myobj.myList1
+                            delegate: Rectangle {
+                                height: 30
+                                width: listView21.width
+                                color: index % 2 === 0 ? "lightgray" : "white"
+
+                                Text {
+                                    id:text21
+                                    text: " "+index
+                                    width:20
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    visible: true
+                                }
+
+                                Text {
+                                    id:text22
+                                    text: modelData
+                                    width:100
+                                    anchors.left: text21.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+
+                                Button {
+                                    id:button21
+                                    width: height
+                                    height: text22.height*1.5
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    visible: true
+
+                                    contentItem: Image {
+                                        source: "qrc:/images/image23.png"
+                                        fillMode: Image.PreserveAspectFit
+                                    }
+
+                                    background: Rectangle {
+                                        color: "white"
+                                        radius: height/5
+                                    }
+
+                                    onClicked: {
+                                        console.log("add"+modelData)
+                                        myobj.addMyList2(modelData)
+                                        listView22.model=myobj.myList2
+                                        myobj.removeMyList1(index)
+                                        listView21.model=myobj.myList1
+                                        console.log(root.width+" "+root.height)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        id:middle21
+                        height: parent.height-left20.height
+                        width: left2.width/2
+                        x:left21.width
+                        y:left20.height
+
+                        Rectangle {
+                            id:rect22
+                            height: rect21.height
+                            width: listView21.width
+                            color: "white"
+                            border.color: "#AA008080"
+                            border.width: 2
+                            radius:2
+
+                            Text {
+                                id:text27
+                                text: "signal chosen"
+                                visible: true
+                                font.pixelSize: 15
+                                font.bold: true
+                                anchors.centerIn: parent
+                            }
+                        }
+
+
+                        ListView {
+                            id: listView22
+                            y:rect22.height
+                            height: parent.height-rect22.height
+                            width: parent.width
+                            model:myobj.myList2
+
+                            delegate: Rectangle {
+                                height: 30
+                                width: listView21.width
+                                color: index % 2 === 0 ? "lightgray" : "white"
+
+                                Text {
+                                    id:text24
+                                    text: " "+index
+                                    width:20
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    visible: true
+                                }
+
+                                Text {
+                                    id:text25
+                                    text: modelData
+                                    width:100
+                                    anchors.left: text24.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+
+                                Button {
+                                    id:button24
+                                    width: height
+                                    height: text25.height*1.5
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    visible: true
+
+                                    contentItem: Image {
+                                        source: "qrc:/images/image21.png"
+                                        fillMode: Image.PreserveAspectFit
+                                    }
+
+                                    background: Rectangle {
+                                        color: "white"
+                                        radius: height/5
+                                    }
+
+                                    onClicked: {
+                                        console.log("delete"+modelData)
+                                        myobj.myList1.push(modelData)
+                                        myobj.removeMyList2(index)
+                                        listView21.model=myobj.myList1
+                                        listView22.model=myobj.myList2
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                Rectangle {
+                    id: middle2
+                    width: 3
+                    height: root.height
+                    color: "grey"
+                    x:280
+
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent // 将mouseArea的锚点设置为与rect完全对齐
+                        drag.target: middle2 // 将rect设置为拖动的目标
+                        drag.axis: Drag.XAxis // 只允许在X轴上拖动
+                        drag.minimumX: 280 // 设置拖动的最小X坐标为0
+                        drag.maximumX: root.width-200// 设置拖动的最大X坐标为父容器的宽度减去rect的宽度
+                    }
+                }
+
+                Rectangle {
+                    color: "lightblue"
+                    id:right2
+                    height: parent.height
+                    width: right2.showSignals?parent.width-left2.width:parent.width-middle2.width
+                    clip: true
+                    x:middle2.x+middle2.width
+
+                    property bool showSignals: true
+
+                    Image {
+                        id: image
+                        source: name
+                        fillMode: Image.PreserveAspectFit
+                        clip: true
+
+                        property real scale: 1.0
+                        property real offsetX: 0.0
+                        property real offsetY: 0.0
+
+                        property string name: "qrc:/images/aabb.svg"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            drag.target: image
+                            onPositionChanged: {
+                                image.offsetX += drag.x / image.scale;
+                                image.offsetY += drag.y / image.scale;
+                                image.x = image.offsetX;
+                                image.y = image.offsetY;
+                            }
+                        }
+
+
+                        function scaleImage(factor) { // 定义一个function，参数是缩放因子
+                            var newFactor = (factor-1)/20+1
+                            var newWidth = width * factor; // 计算缩放后的宽度
+                            var newHeight = height * factor; // 计算缩放后的高度
+                            if (newWidth < right2.width || newWidth>image.sourceSize.width) { // 如果缩放后的宽度或高度低于最小值
+                                return; // 不进行缩放，直接返回
+                            }
+                            if (newHeight < right2.height || newWidth>image.sourceSize.height) { // 如果缩放后的宽度或高度低于最小值
+                                return; // 不进行缩放，直接返回
+                            }
+                            image.width = newWidth; // 否则，将图片的宽度设置为缩放后的宽度
+                            image.height = newHeight; // 同时，将图片的高度设置为缩放后的高度
+
+                            button28.count()
+                            console.log( "aaa"+image.sourceSize.width + " "+image.sourceSize.height)
+                        }
+
+                        PinchArea {
+                            anchors.fill: parent
+                            onPinchUpdated: {
+                                image.scaleImage(pinch.scale)
+        //                            image.scale *= ((pinch.scale-1)/4+1);
+        //                            image.width = image.sourceSize.width * image.scale;
+        //                            image.height = image.sourceSize.height * image.scale;
+                                console.log(pinch.scale)
+                            }
+                        }
+
+                    }
+
+                    Button {
+                        id:button28
+                        width: 70
+                        height: 25
+                        x:parent.width-width-150
+                        y:20
+                        z:1
+
+                        property int number: 100
+
+                        function count() {
+                            var w = image.sourceSize.width/right2.width;
+                            var h = image.sourceSize.height/right2.height;
+                            if (w<h) {
+                                button28.number=image.width*100/right2.width
+                            }else{
+                                button28.number=image.height*100/right2.height
+                            }
+                        }
+
+                        contentItem: Text {
+                            text: button28.number+qsTr("%")
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        background: Rectangle {
+                            color: "lightblue"
+                            radius: height/5
+                        }
+
+                        onClicked: {
+                            image.width = image.sourceSize.width; // 否则，将图片的宽度设置为缩放后的宽度
+                            image.height = image.sourceSize.height; // 同时，将图片的高度设置为缩放后的高度
+                            count()
+                        }
+
+                        Component.onCompleted:  {
+                            count()
+                        }
+
+                    }
+
+                    Button {
+                        id:button25
+                        width: rect21.height
+                        height: width
+                        anchors.left:parent.left
+                        anchors.top:parent.top
+
+                        background: Rectangle {
+                            color: "white"
+                            radius: 5
+                            Image {
+                                source: right2.showSignals?"qrc:/images/image25.svg":"qrc:/images/image24.svg"
+                                fillMode: Image.PreserveAspectCrop
+                                anchors.fill: parent
+                            }
+                        }
+
+                        onClicked: {
+                            right2.showSignals=!right2.showSignals
+                        }
+                    }
+
+                    Button {
+                        id:button22
+                        width: 70
+                        height: 25
+                        x:parent.width-width-50
+                        y:20
+                        z:1
+
+                        contentItem: Text {
+                            text: qsTr("Confirm")
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        background: Rectangle {
+                            color: "orange"
+                            radius: height/5
+                        }
+
+                        onClicked: {
+                            console.log("myob")
+                            myobj.loadSvgPath()
+                            image.name=myobj.string
+                            console.log("myob1")
+                        }
+                    }
+
+                    Button {
+                        id:button23
+                        width: button22.height
+                        height: width
+                        x:parent.width-45
+                        anchors.verticalCenter: button22.verticalCenter
+
+                        contentItem: Image {
+                            source: "qrc:/images/image22.png"
+                            fillMode: Image.PreserveAspectFit
+                        }
+
+                        background: Rectangle {
+                            color: "white"
+                            radius: height/5
+                        }
+
+                        onClicked: {
+                            console.log(text23.infoV)
+                            text23.infoV = !text23.infoV
+                            text23.visible = text23.infoV
+                        }
+
+                    }
+
+                    Text {
+                        z:1
+                        id: text23
+                        y: button22.height+30
+                        anchors.right: button23.right
+                        width: 300
+                        text: qsTr("infomations Yesterday was a beautiful day with clear blue skies and a gentle breeze. I went for a walk in the park and enjoyed the colorful flowers and green trees. As I strolled, I listened to the birds chirping and watched children playing. ")
+                        wrapMode: Text.WordWrap
+                        visible: false
+                        property bool infoV: false
+
+                        Rectangle {
+                            color: "lightgrey"
+                            radius: 5
+                            anchors.fill: parent
+                            opacity:0.5
+                            z:-1
                         }
                     }
                 }
