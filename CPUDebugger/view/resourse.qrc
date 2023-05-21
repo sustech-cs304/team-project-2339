@@ -9,5 +9,13 @@
         <file>images/image2.png</file>
         <file>images/image1.png</file>
         <file>images/image23.png</file>
+        <file>images/image27.svg</file>
+        <file>images/image26.svg</file>
+        <file>images/image12.svg</file>
+        <file>images/image11.svg</file>
+        <file>images/image24.svg</file>
+        <file>images/image25.svg</file>
+        <file>images/aabb.svg</file>
+        <file>images/dot.svg</file>
     </qresource>
 </RCC>
