@@ -323,14 +323,11 @@ Window {
                                         if(button11.isSelected){
                                             btn2.enabled=true
                                             bar.currentIndex=1
-                                            myobj.confirm1()
                                             console.log("Confirm1")
                                             myobj.makeList1()
                                             myobj.makeList2()
                                             listView21.model=myobj.myList1
                                             listView22.model=myobj.myList2
-                                            myobj.string=folderDialog1.folder
-
                                         }else{
                                             text14.show=true
                                         }
@@ -542,7 +539,7 @@ Window {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: "qrc:/images/image26.svg"
+                                    source: "qrc:/images/image26.png"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
@@ -563,7 +560,7 @@ Window {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: "qrc:/images/image27.svg"
+                                    source: "qrc:/images/image27.png"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
@@ -655,7 +652,7 @@ Window {
                                         listView22.model=myobj.myList2
                                         myobj.removeMyList1(index)
                                         listView21.model=myobj.myList1
-                                        console.log(root.width+" "+root.height)
+                                        console.log(window2.width+" "+window2.height)
                                     }
                                 }
                             }
@@ -752,7 +749,7 @@ Window {
                 Rectangle {
                     id: middle2
                     width: 3
-                    height: root.height
+                    height: window2.height
                     color: "grey"
                     x:280
 
@@ -762,7 +759,7 @@ Window {
                         drag.target: middle2 // 将rect设置为拖动的目标
                         drag.axis: Drag.XAxis // 只允许在X轴上拖动
                         drag.minimumX: 280 // 设置拖动的最小X坐标为0
-                        drag.maximumX: root.width-200// 设置拖动的最大X坐标为父容器的宽度减去rect的宽度
+                        drag.maximumX: window2.width-200// 设置拖动的最大X坐标为父容器的宽度减去rect的宽度
                     }
                 }
 
@@ -776,9 +773,21 @@ Window {
 
                     property bool showSignals: true
 
+                    onWidthChanged: {
+                        if(image.width<right2.width){
+                            image.height=image.height*right2.width/image.width
+                            image.width=right2.width
+                        }
+                        if(image.height<window2.height){
+                            image.width=image.width*window2.height/image.height
+                            image.height=window2.height
+                        }
+                        button28.count()
+                    }
+
                     Image {
                         id: image
-                        source: name
+                        source: "qrc:/images/aabb.svg"
                         fillMode: Image.PreserveAspectFit
                         clip: true
 
@@ -788,33 +797,61 @@ Window {
 
                         property string name: "qrc:/images/aabb.svg"
 
+                        function dragImage(drag) {
+                            image.offsetX += drag.x / image.scale;
+                            image.offsetY += drag.y / image.scale;
+                            image.x = image.offsetX;
+                            image.y = image.offsetY;
+                            if(image.x>0){
+                                image.x=0
+                            }
+                            if(image.x<right2.width-image.width){
+                                image.x=right2.width-image.width
+                            }
+                            if(image.y>0){
+                                image.y=0
+                            }
+                            if(image.y<right2.height-image.height){
+                                image.y=right2.height-image.height
+                            }
+                            console.log(image.x+" "+image.y)
+                        }
+
                         MouseArea {
                             anchors.fill: parent
                             drag.target: image
                             onPositionChanged: {
-                                image.offsetX += drag.x / image.scale;
-                                image.offsetY += drag.y / image.scale;
-                                image.x = image.offsetX;
-                                image.y = image.offsetY;
+                                image.dragImage(drag)
                             }
                         }
 
-
                         function scaleImage(factor) { // 定义一个function，参数是缩放因子
-                            var newFactor = (factor-1)/20+1
+                            var newFactor = (factor-1)/100+1
                             var newWidth = width * factor; // 计算缩放后的宽度
                             var newHeight = height * factor; // 计算缩放后的高度
-                            if (newWidth < right2.width || newWidth>image.sourceSize.width) { // 如果缩放后的宽度或高度低于最小值
+                            if (newWidth < right2.width || newWidth>image.sourceSize.width*2) { // 如果缩放后的宽度或高度低于最小值
                                 return; // 不进行缩放，直接返回
                             }
-                            if (newHeight < right2.height || newWidth>image.sourceSize.height) { // 如果缩放后的宽度或高度低于最小值
+                            if (newHeight < right2.height || newWidth>image.sourceSize.height*2) { // 如果缩放后的宽度或高度低于最小值
                                 return; // 不进行缩放，直接返回
                             }
                             image.width = newWidth; // 否则，将图片的宽度设置为缩放后的宽度
                             image.height = newHeight; // 同时，将图片的高度设置为缩放后的高度
 
                             button28.count()
-                            console.log( "aaa"+image.sourceSize.width + " "+image.sourceSize.height)
+                            if(image.x>0){
+                                image.x=0
+                            }
+                            if(image.x<right2.width-image.width){
+                                image.x=right2.width-image.width
+                            }
+                            if(image.y>0){
+                                image.y=0
+                            }
+                            if(image.y<right2.height-image.height){
+                                image.y=right2.height-image.height
+                            }
+                            console.log( "aaa "+image.sourceSize.width + " "+image.sourceSize.height)
                         }
 
                         PinchArea {
@@ -842,11 +879,11 @@ Window {
 
                         function count() {
                             var w = image.sourceSize.width/right2.width;
-                            var h = image.sourceSize.height/right2.height;
+                            var h = image.sourceSize.height/window2.height;
                             if (w<h) {
                                 button28.number=image.width*100/right2.width
                             }else{
-                                button28.number=image.height*100/right2.height
+                                button28.number=image.height*100/window2.height
                             }
                         }
 
@@ -884,7 +921,7 @@ Window {
                             color: "white"
                             radius: 5
                             Image {
-                                source: right2.showSignals?"qrc:/images/image25.svg":"qrc:/images/image24.svg"
+                                source: right2.showSignals?"qrc:/images/image25.png":"qrc:/images/image24.png"
                                 fillMode: Image.PreserveAspectCrop
                                 anchors.fill: parent
                             }
@@ -915,10 +952,8 @@ Window {
                         }
 
                         onClicked: {
-                            console.log("myob")
                             myobj.loadSvgPath()
                             image.name=myobj.string
-                            console.log("myob1")
                         }
                     }
 
