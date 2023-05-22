@@ -1,13 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/image4.png</file>
         <file>images/image32.png</file>
         <file>images/image31.png</file>
-        <file>images/image3.png</file>
         <file>images/image22.png</file>
         <file>images/image21.png</file>
-        <file>images/image2.png</file>
-        <file>images/image1.png</file>
         <file>images/image23.png</file>
         <file>images/image12.svg</file>
         <file>images/image11.svg</file>
@@ -17,5 +13,10 @@
         <file>images/image26.png</file>
         <file>images/image24.png</file>
         <file>images/image25.png</file>
+        <file>images/image41.png</file>
+        <file>images/image42.png</file>
+        <file>images/image45.png</file>
+        <file>images/image43.png</file>
+        <file>images/image44.png</file>
     </qresource>
 </RCC>
