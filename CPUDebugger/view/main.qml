@@ -786,9 +786,21 @@ Window {
                         button28.count()
                     }
 
+                    onHeightChanged: {
+                        if(image.width<right2.width){
+                            image.height=image.height*right2.width/image.width
+                            image.width=right2.width
+                        }
+                        if(image.height<window2.height){
+                            image.width=image.width*window2.height/image.height
+                            image.height=window2.height
+                        }
+                        button28.count()
+                    }
+
                     Image {
                         id: image
-                        source: "qrc:/images/aabb.svg"
+                        source: image.name22
                         fillMode: Image.PreserveAspectFit
                         clip: true
 
@@ -796,7 +808,7 @@ Window {
                         property real offsetX: 0.0
                         property real offsetY: 0.0
 
-                        property string name: "qrc:/images/aabb.svg"
+                        property string name22: "qrc:/images/aabb.svg"
 
                         function dragImage(drag) {
                             image.offsetX += drag.x / image.scale;
@@ -954,7 +966,7 @@ Window {
 
                         onClicked: {
                             myobj.loadSvgPath()
-                            image.name=myobj.string
+                            image.name22=myobj.string
                         }
                     }
 
