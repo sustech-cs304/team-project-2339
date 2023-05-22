@@ -539,7 +539,7 @@ Window {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: "qrc:/images/image26.svg"
+                                    source: "qrc:/images/image26.png"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
@@ -560,7 +560,7 @@ Window {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: "qrc:/images/image27.svg"
+                                    source: "qrc:/images/image27.png"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
@@ -972,12 +972,16 @@ Window {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+//                                myobj.loadSvgPath()
+                                image.name22=myobj.string
+                                btn3.enabled=true
+                                bar.currentIndex=2
+                            }
                         }
 
-                        onClicked: {
-                            myobj.loadSvgPath()
-                            image.name22=myobj.string
-                        }
+
                     }
 
                     Button {
@@ -1458,9 +1462,8 @@ Window {
 
                     }
 
-
                     Rectangle {
-                        id:piece2
+                        id:middle4
                         color: "gray"
                         width: 3
                         height: parent.height
@@ -1468,9 +1471,10 @@ Window {
 
                     Rectangle {
                         color: "#f8f4e7"
-                        width: parent.width -flickable1.width-piece2.width
+                        width: parent.width -left4.width-middle4.width
                         height: parent.height
                         clip:true
+                        x:left4.width+middle4.width
 
                         Grid {
                             rows: 2
@@ -1538,7 +1542,7 @@ Window {
                                 id:buttons4
                                 height: parent.height/10
                                 width: parent.width
-                                color: "lightgray"
+                                color: "#ECE1D3"
                                 anchors.bottom: parent.bottom
 
                                 Button {
@@ -1547,20 +1551,31 @@ Window {
                                     height: parent.height/3*2
                                     x:5
                                     anchors.verticalCenter: parent.verticalCenter
+                                    enabled: button41.light
+
+                                    property bool light: false
 
                                     contentItem: Image {
-                                        source: "qrc:/images/image1.png"
+                                        source: "qrc:/images/image41.png"
                                         fillMode: Image.PreserveAspectFit
                                     }
 
                                     background: Rectangle {
-                                        color: "lightgreen"
+                                        color: button41.light?"#77C396":"lightgrey"
                                         radius: height/5
                                     }
 
                                     onClicked: {
-                                        console.log("play")
+                                        console.log("resume")
+                                        button41.light=false
+                                        button42.light=false
+                                        button43.light=true
                                         myobj.sendResume()
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
+                                        button41.light=true
+                                        button42.light=true
+                                        button43.light=false
                                     }
                                 }
 
@@ -1569,24 +1584,33 @@ Window {
                                     width: height
                                     height: parent.height/3*2
                                     anchors.left: button41.right
+                                    enabled: button42.light
+
+                                    property bool light: false
 
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     contentItem: Image {
-                                        source: "qrc:/images/image2.png"
+                                        source: "qrc:/images/image42.png"
                                         fillMode: Image.PreserveAspectFit
                                     }
 
                                     background: Rectangle {
-                                        color: "lightblue"
+                                        color: button42.light?"lightblue":"lightgrey"
                                         radius: height/5
                                     }
 
                                     onClicked: {
                                         console.log("next")
+                                        button41.light=false
+                                        button42.light=false
+                                        button43.light=false
                                         myobj.sendStep()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
+                                        button41.light=true
+                                        button42.light=true
+                                        button43.light=false
                                         console.log(myobj.value1)
                                     }
                                 }
@@ -1596,24 +1620,63 @@ Window {
                                     width: height
                                     height: parent.height/3*2
                                     anchors.left: button42.right
+                                    enabled: button43.light
+
+                                    property bool light: false
 
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     contentItem: Image {
-                                        source: "qrc:/images/image3.png"
+                                        source: "qrc:/images/image43.png"
                                         fillMode: Image.PreserveAspectFit
                                     }
 
                                     background: Rectangle {
-                                        color: "lightgrey"
+                                        color: button43.light?"#FFF173":"lightgrey"
                                         radius: height/5
                                     }
 
                                     onClicked: {
                                         console.log("pause")
                                         myobj.sendPause()
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
+                                        button41.light=true
+                                        button42.light=true
+                                        button43.light=false
+
                                     }
                                 }
+
+                                Button {
+                                    id:button46
+                                    width: height
+                                    height: parent.height/3*2
+                                    anchors.right:  button44.left
+                                    enabled: button46.light
+
+                                    property bool light: false
+
+                                    anchors.verticalCenter: parent.verticalCenter
+
+                                    contentItem: Image {
+                                        source: "qrc:/images/image44.png"
+                                        fillMode: Image.PreserveAspectFit
+                                    }
+
+                                    background: Rectangle {
+                                        color: button46.light?"#77FF8812":"lightgrey"
+                                        radius: height/5
+                                    }
+
+                                    onClicked: {
+                                        myobj.getAsmFile()
+                                        listView1.model=myobj.myList41
+                                        listView2.model=myobj.myList41
+                                        console.log("update")
+                                    }
+                                }
+
 
                                 FileDialog {
                                     id: fileDialog4
@@ -1621,7 +1684,11 @@ Window {
 
                                     onAccepted: {
                                         console.log("已选择的文件：", currentFile)
-                                        myobj.string=currentFile
+                                        if(currentFile){
+                                            myobj.string=currentFile
+                                            button45.light=true
+                                            button46.light=true
+                                        }
                                     }
                                 }
 
@@ -1630,6 +1697,9 @@ Window {
                                     width: height*3
                                     height: parent.height/3*2
                                     anchors.right:  button45.left
+                                    enabled: button44.light
+
+                                    property bool light: true
 
                                     anchors.verticalCenter: parent.verticalCenter
 
@@ -1643,7 +1713,7 @@ Window {
                                     }
 
                                     background: Rectangle {
-                                        color: "lightblue"
+                                        color: button44.light?"#8B79B1":"lightgrey"
                                         radius: height/5
                                     }
 
@@ -1659,16 +1729,19 @@ Window {
                                     width: height
                                     height: parent.height/3*2
                                     anchors.right: parent.right
+                                    enabled: button45.light
+
+                                    property bool light: false
 
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     contentItem: Image {
-                                        source: "qrc:/images/image4.png"
+                                        source: "qrc:/images/image45.png"
                                         fillMode: Image.PreserveAspectFit
                                     }
 
                                     background: Rectangle {
-                                        color: "orange"
+                                        color: button45.light?"#F5B0BD":"lightgrey"
                                         radius: height/5
                                     }
 
@@ -1676,6 +1749,7 @@ Window {
                                         myobj.getAsmFile()
                                         listView1.model=myobj.myList41
                                         listView2.model=myobj.myList41
+                                        button41.light=true
                                         console.log("update")
                                     }
                                 }
@@ -1685,7 +1759,6 @@ Window {
                         }
 
                     }
-
                 }
 
             }
