@@ -539,7 +539,7 @@ Window {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: "qrc:/images/image26.png"
+                                    source: "qrc:/images/image26.svg"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
@@ -560,7 +560,7 @@ Window {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: "qrc:/images/image27.png"
+                                    source: "qrc:/images/image27.svg"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
@@ -752,7 +752,6 @@ Window {
                     height: window2.height
                     color: "grey"
                     x:280
-                    visible: right2.showSignals
 
                     MouseArea {
                         id: mouseArea
@@ -761,6 +760,8 @@ Window {
                         drag.axis: Drag.XAxis // 只允许在X轴上拖动
                         drag.minimumX: 280 // 设置拖动的最小X坐标为0
                         drag.maximumX: window2.width-200// 设置拖动的最大X坐标为父容器的宽度减去rect的宽度
+                        hoverEnabled: true
+                        cursorShape: Qt.SizeHorCursor
                     }
                 }
 
@@ -768,9 +769,9 @@ Window {
                     color: "lightblue"
                     id:right2
                     height: parent.height
-                    width: right2.showSignals?parent.width-left2.width:parent.width
+                    width: right2.showSignals?parent.width-left2.width:parent.width-middle2.width
                     clip: true
-                    x:right2.showSignals?middle2.x+middle2.width:0
+                    x:middle2.x+middle2.width
 
                     property bool showSignals: true
 
@@ -798,9 +799,10 @@ Window {
                         button28.count()
                     }
 
+
                     Image {
                         id: image
-                        source: image.name22
+                        source: name22
                         fillMode: Image.PreserveAspectFit
                         clip: true
 
@@ -836,6 +838,8 @@ Window {
                             onPositionChanged: {
                                 image.dragImage(drag)
                             }
+                            hoverEnabled: true
+                            cursorShape: mouseArea.pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
                         }
 
                         function scaleImage(factor) { // 定义一个function，参数是缩放因子
@@ -934,7 +938,7 @@ Window {
                             color: "white"
                             radius: 5
                             Image {
-                                source: right2.showSignals?"qrc:/images/image25.png":"qrc:/images/image24.png"
+                                source: right2.showSignals?"qrc:/images/image25.svg":"qrc:/images/image24.svg"
                                 fillMode: Image.PreserveAspectCrop
                                 anchors.fill: parent
                             }
@@ -962,6 +966,12 @@ Window {
                         background: Rectangle {
                             color: "orange"
                             radius: height/5
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
                         }
 
                         onClicked: {
