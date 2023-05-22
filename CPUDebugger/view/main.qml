@@ -752,6 +752,7 @@ Window {
                     height: window2.height
                     color: "grey"
                     x:280
+                    visible: right2.showSignals
 
                     MouseArea {
                         id: mouseArea
@@ -767,9 +768,9 @@ Window {
                     color: "lightblue"
                     id:right2
                     height: parent.height
-                    width: right2.showSignals?parent.width-left2.width:parent.width-middle2.width
+                    width: right2.showSignals?parent.width-left2.width:parent.width
                     clip: true
-                    x:middle2.x+middle2.width
+                    x:right2.showSignals?middle2.x+middle2.width:0
 
                     property bool showSignals: true
 
