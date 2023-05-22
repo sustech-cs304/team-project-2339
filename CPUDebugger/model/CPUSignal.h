@@ -45,7 +45,6 @@ public:
         }
     }
     QString toString() {
-//        QString s = name;
         if (lBound == -1 && rBound == -1) {
             return name;
         } else if (lBound == rBound) {

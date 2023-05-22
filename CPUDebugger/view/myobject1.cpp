@@ -205,6 +205,10 @@ void MyObject1::detect(){
     
 }
 
+/**
+ * @brief MyObject1::confirm1
+ */
+
 void MyObject1::confirm1()
 {
     fileContrl->import(m_string);
@@ -213,5 +217,15 @@ void MyObject1::confirm1()
 
     fileContrl->genGraph();
 
+}
+
+/**
+ * @brief MyObject1::loadSvgPath
+ * m_string="newSvgFilePath"
+ * 测试的话直接点击page2的confirm，我在conclicked函数里面调用了
+ */
+void MyObject1::loadSvgPath(){
+    m_string = fileContrl->getSvgPath();
+    qDebug() << "Get m_string: " << m_string;
 }
 

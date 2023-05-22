@@ -58,6 +58,8 @@ public:
 
     Q_INVOKABLE void confirm1();
 
+    Q_INVOKABLE void loadSvgPath();
+
     int value1() const;
     void setValue1(int newValue1);
 

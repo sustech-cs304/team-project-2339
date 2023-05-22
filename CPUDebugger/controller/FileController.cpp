@@ -54,10 +54,14 @@ QList<QString> FileController::getSignals()
     return FileUtil::dupRemove(ss);
 }
 
+QString FileController::getSvgPath()
+{
+    QString s(tmpPath+"/show.svg");
+    return QUrl::fromLocalFile(s).url();
+}
+
 void FileController::genGraph(QString dirPath)
 {
-
-//    g.genSvg(PROJ_PATH+YOSYS_PATH, dirPath);
     g.genDot(PROJ_PATH+YOSYS_PATH, dirPath);
     g.genSvg(PROJ_PATH+GV_PATH, dirPath, "show.dot");
 }

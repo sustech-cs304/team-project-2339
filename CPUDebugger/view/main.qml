@@ -917,6 +917,7 @@ Window {
                         onClicked: {
                             console.log("myob")
                             myobj.loadSvgPath()
+                            console.log(myobj.string)
                             image.name=myobj.string
                             console.log("myob1")
                         }

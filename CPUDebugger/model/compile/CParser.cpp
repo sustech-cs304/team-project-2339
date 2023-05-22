@@ -10,9 +10,6 @@ QList<CPUSignal> CParser::export_signals()
             }
         }
     }
-    for (CPUSignal& sig: signalList) {
-        qDebug() << sig.name << " [" << sig.lBound << ", " << sig.rBound << "]";
-    }
     return signalList;
 }
 
