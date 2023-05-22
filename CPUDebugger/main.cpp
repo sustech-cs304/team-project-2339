@@ -4,6 +4,7 @@
 #include <QScreen>
 #include "view/myobject1.h"
 #include "Comm/comm.h"
+#include <QImageReader>
 
 int main(int argc, char *argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -12,6 +13,7 @@ int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     QQmlContext *context = engine.rootContext();
+    QImageReader::setAllocationLimit(0);
     qmlRegisterType<MyObject1>("MyObj", 1, 0, "MyObject1");
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

@@ -323,14 +323,11 @@ Window {
                                         if(button11.isSelected){
                                             btn2.enabled=true
                                             bar.currentIndex=1
-                                            myobj.confirm1()
                                             console.log("Confirm1")
                                             myobj.makeList1()
                                             myobj.makeList2()
                                             listView21.model=myobj.myList1
                                             listView22.model=myobj.myList2
-                                            myobj.string=folderDialog1.folder
-
                                         }else{
                                             text14.show=true
                                         }
@@ -542,7 +539,7 @@ Window {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: "qrc:/images/image26.svg"
+                                    source: "qrc:/images/image26.png"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
@@ -563,7 +560,7 @@ Window {
                                 color: "white"
                                 radius: 5
                                 Image {
-                                    source: "qrc:/images/image27.svg"
+                                    source: "qrc:/images/image27.png"
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.fill: parent
                                 }
@@ -655,7 +652,7 @@ Window {
                                         listView22.model=myobj.myList2
                                         myobj.removeMyList1(index)
                                         listView21.model=myobj.myList1
-                                        console.log(root.width+" "+root.height)
+                                        console.log(window2.width+" "+window2.height)
                                     }
                                 }
                             }
@@ -752,7 +749,7 @@ Window {
                 Rectangle {
                     id: middle2
                     width: 3
-                    height: root.height
+                    height: window2.height
                     color: "grey"
                     x:280
 
@@ -762,7 +759,9 @@ Window {
                         drag.target: middle2 // 将rect设置为拖动的目标
                         drag.axis: Drag.XAxis // 只允许在X轴上拖动
                         drag.minimumX: 280 // 设置拖动的最小X坐标为0
-                        drag.maximumX: root.width-200// 设置拖动的最大X坐标为父容器的宽度减去rect的宽度
+                        drag.maximumX: window2.width-200// 设置拖动的最大X坐标为父容器的宽度减去rect的宽度
+                        hoverEnabled: true
+                        cursorShape: Qt.SizeHorCursor
                     }
                 }
 
@@ -776,9 +775,34 @@ Window {
 
                     property bool showSignals: true
 
+                    onWidthChanged: {
+                        if(image.width<right2.width){
+                            image.height=image.height*right2.width/image.width
+                            image.width=right2.width
+                        }
+                        if(image.height<window2.height){
+                            image.width=image.width*window2.height/image.height
+                            image.height=window2.height
+                        }
+                        button28.count()
+                    }
+
+                    onHeightChanged: {
+                        if(image.width<right2.width){
+                            image.height=image.height*right2.width/image.width
+                            image.width=right2.width
+                        }
+                        if(image.height<window2.height){
+                            image.width=image.width*window2.height/image.height
+                            image.height=window2.height
+                        }
+                        button28.count()
+                    }
+
+
                     Image {
                         id: image
-                        source: name
+                        source: name22
                         fillMode: Image.PreserveAspectFit
                         clip: true
 
@@ -786,35 +810,65 @@ Window {
                         property real offsetX: 0.0
                         property real offsetY: 0.0
 
-                        property string name: "qrc:/images/aabb.svg"
+                        property string name22: "qrc:/images/aabb.svg"
+
+                        function dragImage(drag) {
+                            image.offsetX += drag.x / image.scale;
+                            image.offsetY += drag.y / image.scale;
+                            image.x = image.offsetX;
+                            image.y = image.offsetY;
+                            if(image.x>0){
+                                image.x=0
+                            }
+                            if(image.x<right2.width-image.width){
+                                image.x=right2.width-image.width
+                            }
+                            if(image.y>0){
+                                image.y=0
+                            }
+                            if(image.y<right2.height-image.height){
+                                image.y=right2.height-image.height
+                            }
+                            console.log(image.x+" "+image.y)
+                        }
 
                         MouseArea {
                             anchors.fill: parent
                             drag.target: image
                             onPositionChanged: {
-                                image.offsetX += drag.x / image.scale;
-                                image.offsetY += drag.y / image.scale;
-                                image.x = image.offsetX;
-                                image.y = image.offsetY;
+                                image.dragImage(drag)
                             }
+                            hoverEnabled: true
+                            cursorShape: mouseArea.pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
                         }
 
-
                         function scaleImage(factor) { // 定义一个function，参数是缩放因子
-                            var newFactor = (factor-1)/20+1
+                            var newFactor = (factor-1)/100+1
                             var newWidth = width * factor; // 计算缩放后的宽度
                             var newHeight = height * factor; // 计算缩放后的高度
-                            if (newWidth < right2.width || newWidth>image.sourceSize.width) { // 如果缩放后的宽度或高度低于最小值
+                            if (newWidth < right2.width || newWidth>image.sourceSize.width*2) { // 如果缩放后的宽度或高度低于最小值
                                 return; // 不进行缩放，直接返回
                             }
-                            if (newHeight < right2.height || newWidth>image.sourceSize.height) { // 如果缩放后的宽度或高度低于最小值
+                            if (newHeight < right2.height || newWidth>image.sourceSize.height*2) { // 如果缩放后的宽度或高度低于最小值
                                 return; // 不进行缩放，直接返回
                             }
                             image.width = newWidth; // 否则，将图片的宽度设置为缩放后的宽度
                             image.height = newHeight; // 同时，将图片的高度设置为缩放后的高度
 
                             button28.count()
-                            console.log( "aaa"+image.sourceSize.width + " "+image.sourceSize.height)
+                            if(image.x>0){
+                                image.x=0
+                            }
+                            if(image.x<right2.width-image.width){
+                                image.x=right2.width-image.width
+                            }
+                            if(image.y>0){
+                                image.y=0
+                            }
+                            if(image.y<right2.height-image.height){
+                                image.y=right2.height-image.height
+                            }
+                            console.log( "aaa "+image.sourceSize.width + " "+image.sourceSize.height)
                         }
 
                         PinchArea {
@@ -842,11 +896,11 @@ Window {
 
                         function count() {
                             var w = image.sourceSize.width/right2.width;
-                            var h = image.sourceSize.height/right2.height;
+                            var h = image.sourceSize.height/window2.height;
                             if (w<h) {
                                 button28.number=image.width*100/right2.width
                             }else{
-                                button28.number=image.height*100/right2.height
+                                button28.number=image.height*100/window2.height
                             }
                         }
 
@@ -914,13 +968,20 @@ Window {
                             radius: height/5
                         }
 
-                        onClicked: {
-                            console.log("myob")
-                            myobj.loadSvgPath()
-                            console.log(myobj.string)
-                            image.name=myobj.string
-                            console.log("myob1")
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+//                                myobj.loadSvgPath()
+                                image.name22=myobj.string
+                                btn3.enabled=true
+                                bar.currentIndex=2
+                            }
                         }
+
+
                     }
 
                     Button {
@@ -1401,9 +1462,8 @@ Window {
 
                     }
 
-
                     Rectangle {
-                        id:piece2
+                        id:middle4
                         color: "gray"
                         width: 3
                         height: parent.height
@@ -1411,9 +1471,10 @@ Window {
 
                     Rectangle {
                         color: "#f8f4e7"
-                        width: parent.width -flickable1.width-piece2.width
+                        width: parent.width -left4.width-middle4.width
                         height: parent.height
                         clip:true
+                        x:left4.width+middle4.width
 
                         Grid {
                             rows: 2
@@ -1481,7 +1542,7 @@ Window {
                                 id:buttons4
                                 height: parent.height/10
                                 width: parent.width
-                                color: "lightgray"
+                                color: "#ECE1D3"
                                 anchors.bottom: parent.bottom
 
                                 Button {
@@ -1490,20 +1551,31 @@ Window {
                                     height: parent.height/3*2
                                     x:5
                                     anchors.verticalCenter: parent.verticalCenter
+                                    enabled: button41.light
+
+                                    property bool light: false
 
                                     contentItem: Image {
-                                        source: "qrc:/images/image1.png"
+                                        source: "qrc:/images/image41.png"
                                         fillMode: Image.PreserveAspectFit
                                     }
 
                                     background: Rectangle {
-                                        color: "lightgreen"
+                                        color: button41.light?"#77C396":"lightgrey"
                                         radius: height/5
                                     }
 
                                     onClicked: {
-                                        console.log("play")
+                                        console.log("resume")
+                                        button41.light=false
+                                        button42.light=false
+                                        button43.light=true
                                         myobj.sendResume()
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
+                                        button41.light=true
+                                        button42.light=true
+                                        button43.light=false
                                     }
                                 }
 
@@ -1512,24 +1584,33 @@ Window {
                                     width: height
                                     height: parent.height/3*2
                                     anchors.left: button41.right
+                                    enabled: button42.light
+
+                                    property bool light: false
 
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     contentItem: Image {
-                                        source: "qrc:/images/image2.png"
+                                        source: "qrc:/images/image42.png"
                                         fillMode: Image.PreserveAspectFit
                                     }
 
                                     background: Rectangle {
-                                        color: "lightblue"
+                                        color: button42.light?"lightblue":"lightgrey"
                                         radius: height/5
                                     }
 
                                     onClicked: {
                                         console.log("next")
+                                        button41.light=false
+                                        button42.light=false
+                                        button43.light=false
                                         myobj.sendStep()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
+                                        button41.light=true
+                                        button42.light=true
+                                        button43.light=false
                                         console.log(myobj.value1)
                                     }
                                 }
@@ -1539,24 +1620,63 @@ Window {
                                     width: height
                                     height: parent.height/3*2
                                     anchors.left: button42.right
+                                    enabled: button43.light
+
+                                    property bool light: false
 
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     contentItem: Image {
-                                        source: "qrc:/images/image3.png"
+                                        source: "qrc:/images/image43.png"
                                         fillMode: Image.PreserveAspectFit
                                     }
 
                                     background: Rectangle {
-                                        color: "lightgrey"
+                                        color: button43.light?"#FFF173":"lightgrey"
                                         radius: height/5
                                     }
 
                                     onClicked: {
                                         console.log("pause")
                                         myobj.sendPause()
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
+                                        button41.light=true
+                                        button42.light=true
+                                        button43.light=false
+
                                     }
                                 }
+
+                                Button {
+                                    id:button46
+                                    width: height
+                                    height: parent.height/3*2
+                                    anchors.right:  button44.left
+                                    enabled: button46.light
+
+                                    property bool light: false
+
+                                    anchors.verticalCenter: parent.verticalCenter
+
+                                    contentItem: Image {
+                                        source: "qrc:/images/image44.png"
+                                        fillMode: Image.PreserveAspectFit
+                                    }
+
+                                    background: Rectangle {
+                                        color: button46.light?"#77FF8812":"lightgrey"
+                                        radius: height/5
+                                    }
+
+                                    onClicked: {
+                                        myobj.getAsmFile()
+                                        listView1.model=myobj.myList41
+                                        listView2.model=myobj.myList41
+                                        console.log("update")
+                                    }
+                                }
+
 
                                 FileDialog {
                                     id: fileDialog4
@@ -1564,7 +1684,11 @@ Window {
 
                                     onAccepted: {
                                         console.log("已选择的文件：", currentFile)
-                                        myobj.string=currentFile
+                                        if(currentFile){
+                                            myobj.string=currentFile
+                                            button45.light=true
+                                            button46.light=true
+                                        }
                                     }
                                 }
 
@@ -1573,6 +1697,9 @@ Window {
                                     width: height*3
                                     height: parent.height/3*2
                                     anchors.right:  button45.left
+                                    enabled: button44.light
+
+                                    property bool light: true
 
                                     anchors.verticalCenter: parent.verticalCenter
 
@@ -1586,7 +1713,7 @@ Window {
                                     }
 
                                     background: Rectangle {
-                                        color: "lightblue"
+                                        color: button44.light?"#8B79B1":"lightgrey"
                                         radius: height/5
                                     }
 
@@ -1602,16 +1729,19 @@ Window {
                                     width: height
                                     height: parent.height/3*2
                                     anchors.right: parent.right
+                                    enabled: button45.light
+
+                                    property bool light: false
 
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     contentItem: Image {
-                                        source: "qrc:/images/image4.png"
+                                        source: "qrc:/images/image45.png"
                                         fillMode: Image.PreserveAspectFit
                                     }
 
                                     background: Rectangle {
-                                        color: "orange"
+                                        color: button45.light?"#F5B0BD":"lightgrey"
                                         radius: height/5
                                     }
 
@@ -1619,6 +1749,7 @@ Window {
                                         myobj.getAsmFile()
                                         listView1.model=myobj.myList41
                                         listView2.model=myobj.myList41
+                                        button41.light=true
                                         console.log("update")
                                     }
                                 }
@@ -1628,7 +1759,6 @@ Window {
                         }
 
                     }
-
                 }
 
             }
