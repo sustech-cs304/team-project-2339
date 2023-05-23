@@ -49,7 +49,7 @@ QByteArray DebugController::getBin()
 
 int DebugController::sendPrograme()
 {
-    uartCommunicator.sendProgram(this->getBin());
+    uartCommunicator.sendProgram(DebugController::getBin());
     return 0;
 }
 

@@ -16,6 +16,7 @@ public:
     static int pause();
     static int detect();
     static QByteArray getBin();
+    static int sendPrograme();
     friend class PreDebugController;
 
 
