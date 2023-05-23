@@ -7,7 +7,7 @@
 using namespace testing;
 
 QSettings settings("test_conf.ini", QSettings::IniFormat);
-QString root_path = settings.value("root_path");
+QString root_path = settings.value("Debugger/root_path").toString();
 
 QString filePath = root_path + "test.asm";
 QString new_filePath = root_path + "test2.asm";

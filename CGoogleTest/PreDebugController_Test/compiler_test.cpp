@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 #include "Controllers/PreDebugController.h"
-#include <QSetting>
+#include <QSettings>
 
 using namespace testing;
 
 QSettings settings("test_conf.ini", QSettings::IniFormat);
-QString root_path = settings.value("root_path");
+QString root_path = settings.value("Debugger/root_path").toString();
 
 QString file_path = root_path + "test.asm";
 QString new_file_path = root_path + "test2.asm";

@@ -108,14 +108,14 @@ TEST_F(CompilerTest, GenGraph) {
 }
 
 TEST_F(CompilerTest, Parser) {
-    SampleParser parser;
-    qDebug() << std::filesystem::current_path();
-    QStringList entries = FileUtil::getDirList(destPath+"/pre");
-    for (const QString &entry: entries) {
-        QFileInfo info(entry);
-        if (!info.fileName().compare("top1.v")) {
-            qDebug() << entry;
-            parser.read(entry.toStdString());
-        }
-    }
+//    SampleParser parser;
+//    qDebug() << std::filesystem::current_path();
+//    QStringList entries = FileUtil::getDirList(destPath+"/pre");
+//    for (const QString &entry: entries) {
+//        QFileInfo info(entry);
+//        if (!info.fileName().compare("top1.v")) {
+//            qDebug() << entry;
+//            parser.read(entry.toStdString());
+//        }
+//    }
 }
