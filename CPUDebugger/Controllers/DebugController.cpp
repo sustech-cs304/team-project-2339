@@ -47,6 +47,12 @@ QByteArray DebugController::getBin()
     return DebugStore::asmFilePtr->getBin();
 }
 
+int DebugController::sendPrograme()
+{
+    uartCommunicator.sendProgram(this->getBin());
+    return 0;
+}
+
 void DebugController::checkStore()
 {
     if (DebugStore::asmFilePtr == nullptr)
