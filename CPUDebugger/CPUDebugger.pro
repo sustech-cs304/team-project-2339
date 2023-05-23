@@ -43,7 +43,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-include(gtest_dependency.pri)
 include(uart.pri)
 
 include($$PWD/controller/controller.pri)
