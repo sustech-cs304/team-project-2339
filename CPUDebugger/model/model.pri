@@ -13,7 +13,6 @@ HEADERS += \
     $$PWD/compile/PreProcessor.h \
     $$PWD/compile/compiler.h \
     $$PWD/compile/global_compile.h \
-    $$PWD/render/GraphRender.h
 
 SOURCES += \
     $$PWD/FileInputFactory.cpp \
