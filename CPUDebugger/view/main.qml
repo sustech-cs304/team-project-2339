@@ -848,6 +848,13 @@ Window {
                             }
                             hoverEnabled: true
                             cursorShape: mouseArea.pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
+                            onWheel: {
+                                if (wheel.angleDelta.y > 0) {
+                                    image.scaleImage(1.1)
+                                } else {
+                                    image.scaleImage(0.9)
+                                }
+                            }
                         }
 
                         function scaleImage(factor) { // 定义一个function，参数是缩放因子
