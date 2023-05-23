@@ -6,7 +6,7 @@ std::optional<QByteArray> DebugController::resume()
 {
     checkStore();
     QByteArray cpuResponse;
-    bool result = uartCommunicator.sendResume(cpuResponse, 40);
+    bool result = uartCommunicator.sendResume(cpuResponse, DebugStore::binCurLine);
     if (!result)
         return nullptr;
 
