@@ -90,39 +90,6 @@ int Compiler::getPrecedence(char op) {
     }
 }
 
-
-QString Compiler::toPostfix(QString expr) {
-    QStack<QString> stack;
-    QStringList tokens = expr.split(" ");
-    QString result;
-
-    foreach (QString token, tokens) {
-        if (token == "+" || token == "-") {
-            while (!stack.isEmpty() && (stack.top() == "*" || stack.top() == "/")) {
-                result += stack.pop() + " ";
-            }
-            stack.push(token);
-        } else if (token == "*" || token == "/") {
-            stack.push(token);
-        } else if (token == "(") {
-            stack.push(token);
-        } else if (token == ")") {
-            while (!stack.isEmpty() && stack.top() != "(") {
-                result += stack.pop() + " ";
-            }
-            stack.pop();
-        } else {
-            result += token + " ";
-        }
-    }
-
-    while (!stack.isEmpty()) {
-        result += stack.pop() + " ";
-    }
-
-    return result.trimmed();
-}
-
 double Compiler::evaluatePostfix(QString expr) {
     QStack<double> stack;
     QStringList tokens = expr.split(" ");

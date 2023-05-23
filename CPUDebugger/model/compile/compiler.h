@@ -7,11 +7,9 @@ class Compiler
 {
 public:
     Compiler();
-//    void extracted(QList<QString> &lines, QList<Token> &tokenList);
     QList<Token> scan(QList<QString>&);
     bool isMacro(int, QList<Token> &);
     int getEquation(QList<Token>& tokens);
-    QString toPostfix(QString expr);
     double evaluatePostfix(QString expr);
     std::string infixToPostfix(std::string infixExpression);
 private:

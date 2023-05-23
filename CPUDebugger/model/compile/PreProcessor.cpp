@@ -67,6 +67,11 @@ void PreProcessor::filter(QList<Token> &tokens, int fType)
     }
 }
 
+QMap<QString, QString>& PreProcessor::getMarcoMap()
+{
+    return *marcoMap;
+}
+
 QList<CPUSignal> PreProcessor::genSignals(QString &path)
 {
     parser->read(path.toStdString());

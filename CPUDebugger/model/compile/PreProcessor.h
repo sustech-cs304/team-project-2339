@@ -23,6 +23,7 @@ public:
     void process(QString path, std::optional<QString> dest);
     void replace(QString path, QString dest, bool ignoreStatement);
     void filter(QList<Token>&, FilterType fType);
+    QMap<QString, QString>& getMarcoMap();
     QList<CPUSignal> genSignals(QString &path);
 private:
     void replaceMarco(QList<Token>&);
