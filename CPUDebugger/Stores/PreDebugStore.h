@@ -10,7 +10,7 @@
 
 class PreDebugStore
 {
-private:
+public:
     static std::shared_ptr<AsmFile> asmFile;
     static std::shared_ptr<QFile> file;
     static std::set<int> breakPoints;
