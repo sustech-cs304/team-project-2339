@@ -145,6 +145,45 @@ void MyObject1::setMyList41(const QList<QString> &newMyList41)
     emit myList41Changed();
 }
 
+QString MyObject1::string1() const
+{
+    return m_string1;
+}
+
+void MyObject1::setString1(const QString &newString1)
+{
+    if (m_string1 == newString1)
+        return;
+    m_string1 = newString1;
+    emit string1Changed();
+}
+
+QString MyObject1::string21() const
+{
+    return m_string21;
+}
+
+void MyObject1::setString21(const QString &newString21)
+{
+    if (m_string21 == newString21)
+        return;
+    m_string21 = newString21;
+    emit string21Changed();
+}
+
+QString MyObject1::string22() const
+{
+    return m_string22;
+}
+
+void MyObject1::setString22(const QString &newString22)
+{
+    if (m_string22 == newString22)
+        return;
+    m_string22 = newString22;
+    emit string22Changed();
+}
+
 void MyObject1::makeList1()
 {
 //    m_myList1=fileContrl->getSignalList();
@@ -211,9 +250,11 @@ void MyObject1::detect(){
 
 void MyObject1::confirm1()
 {
-    fileContrl->import(m_string);
+    qDebug() << "m_string: " << m_string1;
+    fileContrl->import(m_string1);
 
     m_myList1 = fileContrl->getSignals();
+    qDebug() << m_myList1;
 
     fileContrl->genGraph();
 
@@ -225,7 +266,7 @@ void MyObject1::confirm1()
  * 测试的话直接点击page2的confirm，我在conclicked函数里面调用了
  */
 void MyObject1::loadSvgPath(){
-    m_string = fileContrl->getSvgPath();
-    qDebug() << "Get m_string: " << m_string;
+    m_string22 = fileContrl->getSvgPath();
+    qDebug() << "Get m_string: " << m_string22;
 }
 

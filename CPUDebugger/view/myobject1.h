@@ -75,10 +75,23 @@ public:
     QList<QString> myList41() const;
     void setMyList41(const QList<QString> &newMyList41);
 
+    QString string1() const;
+    void setString1(const QString &newString1);
+
+    QString string21() const;
+    void setString21(const QString &newString21);
+
+    QString string22() const;
+    void setString22(const QString &newString22);
+
 private:
     int m_value;
     int m_value1;
     QString m_string;
+    QString m_string1; //page1 folder address
+    QString m_string21; //search context
+    QString m_string22; //page2 image address
+
     std::shared_ptr<QFile> file1;
     FileController *fileContrl;
     QVariantList m_items1;
@@ -102,6 +115,12 @@ private:
 
     Q_PROPERTY(QList<QString> myList41 READ myList41 WRITE setMyList41 NOTIFY myList41Changed)
 
+    Q_PROPERTY(QString string1 READ string1 WRITE setString1 NOTIFY string1Changed)
+
+    Q_PROPERTY(QString string21 READ string21 WRITE setString21 NOTIFY string21Changed)
+
+    Q_PROPERTY(QString string22 READ string22 WRITE setString22 NOTIFY string22Changed)
+
 signals:
 
     void valueChanged();
@@ -111,6 +130,9 @@ signals:
     void myList1Changed();
     void myList2Changed();
     void myList41Changed();
+    void string1Changed();
+    void string21Changed();
+    void string22Changed();
 };
 
 

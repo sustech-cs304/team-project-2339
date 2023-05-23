@@ -323,11 +323,18 @@ Window {
                                         if(button11.isSelected){
                                             btn2.enabled=true
                                             bar.currentIndex=1
+                                            mask2.show=false
                                             console.log("Confirm1")
+                                            myobj.string1=folderDialog1.folder
+                                            myobj.confirm1()
+                                            myobj.loadSvgPath()
+                                            image.name22=myobj.string22
                                             myobj.makeList1()
                                             myobj.makeList2()
                                             listView21.model=myobj.myList1
                                             listView22.model=myobj.myList2
+
+
                                         }else{
                                             text14.show=true
                                         }
@@ -481,6 +488,20 @@ Window {
             height: root.height-20
 
             Rectangle{
+                id:mask2
+                anchors.fill: parent
+                color: "#55111111"
+                z:1
+                visible: mask2.show
+
+                property bool show: true
+
+                MouseArea{
+                    anchors.fill: parent
+                }
+            }
+
+            Rectangle{
                 anchors.fill: parent
 
                 Rectangle {
@@ -578,6 +599,7 @@ Window {
                         height: parent.height-left20.height
                         width: left2.width/2
                         y:left20.height
+                        clip: true
 
                         Rectangle {
                             id:rect21
@@ -604,6 +626,7 @@ Window {
                             height: parent.height-rect21.height
                             width: parent.width
                             model:myobj.myList1
+                            clip: true
                             delegate: Rectangle {
                                 height: 30
                                 width: listView21.width
@@ -662,6 +685,7 @@ Window {
                         width: left2.width/2
                         x:left21.width
                         y:left20.height
+                        clip: true
 
                         Rectangle {
                             id:rect22
@@ -689,6 +713,7 @@ Window {
                             height: parent.height-rect22.height
                             width: parent.width
                             model:myobj.myList2
+                            clip: true
 
                             delegate: Rectangle {
                                 height: 30
@@ -827,13 +852,14 @@ Window {
                             if(image.y<right2.height-image.height){
                                 image.y=right2.height-image.height
                             }
-                            console.log(image.x+" "+image.y)
+                            console.log("bb"+drag.x+" "+drag.y+" "+image.x+" "+image.y)
                         }
 
                         MouseArea {
                             anchors.fill: parent
                             drag.target: image
                             onPositionChanged: {
+                                console.log("www")
                                 image.dragImage(drag)
                             }
                             hoverEnabled: true
@@ -871,7 +897,8 @@ Window {
 
                         PinchArea {
                             anchors.fill: parent
-                            onPinchUpdated: {
+                            onPinchUpdated: function(pinch){
+                                console.log("eeee")
                                 image.scaleImage(pinch.scale)
         //                            image.scale *= ((pinch.scale-1)/4+1);
         //                            image.width = image.sourceSize.width * image.scale;
@@ -936,7 +963,7 @@ Window {
                             color: "white"
                             radius: 5
                             Image {
-                                source: right2.showSignals?"qrc:/images/image25.svg":"qrc:/images/image24.svg"
+                                source: right2.showSignals?"qrc:/images/image25.png":"qrc:/images/image24.png"
                                 fillMode: Image.PreserveAspectCrop
                                 anchors.fill: parent
                             }
@@ -972,8 +999,6 @@ Window {
                             cursorShape: Qt.PointingHandCursor
 
                             onClicked: {
-//                                myobj.loadSvgPath()
-                                image.name22=myobj.string
                                 btn3.enabled=true
                                 bar.currentIndex=2
                             }
