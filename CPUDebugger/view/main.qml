@@ -323,7 +323,6 @@ Window {
                                         if(button11.isSelected){
                                             btn2.enabled=true
                                             bar.currentIndex=1
-                                            mask2.show=false
                                             console.log("Confirm1")
                                             myobj.string1=folderDialog1.folder
                                             myobj.confirm1()
@@ -339,7 +338,6 @@ Window {
                                             text14.show=true
                                         }
                                     }
-
 
                                 }
 
@@ -486,20 +484,6 @@ Window {
             id:window2
             width: root.width
             height: root.height-20
-
-            Rectangle{
-                id:mask2
-                anchors.fill: parent
-                color: "#55111111"
-                z:1
-                visible: mask2.show
-
-                property bool show: true
-
-                MouseArea{
-                    anchors.fill: parent
-                }
-            }
 
             Rectangle{
                 anchors.fill: parent
@@ -913,8 +897,8 @@ Window {
                         id:button28
                         width: 70
                         height: 25
-                        x:parent.width-width-150
-                        y:20
+                        x:parent.width-width-20
+                        y:parent.height-30-height
                         z:1
 
                         property int number: 100
@@ -949,6 +933,70 @@ Window {
                         Component.onCompleted:  {
                             count()
                         }
+
+                    }
+
+                    Button {
+                        id:button29
+                        width: 25
+                        height: 25
+                        x:button28.x-40
+                        y:button28.y
+                        z:1
+
+                        contentItem: Text {
+                            text: qsTr("-")
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        background: Rectangle {
+                            color: "orange"
+                            radius: height/5
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+                                image.scaleImage(0.8)
+                            }
+                        }
+
+
+                    }
+
+                    Button {
+                        id:button210
+                        width: 25
+                        height: 25
+                        x:button29.x-40
+                        y:button28.y
+                        z:1
+
+                        contentItem: Text {
+                            text: qsTr("+")
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        background: Rectangle {
+                            color: "orange"
+                            radius: height/5
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+                                image.scaleImage(1.2)
+                            }
+                        }
+
 
                     }
 
