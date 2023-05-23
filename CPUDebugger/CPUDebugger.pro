@@ -52,9 +52,6 @@ include($$PWD/model/model.pri)
 include($$PWD/Debugger.pri)
 
 SOURCES += \
-    PreDebugController_Test/compiler_test.cpp \
-    PreDebugController_Test/generalTest.cpp \
-    PreDebugController_Test/upload_test.cpp \
     main.cpp \
 
 INCLUDEPATH += \
