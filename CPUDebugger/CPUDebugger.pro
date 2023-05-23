@@ -54,17 +54,13 @@ include($$PWD/Debugger.pri)
 SOURCES += \
     PreDebugController_Test/compiler_test.cpp \
     PreDebugController_Test/generalTest.cpp \
-    PreDebugController_Test/work_test.cpp \
+    PreDebugController_Test/upload_test.cpp \
     main.cpp \
 
 INCLUDEPATH += \
     $$PWD/controller \
     $$PWD/view \
     $$PWD/model \
-
-DISTFILES += \
-    $$PWD/CodeDetails.md \
-    CPUDebugger.pdocconf
 
 DISTFILES += \
     $$PWD/CodeDetails.md \

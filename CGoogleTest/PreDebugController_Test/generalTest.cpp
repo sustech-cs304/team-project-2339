@@ -1,10 +1,16 @@
 #include <gtest/gtest.h>
 #include "Controllers/PreDebugController.h"
 
+#include <QSettings>
+
+QSettings settings("test_conf.ini", QSettings::IniFormat);
+QString root_path = settings.value("root_path");
+
+
 // 测试上传有效文件路径时是否返回非空文件指针
 TEST(PreDebugControllerTest, UploadFile_WithValidFilePath_ReturnsNonNullFilePointer)
 {
-    QString filePath = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\valid.asm";
+    QString filePath = root_path + "valid.asm";
     std::shared_ptr<QFile> filePtr = PreDebugController::uploadFile(filePath);
     ASSERT_NE(filePtr, nullptr);
 }
@@ -12,21 +18,21 @@ TEST(PreDebugControllerTest, UploadFile_WithValidFilePath_ReturnsNonNullFilePoin
 // 测试上传无效文件路径时是否抛出无效参数异常
 TEST(PreDebugControllerTest, UploadFile_WithInvalidFilePath_ThrowsInvalidArgument)
 {
-    QString filePath = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\???.txt";
+    QString filePath = root_path + "???.txt";
     ASSERT_THROW(PreDebugController::uploadFile(filePath), std::invalid_argument);
 }
 
 // 测试上传非.asm文件时是否抛出无效参数异常
 TEST(PreDebugControllerTest, UploadFile_WithNonAsmFile_ThrowsInvalidArgument)
 {
-    QString filePath = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\invalid.txt";
+    QString filePath = root_path + "invalid.txt";
     ASSERT_THROW(PreDebugController::uploadFile(filePath), std::invalid_argument);
 }
 
 // 测试清除操作是否清除了文件和汇编文件
 TEST(PreDebugControllerTest, Clear_ClearsFileAndAsmFile)
 {
-    QString filePath = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\valid.asm";
+    QString filePath = root_path + "valid.asm";
     std::shared_ptr<QFile> filePtr = PreDebugController::uploadFile(filePath);
     ASSERT_NE(PreDebugStore::file, nullptr);
 
@@ -43,7 +49,7 @@ TEST(PreDebugControllerTest, CompileAsm_WithNoUploadedFile_ThrowsInvalidArgument
 // 测试在已上传文件的情况下编译汇编是否成功，并设置断点
 TEST(PreDebugControllerTest, CompileAsm_WithUploadedFile_CompilesAsmAndSetsBreakPoints)
 {
-    QString filePath = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\valid.asm";
+    QString filePath =  root_path + "valid.asm";
     std::shared_ptr<QFile> filePtr = PreDebugController::uploadFile(filePath);
     PreDebugController::setBreakPoint(10);
     PreDebugController::setBreakPoint(20);

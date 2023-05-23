@@ -1,15 +1,16 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 #include "Controllers/PreDebugController.h"
+#include <QSetting>
 
 using namespace testing;
 
-//QString file_path = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test.asm";
-//QString new_file_path = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test2.asm";
-//QString out_file = "/Users/zitong/Library/CloudStorage/OneDrive-Personal/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/result.txt";
-QString file_path = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\test.asm";
-QString new_file_path = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\test2.asm";
-QString out_file = "C:\\Users\\50164\\OneDrive\\2023_Spring\\CS304 Software Engineering\\team-project-2339\\CPUDebugger\\result.txt";
+QSettings settings("test_conf.ini", QSettings::IniFormat);
+QString root_path = settings.value("root_path");
+
+QString file_path = root_path + "test.asm";
+QString new_file_path = root_path + "test2.asm";
+QString out_file = root_path + "result.txt";
 
 // 是否可以正常编译
 TEST(compile, case1)

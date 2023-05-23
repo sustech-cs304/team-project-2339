@@ -17,11 +17,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     qmlRegisterType<MyObject1>("MyObj", 1, 0, "MyObject1");
     const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-        app, [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
-                QCoreApplication::exit(-1);
-        }, Qt::QueuedConnection);
     engine.load(url);
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

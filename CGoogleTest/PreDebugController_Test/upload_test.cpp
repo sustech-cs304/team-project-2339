@@ -2,11 +2,15 @@
 #include <gmock/gmock-matchers.h>
 #include "Controllers/PreDebugController.h"
 
+#include <QSettings>
 
 using namespace testing;
 
-QString filePath = "C:/Users/50164/OneDrive/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test.asm";
-QString new_filePath = "C:/Users/50164/OneDrive/2023_Spring/CS304 Software Engineering/team-project-2339/CPUDebugger/test2.asm";
+QSettings settings("test_conf.ini", QSettings::IniFormat);
+QString root_path = settings.value("root_path");
+
+QString filePath = root_path + "test.asm";
+QString new_filePath = root_path + "test2.asm";
 
 //是否可以上传
 TEST(upload, case1)
