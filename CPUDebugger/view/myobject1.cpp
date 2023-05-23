@@ -202,6 +202,6 @@ void MyObject1::sendStep(){
 }
 
 void MyObject1::detect(){
-    
+    DebugController::detect();
 }
 
