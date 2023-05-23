@@ -90,9 +90,9 @@ inline QString FileUtil::execute(QString binPath, QString workDir, QStringList &
     process.setArguments(arguments);
     process.start();
     process.waitForFinished();
-    QString output = process.readAllStandardOutput();
+//    QString output = process.readAllStandardOutput();
     QString error = process.readAllStandardError();
-    return output + "\n" + error;
+    return "Error message: " + error;
 }
 
 inline QFile *FileUtil::importFile(QString path, bool isUrl)
