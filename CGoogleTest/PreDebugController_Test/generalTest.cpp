@@ -3,8 +3,8 @@
 
 #include <QSettings>
 
-QSettings settings("test_conf.ini", QSettings::IniFormat);
-QString root_path = settings.value("Debugger/root_path").toString();
+static QSettings settings("test_conf.ini", QSettings::IniFormat);
+static QString root_path = settings.value("Debugger/root_path").toString();
 
 
 // 测试上传有效文件路径时是否返回非空文件指针

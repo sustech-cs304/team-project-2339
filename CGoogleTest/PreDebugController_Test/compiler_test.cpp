@@ -5,12 +5,12 @@
 
 using namespace testing;
 
-QSettings settings("test_conf.ini", QSettings::IniFormat);
-QString root_path = settings.value("Debugger/root_path").toString();
+static QSettings settings("test_conf.ini", QSettings::IniFormat);
+static QString root_path = settings.value("Debugger/root_path").toString();
 
-QString file_path = root_path + "test.asm";
-QString new_file_path = root_path + "test2.asm";
-QString out_file = root_path + "result.txt";
+static QString file_path = root_path + "test.asm";
+static QString new_file_path = root_path + "test2.asm";
+static QString out_file = root_path + "result.txt";
 
 // 是否可以正常编译
 TEST(compile, case1)
