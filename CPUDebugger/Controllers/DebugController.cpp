@@ -1,33 +1,44 @@
 #include "DebugController.h"
 
+static UartCommunicator uartCommunicator;
+
+int DebugController::resume()
+{
+    //checkStore();
+
+    QByteArray cpuResponse;
+    bool result = uartCommunicator.sendResume(cpuResponse, 40);
+    qDebug() << cpuResponse << Qt::endl;
+    return 0;
+}
+
 int DebugController::step()
 {
-    checkStore();
+    //checkStore();
     QByteArray cpuResponse;
-//    UartSimulator::sendStep(cpuResponse);
+    bool result = uartCommunicator.sendStep(cpuResponse);
+    if (result){
 
-    //获取cpuResponse的前4个Byte，将他们右移两位之后转为int返回
-//    int PC = DebugController::extractPC(cpuResponse);
-//    DebugController::setPC(FileType::Bin, PC);
-    
-//    return PC;
+    }else{
+
+    }
+    qDebug() << cpuResponse << Qt::endl;
+    return 0;
 }
-
-int DebugController::next()
-{
-    checkStore();
-    qWarning() << "next is not implement now";
-    return 1;
-}
-
 int DebugController::pause()
 {
-//    checkStore();
-//    QByteArray cpuResponse;
-//    UartSimulator::sendPause(cpuResponse);
-//    int PC = DebugController::extractPC(cpuResponse);
-//    DebugController::setPC(FileType::Bin, PC);
-//    return PC;
+    //checkStore();
+    uartCommunicator.sendPause();
+    qDebug() << "pause" << Qt::endl;
+    return 0;
+}
+
+int DebugController::detect()
+{
+    //checkStore();
+    uartCommunicator.autoConnectCPU();
+    qDebug() << "HA" << Qt::endl;
+    return 0;
 }
 
 // TODO: Delete it4

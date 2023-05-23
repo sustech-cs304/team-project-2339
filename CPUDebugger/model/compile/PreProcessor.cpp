@@ -7,6 +7,7 @@
 PreProcessor::PreProcessor()
 {
     c = new Compiler();
+    parser = new CParser();
     marcoMap = new QMap<QString, QString>();
 }
 
@@ -18,7 +19,8 @@ void PreProcessor::clear()
 void PreProcessor::process(QString path, std::optional<QString> dest)
 {
     QFile *f = FileUtil::importFile(path);
-    QList<Token> tokens = c->scan(FileUtil::getTextStreams(f));
+    QStringList lines = FileUtil::getTextStreams(f);
+    QList<Token> tokens = c->scan(lines);
 
     if (dest.has_value()) {
         QFile of(dest.value());
@@ -42,11 +44,12 @@ void PreProcessor::process(QString path, std::optional<QString> dest)
 void PreProcessor::replace(QString path, QString dest, bool ignoreStatement)
 {
     QFile *f = FileUtil::importFile(path);
-    QList<Token> tokens = c->scan(FileUtil::getTextStreams(f));
+    QStringList lines = FileUtil::getTextStreams(f);
+    QList<Token> tokens = c->scan(lines);
     filter(tokens, FILTER_IGNORE_BEFORE_MODULE);
-    replaceMarco(tokens);
     if (ignoreStatement)
         filter(tokens, FILTER_IGNORE_STATEMENT);
+    replaceMarco(tokens);
     filter(tokens, FILTER_EQUATION_COMPUTION);
     FileUtil::exportFile(dest, tokens);
     f->close();
@@ -62,6 +65,12 @@ void PreProcessor::filter(QList<Token> &tokens, int fType)
     } else if (fType == FILTER_EQUATION_COMPUTION) {
         filterEquationCompution(tokens);
     }
+}
+
+QList<CPUSignal> PreProcessor::genSignals(QString &path)
+{
+    parser->read(path.toStdString());
+    return parser->export_signals();
 }
 
 void PreProcessor::replaceMarco(QList<Token> &tokens)
@@ -98,16 +107,20 @@ void PreProcessor::filterIgnoreStatement(QList<Token> &tokens)
 {
     int p = 0;
     bool isState = false;
+    int f;
     while (p <tokens.size()) {
         Token &t = tokens[p];
-        if (t.s == "endmodule")
+        if (t.s == "endmodule") {
             isState = false;
+            tokens.remove(f, p-f);
+            break;
+        }
         if (isState) {
-            tokens.remove(p);
+            p++;
         } else {
             if (t.s == ';')
                 isState = true;
-            p++;
+            f = ++p;
         }
     }
 }

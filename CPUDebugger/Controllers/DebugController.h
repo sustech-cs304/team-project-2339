@@ -11,14 +11,12 @@
 class DebugController
 {
 public:
+    static int resume();
     static int step();
-    static int next();
     static int pause();
+    static int detect();
     static QByteArray getBin();
     friend class PreDebugController;
-
-
-
 private:
     enum FileType
     {
@@ -32,7 +30,6 @@ private:
     inline static int extractPC(QByteArray& cpuResponse);
 
     inline static int setPC(FileType fileType, int PC);
-
 };
 
 #endif // DEBUGCONTROLLER_H

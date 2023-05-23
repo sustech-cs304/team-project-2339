@@ -3,6 +3,7 @@
 #define FILEUTIL_H
 
 #include "compile/MAlex.h"
+#include "qforeach.h"
 #include "qurl.h"
 #include <QDebug>
 #include <QDir>
@@ -17,8 +18,10 @@ public:
     static void exportFile(QString path, QStringList lines);
     static void exportFile(QString path, QList<Token> tokens);
     static void exportFile(QString dirPath, QString filename, QStringList lines);
+    static QString execute(QString binPath, QString workDir, QStringList &arguments);
     static QFile* importFile(QString path, bool isUrl=false);
     static QString convert(QString url);
+    static QList<QString> dupRemove(QList<QString> ss);
     static QStringList getDirList(QString dirPath, QString filter="v", bool recursively=false);
 private:
     static int findFile(const QString &filePath, QString &filter, QStringList &result, bool recursively);
@@ -79,6 +82,19 @@ inline void FileUtil::exportFile(QString dirPath, QString filename, QStringList 
     exportFile(dirPath+filename, lines);
 }
 
+inline QString FileUtil::execute(QString binPath, QString workDir, QStringList &arguments)
+{
+    QProcess process;
+    process.setProgram(binPath);
+    process.setWorkingDirectory(workDir);
+    process.setArguments(arguments);
+    process.start();
+    process.waitForFinished();
+    QString output = process.readAllStandardOutput();
+    QString error = process.readAllStandardError();
+    return output + "\n" + error;
+}
+
 inline QFile *FileUtil::importFile(QString path, bool isUrl)
 {
     if (isUrl) {
@@ -90,6 +106,16 @@ inline QFile *FileUtil::importFile(QString path, bool isUrl)
 inline QString FileUtil::convert(QString url)
 {
     return QUrl(url).toLocalFile();
+}
+
+inline QList<QString> FileUtil::dupRemove(QList<QString> ss)
+{
+    QSet<QString> uniqueSet;
+    foreach (QString s, ss) {
+        uniqueSet.insert(s);
+    }
+
+    return QList<QString>(uniqueSet.begin(), uniqueSet.end());
 }
 
 inline QStringList FileUtil::getDirList(QString dirPath, QString filter, bool recursively)

@@ -42,7 +42,7 @@ void MyObject1::setString(const QString &newString)
 void MyObject1::getAsmFile()
 {
     m_myList41.clear();
-    QString filePath = m_string.mid(7);
+    QString filePath = m_string.mid(8);
     qDebug()<<filePath;
     file1 = PreDebugController::uploadFile(filePath);
     if (file1->open(QIODevice::ReadOnly | QIODevice::Text))
@@ -147,8 +147,8 @@ void MyObject1::setMyList41(const QList<QString> &newMyList41)
 
 void MyObject1::makeList1()
 {
-    m_myList1=fileContrl->getSignalList();
-    qDebug()<<m_myList1;
+//    m_myList1=fileContrl->getSignalList();
+//    qDebug()<<m_myList1;
 }
 
 void MyObject1::removeMyList1(int index)
@@ -159,7 +159,7 @@ void MyObject1::removeMyList1(int index)
     }
 }
 
-void MyObject1::addMyList1(QString string)
+void MyObject1::addMyList1()
 {
 
 }
@@ -190,26 +190,42 @@ void MyObject1::makeList41()
 }
 
 void MyObject1::sendResume(){
-    QByteArray cpuResponse;
-    bool result = uartCommunicator->sendResume(cpuResponse, 40);
-    if (result){
-
-    }else{
-
-    }
+    DebugController::resume();
 }
 
 void MyObject1::sendPause(){
-    uartCommunicator->sendPause();
+    DebugController::pause();
 }
 
 void MyObject1::sendStep(){
-    QByteArray cpuResponse;
-    bool result = uartCommunicator->sendStep(cpuResponse);
-    if (result){
+    DebugController::step();
+}
 
-    }else{
+void MyObject1::detect(){
+    
+}
 
-    }
+/**
+ * @brief MyObject1::confirm1
+ */
+
+void MyObject1::confirm1()
+{
+    fileContrl->import(m_string);
+
+    m_myList1 = fileContrl->getSignals();
+
+    fileContrl->genGraph();
+
+}
+
+/**
+ * @brief MyObject1::loadSvgPath
+ * m_string="newSvgFilePath"
+ * 测试的话直接点击page2的confirm，我在conclicked函数里面调用了
+ */
+void MyObject1::loadSvgPath(){
+    m_string = fileContrl->getSvgPath();
+    qDebug() << "Get m_string: " << m_string;
 }
 

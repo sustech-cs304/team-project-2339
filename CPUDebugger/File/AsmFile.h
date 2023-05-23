@@ -1,12 +1,12 @@
 #ifndef ASMFILE_H
 #define ASMFILE_H
 
-#include "DebugFile.h"
 #include <vector>
 #include <memory>
 #include <QMap>
 #include <QFile>
 #include <QRegularExpression>
+#include <set>
 
 #define DATA_MEM_SIZE 0x3FFF
 #define TEXT_MEM_SIZE 0x3FFF
@@ -51,6 +51,8 @@ public:
      * binary representation of the machine code associated.
      */
     explicit AsmFile();
+
+    friend class DebugController;
 
     ~AsmFile();
 
@@ -115,6 +117,8 @@ public:
      */
     int getAsmLine(unsigned int PC);
 
+    int setBreakPoints(std::set<int>& breakPoints);
+    
 private:
     QFile *asmFile{};
 
@@ -126,6 +130,9 @@ private:
 
     QMap<int, unsigned int> asmToPCMap;
     QMap<unsigned int, int> PCToAsmMap;
+
+    std::set<int> breakPoints = {};
+    std::set<int> binBreakPoints = {};
 
     enum OpType {
         O_Type, R_Type, I_Type, J_Type, P_Type,
@@ -166,7 +173,7 @@ private:
 
     static int getRegCode(const QString &r);
 
-//    static QString zeroExtent(QString string, int length);
+    //    static QString zeroExtent(QString string, int length);
 };
 
 #endif // ASMFILE_H

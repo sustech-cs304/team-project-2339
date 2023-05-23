@@ -59,6 +59,7 @@ public:
     bool is_number(QChar);
     bool is_number(QString);
     bool is_key(QString);
+    QString filter(QString, QChar);
 private:
     Line pre_check(Line);
     bool is_annotated;

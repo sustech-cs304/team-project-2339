@@ -14,49 +14,61 @@ FileController::~FileController()
 void FileController::import(QString &absolutePath) {
     QString dirPath = FileUtil::convert(absolutePath);
     tmpPath = dirPath+TMP_PATH;
-//    QDir *dirInfo = new QDir(tmpPath);
+    QDir *dir = new QDir(tmpPath);
+    if (!dir->exists()) {
+        if (dir->mkpath(tmpPath))
+            qDebug() << "Folder created successfully";
+        else
+            qDebug() << "Failed to create folder";
+    }
     QStringList entries = FileUtil::getDirList(dirPath, "v", true);
     for (const QString &entryPath: entries) {
+        qDebug() << "Process file: " << QFileInfo(entryPath).fileName();
         p.process(entryPath, std::nullopt);
     }
     for (const QString &entryPath: entries) {
         QFileInfo info(entryPath);
-        if (!info.fileName().compare("top.v"))
+        qDebug() << "Replace file: " << info.fileName();
+        if (!info.fileName().compare("top.v")) {
             p.replace(entryPath, tmpPath+"/"+info.fileName(), false);
-        else
+            topPath = tmpPath+"/"+info.fileName();
+        }
+        else {
             p.replace(entryPath, tmpPath+"/"+info.fileName(), true);
+        }
     }
 }
 
-QList<QString> FileController::getSignalList()
+QList<CPUSignal> FileController::getSignalList()
 {
-    QList<QString> sigList;
-    sigList.append("instruction_mem_instruction");
-    return sigList;
+    return p.genSignals(topPath);
 }
 
-void FileController::genGraph(QString path)
+QList<QString> FileController::getSignals()
 {
-    QProcess process;
-    QString yosysPath = PROJ_PATH+YOSYS_PATH;
-    process.setProgram(yosysPath);
-    QStringList arguments;
-    QStringList entries = FileUtil::getDirList(path, "v", true);
-    QString f;
-    for (QString &s: entries) {
-        f.append(s+" ");
+    QList<CPUSignal> signalList = p.genSignals(topPath);
+    QList<QString> ss;
+    for (CPUSignal sig: signalList) {
+        ss.append(sig.toString());
     }
-    arguments << "-p" << QString("read_verilog %1").arg(f) << "-p" << QString(path+"/show");
-    process.setArguments(arguments);
-    process.start();
-    process.waitForFinished();
-    QString output = process.readAllStandardOutput();
-    QString error = process.readAllStandardError();
-    qDebug() << output;
-    qDebug() << error;
+    return FileUtil::dupRemove(ss);
+}
 
-    QString graphvizPath = PROJ_PATH+GRAPHVIZ_PATH;
+QString FileController::getSvgPath()
+{
+    QString s(tmpPath+"/show.svg");
+    return QUrl::fromLocalFile(s).url();
+}
 
+void FileController::genGraph(QString dirPath)
+{
+    g.genDot(PROJ_PATH+YOSYS_PATH, dirPath);
+    g.genSvg(PROJ_PATH+GV_PATH, dirPath, "show.dot");
+}
+
+void FileController::genGraph()
+{
+    genGraph(tmpPath);
 }
 
 void FileController::exportUart() {

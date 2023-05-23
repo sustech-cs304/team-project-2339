@@ -6,7 +6,7 @@
 #include <QtCore>
 #include "Controllers/DebugController.h"
 #include "Controllers/PreDebugController.h"
-#include "FileController.h"
+#include "controller/FileController.h"
 #include "Comm/comm.h"
 #include <QFile>
 #include <QTextStream>
@@ -38,7 +38,7 @@ public:
 
     Q_INVOKABLE void removeMyList1(int index);
 
-    Q_INVOKABLE void addMyList1(QString string);
+    Q_INVOKABLE void addMyList1();
 
     Q_INVOKABLE void makeList2();
 
@@ -53,6 +53,12 @@ public:
     Q_INVOKABLE void sendPause();
     
     Q_INVOKABLE void sendStep();
+
+    Q_INVOKABLE void detect();
+
+    Q_INVOKABLE void confirm1();
+
+    Q_INVOKABLE void loadSvgPath();
 
     int value1() const;
     void setValue1(int newValue1);
@@ -107,7 +113,6 @@ signals:
     void myList41Changed();
 };
 
-static UartCommunicator* uartCommunicator = new UartCommunicator();
 
 #endif // MYOBJECT1_H
 

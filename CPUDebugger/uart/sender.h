@@ -1,10 +1,12 @@
+#ifndef SENDER_H
+#define SENDER_H
+
 #include "QObject"
 #include "QThread"
 #include "QMutex"
 #include "QWaitCondition"
-
-#ifndef SENDER_H
-#define SENDER_H
+#include "QSerialPort"
+#include "QTime"
 
 class SenderThread : public QThread{
     Q_OBJECT
