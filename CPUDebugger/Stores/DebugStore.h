@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "File/AsmFile.h"
-#include "Comm/comm.h"
+#include "uart/comm.h"
 
 class DebugStore
 {

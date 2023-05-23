@@ -35,8 +35,8 @@ int DebugController::pause()
 int DebugController::detect()
 {
     //checkStore();
-    uartCommunicator.autoConnectCPU();
-    qDebug() << "HA" << Qt::endl;
+    bool result = uartCommunicator.autoConnectCPU();
+    qDebug() << result << Qt::endl;
     return 0;
 }
 
@@ -49,7 +49,10 @@ QByteArray DebugController::getBin()
 
 int DebugController::sendPrograme()
 {
-    uartCommunicator.sendProgram(DebugController::getBin());
+    QByteArray fileBytes = DebugController::getBin();
+    qDebug() << fileBytes;
+    QByteArray cpuResponse;
+    uartCommunicator.sendProgram(fileBytes, cpuResponse);
     return 0;
 }
 
