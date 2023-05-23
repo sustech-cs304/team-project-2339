@@ -493,6 +493,7 @@ Window {
                         id:left20
                         height: 30
                         width: left2.width
+                        visible: right2.showSignals
 
                         Rectangle {
                             id:rect23
@@ -578,6 +579,8 @@ Window {
                         height: parent.height-left20.height
                         width: left2.width/2
                         y:left20.height
+
+                        visible: right2.showSignals
 
                         Rectangle {
                             id:rect21
@@ -750,8 +753,6 @@ Window {
                     color: "grey"
                     x:280
 
-                    visible: right2.showSignals
-
                     MouseArea {
                         id: mouseArea
                         anchors.fill: parent // 将mouseArea的锚点设置为与rect完全对齐
@@ -770,7 +771,7 @@ Window {
                     height: parent.height
                     width: right2.showSignals?parent.width-left2.width:parent.width-middle2.width
                     clip: true
-                    x:right2.showSignals?middle2.x+middle2.width:0
+                    x:middle2.x+middle2.width
 
                     property bool showSignals: true
 
@@ -797,6 +798,7 @@ Window {
                         }
                         button28.count()
                     }
+
 
                     Image {
                         id: image
