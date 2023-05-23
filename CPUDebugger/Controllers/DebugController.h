@@ -11,8 +11,8 @@
 class DebugController
 {
 public:
-    static int resume();
-    static int step();
+    static std::optional<QByteArray> resume();
+    static std::optional<QByteArray> step();
     static int pause();
     static int detect();
     static QByteArray getBin();

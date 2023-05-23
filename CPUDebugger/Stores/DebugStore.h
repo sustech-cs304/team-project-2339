@@ -7,6 +7,9 @@
 
 class DebugStore
 {
+public:
+    static int setPC_Asm(int PC);
+    static int setPC_Bin(int PC);
 private:
     static int binCurLine;
     static int asmCurLine;

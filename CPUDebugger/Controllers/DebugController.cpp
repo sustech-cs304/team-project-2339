@@ -1,34 +1,40 @@
 #include "DebugController.h"
 
 UartCommunicator uartCommunicator;
-int DebugController::resume()
-{
-    //checkStore();
 
+std::optional<QByteArray> DebugController::resume()
+{
+    checkStore();
     QByteArray cpuResponse;
     bool result = uartCommunicator.sendResume(cpuResponse, 40);
-    qDebug() << cpuResponse << Qt::endl;
-    return 0;
+    if (!result)
+        return nullptr;
+
+    int asmPC = cpuResponse.toInt() >> 2;
+    DebugStore::setPC_Asm(asmPC);
+
+    return cpuResponse;
 }
 
-int DebugController::step()
+std::optional<QByteArray> DebugController::step()
 {
-    //checkStore();
+    checkStore();
     QByteArray cpuResponse;
     bool result = uartCommunicator.sendStep(cpuResponse);
-    if (result){
 
-    }else{
+    if (!result)
+        return nullptr;
 
-    }
-    qDebug() << cpuResponse << Qt::endl;
-    return 0;
+    int asmPC = cpuResponse.toInt() >> 2;
+    DebugStore::setPC_Asm(asmPC);
+
+    return cpuResponse;
 }
+
 int DebugController::pause()
 {
-    //checkStore();
+    checkStore();
     uartCommunicator.sendPause();
-    qDebug() << "pause" << Qt::endl;
     return 0;
 }
 
