@@ -16,7 +16,6 @@ CONFIG += qmltypes
 SOURCES += \
         main.cpp \
         tst_importfile.cpp \
-        tst_render.cpp \
         tst_uart.cpp \
         PreDebugController_Test/compiler_test.cpp \
         PreDebugController_Test/generalTest.cpp \
