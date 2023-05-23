@@ -3,7 +3,6 @@
 #include <QQmlContext>
 #include <QScreen>
 #include "view/myobject1.h"
-#include "Comm/comm.h"
 #include <QImageReader>
 
 int main(int argc, char *argv[]) {
