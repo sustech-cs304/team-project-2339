@@ -270,3 +270,13 @@ void MyObject1::loadSvgPath(){
     qDebug() << "Get m_string: " << m_string22;
 }
 
+void MyObject1::search()
+{
+
+}
+
+void MyObject1::searchCancel()
+{
+
+}
+

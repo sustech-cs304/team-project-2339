@@ -332,8 +332,6 @@ Window {
                                             myobj.makeList2()
                                             listView21.model=myobj.myList1
                                             listView22.model=myobj.myList2
-
-
                                         }else{
                                             text14.show=true
                                         }
@@ -498,20 +496,24 @@ Window {
                         id:left20
                         height: 30
                         width: left2.width
+                        color: "yellow"
 
                         Rectangle {
                             id:rect23
-                            width: left2-60
+                            width: left2.width-60
                             height: 30
+                            x:0
+                            y:0
                             color: "white"
                             border.color: "lightgrey"
                             border.width: 3
-                            radius: 10
+                            radius: 2
 
                             TextInput {
                                 id:ti2
                                 x:10
                                 y:5
+                                width: parent.width-30
                                 anchors.margins: 2
                                 font.pointSize: 15
                                 focus: true
@@ -551,6 +553,10 @@ Window {
 
                             onClicked: {
                                 ti2.clear()
+                                myobj.search()
+
+                                listView21.model=myobj.myList1
+                                listView22.model=myobj.myList2
                             }
                         }
 
@@ -572,6 +578,10 @@ Window {
 
                             onClicked: {
                                 console.log(ti2.text)
+                                myobj.searchCancel()
+
+                                listView21.model=myobj.myList1
+                                listView22.model=myobj.myList2
                             }
                         }
 
@@ -836,14 +846,14 @@ Window {
                             if(image.y<right2.height-image.height){
                                 image.y=right2.height-image.height
                             }
-                            console.log("bb"+drag.x+" "+drag.y+" "+image.x+" "+image.y)
+                            //console.log("bb"+drag.x+" "+drag.y+" "+image.x+" "+image.y)
                         }
 
                         MouseArea {
                             anchors.fill: parent
                             drag.target: image
                             onPositionChanged: {
-                                console.log("www")
+                                //console.log("www")
                                 image.dragImage(drag)
                             }
                             hoverEnabled: true

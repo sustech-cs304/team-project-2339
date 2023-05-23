@@ -59,6 +59,10 @@ public:
 
     Q_INVOKABLE void loadSvgPath();
 
+    Q_INVOKABLE void search();
+
+    Q_INVOKABLE void searchCancel();
+
     int value1() const;
     void setValue1(int newValue1);
 
