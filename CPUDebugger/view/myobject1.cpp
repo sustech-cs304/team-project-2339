@@ -74,7 +74,6 @@ void MyObject1::loadFile1()
 
 void MyObject1::makeBreakPoint()
 {
-
     PreDebugController::setBreakPoint(m_value);
     qDebug() << m_value;
 }
@@ -145,6 +144,58 @@ void MyObject1::setMyList41(const QList<QString> &newMyList41)
     emit myList41Changed();
 }
 
+QString MyObject1::string31() const
+{
+    return m_string31;
+}
+
+void MyObject1::setString31(const QString &newString31)
+{
+    if (m_string31 == newString31)
+        return;
+    m_string31 = newString31;
+    emit string31Changed();
+}
+
+QString MyObject1::string32() const
+{
+    return m_string32;
+}
+
+void MyObject1::setString32(const QString &newString32)
+{
+    if (m_string32 == newString32)
+        return;
+    m_string32 = newString32;
+    emit string32Changed();
+}
+
+QString MyObject1::string41() const
+{
+    return m_string41;
+}
+
+void MyObject1::setString41(const QString &newString41)
+{
+    if (m_string41 == newString41)
+        return;
+    m_string41 = newString41;
+    emit string41Changed();
+}
+
+QList<QString> MyObject1::myList42() const
+{
+    return m_myList42;
+}
+
+void MyObject1::setMyList42(const QList<QString> &newMyList42)
+{
+    if (m_myList42 == newMyList42)
+        return;
+    m_myList42 = newMyList42;
+    emit myList42Changed();
+}
+
 void MyObject1::makeList1()
 {
     m_myList1=fileContrl->getSignalList();
@@ -197,11 +248,26 @@ void MyObject1::sendPause(){
     DebugController::pause();
 }
 
+void MyObject1::sendBreakPoint()
+{
+
+}
+
 void MyObject1::sendStep(){
     DebugController::step();
 }
 
 void MyObject1::detect(){
     DebugController::detect();
+}
+
+void MyObject1::exportTo()
+{
+
+}
+
+void MyObject1::complete()
+{
+
 }
 

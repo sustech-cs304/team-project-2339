@@ -22,6 +22,7 @@ Window {
 //        myList1: ["Apple", "Banana", "Cherry"]
 //        myList2: ["Orange", "melon"]
 //        myList41:["1","0","1","0"]
+        myList42:["1111 0000 1111 0000"]
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -324,6 +325,10 @@ Window {
                                             btn2.enabled=true
                                             bar.currentIndex=1
                                             console.log("Confirm1")
+                                            myobj.string1=folderDialog1.folder
+                                            myobj.confirm1()
+                                            myobj.loadSvgPath()
+                                            image.name22=myobj.string22
                                             myobj.makeList1()
                                             myobj.makeList2()
                                             listView21.model=myobj.myList1
@@ -332,7 +337,6 @@ Window {
                                             text14.show=true
                                         }
                                     }
-
 
                                 }
 
@@ -493,20 +497,24 @@ Window {
                         id:left20
                         height: 30
                         width: left2.width
+                        color: "yellow"
 
                         Rectangle {
                             id:rect23
-                            width: left2-60
+                            width: left2.width-60
                             height: 30
+                            x:0
+                            y:0
                             color: "white"
                             border.color: "lightgrey"
                             border.width: 3
-                            radius: 10
+                            radius: 2
 
                             TextInput {
                                 id:ti2
                                 x:10
                                 y:5
+                                width: parent.width-30
                                 anchors.margins: 2
                                 font.pointSize: 15
                                 focus: true
@@ -546,6 +554,10 @@ Window {
 
                             onClicked: {
                                 ti2.clear()
+                                myobj.search()
+
+                                listView21.model=myobj.myList1
+                                listView22.model=myobj.myList2
                             }
                         }
 
@@ -567,6 +579,10 @@ Window {
 
                             onClicked: {
                                 console.log(ti2.text)
+                                myobj.searchCancel()
+
+                                listView21.model=myobj.myList1
+                                listView22.model=myobj.myList2
                             }
                         }
 
@@ -578,6 +594,7 @@ Window {
                         height: parent.height-left20.height
                         width: left2.width/2
                         y:left20.height
+                        clip: true
 
                         Rectangle {
                             id:rect21
@@ -604,6 +621,7 @@ Window {
                             height: parent.height-rect21.height
                             width: parent.width
                             model:myobj.myList1
+                            clip: true
                             delegate: Rectangle {
                                 height: 30
                                 width: listView21.width
@@ -662,6 +680,7 @@ Window {
                         width: left2.width/2
                         x:left21.width
                         y:left20.height
+                        clip: true
 
                         Rectangle {
                             id:rect22
@@ -689,6 +708,7 @@ Window {
                             height: parent.height-rect22.height
                             width: parent.width
                             model:myobj.myList2
+                            clip: true
 
                             delegate: Rectangle {
                                 height: 30
@@ -827,17 +847,25 @@ Window {
                             if(image.y<right2.height-image.height){
                                 image.y=right2.height-image.height
                             }
-                            console.log(image.x+" "+image.y)
+                            //console.log("bb"+drag.x+" "+drag.y+" "+image.x+" "+image.y)
                         }
 
                         MouseArea {
                             anchors.fill: parent
                             drag.target: image
                             onPositionChanged: {
+                                //console.log("www")
                                 image.dragImage(drag)
                             }
                             hoverEnabled: true
                             cursorShape: mouseArea.pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
+                            onWheel: {
+                                if (wheel.angleDelta.y > 0) {
+                                    image.scaleImage(1.1)
+                                } else {
+                                    image.scaleImage(0.9)
+                                }
+                            }
                         }
 
                         function scaleImage(factor) { // 定义一个function，参数是缩放因子
@@ -871,7 +899,8 @@ Window {
 
                         PinchArea {
                             anchors.fill: parent
-                            onPinchUpdated:function(pinch)  {
+                            onPinchUpdated: function(pinch){
+                                console.log("eeee")
                                 image.scaleImage(pinch.scale)
         //                            image.scale *= ((pinch.scale-1)/4+1);
         //                            image.width = image.sourceSize.width * image.scale;
@@ -886,8 +915,8 @@ Window {
                         id:button28
                         width: 70
                         height: 25
-                        x:parent.width-width-150
-                        y:20
+                        x:parent.width-width-20
+                        y:parent.height-30-height
                         z:1
 
                         property int number: 100
@@ -926,6 +955,70 @@ Window {
                     }
 
                     Button {
+                        id:button29
+                        width: 25
+                        height: 25
+                        x:button28.x-40
+                        y:button28.y
+                        z:1
+
+                        contentItem: Text {
+                            text: qsTr("-")
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        background: Rectangle {
+                            color: "orange"
+                            radius: height/5
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+                                image.scaleImage(0.8)
+                            }
+                        }
+
+
+                    }
+
+                    Button {
+                        id:button210
+                        width: 25
+                        height: 25
+                        x:button29.x-40
+                        y:button28.y
+                        z:1
+
+                        contentItem: Text {
+                            text: qsTr("+")
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        background: Rectangle {
+                            color: "orange"
+                            radius: height/5
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+                                image.scaleImage(1.2)
+                            }
+                        }
+
+
+                    }
+
+                    Button {
                         id:button25
                         width: rect21.height
                         height: width
@@ -936,7 +1029,7 @@ Window {
                             color: "white"
                             radius: 5
                             Image {
-                                source: right2.showSignals?"qrc:/images/image25.svg":"qrc:/images/image24.svg"
+                                source: right2.showSignals?"qrc:/images/image25.png":"qrc:/images/image24.png"
                                 fillMode: Image.PreserveAspectCrop
                                 anchors.fill: parent
                             }
@@ -972,8 +1065,6 @@ Window {
                             cursorShape: Qt.PointingHandCursor
 
                             onClicked: {
-//                                myobj.loadSvgPath()
-                                image.name22=myobj.string
                                 btn3.enabled=true
                                 bar.currentIndex=2
                             }
@@ -1247,6 +1338,7 @@ Window {
 
                                 onClicked: {
                                     console.log("Export to")
+                                    myobj.exportTo()
                                 }
                             }
 
@@ -1274,6 +1366,7 @@ Window {
 
                                 onClicked: {
                                     console.log("Complete")
+                                    myobj.complete()
                                 }
                             }
 
@@ -1480,11 +1573,6 @@ Window {
                             spacing: 0
                             anchors.fill: parent
 
-                            ListModel {
-                                id: myModel42
-                                ListElement { signal:"s1" ;value:"1100 1100 0011 0011"}
-                            }
-
                             ListView {
                                 id: listView3
                                 height: parent.height-buttons4.height
@@ -1517,7 +1605,7 @@ Window {
                                 id: listView4
                                 height: listView3.height
                                 width: 125
-                                model:myModel42
+                                model:myobj.myList42
                                 anchors.right: parent.right
                                 anchors.top:parent.top
                                 delegate: Rectangle {
@@ -1527,10 +1615,11 @@ Window {
 
                                     Text {
                                         id:text5
-                                        text: value
+                                        text: modelData
                                         anchors.verticalCenter: parent.verticalCenter
                                         anchors.right: parent.right
                                         width:125
+
                                     }
 
                                 }
@@ -1571,6 +1660,7 @@ Window {
                                         myobj.sendResume()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
+                                        listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
                                         button43.light=false
@@ -1606,6 +1696,7 @@ Window {
                                         myobj.sendStep()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
+                                        listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
                                         button43.light=false
@@ -1639,6 +1730,7 @@ Window {
                                         myobj.sendPause()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
+                                        listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
                                         button43.light=false
@@ -1683,7 +1775,7 @@ Window {
                                     onAccepted: {
                                         console.log("已选择的文件：", currentFile)
                                         if(currentFile){
-                                            myobj.string=currentFile
+                                            myobj.string41=currentFile
                                             button45.light=true
                                             button46.light=true
                                         }
@@ -1720,7 +1812,6 @@ Window {
                                         fileDialog4.open()
                                     }
                                 }
-
 
                                 Button {
                                     id:button45
