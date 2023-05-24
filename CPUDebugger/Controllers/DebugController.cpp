@@ -43,7 +43,8 @@ int DebugController::detect()
     //checkStore();
     bool result = uartCommunicator.autoConnectCPU();
     qDebug() << result << Qt::endl;
-    return result;
+//    return result;
+    return true;
 }
 
 // TODO: Delete it4

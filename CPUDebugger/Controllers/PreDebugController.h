@@ -13,7 +13,7 @@ class PreDebugController
 {
 public:
     static std::shared_ptr<QFile> uploadFile(QString filePath);
-    static int compileAsm();
+
     static void setBreakPoint(int lineIdx);
     static std::shared_ptr<AsmFile> getAsm();
     static std::shared_ptr<QFile> getFile();
