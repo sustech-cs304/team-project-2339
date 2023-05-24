@@ -94,7 +94,7 @@ module debug_unit (
     reg                        tx_start, tx_complete;
 
     reg [`ISA_WIDTH - 1:0] breakpoint;
-    wire                   breakpoint_reached = (breakpoint <= pc);
+    wire                   breakpoint_reached = (breakpoint == pc);
 
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
@@ -232,7 +232,7 @@ module debug_unit (
             uart_addr          <= -1;
             uart_write_enable  <= 1'b0;
             breakpoint         <= 0;
-            debug_pause        <= 1'b0;
+            debug_pause        <= 1'b1;
             core_rx_state      <= CORE_RX_OPCODE;
         end else begin
             // transmission FSM
@@ -344,9 +344,10 @@ module debug_unit (
                                 core_rx_state <= CORE_RX_PC;
                             end
                             OP_PROGRAM : begin
-                                debug_pause   <= 1'b1;
-                                core_rx_state <= CORE_RX_PROGRAM;
-                                breakpoint    <= 0;
+                                debug_pause       <= 1'b0; // enable signal sending
+                                uart_write_enable <= 1'b1; // set the CPU to start receiving UART program
+                                core_rx_state     <= CORE_RX_PROGRAM;
+                                breakpoint        <= 0;
                             end
                             // will be back to this state after the next cycle
                             OP_NEXT    : begin

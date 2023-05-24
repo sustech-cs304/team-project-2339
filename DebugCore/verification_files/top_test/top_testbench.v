@@ -45,7 +45,7 @@ module top_testbench ();
                 OP_PROGRAM = 8'h07; // reprogram the CPU
 
     localparam  KEYPRESS_CNT = 40;
-    localparam  SIGNAL_CNT   = 20;
+    localparam  SIGNAL_CNT   = 80;
 
     localparam  UNIT_TIME    = 5,
                 UART_TIME    = 868 * UNIT_TIME * 2,
@@ -162,17 +162,23 @@ module top_testbench ();
         // signals[6]  = OP_NONE;
         // signals[7]  = OP_NEXT;
         // signals[8]  = OP_NEXT;
-        // signals[9]  = OP_RESUME;
-        // signals[10] = 220;          // breakpoint at 64th instruction
-        // signals[11] = 0;
-        // signals[12] = 0;
-        // signals[13] = 0;
+        signals[9]  = OP_RESUME;
+        signals[10] = 8'h00;
+        signals[11] = 0;
+        signals[12] = 0;
+        signals[13] = 0;
         // signals[14] = OP_PAUSE;
         // signals[15] = OP_PROGRAM;
         // signals[16] = 1;
         // signals[17] = 1;
         // signals[18] = 1;
-        signals[19] = OP_NEXT;
+        // signals[19] = 1;
+        // signals[19] = OP_NEXT;
+        signals[20]  = OP_RESUME;
+        signals[21] = 8'h00;
+        signals[22] = 0;
+        signals[23] = 0;
+        signals[24] = 0;
     end
 
     initial begin
