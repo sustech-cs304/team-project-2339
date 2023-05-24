@@ -92,6 +92,12 @@ public:
     bool getDetectResult() const;
     void setDetectResult(bool newDetectResult);
 
+    bool getResult41() const;
+    void setResult41(bool newResult41);
+
+    bool getResult42() const;
+    void setResult42(bool newResult42);
+
 private:
     int m_value;
     int m_value1;
@@ -102,6 +108,8 @@ private:
     QString m_string41; //page4 asm file address
 
     bool detectResult;
+    bool result41; //page4 get asm file
+    bool result42; //send breaking point
 
     std::shared_ptr<QFile> file1;
     FileController *fileContrl;
@@ -137,6 +145,10 @@ private:
 
     Q_PROPERTY(bool detectResult READ getDetectResult WRITE setDetectResult NOTIFY detectResultChanged)
 
+    Q_PROPERTY(bool result41 READ getResult41 WRITE setResult41 NOTIFY result41Changed)
+
+    Q_PROPERTY(bool result42 READ getResult42 WRITE setResult42 NOTIFY result42Changed)
+
 signals:
 
     void valueChanged();
@@ -151,6 +163,8 @@ signals:
     void string41Changed();
     void myList42Changed();
     void detectResultChanged();
+    void result41Changed();
+    void result42Changed();
 };
 
 

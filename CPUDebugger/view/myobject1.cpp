@@ -209,6 +209,32 @@ void MyObject1::setDetectResult(bool newDetectResult)
     emit detectResultChanged();
 }
 
+bool MyObject1::getResult41() const
+{
+    return result41;
+}
+
+void MyObject1::setResult41(bool newResult41)
+{
+    if (result41 == newResult41)
+        return;
+    result41 = newResult41;
+    emit result41Changed();
+}
+
+bool MyObject1::getResult42() const
+{
+    return result42;
+}
+
+void MyObject1::setResult42(bool newResult42)
+{
+    if (result42 == newResult42)
+        return;
+    result42 = newResult42;
+    emit result42Changed();
+}
+
 void MyObject1::makeList1()
 {
     m_myList1=fileContrl->getSignalList();
@@ -263,7 +289,11 @@ void MyObject1::sendPause(){
 
 void MyObject1::sendBreakPoint()
 {
-
+    if(DebugController::sendPrograme().has_value()){
+        result42=true;
+    }else {
+        result42=false;
+    }
 }
 
 void MyObject1::sendStep(){
