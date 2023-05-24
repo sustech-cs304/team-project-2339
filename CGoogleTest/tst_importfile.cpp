@@ -54,6 +54,19 @@ TEST_F(CompilerTest, ExportSignals) {
     c->import(url);
     QList<QString> ss = c->getSignals();
     ASSERT_GE(ss.size(), 0);
-    ASSERT_EQ(c->getSvgPath(), QUrl::fromLocalFile(QString(dirPath+"/tmp/show.svg")).url());
+    ASSERT_EQ(c->getSvgPath(), QUrl::fromLocalFile(QString(QDir::tempPath()+"/tmp/show.svg")).url());
     delete c;
+}
+
+TEST(SignalTest, FilterSignals) {
+    FileController *c = new FileController();
+    QList<QString> ss;
+    ss.append("Andy");
+    ss.append("Bob");
+    ss.append("Apple");
+    ss.append("Cindy");
+    ss.append("Andrew");
+    qDebug() << ss;
+    c->filter(ss, "A");
+    qDebug() << ss;
 }
