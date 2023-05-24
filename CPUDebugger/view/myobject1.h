@@ -57,11 +57,15 @@ public:
 
     Q_INVOKABLE void confirm1();
 
+    Q_INVOKABLE void confirm2();
+
     Q_INVOKABLE void loadSvgPath();
 
     Q_INVOKABLE void search();
 
     Q_INVOKABLE void searchCancel();
+
+    Q_INVOKABLE void closeWindow();
 
     int value1() const;
     void setValue1(int newValue1);

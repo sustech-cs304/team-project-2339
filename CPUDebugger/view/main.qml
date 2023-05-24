@@ -14,6 +14,11 @@ Window {
     title: qsTr("CPUDebugger")
     color:"lightgray"
 
+    onClosing: {
+        console.log("close")
+        myobj.closeWindow()
+    }
+
     MyObject1{
         id:myobj
         value: 10
@@ -22,6 +27,7 @@ Window {
 //        myList1: ["Apple", "Banana", "Cherry"]
 //        myList2: ["Orange", "melon"]
 //        myList41:["1","0","1","0"]
+        myList42:["1111 0000 1111 0000"]
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -1066,6 +1072,7 @@ Window {
                             onClicked: {
                                 btn3.enabled=true
                                 bar.currentIndex=2
+                                myobj.confirm2()
                             }
                         }
 
@@ -1337,6 +1344,7 @@ Window {
 
                                 onClicked: {
                                     console.log("Export to")
+                                    myobj.exportTo()
                                 }
                             }
 
@@ -1344,7 +1352,6 @@ Window {
                                 id:button32
                                 width:  parent.width/2+4
                                 height: width/3+2
-                                anchors.top: controlB.bottom
                                 y:button31.y+60 * root.height/480
 
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -1364,6 +1371,7 @@ Window {
 
                                 onClicked: {
                                     console.log("Complete")
+                                    myobj.complete()
                                 }
                             }
 
@@ -1390,8 +1398,8 @@ Window {
 
                                 onClicked: {
                                     console.log("detect")
-                                    button34.isClicked=true
                                     myobj.detect()
+                                    button34.isClicked=myobj.detectResult
                                 }
                             }
 
@@ -1570,11 +1578,6 @@ Window {
                             spacing: 0
                             anchors.fill: parent
 
-                            ListModel {
-                                id: myModel42
-                                ListElement { signal:"s1" ;value:"1100 1100 0011 0011"}
-                            }
-
                             ListView {
                                 id: listView3
                                 height: parent.height-buttons4.height
@@ -1607,7 +1610,7 @@ Window {
                                 id: listView4
                                 height: listView3.height
                                 width: 125
-                                model:myModel42
+                                model:myobj.myList42
                                 anchors.right: parent.right
                                 anchors.top:parent.top
                                 delegate: Rectangle {
@@ -1617,10 +1620,11 @@ Window {
 
                                     Text {
                                         id:text5
-                                        text: value
+                                        text: modelData
                                         anchors.verticalCenter: parent.verticalCenter
                                         anchors.right: parent.right
                                         width:125
+
                                     }
 
                                 }
@@ -1661,6 +1665,7 @@ Window {
                                         myobj.sendResume()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
+                                        listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
                                         button43.light=false
@@ -1696,6 +1701,7 @@ Window {
                                         myobj.sendStep()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
+                                        listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
                                         button43.light=false
@@ -1729,6 +1735,7 @@ Window {
                                         myobj.sendPause()
                                         listView2.model = null
                                         listView2.model = myobj.myList41
+                                        listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
                                         button43.light=false
@@ -1773,7 +1780,7 @@ Window {
                                     onAccepted: {
                                         console.log("已选择的文件：", currentFile)
                                         if(currentFile){
-                                            myobj.string=currentFile
+                                            myobj.string41=currentFile
                                             button45.light=true
                                             button46.light=true
                                         }
@@ -1811,7 +1818,6 @@ Window {
                                     }
                                 }
 
-
                                 Button {
                                     id:button45
                                     width: height
@@ -1838,6 +1844,7 @@ Window {
                                         listView1.model=myobj.myList41
                                         listView2.model=myobj.myList41
                                         button41.light=true
+                                        button42.light=true
                                         console.log("update")
                                     }
                                 }

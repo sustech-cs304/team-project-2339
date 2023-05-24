@@ -260,6 +260,11 @@ void MyObject1::confirm1()
 
 }
 
+void MyObject1::confirm2()
+{
+
+}
+
 /**
  * @brief MyObject1::loadSvgPath
  * m_string="newSvgFilePath"
@@ -276,6 +281,11 @@ void MyObject1::search()
 }
 
 void MyObject1::searchCancel()
+{
+
+}
+
+void MyObject1::closeWindow()
 {
 
 }
