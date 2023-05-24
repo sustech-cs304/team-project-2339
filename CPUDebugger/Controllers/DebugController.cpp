@@ -56,7 +56,6 @@ QByteArray DebugController::getBin()
 
 std::optional<QByteArray> DebugController::sendPrograme()
 {
-    checkStore();
     compileAsm();
     QByteArray fileBytes = DebugController::getBin();
     qDebug() << fileBytes;

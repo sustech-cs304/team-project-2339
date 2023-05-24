@@ -23,9 +23,6 @@ public:
     static int compileAsm();
     friend class PreDebugController;
 
-
-
-
 private:
     enum FileType
     {
