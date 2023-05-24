@@ -7,11 +7,13 @@ std::optional<QByteArray> DebugController::resume()
     checkStore();
     std::shared_ptr<AsmFile> asmFilePtr = DebugStore::asmFilePtr;
     QByteArray cpuResponse;
+
     int PC;
     if(DebugStore::asmFilePtr->binBreakPoints.size() > 0)
     {
         for (int i : DebugStore::asmFilePtr->binBreakPoints)
         {
+            int binCurLine = DebugStore::binCurLine;
             if (i > DebugStore::binCurLine)
             {
                 PC = i;
@@ -19,12 +21,18 @@ std::optional<QByteArray> DebugController::resume()
             }
         }
     }
+    qDebug() << "target pc" << PC;
     bool result = uartCommunicator.sendResume(cpuResponse, PC);
     if (!result)
         return nullptr;
-    int asmPC = cpuResponse.left(4).toInt();
-    DebugStore::setPC_Asm(asmPC);
+    int binPC = (static_cast<unsigned int>(cpuResponse[0]) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse[1]) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
+    DebugStore::setPC_Bin(binPC);
     qDebug() << cpuResponse;
+    qDebug() << "response pc" << binPC;
+
     return cpuResponse;
 }
 
@@ -37,8 +45,11 @@ std::optional<QByteArray> DebugController::step()
     if (!result)
         return nullptr;
 
-    int asmPC = cpuResponse.left(4).toInt();
-    DebugStore::setPC_Asm(asmPC);
+    int binPC = (static_cast<unsigned int>(cpuResponse[0]) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse[1]) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
+    DebugStore::setPC_Bin(binPC);
     qDebug() << cpuResponse;
     return cpuResponse;
 }
@@ -55,8 +66,7 @@ int DebugController::detect()
     //checkStore();
     bool result = uartCommunicator.autoConnectCPU();
     qDebug() << result << Qt::endl;
-//    return result;
-    return true;
+    return result;
 }
 
 // TODO: Delete it4
@@ -71,11 +81,14 @@ std::optional<QByteArray> DebugController::sendPrograme()
     compileAsm();
     QByteArray fileBytes = DebugController::getBin();
     QByteArray cpuResponse;
-    bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse);
+    bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse, 10000, 10000);
     if (!result)
         return nullptr;
-    int asmPC = cpuResponse.left(4).toInt();
-    DebugStore::setPC_Asm(asmPC);
+    int binPC = (static_cast<unsigned int>(cpuResponse[0]) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse[1]) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
+    DebugStore::setPC_Bin(binPC);
     qDebug() << cpuResponse;
     return cpuResponse;
 }
@@ -88,6 +101,7 @@ int DebugController::compileAsm()
     std::shared_ptr<AsmFile> asmFilePtr = std::make_shared<AsmFile>(*filePtr);
     PreDebugStore::asmFile = asmFilePtr;
     asmFilePtr->setBreakPoints(PreDebugStore::breakPoints);
+    asmFilePtr->binBreakPoints.insert(INT_MAX);
     initialize(asmFilePtr);
     return 0;
 }

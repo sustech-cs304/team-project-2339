@@ -70,6 +70,7 @@ void SenderThread::run(){
         if (!serial.waitForBytesWritten(currentWaitTimeout))
             emit timeout(tr("Wait write request timeout %1").arg(QTime::currentTime().toString()));
         emit finishSending();
+        qDebug() << "finished sending";
         if (currentHasResponse){
             // Read response
             QElapsedTimer timer;

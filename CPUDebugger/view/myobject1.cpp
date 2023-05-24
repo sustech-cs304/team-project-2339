@@ -282,6 +282,7 @@ void MyObject1::makeList41()
 
 void MyObject1::sendResume(){
     DebugController::resume();
+    // m_value1=
 }
 
 void MyObject1::sendPause(){
