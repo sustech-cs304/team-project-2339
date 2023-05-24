@@ -67,6 +67,8 @@ public:
 
     Q_INVOKABLE void closeWindow();
 
+    Q_INVOKABLE void exportTo();
+
     int value1() const;
     void setValue1(int newValue1);
 
@@ -91,6 +93,9 @@ public:
     QString string22() const;
     void setString22(const QString &newString22);
 
+    QString string3() const;
+    void setString3(const QString &newString3);
+
 private:
     int m_value;
     int m_value1;
@@ -98,6 +103,7 @@ private:
     QString m_string1; //page1 folder address
     QString m_string21; //search context
     QString m_string22; //page2 image address
+    QString m_string31;
 
     std::shared_ptr<QFile> file1;
     FileController *fileContrl;
@@ -128,6 +134,8 @@ private:
 
     Q_PROPERTY(QString string22 READ string22 WRITE setString22 NOTIFY string22Changed)
 
+    Q_PROPERTY(QString string3 READ string3 WRITE setString3 NOTIFY string3Changed)
+
 signals:
 
     void valueChanged();
@@ -140,6 +148,7 @@ signals:
     void string1Changed();
     void string21Changed();
     void string22Changed();
+    void string3Changed();
 };
 
 

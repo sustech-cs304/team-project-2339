@@ -184,6 +184,19 @@ void MyObject1::setString22(const QString &newString22)
     emit string22Changed();
 }
 
+QString MyObject1::string3() const
+{
+    return m_string3;
+}
+
+void MyObject1::setString3(const QString &newString3)
+{
+    if (m_string3 == newString3)
+        return;
+    m_string3 = newString3;
+    emit string3Changed();
+}
+
 void MyObject1::makeList1()
 {
 //    m_myList1=fileContrl->getSignalList();
@@ -285,6 +298,11 @@ void MyObject1::searchCancel()
 }
 
 void MyObject1::closeWindow()
+{
+
+}
+
+void MyObject1::exportTo()
 {
 
 }

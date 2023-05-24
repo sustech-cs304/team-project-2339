@@ -1218,7 +1218,6 @@ Window {
                                             clip: true
                                             interactive: true
 
-
                                         TextInput {
                                             id: inputBoxInput
                                             text:folderDialog.folder
@@ -1330,7 +1329,7 @@ Window {
                                 anchors.bottom: folderChoose.bottom
 
                                 contentItem: Text {
-                                    text: qsTr("Export to")
+                                    text: qsTr("AutoExport")
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
                                     color: "white"
@@ -1344,6 +1343,7 @@ Window {
 
                                 onClicked: {
                                     console.log("Export to")
+                                    myobj.string31=folderDialog.folder
                                     myobj.exportTo()
                                 }
                             }
