@@ -128,9 +128,15 @@ QString insertModule(const QList<CPUSignal> &selectedSignals) {
 /**
  * Generates
  */
-bool generateCore(QFile &topFile,
-                  QDir &outputDir,
+bool generateCore(QString topPath,
+                  QString outputDirPath,
                   const QList<CPUSignal> &selectedSignals) {
+    QFile topFile(topPath);
+    QDir outputDir(outputDirPath);
+    if (!topFile.open(QIODevice::ReadWrite)) {
+        qDebug("Top file cannot open");
+        return false;
+    }
     // the template to start with
     QFile coreTemplate(QDir::currentPath().append("/template.v"));
     if (!coreTemplate.open(QIODevice::ReadOnly | QIODevice::Text)) {

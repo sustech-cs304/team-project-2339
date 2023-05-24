@@ -13,8 +13,9 @@ FileController::~FileController()
 
 void FileController::import(QString &absolutePath) {
     QString dirPath = FileUtil::convert(absolutePath);
-    tmpPath = dirPath+TMP_PATH;
+    tmpPath = QDir::tempPath()+TMP_PATH;
     QDir *dir = new QDir(tmpPath);
+    delTempDir();
     if (!dir->exists()) {
         if (dir->mkpath(tmpPath))
             qDebug() << "Folder created successfully";
@@ -37,11 +38,15 @@ void FileController::import(QString &absolutePath) {
             p.replace(entryPath, tmpPath+"/"+info.fileName(), true);
         }
     }
+    delete dir;
 }
 
 QList<CPUSignal> FileController::getSignalList()
 {
-    return p.genSignals(topPath);
+    if (signalList.size() == 0) {
+        signalList = p.genSignals(topPath);
+    }
+    return signalList;
 }
 
 QList<QString> FileController::getSignals()
@@ -71,6 +76,38 @@ void FileController::genGraph()
     genGraph(tmpPath);
 }
 
-void FileController::exportUart() {
+void FileController::exportUart(QList<QString> signalList, QString outputUrl) {
+    QList<CPUSignal> results;
+    QString outputDir = FileUtil::convert(outputUrl);
+    for (const QString& s: signalList) {
+        CPUSignal sig("NULL", -1, -1);
+        if (searchSignal(s, sig)) {
+            results.append(sig);
+        }
+    }
+    generateCore(topPath, outputDir, results);
+}
 
+void FileController::delTempDir() {
+    if (tmpPath == " ") {
+        qDebug() << "You should import directory path first";
+    } else {
+        QDir *dir = new QDir(tmpPath);
+        if (!dir->exists()) {
+            qDebug() << "Temp directory does not exist";
+        }
+        dir->removeRecursively();
+        delete dir;
+    }
+}
+
+bool FileController::searchSignal(QString signalName, CPUSignal &cpusignal)
+{
+    for (const CPUSignal& sig: signalList) {
+        if (sig.name == signalName) {
+            cpusignal = sig;
+            return true;
+        }
+    }
+    return false;
 }

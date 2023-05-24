@@ -4,6 +4,7 @@
 #include "QFile"
 #include <QDir>
 #include <compile/PreProcessor.h>
+#include <uart/CoreGenerator.h>
 
 #define TMP_PATH "/tmp"
 #define PROJ_PATH QDir::currentPath()+"/.."
@@ -18,15 +19,17 @@ public:
     QList<CPUSignal> getSignalList();
     QList<QString> getSignals();
     QString getSvgPath();
-    void setSignal(QString signalName);
     void genGraph(QString path);
     void genGraph();
-    void exportUart();
+    void exportUart(QList<QString> signalList, QString outputUrl);
+    void delTempDir();
 private:
+    bool searchSignal(QString signalName, CPUSignal&cpusignal);
     PreProcessor p;
     Generator g;
     QString tmpPath;
     QString topPath;
+    QList<CPUSignal> signalList;
 };
 
 #endif // FILECONTROLLER_H

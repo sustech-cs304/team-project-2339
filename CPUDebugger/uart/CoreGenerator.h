@@ -11,12 +11,12 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 #include <QRegularExpression>
-#include <CPUDebugger/model/CPUSignal.h>
+#include <CPUSignal.h>
 
 #define OPCODE_WIDTH 8
 
-bool generateCore(QFile &topFile,
-                  QDir &outputDir,
+bool generateCore(QString topPath,
+                  QString outputDirPath,
                   const QList<CPUSignal> &selectedSignals);
 
 int setISAWidth(int ISAWidth);
