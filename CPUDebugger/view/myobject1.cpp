@@ -271,7 +271,7 @@ void MyObject1::sendStep(){
 }
 
 void MyObject1::detect(){
-    DebugController::detect();
+    detectResult=DebugController::detect();
 }
 
 void MyObject1::exportTo()

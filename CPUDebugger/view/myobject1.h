@@ -89,6 +89,9 @@ public:
     QList<QString> myList42() const;
     void setMyList42(const QList<QString> &newMyList42);
 
+    bool getDetectResult() const;
+    void setDetectResult(bool newDetectResult);
+
 private:
     int m_value;
     int m_value1;
@@ -97,6 +100,8 @@ private:
     QString m_string31; //page3 folder address
     QString m_string32; //page3 detect result
     QString m_string41; //page4 asm file address
+
+    bool detectResult;
 
     std::shared_ptr<QFile> file1;
     FileController *fileContrl;
@@ -130,6 +135,8 @@ private:
 
     Q_PROPERTY(QList<QString> myList42 READ myList42 WRITE setMyList42 NOTIFY myList42Changed)
 
+    Q_PROPERTY(bool detectResult READ getDetectResult WRITE setDetectResult NOTIFY detectResultChanged)
+
 signals:
 
     void valueChanged();
@@ -143,6 +150,7 @@ signals:
     void string32Changed();
     void string41Changed();
     void myList42Changed();
+    void detectResultChanged();
 };
 
 
