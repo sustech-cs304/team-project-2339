@@ -5,6 +5,7 @@
 
 FileController::FileController() {
     tmpPath = "";
+    tmpTopPath = "";
 }
 
 FileController::~FileController()
@@ -24,7 +25,11 @@ void FileController::import(QString &absolutePath) {
     }
     QStringList entries = FileUtil::getDirList(dirPath, "v", true);
     for (const QString &entryPath: entries) {
-        qDebug() << "Process file: " << QFileInfo(entryPath).fileName();
+        QFileInfo info(entryPath);
+        qDebug() << "Process file: " << info.fileName();
+        if (!info.fileName().compare("top.v")) {
+            oriTopPath = info.absoluteFilePath();
+        }
         p.process(entryPath, std::nullopt);
     }
     for (const QString &entryPath: entries) {
@@ -32,7 +37,7 @@ void FileController::import(QString &absolutePath) {
         qDebug() << "Replace file: " << info.fileName();
         if (!info.fileName().compare("top.v")) {
             p.replace(entryPath, tmpPath+"/"+info.fileName(), false);
-            topPath = tmpPath+"/"+info.fileName();
+            tmpTopPath = tmpPath+"/"+info.fileName();
         }
         else {
             p.replace(entryPath, tmpPath+"/"+info.fileName(), true);
@@ -44,14 +49,14 @@ void FileController::import(QString &absolutePath) {
 QList<CPUSignal> FileController::getSignalList()
 {
     if (signalList.size() == 0) {
-        signalList = p.genSignals(topPath);
+        signalList = p.genSignals(tmpTopPath);
     }
     return signalList;
 }
 
 QList<QString> FileController::getSignals()
 {
-    QList<CPUSignal> signalList = p.genSignals(topPath);
+    QList<CPUSignal> signalList = p.genSignals(tmpTopPath);
     QList<QString> ss;
     for (CPUSignal sig: signalList) {
         ss.append(sig.toString());
@@ -85,7 +90,7 @@ void FileController::exportUart(QList<QString> signalList, QString outputUrl) {
             results.append(sig);
         }
     }
-    generateCore(topPath, outputDir, results);
+    generateCore(oriTopPath, outputDir, results);
 }
 
 void FileController::delTempDir() {

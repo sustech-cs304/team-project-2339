@@ -28,7 +28,8 @@ private:
     PreProcessor p;
     Generator g;
     QString tmpPath;
-    QString topPath;
+    QString tmpTopPath;
+    QString oriTopPath;
     QList<CPUSignal> signalList;
 };
 
