@@ -1346,7 +1346,6 @@ Window {
                                 id:button32
                                 width:  parent.width/2+4
                                 height: width/3+2
-                                anchors.top: controlB.bottom
                                 y:button31.y+60 * root.height/480
 
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -1839,6 +1838,7 @@ Window {
                                         listView1.model=myobj.myList41
                                         listView2.model=myobj.myList41
                                         button41.light=true
+                                        button42.light=true
                                         console.log("update")
                                     }
                                 }
