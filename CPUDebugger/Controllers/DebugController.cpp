@@ -7,7 +7,19 @@ std::optional<QByteArray> DebugController::resume()
     checkStore();
     std::shared_ptr<AsmFile> asmFilePtr = DebugStore::asmFilePtr;
     QByteArray cpuResponse;
-    bool result = uartCommunicator.sendResume(cpuResponse, DebugStore::binCurLine);
+    int PC;
+    if(DebugStore::asmFilePtr->binBreakPoints.size() > 0)
+    {
+        for (int i : DebugStore::asmFilePtr->binBreakPoints)
+        {
+            if (i > DebugStore::binCurLine)
+            {
+                PC = i;
+                break;
+            }
+        }
+    }
+    bool result = uartCommunicator.sendResume(cpuResponse, PC);
     if (!result)
         return nullptr;
     int asmPC = cpuResponse.left(4).toInt();
