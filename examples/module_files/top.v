@@ -53,12 +53,6 @@ module top (
             `ISA_WIDTH - `OP_CODE_WIDTH - (3 * `REG_FILE_ADDR_WIDTH) - `SHIFT_AMOUNT_WIDTH
         ];
     wire [`REG_FILE_ADDR_WIDTH - 1:0] 
-        // rs [25:21]
-        rs = if_id_reg_instruction[
-            `ISA_WIDTH - `OP_CODE_WIDTH - 1
-            :
-            `ISA_WIDTH - `OP_CODE_WIDTH - `REG_FILE_ADDR_WIDTH
-        ],
         // rt [20:16]
         rt = if_id_reg_instruction[
             `ISA_WIDTH - `OP_CODE_WIDTH - `REG_FILE_ADDR_WIDTH - 1
@@ -305,7 +299,7 @@ module top (
         .clk                    (clk_cpu),
         .rst_n                  (rst_n),
 
-        .read_reg_addr_1        (rs),
+        .read_reg_addr_1        (if_id_reg_instruction[`ISA_WIDTH - `OP_CODE_WIDTH - 1:`ISA_WIDTH - `OP_CODE_WIDTH - `REG_FILE_ADDR_WIDTH]),
         .read_reg_addr_2        (rt),
 
         .write_reg_addr         (mem_wb_reg_reg_dest_idx),
@@ -372,7 +366,7 @@ module top (
         .id_instruction         (if_id_reg_instruction),
         .pc_overload_value      (mux_pc_overload_value),
 
-        .id_reg_1_idx           (rs),
+        .id_reg_1_idx           (if_id_reg_instruction[`ISA_WIDTH - `OP_CODE_WIDTH - 1:`ISA_WIDTH - `OP_CODE_WIDTH - `REG_FILE_ADDR_WIDTH]),
         .id_reg_2_idx           (rt),
         .id_reg_dest_idx        (rd),
         .mux_reg_1_idx          (mux_reg_1_idx),
@@ -584,13 +578,15 @@ module top (
         .uart_tx                (uart_tx),
 
         .pc                     (instruction_mem_pc),
-        .instruction            (instruction_mem_instruction),
+		.signal_0               (id_ex_reg_reg_1_idx),
+		.signal_1               (vsync),
+		.signal_2               (clk_tube),
 
         .uart_addr              (debug_unit_write_address),
         .uart_data              (debug_unit_write_data),
         .uart_write_enable      (debug_unit_write_enable),
 
-        .rx_light                (rx_light),
+        .rx_light               (rx_light),
 
         .debug_pause            (debug_unit_debug_pause),
         .uart_complete          (debug_unit_uart_complete)
