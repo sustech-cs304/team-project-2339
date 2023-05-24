@@ -267,6 +267,7 @@ module hazard_unit (
                                 3'b01x : begin
                                     issue_type        = `ISSUE_UART;
                                     ignore_pause      = 1'b1;
+                                    pc_reset          = 1'b1;
                                 end
                                 3'b001 : begin
                                     issue_type        = `ISSUE_PAUSE;
@@ -300,6 +301,7 @@ module hazard_unit (
                             if (uart_write_enable) begin
                                 issue_type            = `ISSUE_UART;
                                 ignore_pause          = 1'b1;
+                                pc_reset              = 1'b1;
                             end else if (~cpu_pause) begin
                                 issue_type            = `ISSUE_NONE;
                                 cpu_state             = EXECUTE;
@@ -313,7 +315,6 @@ module hazard_unit (
                             if (uart_complete) begin
                                 issue_type            = `ISSUE_PAUSE;
                                 ignore_pause          = 1'b0;
-                                pc_reset              = 1'b1;
                             end else
                                 cpu_state             = cpu_state; // prevent auto latches
                         default           : 
@@ -353,6 +354,7 @@ module hazard_unit (
                             if (uart_write_enable) begin
                                 issue_type   = `ISSUE_UART;
                                 ignore_pause = 1'b1;
+                                pc_reset     = 1'b1;
                             end else if (~cpu_pause) begin
                                 issue_type   = `ISSUE_KEYPAD;
                                 uart_disable = 1'b1;
@@ -363,7 +365,6 @@ module hazard_unit (
                             if (uart_complete) begin
                                 issue_type   = `ISSUE_PAUSE;
                                 ignore_pause = 1'b0;
-                                pc_reset     = 1'b1;
                             end else
                                 cpu_state    = cpu_state; // prevent auto latches
                         default      : 

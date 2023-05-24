@@ -179,7 +179,7 @@ module top_testbench ();
         // signals[23] = 2;
         // signals[25] = OP_NEXT;
         signals[30]  = OP_RESUME;
-        signals[31] = 8'h08;
+        signals[31] = 8'h0c;
         signals[32] = 0;
         signals[33] = 0;
         signals[34] = 0;
