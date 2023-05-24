@@ -9,10 +9,9 @@ std::optional<QByteArray> DebugController::resume()
     bool result = uartCommunicator.sendResume(cpuResponse, DebugStore::binCurLine);
     if (!result)
         return nullptr;
-
     int asmPC = cpuResponse.left(4).toInt();
     DebugStore::setPC_Asm(asmPC);
-
+    qDebug() << cpuResponse;
     return cpuResponse;
 }
 
@@ -27,7 +26,7 @@ std::optional<QByteArray> DebugController::step()
 
     int asmPC = cpuResponse.left(4).toInt();
     DebugStore::setPC_Asm(asmPC);
-
+    qDebug() << cpuResponse;
     return cpuResponse;
 }
 
@@ -58,11 +57,11 @@ std::optional<QByteArray> DebugController::sendPrograme()
 {
     compileAsm();
     QByteArray fileBytes = DebugController::getBin();
-    qDebug() << fileBytes;
     QByteArray cpuResponse;
     bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse);
     if (!result)
         return nullptr;
+    qDebug() << cpuResponse;
     return cpuResponse;
 }
 
