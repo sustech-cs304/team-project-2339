@@ -63,6 +63,8 @@ public:
 
     Q_INVOKABLE void searchCancel();
 
+    Q_INVOKABLE void closeWindow();
+
     int value1() const;
     void setValue1(int newValue1);
 

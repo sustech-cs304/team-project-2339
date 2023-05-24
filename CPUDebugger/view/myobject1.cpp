@@ -280,3 +280,8 @@ void MyObject1::searchCancel()
 
 }
 
+void MyObject1::closeWindow()
+{
+
+}
+
