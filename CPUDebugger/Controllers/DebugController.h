@@ -19,7 +19,7 @@ public:
     static int pause();
     static int detect();
     static QByteArray getBin();
-    static int sendPrograme();
+    static std::optional<QByteArray> sendPrograme();
     static int compileAsm();
     friend class PreDebugController;
 

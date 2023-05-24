@@ -54,14 +54,17 @@ QByteArray DebugController::getBin()
     return DebugStore::asmFilePtr->getBin();
 }
 
-int DebugController::sendPrograme()
+std::optional<QByteArray> DebugController::sendPrograme()
 {
+    checkStore();
     compileAsm();
     QByteArray fileBytes = DebugController::getBin();
     qDebug() << fileBytes;
     QByteArray cpuResponse;
     bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse);
-    return result;
+    if (!result)
+        return nullptr;
+    return cpuResponse;
 }
 
 int DebugController::compileAsm()
