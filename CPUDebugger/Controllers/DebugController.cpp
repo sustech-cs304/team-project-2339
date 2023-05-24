@@ -5,6 +5,7 @@ UartCommunicator uartCommunicator;
 std::optional<QByteArray> DebugController::resume()
 {
     checkStore();
+    std::shared_ptr<AsmFile> asmFilePtr = DebugStore::asmFilePtr;
     QByteArray cpuResponse;
     bool result = uartCommunicator.sendResume(cpuResponse, DebugStore::binCurLine);
     if (!result)

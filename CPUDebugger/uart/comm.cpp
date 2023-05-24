@@ -264,7 +264,7 @@ bool UartCommunicator::sendProgram(const QByteArray& asmFile, QByteArray& cpuRes
     QMetaObject::Connection c3 = connect(worker, &SenderThread::timeout, timeoutSlot);
     QElapsedTimer timer;
     timer.start();
-    worker->transaction(*(this->cpuPortName), this->serialBaudRate, (int)(packetWaitingSeconds*1000), ASM, true);
+    worker->transaction(*(this->cpuPortName), this->serialBaudRate, (int)(packetWaitingSeconds*1000), ASM, false);
     while (timer.elapsed() < (int)(totWaitingSeconds*1000)){
         if (packetTimeout || packetError || responseResult != 0)
             break;
