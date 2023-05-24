@@ -55,11 +55,24 @@ QByteArray DebugController::getBin()
 
 int DebugController::sendPrograme()
 {
+    compileAsm();
     QByteArray fileBytes = DebugController::getBin();
     qDebug() << fileBytes;
     QByteArray cpuResponse;
     bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse);
     return result;
+}
+
+int DebugController::compileAsm()
+{
+    std::shared_ptr<QFile> filePtr = PreDebugStore::file;
+    if (filePtr == nullptr)
+        throw std::invalid_argument("Select .asm file first!");
+    std::shared_ptr<AsmFile> asmFilePtr = std::make_shared<AsmFile>(*filePtr);
+    PreDebugStore::asmFile = asmFilePtr;
+    //    asmFilePtr->setBreakPoints(PreDebugStore::breakPoints);
+    initialize(asmFilePtr);
+    return 0;
 }
 
 void DebugController::checkStore()

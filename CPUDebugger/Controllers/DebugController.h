@@ -7,6 +7,9 @@
 #include "File/AsmFile.h"
 #include "Stores/DebugStore.h"
 #include "uart/comm.h"
+#include "Controllers/PreDebugController.h"
+#include "Stores/PreDebugStore.h"
+
 
 class DebugController
 {
@@ -17,7 +20,9 @@ public:
     static int detect();
     static QByteArray getBin();
     static int sendPrograme();
+    static int compileAsm();
     friend class PreDebugController;
+
 
 
 
