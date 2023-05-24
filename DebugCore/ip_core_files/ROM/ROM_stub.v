@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-// Date        : Thu May 18 09:18:17 2023
+// Date        : Thu May 18 09:18:16 2023
 // Host        : MAC running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub {Z:/Documents/SUStech/Homework/Software
-//               Engineering/project/team-2339/DebugCore/ip_core_files/ROM/ROM_stub.v}
+// Command     : write_verilog -force -mode synth_stub -rename_top ROM -prefix
+//               ROM_ ROM_stub.v
 // Design      : ROM
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tfgg484-1

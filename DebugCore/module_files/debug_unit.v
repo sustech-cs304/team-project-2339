@@ -80,7 +80,7 @@ module debug_unit (
     reg  [SIGNALS_BYTE_CNT_WIDTH - 1:0] signals_byte_idx;
     wire [SIGNALS_WIDTH - 1:0]          signals = {
                                                       instruction,
-                                                      pc,
+                                                      pc_cache,
                                                       OP_SIGNAL
                                                   };                //// [TODO] demo only !!! ////
     
@@ -93,6 +93,7 @@ module debug_unit (
     reg [UART_LEN + 1:0]       tx_byte;
     reg                        tx_start, tx_complete;
 
+    reg [`ISA_WIDTH - 1:0] pc_cache;
     reg [`ISA_WIDTH - 1:0] breakpoint;
     wire                   breakpoint_reached = (breakpoint == pc);
 
@@ -218,6 +219,8 @@ module debug_unit (
 
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
+            pc_cache           <= 0;
+
             // transmission
             tx_byte            <= {1'b1, {(UART_LEN){1'b0}}, 1'b0};
             tx_start           <= 1'b0;
@@ -269,6 +272,7 @@ module debug_unit (
 
                             tx_start             <= 1'b1;
                             tx_byte[1+:UART_LEN] <= signals[0+:UART_LEN];
+                            pc_cache             <= pc;
                         end
                         2'b01  : // after receiving the opcode
                             case (rx_byte)
@@ -303,6 +307,9 @@ module debug_unit (
 
                             uart_addr          <= -1;
                             uart_data          <= 0;
+
+                            debug_pause        <= 1'b0; // enable signal sending
+                            breakpoint         <= 0;
                         end else if (uart_byte_idx == ISA_BYTE_CNT) begin
                             uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] <= rx_byte;
 
@@ -344,10 +351,8 @@ module debug_unit (
                                 core_rx_state <= CORE_RX_PC;
                             end
                             OP_PROGRAM : begin
-                                debug_pause       <= 1'b0; // enable signal sending
                                 uart_write_enable <= 1'b1; // set the CPU to start receiving UART program
                                 core_rx_state     <= CORE_RX_PROGRAM;
-                                breakpoint        <= 0;
                             end
                             // will be back to this state after the next cycle
                             OP_NEXT    : begin
