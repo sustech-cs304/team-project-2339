@@ -35,7 +35,7 @@ int DebugController::pause()
 {
     checkStore();
     uartCommunicator.sendPause();
-    return 0;
+    return 1;
 }
 
 int DebugController::detect()
@@ -43,7 +43,7 @@ int DebugController::detect()
     //checkStore();
     bool result = uartCommunicator.autoConnectCPU();
     qDebug() << result << Qt::endl;
-    return 0;
+    return result;
 }
 
 // TODO: Delete it4
@@ -58,8 +58,8 @@ int DebugController::sendPrograme()
     QByteArray fileBytes = DebugController::getBin();
     qDebug() << fileBytes;
     QByteArray cpuResponse;
-    uartCommunicator.sendProgram(fileBytes, cpuResponse);
-    return 0;
+    bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse);
+    return result;
 }
 
 void DebugController::checkStore()
