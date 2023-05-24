@@ -92,7 +92,7 @@ module hazard_unit (
             uart_disable       = 1'b1;
 
             issue_type         = `ISSUE_NONE;
-            cpu_state          = EXECUTE;
+            cpu_state          = IDLE;
 
             if_hazard_control  = `HAZD_CTL_NORMAL;
             id_hazard_control  = `HAZD_CTL_NORMAL;

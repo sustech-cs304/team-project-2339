@@ -346,6 +346,7 @@ module debug_unit (
                             OP_PROGRAM : begin
                                 debug_pause   <= 1'b1;
                                 core_rx_state <= CORE_RX_PROGRAM;
+                                breakpoint    <= 0;
                             end
                             // will be back to this state after the next cycle
                             OP_NEXT    : begin
