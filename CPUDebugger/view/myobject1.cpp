@@ -287,6 +287,13 @@ void MyObject1::sendResume(){
             + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
+    QString binaryString;
+    binaryString += QString::number(cpuResponse->at(4), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(5), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(6), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
+    m_myList42.clear();
+    m_myList42.append(binaryString);
     m_value1=lineNum;
 }
 
@@ -311,6 +318,13 @@ void MyObject1::sendStep(){
             + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
+    QString binaryString;
+    binaryString += QString::number(cpuResponse->at(4), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(5), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(6), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
+    m_myList42.clear();
+    m_myList42.append(binaryString);
     m_value1=lineNum;
 }
 

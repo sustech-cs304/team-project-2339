@@ -30,9 +30,8 @@ std::optional<QByteArray> DebugController::resume()
             + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
     DebugStore::setPC_Bin(binPC);
-    qDebug() << cpuResponse.toHex();
+//    qDebug() << cpuResponse.toHex();
     qDebug() << "response pc" << binPC;
-
     return cpuResponse;
 }
 
@@ -104,7 +103,7 @@ int DebugController::compileAsm()
     std::shared_ptr<AsmFile> asmFilePtr = std::make_shared<AsmFile>(*filePtr);
     PreDebugStore::asmFile = asmFilePtr;
     asmFilePtr->setBreakPoints(PreDebugStore::breakPoints);
-    asmFilePtr->binBreakPoints.insert(100);
+    asmFilePtr->binBreakPoints.insert(INT_MAX);
     initialize(asmFilePtr);
     return 0;
 }

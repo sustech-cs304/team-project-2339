@@ -22,7 +22,7 @@ Window {
 //        myList1: ["Apple", "Banana", "Cherry"]
 //        myList2: ["Orange", "melon"]
 //        myList41:["1","0","1","0"]
-        myList42:["1111 0000 1111 0000"]
+        //myList42:["1111 0000 1111 0000"]
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -1603,7 +1603,7 @@ Window {
                             ListView {
                                 id: listView4
                                 height: listView3.height
-                                width: 125
+                                width: 160
                                 model:myobj.myList42
                                 anchors.right: parent.right
                                 anchors.top:parent.top
@@ -1617,7 +1617,7 @@ Window {
                                         text: modelData
                                         anchors.verticalCenter: parent.verticalCenter
                                         anchors.right: parent.right
-                                        width:125
+                                        width:160
 
                                     }
 
