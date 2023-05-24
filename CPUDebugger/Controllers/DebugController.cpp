@@ -61,6 +61,8 @@ std::optional<QByteArray> DebugController::sendPrograme()
     bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse);
     if (!result)
         return nullptr;
+    int asmPC = cpuResponse.left(4).toInt();
+    DebugStore::setPC_Asm(asmPC);
     qDebug() << cpuResponse;
     return cpuResponse;
 }
