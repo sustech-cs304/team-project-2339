@@ -10,7 +10,7 @@ std::optional<QByteArray> DebugController::resume()
     if (!result)
         return nullptr;
 
-    int asmPC = cpuResponse.toInt() >> 2;
+    int asmPC = cpuResponse.left(4).toInt();
     DebugStore::setPC_Asm(asmPC);
 
     return cpuResponse;
@@ -25,7 +25,7 @@ std::optional<QByteArray> DebugController::step()
     if (!result)
         return nullptr;
 
-    int asmPC = cpuResponse.toInt() >> 2;
+    int asmPC = cpuResponse.left(4).toInt();
     DebugStore::setPC_Asm(asmPC);
 
     return cpuResponse;
@@ -98,12 +98,6 @@ void DebugController::clear()
     DebugStore::asmFilePtr = nullptr;
     DebugStore::asmCurLine = 0;
     DebugStore::binCurLine = 0;
-}
-
-int DebugController::extractPC(QByteArray& cpuResponse)
-{
-    QByteArray responseCopy = cpuResponse;
-    return ((responseCopy[0] << 24) | (responseCopy[1] << 16) | (responseCopy[2] << 8) | responseCopy[3]) >> 2;
 }
 
 int DebugController::setPC(FileType fileType, int PC)
