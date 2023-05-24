@@ -196,6 +196,19 @@ void MyObject1::setMyList42(const QList<QString> &newMyList42)
     emit myList42Changed();
 }
 
+bool MyObject1::getDetectResult() const
+{
+    return detectResult;
+}
+
+void MyObject1::setDetectResult(bool newDetectResult)
+{
+    if (detectResult == newDetectResult)
+        return;
+    detectResult = newDetectResult;
+    emit detectResultChanged();
+}
+
 void MyObject1::makeList1()
 {
     m_myList1=fileContrl->getSignalList();

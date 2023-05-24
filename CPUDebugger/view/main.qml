@@ -1392,8 +1392,8 @@ Window {
 
                                 onClicked: {
                                     console.log("detect")
-                                    button34.isClicked=true
                                     myobj.detect()
+                                    button34.isClicked=myobj.detectResult
                                 }
                             }
 
