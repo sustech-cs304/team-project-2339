@@ -54,6 +54,7 @@ void MyObject1::getAsmFile()
                 m_myList41.append(line);
             }
         }
+    file1->close();
     qDebug()<<m_myList41;
     qDebug() << __FUNCTION__;
 }
