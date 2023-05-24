@@ -84,7 +84,7 @@ void AsmFile::parseAsm(QString asmString) {
                                                Qt::SkipEmptyParts);
     QStringList::const_iterator instruction  = instructions.constBegin();
 
-    qDebug() << instructions.toList();
+//    qDebug() << instructions.toList();
 
     asmLine = 0;
     int opType;
@@ -125,7 +125,7 @@ void AsmFile::parseAsm(QString asmString) {
     // pad the .text section with 0s for a total of 64KB (14-bit address width)
     bin = bin.append(TEXT_MEM_SIZE - bin.length(), '\x00').append(data);
 
-    qDebug() << bin.toHex();
+//    qDebug() << bin.toHex();
 }
 
 void printByte(char byte) {
