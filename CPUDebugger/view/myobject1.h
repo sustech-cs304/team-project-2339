@@ -57,6 +57,8 @@ public:
 
     Q_INVOKABLE void confirm1();
 
+    Q_INVOKABLE void confirm2();
+
     Q_INVOKABLE void loadSvgPath();
 
     Q_INVOKABLE void search();

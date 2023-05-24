@@ -1072,6 +1072,7 @@ Window {
                             onClicked: {
                                 btn3.enabled=true
                                 bar.currentIndex=2
+                                myobj.confirm2()
                             }
                         }
 
