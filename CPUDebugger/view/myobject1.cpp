@@ -289,10 +289,10 @@ void MyObject1::sendPause(){
 
 void MyObject1::sendBreakPoint()
 {
-    if(DebugController::sendPrograme().has_value()){
-        result42=true;
-    }else {
+    if(DebugController::sendPrograme()== nullptr){
         result42=false;
+    }else {
+        result42=true;
     }
 }
 
