@@ -23,6 +23,7 @@ public:
     void genGraph();
     void exportUart(QList<QString> signalList, QString outputUrl);
     void delTempDir();
+    void filter(QList<QString> &ss, QString filter);
 private:
     bool searchSignal(QString signalName, CPUSignal&cpusignal);
     PreProcessor p;

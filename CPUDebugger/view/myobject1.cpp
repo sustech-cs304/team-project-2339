@@ -184,17 +184,17 @@ void MyObject1::setString22(const QString &newString22)
     emit string22Changed();
 }
 
-QString MyObject1::string3() const
+QString MyObject1::string31() const
 {
-    return m_string3;
+    return m_string31;
 }
 
-void MyObject1::setString3(const QString &newString3)
+void MyObject1::setString31(const QString &newString31)
 {
-    if (m_string3 == newString3)
+    if (m_string31 == newString31)
         return;
-    m_string3 = newString3;
-    emit string3Changed();
+    m_string31 = newString31;
+    emit string31Changed();
 }
 
 void MyObject1::makeList1()
@@ -289,7 +289,9 @@ void MyObject1::loadSvgPath(){
 
 void MyObject1::search()
 {
-
+    fileContrl->filter(m_myList1, m_string21);
+    fileContrl->filter(m_myList2, m_string21);
+    qDebug()<<m_myList1;
 }
 
 void MyObject1::searchCancel()
@@ -304,6 +306,8 @@ void MyObject1::closeWindow()
 
 void MyObject1::exportTo()
 {
-
+    QString filePath = m_string31.mid(8);
+    qDebug() << "Signal list: " << m_myList2;
+    fileContrl->exportUart(m_myList2, filePath);
 }
 

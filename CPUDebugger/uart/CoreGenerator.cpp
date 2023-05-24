@@ -138,7 +138,7 @@ bool generateCore(QString topPath,
         return false;
     }
     // the template to start with
-    QFile coreTemplate(QDir::currentPath().append("/template.v"));
+    QFile coreTemplate(QDir::currentPath().append("/../template.v"));
     if (!coreTemplate.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug("Template not found\n");
         return false;

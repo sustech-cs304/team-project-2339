@@ -93,8 +93,8 @@ public:
     QString string22() const;
     void setString22(const QString &newString22);
 
-    QString string3() const;
-    void setString3(const QString &newString3);
+    QString string31() const;
+    void setString31(const QString &newString31);
 
 private:
     int m_value;
@@ -134,7 +134,7 @@ private:
 
     Q_PROPERTY(QString string22 READ string22 WRITE setString22 NOTIFY string22Changed)
 
-    Q_PROPERTY(QString string3 READ string3 WRITE setString3 NOTIFY string3Changed)
+    Q_PROPERTY(QString string31 READ string31 WRITE setString31 NOTIFY string31Changed)
 
 signals:
 
@@ -148,7 +148,7 @@ signals:
     void string1Changed();
     void string21Changed();
     void string22Changed();
-    void string3Changed();
+    void string31Changed();
 };
 
 

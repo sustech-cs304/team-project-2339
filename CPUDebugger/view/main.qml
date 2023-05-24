@@ -502,7 +502,7 @@ Window {
                         id:left20
                         height: 30
                         width: left2.width
-                        color: "yellow"
+                        color: "white"
 
                         Rectangle {
                             id:rect23
@@ -536,6 +536,10 @@ Window {
 
                                 onEditingFinished: {
                                     console.log(ti2.text)
+                                    myobj.string21=ti2.text
+                                    myobj.search()
+                                    listView21.model=myobj.myList1
+                                    listView22.model=myobj.myList2
                                 }
                             }
 
@@ -559,8 +563,6 @@ Window {
 
                             onClicked: {
                                 ti2.clear()
-                                myobj.search()
-
                                 listView21.model=myobj.myList1
                                 listView22.model=myobj.myList2
                             }
@@ -584,7 +586,8 @@ Window {
 
                             onClicked: {
                                 console.log(ti2.text)
-                                myobj.searchCancel()
+                                myobj.string21=ti2.text
+                                myobj.search()
 
                                 listView21.model=myobj.myList1
                                 listView22.model=myobj.myList2

@@ -56,7 +56,9 @@ QList<CPUSignal> FileController::getSignalList()
 
 QList<QString> FileController::getSignals()
 {
-    QList<CPUSignal> signalList = p.genSignals(tmpTopPath);
+    if (signalList.size() == 0) {
+        signalList = p.genSignals(tmpTopPath);
+    }
     QList<QString> ss;
     for (CPUSignal sig: signalList) {
         ss.append(sig.toString());
@@ -87,6 +89,7 @@ void FileController::exportUart(QList<QString> signalList, QString outputUrl) {
     for (const QString& s: signalList) {
         CPUSignal sig("NULL", -1, -1);
         if (searchSignal(s, sig)) {
+            qDebug() << sig.name;
             results.append(sig);
         }
     }
@@ -106,10 +109,25 @@ void FileController::delTempDir() {
     }
 }
 
+void FileController::filter(QList<QString> &ss, QString filter)
+{
+    QRegularExpression regExp("^"+filter);
+    int count = 0;
+    int match_count = 0;
+    for (const QString& s: ss) {
+        auto localMatch = regExp.match(s);
+        if (localMatch.hasMatch()) {
+            ss.swapItemsAt(count, match_count);
+            match_count++;
+        }
+        count++;
+    }
+}
+
 bool FileController::searchSignal(QString signalName, CPUSignal &cpusignal)
 {
     for (const CPUSignal& sig: signalList) {
-        if (sig.name == signalName) {
+        if (sig.name.compare(signalName) == 0) {
             cpusignal = sig;
             return true;
         }
