@@ -1730,6 +1730,7 @@ Window {
                                         listView2.model = null
                                         listView2.model = myobj.myList41
                                         listView4.model = myobj.myList42
+
                                         button41.light=true
                                         button42.light=true
                                         button43.light=false
@@ -1760,6 +1761,9 @@ Window {
 
                                     onClicked: {
                                         myobj.sendBreakPoint()
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
+                                        listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
                                         console.log("update")

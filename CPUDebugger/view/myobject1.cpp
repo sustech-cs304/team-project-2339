@@ -281,8 +281,13 @@ void MyObject1::makeList41()
 }
 
 void MyObject1::sendResume(){
-    DebugController::resume();
-    // m_value1=
+    std::optional<QByteArray> cpuResponse = DebugController::resume();
+    int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
+    int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
+    m_value1=lineNum;
 }
 
 void MyObject1::sendPause(){
@@ -296,10 +301,17 @@ void MyObject1::sendBreakPoint()
     }else {
         result42=true;
     }
+    sendStep();
 }
 
 void MyObject1::sendStep(){
-    DebugController::step();
+    std::optional<QByteArray> cpuResponse = DebugController::step();
+    int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
+    int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
+    m_value1=lineNum;
 }
 
 void MyObject1::detect(){

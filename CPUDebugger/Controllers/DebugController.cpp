@@ -30,7 +30,7 @@ std::optional<QByteArray> DebugController::resume()
             + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
     DebugStore::setPC_Bin(binPC);
-    qDebug() << cpuResponse;
+    qDebug() << cpuResponse.toHex();
     qDebug() << "response pc" << binPC;
 
     return cpuResponse;
@@ -80,8 +80,8 @@ std::optional<QByteArray> DebugController::sendPrograme()
 {
     compileAsm();
     QByteArray fileBytes = DebugController::getBin();
-    QByteArray cpuResponse;
-    bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse, 10000, 10000);
+    QByteArray cpuResponse, tmpResumeResponse;
+    bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse, 20, 30);
     if (!result)
         return nullptr;
     int binPC = (static_cast<unsigned int>(cpuResponse[0]) & 0xFF)
@@ -90,6 +90,9 @@ std::optional<QByteArray> DebugController::sendPrograme()
             + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
     DebugStore::setPC_Bin(binPC);
     qDebug() << cpuResponse;
+
+    uartCommunicator.sendResume(tmpResumeResponse, 0);
+    QThread::sleep(1);
     return cpuResponse;
 }
 
@@ -101,7 +104,7 @@ int DebugController::compileAsm()
     std::shared_ptr<AsmFile> asmFilePtr = std::make_shared<AsmFile>(*filePtr);
     PreDebugStore::asmFile = asmFilePtr;
     asmFilePtr->setBreakPoints(PreDebugStore::breakPoints);
-    asmFilePtr->binBreakPoints.insert(INT_MAX);
+    asmFilePtr->binBreakPoints.insert(100);
     initialize(asmFilePtr);
     return 0;
 }
