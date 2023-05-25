@@ -183,6 +183,12 @@ module top_testbench ();
         signals[32] = 0;
         signals[33] = 0;
         signals[34] = 0;
+
+        signals[40]  = OP_RESUME;
+        signals[41] = 8'h0c;
+        signals[42] = 0;
+        signals[43] = 0;
+        signals[44] = 0;
     end
 
     initial begin

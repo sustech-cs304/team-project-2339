@@ -73,7 +73,8 @@ module top (
         ];
     
     // pc
-    wire [`ISA_WIDTH - 1:0] instruction_mem_pc,
+    wire [`ISA_WIDTH - 1:0] instruction_mem_pc_next,
+                            instruction_mem_pc,
                             if_id_reg_pc;
 
     // register_file data
@@ -277,6 +278,7 @@ module top (
 
         .if_no_op               (instruction_mem_no_op),
 
+        .pc_next                (instruction_mem_pc_next),
         .pc                     (instruction_mem_pc),                       
         .instruction            (instruction_mem_instruction)
     );
@@ -582,7 +584,8 @@ module top (
 
         .uart_rx                (uart_rx),
         .uart_tx                (uart_tx),
-
+        
+        .pc_next                (instruction_mem_pc_next),
         .pc                     (instruction_mem_pc),
         .instruction            (instruction_mem_instruction),
 

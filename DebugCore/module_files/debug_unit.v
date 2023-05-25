@@ -8,6 +8,7 @@ module debug_unit (
     output reg uart_tx,                         // 
 
     input      [`ISA_WIDTH - 1:0] pc,           //
+    input      [`ISA_WIDTH - 1:0] pc_next,      //
 
     //// [TODO] demo only !!! ////
     input      [`ISA_WIDTH - 1:0] instruction,  // from instruction_mem
@@ -77,10 +78,11 @@ module debug_unit (
     localparam  SIGNALS_WIDTH          = `ISA_WIDTH * 2 + 8,        //// [TODO] demo only !!! ////
                 SIGNALS_BYTE_CNT       = SIGNALS_WIDTH / 8,
                 SIGNALS_BYTE_CNT_WIDTH = 4;                         // ceil(sqrt(SIGNALS_WIDTH / 8)): has to be calculated [TODO]
+
     reg  [SIGNALS_BYTE_CNT_WIDTH - 1:0] signals_byte_idx;
     wire [SIGNALS_WIDTH - 1:0]          signals = {
                                                       instruction,
-                                                      pc_cache,
+                                                      pc,
                                                       OP_SIGNAL
                                                   };                //// [TODO] demo only !!! ////
     
@@ -93,9 +95,8 @@ module debug_unit (
     reg [UART_LEN + 1:0]       tx_byte;
     reg                        tx_start, tx_complete;
 
-    reg [`ISA_WIDTH - 1:0] pc_cache;
     reg [`ISA_WIDTH - 1:0] breakpoint;
-    wire                   breakpoint_reached = (breakpoint == pc);
+    wire                   breakpoint_reached = (breakpoint == pc_next);
 
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
@@ -215,12 +216,10 @@ module debug_unit (
         end
     end
 
-    assign rx_light = {debug_pause, 5'b0, core_tx_state};
+    assign rx_light = {tx_complete, 5'b0, core_tx_state};
 
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
-            pc_cache           <= 0;
-
             // transmission
             tx_byte            <= {1'b1, {(UART_LEN){1'b0}}, 1'b0};
             tx_start           <= 1'b0;
@@ -272,7 +271,6 @@ module debug_unit (
 
                             tx_start             <= 1'b1;
                             tx_byte[1+:UART_LEN] <= signals[0+:UART_LEN];
-                            pc_cache             <= pc;
                         end
                         2'b01  : // after receiving the opcode
                             case (rx_byte)

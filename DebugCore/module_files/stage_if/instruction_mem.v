@@ -37,11 +37,11 @@ module instruction_mem (
     output reg [`ISA_WIDTH - 1:0] pc,                   // for (1) hazard_unit (to detect UART hazard)
                                                         //     (2) if_id_reg (jal store into 31st register)
                                                         //     (3) debug_unit (check if the pc reaches breakpoint)
+    output reg [`ISA_WIDTH - 1:0] pc_next,              // for debug_unit (to determine if the next breakpoint is met)
     output     [`ISA_WIDTH - 1:0] instruction           // for if_id_reg (the current instruction)
     );
 
     wire uart_instruction_write_enable = uart_write_enable & ~uart_addr[`ROM_DEPTH];
-    reg [`ISA_WIDTH - 1:0] pc_next;
 
     ROM rom(
         .ena    (uart_instruction_write_enable | ~if_no_op), // disabled unpon no_op
