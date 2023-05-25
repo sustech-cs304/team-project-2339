@@ -1,4 +1,3 @@
-
 QT += quickcontrols2
 QT += serialport
 
@@ -15,7 +14,10 @@ CONFIG += thread
 SOURCES += \
         main.cpp \
         tst_importfile.cpp \
-        tst_uart.cpp
+        tst_uart.cpp \
+        PreDebugController_Test/compiler_test.cpp \
+        PreDebugController_Test/generalTest.cpp \
+        PreDebugController_Test/upload_test.cpp \
 
 INCLUDEPATH += \
     ../CPUDebugger/model \
@@ -26,11 +28,13 @@ INCLUDEPATH += \
 
 LIBS += -lgcov
 
+DISTFILES += \
+    $$PWD/PreDebugController_Test/test_conf.ini
 
+include(gtest_dependency.pri)
 include(../CPUDebugger/model/model.pri)
 include(../CPUDebugger/controller/controller.pri)
 include(../CPUDebugger/parse-verilog/parse-verilog.pri)
 include(../CPUDebugger/view/view.pri)
 include(../CPUDebugger/Debugger.pri)
 include(../CPUDebugger/uart.pri)
-include(gtest_dependency.pri)

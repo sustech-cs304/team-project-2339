@@ -1612,7 +1612,7 @@ Window {
                             ListView {
                                 id: listView4
                                 height: listView3.height
-                                width: 125
+                                width: 160
                                 model:myobj.myList42
                                 anchors.right: parent.right
                                 anchors.top:parent.top
@@ -1626,7 +1626,7 @@ Window {
                                         text: modelData
                                         anchors.verticalCenter: parent.verticalCenter
                                         anchors.right: parent.right
-                                        width:125
+                                        width:160
 
                                     }
 
@@ -1739,6 +1739,7 @@ Window {
                                         listView2.model = null
                                         listView2.model = myobj.myList41
                                         listView4.model = myobj.myList42
+
                                         button41.light=true
                                         button42.light=true
                                         button43.light=false
@@ -1768,9 +1769,12 @@ Window {
                                     }
 
                                     onClicked: {
-                                        myobj.getAsmFile()
-                                        listView1.model=myobj.myList41
-                                        listView2.model=myobj.myList41
+                                        myobj.sendBreakPoint()
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
+                                        listView4.model = myobj.myList42
+                                        button41.light=true
+                                        button42.light=true
                                         console.log("update")
                                     }
                                 }
@@ -1785,7 +1789,6 @@ Window {
                                         if(currentFile){
                                             myobj.string41=currentFile
                                             button45.light=true
-                                            button46.light=true
                                         }
                                     }
                                 }
@@ -1846,8 +1849,7 @@ Window {
                                         myobj.getAsmFile()
                                         listView1.model=myobj.myList41
                                         listView2.model=myobj.myList41
-                                        button41.light=true
-                                        button42.light=true
+                                        button46.light=true
                                         console.log("update")
                                     }
                                 }

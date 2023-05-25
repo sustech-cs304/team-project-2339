@@ -7,6 +7,7 @@
 #include "Controllers/DebugController.h"
 #include "Controllers/PreDebugController.h"
 #include "controller/FileController.h"
+#include "uart/comm.h"
 #include <QFile>
 #include <QTextStream>
 #include <QVariantList>
@@ -27,8 +28,6 @@ public:
     QString string() const;
     void setString(const QString &newString);
 
-    Q_INVOKABLE void getAsmFile();
-
     Q_INVOKABLE void loadFile1();
 
     Q_INVOKABLE void makeBreakPoint();
@@ -47,13 +46,35 @@ public:
 
     Q_INVOKABLE void makeList41();
     
-    Q_INVOKABLE void sendResume();
-    
-    Q_INVOKABLE void sendPause();
-    
-    Q_INVOKABLE void sendStep();
+    Q_INVOKABLE void sendResume(); //page4 resume
 
-    Q_INVOKABLE void detect();
+    Q_INVOKABLE void sendStep(); //page4 step
+    
+    Q_INVOKABLE void sendPause(); //page4 pause
+
+    Q_INVOKABLE void sendBreakPoint(); //page4 break point
+
+    Q_INVOKABLE void getAsmFile(); //page4 get asm file
+
+    Q_INVOKABLE void exportTo(); //page3 export to button
+
+    Q_INVOKABLE void complete(); //page3 complete button
+
+    Q_INVOKABLE void detect();  //page3 detect button
+
+    Q_INVOKABLE void confirm1();
+
+    Q_INVOKABLE void confirm2();
+
+    Q_INVOKABLE void loadSvgPath();
+
+    Q_INVOKABLE void search();
+
+    Q_INVOKABLE void searchCancel();
+
+    Q_INVOKABLE void closeWindow();
+
+    Q_INVOKABLE void exportTo();
 
     Q_INVOKABLE void confirm1();
 
@@ -84,6 +105,27 @@ public:
     QList<QString> myList41() const;
     void setMyList41(const QList<QString> &newMyList41);
 
+    QString string31() const;
+    void setString31(const QString &newString31);
+
+    QString string32() const;
+    void setString32(const QString &newString32);
+
+    QString string41() const;
+    void setString41(const QString &newString41);
+
+    QList<QString> myList42() const;
+    void setMyList42(const QList<QString> &newMyList42);
+
+    bool getDetectResult() const;
+    void setDetectResult(bool newDetectResult);
+
+    bool getResult41() const;
+    void setResult41(bool newResult41);
+
+    bool getResult42() const;
+    void setResult42(bool newResult42);
+
     QString string1() const;
     void setString1(const QString &newString1);
 
@@ -93,17 +135,22 @@ public:
     QString string22() const;
     void setString22(const QString &newString22);
 
-    QString string31() const;
-    void setString31(const QString &newString31);
-
 private:
     int m_value;
     int m_value1;
     QString m_string;
+
+    QString m_string31; //page3 folder address
+    QString m_string32; //page3 detect result
+    QString m_string41; //page4 asm file address
+
+    bool detectResult;
+    bool result41; //page4 get asm file
+    bool result42; //send breaking point
+
     QString m_string1; //page1 folder address
     QString m_string21; //search context
     QString m_string22; //page2 image address
-    QString m_string31;
 
     std::shared_ptr<QFile> file1;
     FileController *fileContrl;
@@ -111,6 +158,7 @@ private:
     QList<QString> m_myList1;
     QList<QString> m_myList2;
     QList<QString> m_myList41;
+    QList<QString> m_myList42; //page4 signal result list
     
 
 
@@ -128,13 +176,25 @@ private:
 
     Q_PROPERTY(QList<QString> myList41 READ myList41 WRITE setMyList41 NOTIFY myList41Changed)
 
+    Q_PROPERTY(QString string31 READ string31 WRITE setString31 NOTIFY string31Changed)
+
+    Q_PROPERTY(QString string32 READ string32 WRITE setString32 NOTIFY string32Changed)
+
+    Q_PROPERTY(QString string41 READ string41 WRITE setString41 NOTIFY string41Changed)
+
+    Q_PROPERTY(QList<QString> myList42 READ myList42 WRITE setMyList42 NOTIFY myList42Changed)
+
+    Q_PROPERTY(bool detectResult READ getDetectResult WRITE setDetectResult NOTIFY detectResultChanged)
+
+    Q_PROPERTY(bool result41 READ getResult41 WRITE setResult41 NOTIFY result41Changed)
+
+    Q_PROPERTY(bool result42 READ getResult42 WRITE setResult42 NOTIFY result42Changed)
+
     Q_PROPERTY(QString string1 READ string1 WRITE setString1 NOTIFY string1Changed)
 
     Q_PROPERTY(QString string21 READ string21 WRITE setString21 NOTIFY string21Changed)
 
     Q_PROPERTY(QString string22 READ string22 WRITE setString22 NOTIFY string22Changed)
-
-    Q_PROPERTY(QString string31 READ string31 WRITE setString31 NOTIFY string31Changed)
 
 signals:
 
@@ -145,10 +205,16 @@ signals:
     void myList1Changed();
     void myList2Changed();
     void myList41Changed();
+    void string31Changed();
+    void string32Changed();
+    void string41Changed();
+    void myList42Changed();
+    void detectResultChanged();
+    void result41Changed();
+    void result42Changed();
     void string1Changed();
     void string21Changed();
     void string22Changed();
-    void string31Changed();
 };
 
 

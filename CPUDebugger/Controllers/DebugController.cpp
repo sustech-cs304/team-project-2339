@@ -1,44 +1,71 @@
 #include "DebugController.h"
 
-static UartCommunicator uartCommunicator;
+UartCommunicator uartCommunicator;
 
-int DebugController::resume()
+std::optional<QByteArray> DebugController::resume()
 {
-    //checkStore();
-
+    checkStore();
+    std::shared_ptr<AsmFile> asmFilePtr = DebugStore::asmFilePtr;
     QByteArray cpuResponse;
-    bool result = uartCommunicator.sendResume(cpuResponse, 40);
-    qDebug() << cpuResponse << Qt::endl;
-    return 0;
+
+    int PC;
+    if(DebugStore::asmFilePtr->binBreakPoints.size() > 0)
+    {
+        for (int i : DebugStore::asmFilePtr->binBreakPoints)
+        {
+            int binCurLine = DebugStore::binCurLine;
+            if (i > DebugStore::binCurLine)
+            {
+                PC = i;
+                break;
+            }
+        }
+    }
+    qDebug() << "target pc" << PC;
+    bool result = uartCommunicator.sendResume(cpuResponse, PC);
+    if (!result)
+        return nullptr;
+    int binPC = (static_cast<unsigned int>(cpuResponse[0]) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse[1]) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
+    DebugStore::setPC_Bin(binPC);
+//    qDebug() << cpuResponse.toHex();
+    qDebug() << "response pc" << binPC;
+    return cpuResponse;
 }
 
-int DebugController::step()
+std::optional<QByteArray> DebugController::step()
 {
-    //checkStore();
+    checkStore();
     QByteArray cpuResponse;
     bool result = uartCommunicator.sendStep(cpuResponse);
-    if (result){
 
-    }else{
+    if (!result)
+        return nullptr;
 
-    }
-    qDebug() << cpuResponse << Qt::endl;
-    return 0;
+    int binPC = (static_cast<unsigned int>(cpuResponse[0]) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse[1]) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
+    DebugStore::setPC_Bin(binPC);
+    qDebug() << cpuResponse;
+    return cpuResponse;
 }
+
 int DebugController::pause()
 {
-    //checkStore();
+    checkStore();
     uartCommunicator.sendPause();
-    qDebug() << "pause" << Qt::endl;
-    return 0;
+    return 1;
 }
 
 int DebugController::detect()
 {
     //checkStore();
-    uartCommunicator.autoConnectCPU();
-    qDebug() << "HA" << Qt::endl;
-    return 0;
+    bool result = uartCommunicator.autoConnectCPU();
+    qDebug() << result << Qt::endl;
+    return result;
 }
 
 // TODO: Delete it4
@@ -46,6 +73,39 @@ QByteArray DebugController::getBin()
 {
     checkStore();
     return DebugStore::asmFilePtr->getBin();
+}
+
+std::optional<QByteArray> DebugController::sendPrograme()
+{
+    compileAsm();
+    QByteArray fileBytes = DebugController::getBin();
+    QByteArray cpuResponse, tmpResumeResponse;
+    bool result = uartCommunicator.sendProgram(fileBytes, cpuResponse, 20, 30);
+    if (!result)
+        return nullptr;
+    int binPC = (static_cast<unsigned int>(cpuResponse[0]) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse[1]) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
+    DebugStore::setPC_Bin(binPC);
+    qDebug() << cpuResponse;
+
+    uartCommunicator.sendResume(tmpResumeResponse, 0);
+    QThread::sleep(1);
+    return cpuResponse;
+}
+
+int DebugController::compileAsm()
+{
+    std::shared_ptr<QFile> filePtr = PreDebugStore::file;
+    if (filePtr == nullptr)
+        throw std::invalid_argument("Select .asm file first!");
+    std::shared_ptr<AsmFile> asmFilePtr = std::make_shared<AsmFile>(*filePtr);
+    PreDebugStore::asmFile = asmFilePtr;
+    asmFilePtr->setBreakPoints(PreDebugStore::breakPoints);
+    asmFilePtr->binBreakPoints.insert(INT_MAX);
+    initialize(asmFilePtr);
+    return 0;
 }
 
 void DebugController::checkStore()
@@ -68,12 +128,6 @@ void DebugController::clear()
     DebugStore::asmFilePtr = nullptr;
     DebugStore::asmCurLine = 0;
     DebugStore::binCurLine = 0;
-}
-
-int DebugController::extractPC(QByteArray& cpuResponse)
-{
-    QByteArray responseCopy = cpuResponse;
-    return ((responseCopy[0] << 24) | (responseCopy[1] << 16) | (responseCopy[2] << 8) | responseCopy[3]) >> 2;
 }
 
 int DebugController::setPC(FileType fileType, int PC)

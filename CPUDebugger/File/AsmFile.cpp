@@ -13,7 +13,7 @@ QString AsmFile::loadAsmFile(QFile &file) {
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
         qDebug("Asm file not found\n");
     }
-    asmFile                  = &file;
+    asmFile = &file;
     // generate the input streams
     QTextStream in(&file);
     QString     fileContents = in.readAll();
@@ -36,6 +36,25 @@ QByteArray AsmFile::updateAsmFile(QString &asmString) {
     // get binary and asm -> bin map
     parseAsm(asmString);
     return bin;
+}
+
+int AsmFile::setBreakPoints(std::set<int>& breakPoints)
+{
+//    std::set<int>::iterator iter = BreakPoints.find(lineIdx);
+//    if (iter != BreakPoints.end()) BreakPoints.erase(iter);
+//    else breakPoints.insert(lineIdx);
+    for (auto i : breakPoints)
+    {
+        this->breakPoints.insert(i);
+        this->binBreakPoints.insert(this->asmToPCMap.value(i));
+    }
+
+    return 0;
+}
+
+std::set<int>& AsmFile::getBreakPoints()
+{
+    return this->breakPoints;
 }
 
 QByteArray AsmFile::getBin() {
@@ -65,7 +84,7 @@ void AsmFile::parseAsm(QString asmString) {
                                                Qt::SkipEmptyParts);
     QStringList::const_iterator instruction  = instructions.constBegin();
 
-    qDebug() << instructions.toList();
+//    qDebug() << instructions.toList();
 
     asmLine = 0;
     int opType;
@@ -106,7 +125,7 @@ void AsmFile::parseAsm(QString asmString) {
     // pad the .text section with 0s for a total of 64KB (14-bit address width)
     bin = bin.append(TEXT_MEM_SIZE - bin.length(), '\x00').append(data);
 
-    qDebug() << bin.toHex();
+//    qDebug() << bin.toHex();
 }
 
 void printByte(char byte) {

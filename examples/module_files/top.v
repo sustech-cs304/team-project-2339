@@ -579,10 +579,8 @@ module top (
 
         .pc                     (instruction_mem_pc),
 		.signal_0               (id_ex_reg_reg_1_idx),
-		.signal_1               (immediate),
-		.signal_2               (control_condition_type),
-		.signal_3               (keypad_unit_key_coord),
-		.signal_4               (instruction_mem_instruction),
+		.signal_1               (vsync),
+		.signal_2               (clk_tube),
 
         .uart_addr              (debug_unit_write_address),
         .uart_data              (debug_unit_write_data),

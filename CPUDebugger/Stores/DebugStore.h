@@ -3,9 +3,13 @@
 
 #include <memory>
 #include "File/AsmFile.h"
+#include "uart/comm.h"
 
 class DebugStore
 {
+public:
+    static int setPC_Asm(int PC);
+    static int setPC_Bin(int PC);
 private:
     static int binCurLine;
     static int asmCurLine;

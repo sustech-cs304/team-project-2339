@@ -7,16 +7,22 @@
 #include "File/AsmFile.h"
 #include "Stores/DebugStore.h"
 #include "uart/comm.h"
+#include "Controllers/PreDebugController.h"
+#include "Stores/PreDebugStore.h"
+
 
 class DebugController
 {
 public:
-    static int resume();
-    static int step();
+    static std::optional<QByteArray> resume();
+    static std::optional<QByteArray> step();
     static int pause();
     static int detect();
     static QByteArray getBin();
+    static std::optional<QByteArray> sendPrograme();
+    static int compileAsm();
     friend class PreDebugController;
+
 private:
     enum FileType
     {

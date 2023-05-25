@@ -30,18 +30,6 @@ void PreDebugController::clear()
     PreDebugStore::asmFile = nullptr;
 }
 
-int PreDebugController::compileAsm()
-{
-    std::shared_ptr<QFile> filePtr = PreDebugStore::file;
-    if (filePtr == nullptr)
-        throw std::invalid_argument("Select .asm file first!");
-    std::shared_ptr<AsmFile> asmFilePtr = std::make_shared<AsmFile>(*filePtr);
-    PreDebugStore::asmFile = asmFilePtr;
-//    asmFilePtr->setBreakPoints(PreDebugStore::breakPoints);
-    DebugController::initialize(asmFilePtr);
-    return 0;
-}
-
 void PreDebugController::setBreakPoint(int lineIdx)
 {
     std::set<int>::iterator iter = PreDebugStore::breakPoints.find(lineIdx);

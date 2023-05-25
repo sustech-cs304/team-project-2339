@@ -118,7 +118,8 @@ public:
     int getAsmLine(unsigned int PC);
 
     int setBreakPoints(std::set<int>& breakPoints);
-    
+    std::set<int>& getBreakPoints();
+
 private:
     QFile *asmFile{};
 

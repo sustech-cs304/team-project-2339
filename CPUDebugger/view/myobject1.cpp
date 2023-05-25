@@ -42,7 +42,7 @@ void MyObject1::setString(const QString &newString)
 void MyObject1::getAsmFile()
 {
     m_myList41.clear();
-    QString filePath = m_string.mid(8);
+    QString filePath = m_string41.mid(8);
     qDebug()<<filePath;
     file1 = PreDebugController::uploadFile(filePath);
     if (file1->open(QIODevice::ReadOnly | QIODevice::Text))
@@ -54,6 +54,7 @@ void MyObject1::getAsmFile()
                 m_myList41.append(line);
             }
         }
+    file1->close();
     qDebug()<<m_myList41;
     qDebug() << __FUNCTION__;
 }
@@ -74,7 +75,6 @@ void MyObject1::loadFile1()
 
 void MyObject1::makeBreakPoint()
 {
-
     PreDebugController::setBreakPoint(m_value);
     qDebug() << m_value;
 }
@@ -143,6 +143,97 @@ void MyObject1::setMyList41(const QList<QString> &newMyList41)
         return;
     m_myList41 = newMyList41;
     emit myList41Changed();
+}
+
+QString MyObject1::string31() const
+{
+    return m_string31;
+}
+
+void MyObject1::setString31(const QString &newString31)
+{
+    if (m_string31 == newString31)
+        return;
+    m_string31 = newString31;
+    emit string31Changed();
+}
+
+QString MyObject1::string32() const
+{
+    return m_string32;
+}
+
+void MyObject1::setString32(const QString &newString32)
+{
+    if (m_string32 == newString32)
+        return;
+    m_string32 = newString32;
+    emit string32Changed();
+}
+
+QString MyObject1::string41() const
+{
+    return m_string41;
+}
+
+void MyObject1::setString41(const QString &newString41)
+{
+    if (m_string41 == newString41)
+        return;
+    m_string41 = newString41;
+    emit string41Changed();
+}
+
+QList<QString> MyObject1::myList42() const
+{
+    return m_myList42;
+}
+
+void MyObject1::setMyList42(const QList<QString> &newMyList42)
+{
+    if (m_myList42 == newMyList42)
+        return;
+    m_myList42 = newMyList42;
+    emit myList42Changed();
+}
+
+bool MyObject1::getDetectResult() const
+{
+    return detectResult;
+}
+
+void MyObject1::setDetectResult(bool newDetectResult)
+{
+    if (detectResult == newDetectResult)
+        return;
+    detectResult = newDetectResult;
+    emit detectResultChanged();
+}
+
+bool MyObject1::getResult41() const
+{
+    return result41;
+}
+
+void MyObject1::setResult41(bool newResult41)
+{
+    if (result41 == newResult41)
+        return;
+    result41 = newResult41;
+    emit result41Changed();
+}
+
+bool MyObject1::getResult42() const
+{
+    return result42;
+}
+
+void MyObject1::setResult42(bool newResult42)
+{
+    if (result42 == newResult42)
+        return;
+    result42 = newResult42;
+    emit result42Changed();
 }
 
 QString MyObject1::string1() const
@@ -242,19 +333,67 @@ void MyObject1::makeList41()
 }
 
 void MyObject1::sendResume(){
-    DebugController::resume();
+    std::optional<QByteArray> cpuResponse = DebugController::resume();
+    int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
+    int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
+    QString binaryString;
+    binaryString += QString::number(cpuResponse->at(4), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(5), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(6), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
+    m_myList42.clear();
+    m_myList42.append(binaryString);
+    m_value1=lineNum;
 }
 
 void MyObject1::sendPause(){
     DebugController::pause();
 }
 
+void MyObject1::sendBreakPoint()
+{
+    if(DebugController::sendPrograme()== nullptr){
+        result42=false;
+    }else {
+        result42=true;
+    }
+    sendStep();
+}
+
 void MyObject1::sendStep(){
-    DebugController::step();
+    std::optional<QByteArray> cpuResponse = DebugController::step();
+    int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
+    int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
+    QString binaryString;
+    binaryString += QString::number(cpuResponse->at(4), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(5), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(6), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
+    m_myList42.clear();
+    m_myList42.append(binaryString);
+    m_value1=lineNum;
 }
 
 void MyObject1::detect(){
-    
+    detectResult=DebugController::detect();
+}
+
+void MyObject1::exportTo()
+{
+    QString filePath = m_string31.mid(8);
+    qDebug() << "Signal list: " << m_myList2;
+    fileContrl->exportUart(m_myList2, filePath);
+}
+
+void MyObject1::complete()
+{
+
 }
 
 /**
@@ -304,10 +443,5 @@ void MyObject1::closeWindow()
 
 }
 
-void MyObject1::exportTo()
-{
-    QString filePath = m_string31.mid(8);
-    qDebug() << "Signal list: " << m_myList2;
-    fileContrl->exportUart(m_myList2, filePath);
-}
+
 

@@ -187,9 +187,11 @@ bool UartCommunicator::sendStep(QByteArray& cpuResponse, double packetWaitingSec
 
 bool UartCommunicator::sendResume(QByteArray& cpuResponse, int nextPC, double packetWaitingSeconds, double totWaitingSeconds){
     const QByteArray PAUSE = QByteArray(1, 0x04);
-    QByteArray RESUME;
-    QDataStream stream(&RESUME, QIODevice::ReadWrite);
-    stream << quint8(0x05) << quint32(nextPC);
+    QByteArray RESUME = QByteArray(1, 0x05);
+    RESUME.append(nextPC & 0xFF);
+    RESUME.append((nextPC >> 8) & 0xFF);
+    RESUME.append((nextPC >> 16) & 0xFF);
+    RESUME.append((nextPC >> 24) & 0xFF);
     bool packetTimeout = false, packetError = false;
     // 0 -> no Response, 1 -> success, -1 -> format failed
     int responseResult = 0;
