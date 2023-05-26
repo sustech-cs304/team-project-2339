@@ -49,7 +49,7 @@ std::optional<QByteArray> DebugController::step()
             + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
     DebugStore::setPC_Bin(binPC);
-    qDebug() << cpuResponse;
+    qDebug() << "response pc" << binPC;
     return cpuResponse;
 }
 
@@ -90,9 +90,6 @@ std::optional<QByteArray> DebugController::sendPrograme()
     DebugStore::setPC_Bin(binPC);
     qDebug() << cpuResponse;
 
-    uartCommunicator.sendResume(cpuResponse, 0);
-    QThread::sleep(1);
-//    uartCommunicator.sendPause();
     uartCommunicator.sendResume(cpuResponse, 0);
     return cpuResponse;
 }
@@ -145,4 +142,8 @@ int DebugController::setPC(FileType fileType, int PC)
         break;
     }
     return 0;
+}
+
+void DebugController::setSignals(QList<CPUSignal>* sharedSignals){
+    DebugController::mysignals = sharedSignals;
 }
