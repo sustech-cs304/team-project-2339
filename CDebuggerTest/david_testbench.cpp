@@ -19,7 +19,7 @@ private slots:
 };
 
 void Testbench::parseASM() {
-    QFile   top(QDir::currentPath().append("/test.asm"));
+    QFile   top(QDir::currentPath().append("/../CPUDebugger/File/test.asm"));
     AsmFile asmFile(top);
 }
 
@@ -29,8 +29,8 @@ void Testbench::generate() {
             CPUSignal{"another_instruction", 0, 31}
     };
 
-    generateCore(QDir::currentPath().append("/top.v"),
-                 QDir::currentPath(),
+    generateCore(QDir::currentPath().append("/../CPUDebugger/uart/assets/top.v"),
+                 QDir::currentPath().append("/../CPUDebugger/uart/assets"),
                  list);
 }
 

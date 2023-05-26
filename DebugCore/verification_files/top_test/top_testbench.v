@@ -189,6 +189,7 @@ module top_testbench ();
         // signals[42] = 0;
         // signals[43] = 0;
         // signals[44] = 0;
+        signals[45]  = OP_NEXT;
     end
 
     initial begin

@@ -4,8 +4,8 @@
 
 #include "CoreGenerator.h"
 
-const char *inputFormat    = "input      [0:%d] signal_%d,\n";
-const char *inputIndent    = "\tinput      [0:%d] signal_%d,\n";
+const char *inputFormat    = "input      [%d:0] signal_%d,\n";
+const char *inputIndent    = "\tinput      [%d:0] signal_%d,\n";
 const char *signalFormat   = "signal_%d,\n\t                                                  ";
 const char *moduleFormat   = "\t\t.signal_%-16d(%s),\n";
 const char *moduleSection  = "debug_unit(\n"
@@ -138,7 +138,7 @@ bool generateCore(QString topFilePath,
         return false;
     }
     // the template to start with
-    QFile coreTemplate(QDir::currentPath().append("/../template.v"));
+    QFile coreTemplate(QDir::currentPath().append("/../CPUDebugger/uart/assets/template.v"));
     if (!coreTemplate.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug("Template not found\n");
         return false;
