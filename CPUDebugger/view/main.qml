@@ -327,17 +327,25 @@ Window {
 
                                     onClicked: {
                                         if(button11.isSelected){
-                                            btn2.enabled=true
-                                            bar.currentIndex=1
-                                            console.log("Confirm1")
+//                                            btn2.enabled=true
+//                                            bar.currentIndex=1
+
+                                            button11.isSelected=false
+                                            waitCircle.wait=true
                                             myobj.string1=folderDialog1.folder
-                                            myobj.confirm1()
-                                            myobj.loadSvgPath()
-                                            image.name22=myobj.string22
-                                            myobj.makeList1()
-                                            myobj.makeList2()
-                                            listView21.model=myobj.myList1
-                                            listView22.model=myobj.myList2
+                                            theworker1.string1=folderDialog1.folder
+                                            theworker1.start()
+                                            timer.start()
+
+//                                            console.log("Confirm1")
+//                                            myobj.string1=folderDialog1.folder
+//                                            myobj.confirm1()
+//                                            myobj.loadSvgPath()
+//                                            image.name22=myobj.string22
+//                                            myobj.makeList1()
+//                                            myobj.makeList2()
+//                                            listView21.model=myobj.myList1
+//                                            listView22.model=myobj.myList2
                                         }else{
                                             text14.show=true
                                         }
@@ -455,6 +463,7 @@ Window {
                                     text: folderDialog1.folder
                                     x: ma1.mouseX+2
                                     y: ma1.mouseY-height-2
+                                    z:0.5
                                     delay: 200
                                 }
 
@@ -481,6 +490,222 @@ Window {
                         }
                     }
                 }
+
+                Rectangle{
+                    id: waitCircle
+                    anchors.fill: parent
+                    visible:waitCircle.wait
+                    z:1
+
+                    property bool wait: false
+
+                    Canvas {
+                        id: canvas
+                        width: 120
+                        height: 120
+                        antialiasing: true
+                        anchors.centerIn: parent
+
+                        property bool show1: true
+
+                        property color primaryColor: "orange"
+                        property color secondaryColor: "lightblue"
+
+                        property real centerWidth: width / 2
+                        property real centerHeight: height / 2
+                        property real radius: Math.min(canvas.width-10, canvas.height-10) / 2
+
+                        property real minimumValue: 0
+                        property real maximumValue: 100
+                        property real currentValue: 0
+
+                        property real angle: (currentValue - minimumValue) / (maximumValue - minimumValue) * 2 * Math.PI
+
+                        property real angleOffset: -Math.PI / 2
+
+                        signal clicked()
+                        onPrimaryColorChanged: requestPaint()
+                        onSecondaryColorChanged: requestPaint()
+                        onMinimumValueChanged: requestPaint()
+                        onMaximumValueChanged: requestPaint()
+                        onCurrentValueChanged: requestPaint()
+                        onPaint: {
+                            var ctx = getContext("2d");
+                            ctx.save();
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+//                            if (mouseArea11.pressed) {
+//                                timer.running = true;
+//                            }
+
+                            ctx.beginPath();
+                            ctx.lineWidth = 10;
+                            ctx.strokeStyle = primaryColor;
+                            ctx.arc(canvas.centerWidth,
+                                    canvas.centerHeight,
+                                    canvas.radius,
+                                    angleOffset + canvas.angle,
+                                    angleOffset + 2*Math.PI);
+                            ctx.stroke();
+
+                            ctx.beginPath();
+                            ctx.lineWidth = 10;
+                            ctx.strokeStyle = canvas.secondaryColor;
+                            ctx.arc(canvas.centerWidth,
+                                    canvas.centerHeight,
+                                    canvas.radius,
+                                    canvas.angleOffset,
+                                    canvas.angleOffset + canvas.angle);
+                            ctx.stroke();
+
+                            ctx.restore();
+                        }
+
+                        Text {
+                            id: txt_progress
+                            anchors.centerIn: parent
+
+                            font.pixelSize: 16
+                            text: "Wait"
+                            color: "black"
+                        }
+
+                        MouseArea {
+                            id: mouseArea11
+                            anchors.fill: parent
+                            onClicked: canvas.clicked()
+                            onPressedChanged: canvas.requestPaint()
+                        }
+
+
+                        Timer{
+                            id: timer
+                            interval: 20
+                            running: false
+                            repeat: true
+                            onTriggered: {
+                                if(canvas.currentValue === 100) {
+                                    canvas.currentValue = 0
+                                    canvas.show1=!canvas.show1
+                                }
+                                canvas.currentValue += 1
+                                canvas1.currentValue=canvas.currentValue
+                            }
+
+                        }
+                    }
+
+                    Canvas {
+                        id: canvas1
+                        width: 120
+                        height: 120
+                        antialiasing: true
+                        anchors.centerIn: parent
+                        visible: canvas.show1
+
+                        property color primaryColor: canvas.secondaryColor
+                        property color secondaryColor: canvas.primaryColor
+
+                        property real centerWidth: width / 2
+                        property real centerHeight: height / 2
+                        property real radius: Math.min(canvas1.width-10, canvas1.height-10) / 2
+
+                        property real minimumValue: 0
+                        property real maximumValue: 100
+                        property real currentValue: 0
+
+                        property real angle: (currentValue - minimumValue) / (maximumValue - minimumValue) * 2 * Math.PI
+
+                        property real angleOffset: -Math.PI / 2
+
+                        signal clicked()
+                        onPrimaryColorChanged: requestPaint()
+                        onSecondaryColorChanged: requestPaint()
+                        onMinimumValueChanged: requestPaint()
+                        onMaximumValueChanged: requestPaint()
+                        onCurrentValueChanged: requestPaint()
+                        onPaint: {
+                            var ctx = getContext("2d");
+                            ctx.save();
+
+                            ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+
+//                            if (mouseArea12.pressed) {
+//                                timer.running = true;
+//                            }
+
+                            ctx.beginPath();
+                            ctx.lineWidth = 10;
+                            ctx.strokeStyle = primaryColor;
+                            ctx.arc(canvas1.centerWidth,
+                                    canvas1.centerHeight,
+                                    canvas1.radius,
+                                    angleOffset + canvas1.angle,
+                                    angleOffset + 2*Math.PI);
+                            ctx.stroke();
+
+                            ctx.beginPath();
+                            ctx.lineWidth = 10;
+                            ctx.strokeStyle = canvas1.secondaryColor;
+                            ctx.arc(canvas1.centerWidth,
+                                    canvas1.centerHeight,
+                                    canvas1.radius,
+                                    canvas1.angleOffset,
+                                    canvas1.angleOffset + canvas1.angle);
+                            ctx.stroke();
+
+                            ctx.restore();
+                        }
+
+                        MouseArea {
+                            id: mouseArea12
+
+                            anchors.fill: parent
+                            onClicked: canvas1.clicked()
+                            onPressedChanged: canvas1.requestPaint()
+                        }
+
+                    }
+
+                    Button{
+                        x:0
+                        y:0
+                        id:bu
+                        width: 100
+                        height: 50
+                        text: "stop"
+                        background: Rectangle{
+                            color: "black"
+                        }
+
+                        onClicked: {
+                            theworker1.start()
+                        }
+                    }
+
+                }
+
+                Connections {  //连接的目标不在QML中
+                    target: theworker1  //指向发出信号的对象
+                    onStarted: {
+                        print('线程开启')
+                    }
+
+                    onDataChanged: {
+                        console.log("aaa")
+                        myobj.string22=theworker1.string2
+                        myobj.myList1=theworker1.myList1
+                        image.name22=myobj.string22
+                        myobj.makeList1()
+                        myobj.makeList2()
+                        listView21.model=myobj.myList1
+                        listView22.model=myobj.myList2
+                        timer.stop()
+                        waitCircle.wait=false
+                        btn2.enabled=true
+                        bar.currentIndex=1
+                    }
+                }
+
             }
         }
 
@@ -1139,27 +1364,27 @@ Window {
 
             Rectangle{
                 anchors.fill: parent
-        
+
                 Rectangle{
                     width: parent.width/8*7
                     height: parent.height/8*7
                     anchors.centerIn: parent
-        
+
                     Grid{
                         rows: 1
                         columns: 2
                         spacing: 0
                         anchors.fill: parent
-        
+
                         Rectangle {
                             id:left3
                             height: parent.height
                             width: parent.width/4*3
-        
+
                             Rectangle {
                                 height: parent.height/10
                                 width: parent.width
-        
+
                                 Image {
                                     id:image31
                                     x:10
@@ -1169,7 +1394,7 @@ Window {
                                     height: width
                                     fillMode: Image.PreserveAspectFit
                                 }
-        
+
                                 Text {
                                     id:text31
                                     x:20+image31.width
@@ -1179,7 +1404,7 @@ Window {
                                     font.pixelSize: 20 * root.height/480
                                     font.bold: true
                                 }
-        
+
                                 Text {
                                     id:text32
                                     anchors.top: text31.bottom
@@ -1190,21 +1415,21 @@ Window {
                                     font.bold: false
                                     wrapMode: Text.WordWrap
                                 }
-        
+
                                 Rectangle {
                                     id: piece31
                                     anchors.top: text32.bottom
                                     height: 20 * root.height/480
                                     anchors.right: parent.right
                                 }
-        
+
                                 Rectangle{
                                     id: folderChoose
                                     width: text32.width
                                     height: button31.height
                                     anchors.left: text31.left
                                     anchors.top: piece31.bottom
-        
+
                                     Rectangle {
                                         id:rect31
                                         width: parent.width-button31.width+10
@@ -1214,13 +1439,13 @@ Window {
                                         border.width: 1
                                         border.color: "#DFE0E4"
                                         radius: 5
-        
+
                                         Flickable {
                                             anchors.fill: parent
                                             contentWidth: inputBoxInput.width
                                             clip: true
                                             interactive: true
-        
+
                                         TextInput {
                                             id: inputBoxInput
                                             text:folderDialog.folder
@@ -1238,14 +1463,14 @@ Window {
                                         }
                                         }
                                     }
-        
+
                                     Button{
                                         id:button35
                                         x:rect31.width+10
                                         height: button31.height
                                         width: button31.width/2
                                         anchors.left: rect31.right
-        
+
                                         contentItem: Text {
                                             text: qsTr("Path")
                                             color: "white"
@@ -1253,12 +1478,12 @@ Window {
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
                                         }
-        
+
                                         background: Rectangle {
                                             color: "#AA0055ff"
                                             radius: height/5
                                         }
-        
+
                                         MouseArea{
                                             anchors.fill: parent
                                             onClicked: {
@@ -1267,21 +1492,21 @@ Window {
                                             }
                                         }
                                     }
-        
+
                                 }
-        
+
                                 FolderDialog {
                                     id: folderDialog
                                     folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0] //默认打开Pictures文件夹
                                 }
-        
+
                                 Rectangle {
                                     id: piece32
                                     anchors.top: folderChoose.bottom
                                     height: 20 * root.height/480
                                     anchors.right: parent.right
                                 }
-        
+
                                 Image {
                                     id:image32
                                     anchors.top: piece32.bottom
@@ -1291,7 +1516,7 @@ Window {
                                     height: width
                                     fillMode: Image.PreserveAspectFit
                                 }
-        
+
                                 Text {
                                     id:text33
                                     anchors.top: piece32.bottom
@@ -1301,7 +1526,7 @@ Window {
                                     font.pixelSize: 20 * root.height/480
                                     font.bold: true
                                 }
-        
+
                                 Text {
                                     id:text34
                                     anchors.top: text33.bottom
@@ -1312,25 +1537,25 @@ Window {
                                     font.bold: false
                                     wrapMode: Text.WordWrap
                                 }
-        
+
                             }
-        
+
                         }
-        
+
                         Rectangle {
                             id:right3
                             height: parent.height
                             width: parent.width/4
-        
+
                             Button {
                                 id:button31
                                 width:  parent.width/2+3
                                 height: width/3+2
                                 y:20 * root.height/480+image31.height+text32.height+piece31.height
-        
+
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.bottom: folderChoose.bottom
-        
+
                                 contentItem: Text {
                                     text: qsTr("AutoExport")
                                     horizontalAlignment: Text.AlignHCenter
@@ -1338,27 +1563,27 @@ Window {
                                     color: "white"
                                     font.pixelSize: 13 * root.height/480
                                 }
-        
+
                                 background: Rectangle {
                                     color: "#AA0077ff"
                                     radius: height/5
                                 }
-        
+
                                 onClicked: {
                                     console.log("Export to")
                                     myobj.string31=folderDialog.folder
                                     myobj.exportTo()
                                 }
                             }
-        
+
         //                    Button {
         //                        id:button32
         //                        width:  parent.width/2+4
         //                        height: width/3+2
         //                        y:button31.y+60 * root.height/480
-        
+
         //                        anchors.horizontalCenter: parent.horizontalCenter
-        
+
         //                        contentItem: Text {
         //                            text: qsTr("Complete")
         //                            horizontalAlignment: Text.AlignHCenter
@@ -1366,26 +1591,26 @@ Window {
         //                            color: "white"
         //                            font.pixelSize: 13 * root.height/480
         //                        }
-        
+
         //                        background: Rectangle {
         //                            color: "#AA0099ff"
         //                            radius: height/5
         //                        }
-        
+
         //                        onClicked: {
         //                            console.log("Complete")
         //                            myobj.complete()
         //                        }
         //                    }
-        
+
                             Button {
                                 id:button33
                                 width:  parent.width/2+4
                                 height: width/3+2
                                 y:button31.y+60 * root.height/480
-        
+
                                 anchors.horizontalCenter: parent.horizontalCenter
-        
+
                                 contentItem: Text {
                                     text: qsTr("Detect")
                                     horizontalAlignment: Text.AlignHCenter
@@ -1393,30 +1618,30 @@ Window {
                                     color: "white"
                                     font.pixelSize: 13 * root.height/480
                                 }
-        
+
                                 background: Rectangle {
                                     color: "#AA00bbff"
                                     radius: height/5
                                 }
-        
+
                                 onClicked: {
                                     console.log("detect")
                                     myobj.detect()
                                     button34.isClicked=myobj.detectResult
                                 }
                             }
-        
+
                             Button {
                                 id:button34
                                 width:  parent.width/2+4
                                 height: width/3+2
                                 y:button33.y+120 * root.height/480
                                 enabled: button34.isClicked
-        
+
                                 property bool isClicked: false
-        
+
                                 anchors.horizontalCenter: parent.horizontalCenter
-        
+
                                 contentItem: Text {
                                     text: qsTr("Confirm")
                                     horizontalAlignment: Text.AlignHCenter
@@ -1424,12 +1649,12 @@ Window {
                                     color: "white"
                                     font.pixelSize: 13 * root.height/480
                                 }
-        
+
                                 background: Rectangle {
                                     color: button34.isClicked? "orange":"lightgrey"
                                     radius: height/5
                                 }
-        
+
                                 onClicked: {
                                     console.log("Confirm3")
                                     btn4.enabled=true
