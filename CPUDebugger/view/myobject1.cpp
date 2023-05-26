@@ -354,12 +354,17 @@ void MyObject1::sendResume(){
             + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
-    QString hexString;
-        for (int i = 7; i >= 4; i--) {
-            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(i)), 2, 16, QChar('0'));
-        }
+
     m_myList42.clear();
-    m_myList42.append(hexString);
+    int start_idx = 3;
+    for (int i = 0 ; i < DebugController::mysignals.length() ; i ++){
+        QString hexString;
+        for (int j = start_idx + DebugController::mysignals.at(i).width; j > start_idx; i--) {
+            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
+        }
+        m_myList42.append(hexString);
+        start_idx += DebugController::mysignals.at(i).width;
+    }
     m_value1=lineNum;
 }
 
@@ -393,13 +398,16 @@ void MyObject1::sendStep(){
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
 
-
-    QString hexString;
-    for (int i = 7; i >= 4; i--) {
-        hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(i)), 2, 16, QChar('0'));
-    }
     m_myList42.clear();
-    m_myList42.append(hexString);
+    int start_idx = 3;
+    for (int i = 0 ; i < DebugController::mysignals.length() ; i ++){
+        QString hexString;
+        for (int j = start_idx + DebugController::mysignals.at(i).width; j > start_idx; i--) {
+            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
+        }
+        m_myList42.append(hexString);
+        start_idx += DebugController::mysignals.at(i).width;
+    }
     m_value1=lineNum;
 }
 
