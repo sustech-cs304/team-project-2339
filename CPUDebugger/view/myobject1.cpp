@@ -417,8 +417,8 @@ void MyObject1::confirm1()
 {
     qDebug() << "m_string: " << m_string1;
     fileContrl->import(m_string1);
-
-    m_myList1 = fileContrl->getSignals();
+    
+    m_myList1 = fileContrl->getStringSignals();
     qDebug() << m_myList1;
 
     fileContrl->genGraph();
