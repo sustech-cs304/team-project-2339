@@ -20,7 +20,7 @@ public:
     static int detect();
     static QByteArray getBin();
     static std::optional<QByteArray> sendPrograme();
-    static void setSignals(QList<CPUSignal> sharedSignals);
+    static QList<CPUSignal> mysignals;
     static int compileAsm();
     friend class PreDebugController;
 
@@ -37,7 +37,6 @@ private:
     inline static int extractPC(QByteArray& cpuResponse);
 
     inline static int setPC(FileType fileType, int PC);
-    static QList<CPUSignal> mysignals;
 };
 
 #endif // DEBUGCONTROLLER_H
