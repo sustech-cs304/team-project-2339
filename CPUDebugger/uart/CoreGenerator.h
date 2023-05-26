@@ -11,11 +11,11 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 #include <QRegularExpression>
-#include <CPUSignal.h>
+#include <model/CPUSignal.h>
 
 #define OPCODE_WIDTH 8
 
-bool generateCore(QString topPath,
+bool generateCore(QString topFilePath,
                   QString outputDirPath,
                   const QList<CPUSignal> &selectedSignals);
 

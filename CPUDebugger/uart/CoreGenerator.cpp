@@ -4,8 +4,8 @@
 
 #include "CoreGenerator.h"
 
-const char *inputFormat    = "input      [%d:0] signal_%d,\n";
-const char *inputIndent    = "\tinput      [%d:0] signal_%d,\n";
+const char *inputFormat    = "input      [0:%d] signal_%d,\n";
+const char *inputIndent    = "\tinput      [0:%d] signal_%d,\n";
 const char *signalFormat   = "signal_%d,\n\t                                                  ";
 const char *moduleFormat   = "\t\t.signal_%-16d(%s),\n";
 const char *moduleSection  = "debug_unit(\n"
@@ -128,11 +128,11 @@ QString insertModule(const QList<CPUSignal> &selectedSignals) {
 /**
  * Generates
  */
-bool generateCore(QString topPath,
+bool generateCore(QString topFilePath,
                   QString outputDirPath,
                   const QList<CPUSignal> &selectedSignals) {
-    QFile topFile(topPath);
-    QDir outputDir(outputDirPath);
+    QFile topFile(topFilePath);
+    QDir  outputDir(outputDirPath);
     if (!topFile.open(QIODevice::ReadWrite)) {
         qDebug("Top file cannot open");
         return false;
@@ -162,8 +162,6 @@ bool generateCore(QString topPath,
             ++iterator;
         }
         out << line << "\n";
-
-//        qDebug() << line;
     }
     coreTemplate.close();
     outputFile.close();
@@ -185,21 +183,17 @@ bool generateCore(QString topPath,
 
 //int main() {
 //    QList<CPUSignal> list{
-//            CPUSignal{"instruction_1", 32, 32, QBitArray(), false},
-//            CPUSignal{"another_instruction", 32, 32, QBitArray(), false}
+//            CPUSignal{"instruction_1", 0, 31},
+//            CPUSignal{"another_instruction", 0, 31}
 //    };
 ////    qDebug("%s", insertInput(list).toLocal8Bit().constData());
 ////    qDebug("%s", insertBytes(list).toLocal8Bit().constData());
 ////    qDebug("%s", insertWidth(list).toLocal8Bit().constData());
 ////    qDebug("%s", insertSignals(list).toLocal8Bit().constData());
 //
-//    QFile top(QDir::currentPath().append("/top.v"));
-//    QDir  output(QDir::currentPath());
+//    generateCore(QDir::currentPath().append("/top.v"),
+//                 QDir::currentPath(),
+//                 list);
 //
-//    top.open(QIODevice::ReadWrite | QIODevice::Text);
-//
-//    generateCore(top, output, list);
-//
-//    top.close();
 //    return 0;
 //}

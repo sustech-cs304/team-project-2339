@@ -90,8 +90,10 @@ std::optional<QByteArray> DebugController::sendPrograme()
     DebugStore::setPC_Bin(binPC);
     qDebug() << cpuResponse;
 
-    uartCommunicator.sendResume(tmpResumeResponse, 0);
+    uartCommunicator.sendResume(cpuResponse, 0);
     QThread::sleep(1);
+//    uartCommunicator.sendPause();
+    uartCommunicator.sendResume(cpuResponse, 0);
     return cpuResponse;
 }
 
