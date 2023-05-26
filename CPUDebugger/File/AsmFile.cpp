@@ -90,6 +90,7 @@ void AsmFile::parseAsm(QString asmString) {
     int opType;
 
     do {
+//        qDebug() << *instruction;
         opType = getOpType(*instruction);
 
         if (opType == N_Type) {
