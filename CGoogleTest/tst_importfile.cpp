@@ -52,8 +52,13 @@ TEST_F(CompilerTest, ExportSignals) {
     FileController *c = new FileController();
     QString url = QString::fromStdString("file:///"+dirPath.toStdString());
     c->import(url);
-    QList<QString> ss = c->getSignals();
-    ASSERT_GE(ss.size(), 0);
+    QList<CPUSignal> sigs = c->getSignalList();
+    for (const CPUSignal& sig: sigs) {
+        qDebug() << "Signal: " << sig.name << sig.lBound << " " << sig.rBound << " " << sig.rawWidth << " " << sig.width;
+    }
+//    QList<QString> ss = c->getStringSignals();
+//    qDebug() << ss;
+//    ASSERT_GE(ss.size(), 0);
     ASSERT_EQ(c->getSvgPath(), QUrl::fromLocalFile(QString(QDir::tempPath()+"/tmp/show.svg")).url());
     delete c;
 }

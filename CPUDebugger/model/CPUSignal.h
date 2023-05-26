@@ -23,7 +23,7 @@ class CPUSignal {
 public:
     CPUSignal(QString name, int lBound, int rBound) : name(name), lBound(lBound), rBound(rBound) {
         rawWidth = rBound - lBound + 1;
-        width    = (rawWidth + 7) & (!7);
+        width    = (rawWidth + 7) & (~7);
     }
 
     static CPUSignal createInstance(verilog::NetConcat &net) {
