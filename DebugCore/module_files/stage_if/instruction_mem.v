@@ -32,7 +32,7 @@ module instruction_mem (
     input      pc_reset,                                // from hazard_unit (reset pc when UART is completed)
     input      [`HAZD_CTL_WIDTH - 1:0] hazard_control,  // from hazard_unit (specifies the next state for if stage)
 
-    output reg if_no_op,                                // for if_id_reg (stop id operations)
+    output     if_no_op,                                // for if_id_reg (stop id operations)
 
     output reg [`ISA_WIDTH - 1:0] pc,                   // for (1) hazard_unit (to detect UART hazard)
                                                         //     (2) if_id_reg (jal store into 31st register)
@@ -42,6 +42,8 @@ module instruction_mem (
     );
 
     wire uart_instruction_write_enable = uart_write_enable & ~uart_addr[`ROM_DEPTH];
+
+    assign if_no_op = (hazard_control == `HAZD_CTL_NO_OP);
 
     ROM rom(
         .ena    (uart_instruction_write_enable | ~if_no_op), // disabled unpon no_op
@@ -65,24 +67,18 @@ module instruction_mem (
     
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
-            {
-                if_no_op,
-                pc
-            }            <= 0;
+            pc <= 0;
         end else case (hazard_control)
             `HAZD_CTL_NO_OP: begin
-                if_no_op <= 1'b1;
-                
                 if (pc_offset | pc_overload | pc_reset) 
                     pc <= pc_next;
                 else
                     pc <= pc; // prevent auto latches
             end
             `HAZD_CTL_RETRY: 
-                if_no_op <= if_no_op;
+                pc       <= pc;
             /* this is the `HAZD_CTL_NORMAL state */
             default        : begin
-                if_no_op <= 1'b0;
                 pc       <= pc_next;
             end
         endcase
