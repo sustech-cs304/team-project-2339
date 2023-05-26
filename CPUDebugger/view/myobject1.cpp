@@ -359,7 +359,7 @@ void MyObject1::sendResume(){
     binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
     m_myList42.clear();
     m_myList42.append(binaryString);
-    m_value1=lineNum+1;
+    m_value1=lineNum;
 }
 
 void MyObject1::sendPause(){
@@ -368,12 +368,18 @@ void MyObject1::sendPause(){
 
 void MyObject1::sendBreakPoint()
 {
-    if(DebugController::sendPrograme()== nullptr){
+    std::optional<QByteArray> cpuResponse = DebugController::sendPrograme();
+    if(cpuResponse == nullptr){
         result42=false;
     }else {
         result42=true;
     }
-    sendStep();
+    int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
+             + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
+            + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
+            + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
+    int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
+    m_value1=lineNum;
 }
 
 void MyObject1::sendStep(){
@@ -390,7 +396,7 @@ void MyObject1::sendStep(){
     binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
     m_myList42.clear();
     m_myList42.append(binaryString);
-    m_value1=lineNum+1;
+    m_value1=lineNum;
 }
 
 void MyObject1::detect(){
