@@ -29,6 +29,7 @@ void PreDebugController::clear()
 {
     PreDebugStore::file = nullptr;
     PreDebugStore::asmFile = nullptr;
+    PreDebugStore::breakPoints.clear();
 }
 
 void PreDebugController::setBreakPoint(int lineIdx)
