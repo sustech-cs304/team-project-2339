@@ -275,17 +275,30 @@ void MyObject1::setString22(const QString &newString22)
     emit string22Changed();
 }
 
-QString MyObject1::string31() const
+QString MyObject1::string42() const
 {
-    return m_string31;
+    return m_string42;
 }
 
-void MyObject1::setString31(const QString &newString31)
+void MyObject1::setString42(const QString &newString42)
 {
-    if (m_string31 == newString31)
+    if (m_string42 == newString42)
         return;
-    m_string31 = newString31;
-    emit string31Changed();
+    m_string42 = newString42;
+    emit string42Changed();
+}
+
+int MyObject1::value42() const
+{
+    return m_value42;
+}
+
+void MyObject1::setValue42(int newValue42)
+{
+    if (m_value42 == newValue42)
+        return;
+    m_value42 = newValue42;
+    emit value42Changed();
 }
 
 void MyObject1::makeList1()
@@ -443,5 +456,9 @@ void MyObject1::closeWindow()
 
 }
 
+void MyObject1::changeAsmFile()
+{
+    m_myList41.replace(m_value42, m_string42);
+}
 
 
