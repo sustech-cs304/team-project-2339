@@ -18,7 +18,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-include(gtest_dependency.pri)
 include($$PWD/uart.pri)
 include($$PWD/parse-verilog/parse-verilog.pri)
 include($$PWD/controller/controller.pri)

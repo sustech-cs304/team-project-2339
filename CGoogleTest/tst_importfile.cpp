@@ -69,4 +69,5 @@ TEST(SignalTest, FilterSignals) {
     qDebug() << ss;
     c->filter(ss, "A");
     qDebug() << ss;
+    c->genGraph("E:/debug/basicmodules");
 }
