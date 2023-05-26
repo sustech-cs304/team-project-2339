@@ -1508,7 +1508,7 @@ Window {
                                             onClicked:  {
                                                 button1.isClicked = !button1.isClicked
                                                 button1.color = button1.isClicked ? "red" : "#555555"
-                                                myobj.value=index+1
+                                                myobj.value=index
                                                 myobj.makeBreakPoint()
                                             }
                                         }
