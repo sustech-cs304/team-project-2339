@@ -347,18 +347,19 @@ void MyObject1::makeList41()
 
 void MyObject1::sendResume(){
     std::optional<QByteArray> cpuResponse = DebugController::resume();
+    if (cpuResponse == nullptr)
+        return;
     int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
              + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
             + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
-    QString binaryString;
-    binaryString += QString::number(cpuResponse->at(4), 2).rightJustified(8, '0');
-    binaryString += QString::number(cpuResponse->at(5), 2).rightJustified(8, '0');
-    binaryString += QString::number(cpuResponse->at(6), 2).rightJustified(8, '0');
-    binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
+    QString hexString;
+        for (int i = 7; i >= 4; i--) {
+            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(i)), 2, 16, QChar('0'));
+        }
     m_myList42.clear();
-    m_myList42.append(binaryString);
+    m_myList42.append(hexString);
     m_value1=lineNum;
 }
 
@@ -384,18 +385,19 @@ void MyObject1::sendBreakPoint()
 
 void MyObject1::sendStep(){
     std::optional<QByteArray> cpuResponse = DebugController::step();
+    if (cpuResponse == nullptr)
+        return;
     int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
              + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
             + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
-    QString binaryString;
-    binaryString += QString::number(cpuResponse->at(4), 2).rightJustified(8, '0');
-    binaryString += QString::number(cpuResponse->at(5), 2).rightJustified(8, '0');
-    binaryString += QString::number(cpuResponse->at(6), 2).rightJustified(8, '0');
-    binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
+    QString hexString;
+        for (int i = 7; i >= 4; i--) {
+            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(i)), 2, 16, QChar('0'));
+        }
     m_myList42.clear();
-    m_myList42.append(binaryString);
+    m_myList42.append(hexString);
     m_value1=lineNum;
 }
 
