@@ -53,7 +53,7 @@ module signal_mux (
                                     2'b00
                                 } : id_reg_1; // for J type instruction address extension 
 
-    assign mux_operand_1 = jal_instruction    ? id_pc                 : (
+    assign mux_operand_1 = jal_instruction    ? 0 /* id_pc */                : (
                            shift_instruction  ? {
                                                     {(`ISA_WIDTH - `SHIFT_AMOUNT_WIDTH){1'b0}}, 
                                                     shift_amount
