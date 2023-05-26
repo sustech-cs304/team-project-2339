@@ -48,13 +48,13 @@ public:
         }
     }
 
-    QString toString() {
+    QString toString() const {
         if (lBound == -1 && rBound == -1) {
             return name;
         } else if (lBound == rBound) {
             return name + "[" + QString::number(lBound) + "]";
         } else {
-            return name + "[" + QString::number(lBound) + ", " + QString::number(rBound) + "]";
+            return name + "[" + QString::number(rBound) + ":" + QString::number(lBound) + "]";
         }
     }
 
