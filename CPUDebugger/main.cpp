@@ -4,7 +4,6 @@
 #include <QScreen>
 #include "view/myobject1.h"
 #include <QImageReader>
-#include "worker1.h"
 
 QList<CPUSignal> mysignals;
 
@@ -17,8 +16,6 @@ int main(int argc, char *argv[]) {
     QQmlContext *context = engine.rootContext();
     QImageReader::setAllocationLimit(0);
     qmlRegisterType<MyObject1>("MyObj", 1, 0, "MyObject1");
-    Worker1 worker1;
-    engine.rootContext()->setContextProperty("theworker1", &worker1);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
