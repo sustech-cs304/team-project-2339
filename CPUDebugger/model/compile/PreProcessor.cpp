@@ -145,6 +145,8 @@ void PreProcessor::filterEquationCompution(QList<Token> &tokens)
                 tokens.remove(p);
             } else {
                 qDebug() << "unexpected token " << t.s;
+                transform = false;
+                ts.clear();
             }
         } else {
             if (ts.size() == 1) {

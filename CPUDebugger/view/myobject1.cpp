@@ -275,19 +275,6 @@ void MyObject1::setString22(const QString &newString22)
     emit string22Changed();
 }
 
-QString MyObject1::string31() const
-{
-    return m_string31;
-}
-
-void MyObject1::setString31(const QString &newString31)
-{
-    if (m_string31 == newString31)
-        return;
-    m_string31 = newString31;
-    emit string31Changed();
-}
-
 void MyObject1::makeList1()
 {
 //    m_myList1=fileContrl->getSignalList();

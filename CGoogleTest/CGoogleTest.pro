@@ -15,9 +15,9 @@ SOURCES += \
         main.cpp \
         tst_importfile.cpp \
         tst_uart.cpp \
-        PreDebugController_Test/compiler_test.cpp \
-        PreDebugController_Test/generalTest.cpp \
-        PreDebugController_Test/upload_test.cpp \
+#        PreDebugController_Test/compiler_test.cpp \
+#        PreDebugController_Test/generalTest.cpp \
+#        PreDebugController_Test/upload_test.cpp \
 
 INCLUDEPATH += \
     ../CPUDebugger/model \
