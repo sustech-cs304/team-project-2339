@@ -20,7 +20,6 @@ public:
     static int detect();
     static QByteArray getBin();
     static std::optional<QByteArray> sendPrograme();
-    static QList<CPUSignal> mysignals;
     static int compileAsm();
     friend class PreDebugController;
 
