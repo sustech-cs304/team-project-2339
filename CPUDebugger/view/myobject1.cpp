@@ -437,6 +437,7 @@ void MyObject1::confirm1()
 
 void MyObject1::confirm2()
 {
+    DebugController::setSignals(fileContrl->getSignalList(m_myList2));
 }
 
 /**
