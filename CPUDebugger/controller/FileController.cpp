@@ -54,7 +54,21 @@ QList<CPUSignal> FileController::getSignalList()
     return signalList;
 }
 
-QList<QString> FileController::getSignals()
+QList<CPUSignal> FileController::getSignalList(QList<QString> &ss)
+{
+    if (signalList.size() == 0) {
+        signalList = p.genSignals(tmpTopPath);
+    }
+    QList<CPUSignal> sigs;
+    for (const QString &s: ss) {
+        CPUSignal sig("NULL", -1, -1);
+        if (searchSignal(s, sig))
+            sigs.append(sig);
+    }
+    return sigs;
+}
+
+QList<QString> FileController::getStringSignals()
 {
     if (signalList.size() == 0) {
         signalList = p.genSignals(tmpTopPath);
