@@ -345,6 +345,8 @@ void MyObject1::makeList41()
 
 }
 
+extern QList<CPUSignal> mysignals;
+
 void MyObject1::sendResume(){
     std::optional<QByteArray> cpuResponse = DebugController::resume();
     if (cpuResponse == nullptr)
@@ -357,13 +359,13 @@ void MyObject1::sendResume(){
 
     m_myList42.clear();
     int start_idx = 3;
-    for (int i = 0 ; i < DebugController::mysignals.length() ; i ++){
+    for (int i = 0 ; i < mysignals.length() ; i ++){
         QString hexString;
-        for (int j = start_idx + DebugController::mysignals.at(i).width; j > start_idx; i--) {
+        for (int j = start_idx + mysignals.at(i).width; j > start_idx; i--) {
             hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
         }
         m_myList42.append(hexString);
-        start_idx += DebugController::mysignals.at(i).width;
+        start_idx += mysignals.at(i).width;
     }
     m_value1=lineNum;
 }
@@ -400,13 +402,13 @@ void MyObject1::sendStep(){
 
     m_myList42.clear();
     int start_idx = 3;
-    for (int i = 0 ; i < DebugController::mysignals.length() ; i ++){
+    for (int i = 0 ; i < mysignals.length() ; i ++){
         QString hexString;
-        for (int j = start_idx + DebugController::mysignals.at(i).width; j > start_idx; i--) {
+        for (int j = start_idx + mysignals.at(i).width; j > start_idx; i--) {
             hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
         }
         m_myList42.append(hexString);
-        start_idx += DebugController::mysignals.at(i).width;
+        start_idx += mysignals.at(i).width;
     }
     m_value1=lineNum;
 }
