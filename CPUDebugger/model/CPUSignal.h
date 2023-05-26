@@ -2,7 +2,7 @@
 #define CPUSIGNAL_H
 
 #include "qdebug.h"
-#include "CPUDebugger/parse-verilog/verilog_data.hpp"
+#include "parse-verilog/verilog_data.hpp"
 #include <QString>
 #include <QBitArray>
 
