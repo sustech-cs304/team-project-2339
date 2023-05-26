@@ -361,7 +361,7 @@ void MyObject1::sendResume(){
     int start_idx = 3;
     for (int i = 0 ; i < mysignals.length() ; i ++){
         QString hexString;
-        for (int j = start_idx + mysignals.at(i).width; j > start_idx; i--) {
+        for (int j = start_idx + mysignals.at(i).width; j > start_idx; j--) {
             hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
         }
         m_myList42.append(hexString);
@@ -404,7 +404,7 @@ void MyObject1::sendStep(){
     int start_idx = 3;
     for (int i = 0 ; i < mysignals.length() ; i ++){
         QString hexString;
-        for (int j = start_idx + mysignals.at(i).width; j > start_idx; i--) {
+        for (int j = start_idx + mysignals.at(i).width; j > start_idx; j--) {
             hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
         }
         m_myList42.append(hexString);
