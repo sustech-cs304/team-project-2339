@@ -1,5 +1,7 @@
 #include "myobject1.h"
 
+extern QList<CPUSignal> mysignals;
+
 MyObject1::MyObject1(QObject *parent)
     : QObject{parent}
 {
@@ -447,7 +449,7 @@ void MyObject1::confirm1()
 
 void MyObject1::confirm2()
 {
-    DebugController::setSignals(fileContrl->getSignalList(m_myList2));
+    mysignals = fileContrl->getSignalList(m_myList2);
 }
 
 /**
