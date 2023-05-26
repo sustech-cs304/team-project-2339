@@ -72,3 +72,13 @@ CMakeLists.txt.user*
 *.dll
 *.exe
 
+*.idx
+*.qrc
+
+*.xml
+
+.vscode/*
+*.stash
+.DS_Store
+*.json
+*.qmltypes

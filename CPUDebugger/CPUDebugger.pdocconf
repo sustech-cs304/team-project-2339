@@ -1,0 +1,2 @@
+outputdir = mydoc
+sourcedirs = myproject/src

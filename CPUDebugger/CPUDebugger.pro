@@ -1,35 +1,42 @@
 QT += quick
+QT += quickcontrols2
+QT += gui-private
+QT += serialport
 
-SOURCES += \
-        main.cpp
-
-resources.files = main.qml 
-resources.prefix = /$${TARGET}
-RESOURCES += resources
+CONFIG += qmltypes
+QML_IMPORT_NAME = MyObj
+QML_IMPORT_MAJOR_VERSION = 1
+QMAKE_CXXFLAGS += -std=c++17
 
 TRANSLATIONS += \
-    CPUDebugger_zh_CN.ts
+        CPUDebugger_zh_CN.ts
 CONFIG += lrelease
 CONFIG += embed_translations
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
-
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-QML_DESIGNER_IMPORT_PATH =
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+include($$PWD/uart.pri)
+include($$PWD/parse-verilog/parse-verilog.pri)
+include($$PWD/controller/controller.pri)
+include($$PWD/view/view.pri)
+include($$PWD/model/model.pri)
+include($$PWD/Debugger.pri)
+
+SOURCES += \
+    main.cpp \
+
 INCLUDEPATH += \
     $$PWD/controller \
     $$PWD/view \
-    $$PWD/uart \
-    $$PWD/model
+    $$PWD/model \
+    $$PWD/parse-verilog
 
-include($$PWD/controller/controller.pri)
-include($$PWD/view/view.pri)
-include($$PWD/uart/uart.pri)
-include($$PWD/model/model.pri)
+DISTFILES += \
+    $$PWD/CodeDetails.md \
+    CPUDebugger.pdocconf
+
+
+
