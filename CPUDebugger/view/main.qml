@@ -1545,14 +1545,14 @@ Window {
                                         id:rect1
                                         height: 20
                                         width: parent.width*6
-                                        color: index+1 === myobj.value1 ? "lightblue":"lightgray"
+                                        color: index === myobj.value1 ? "lightblue":"lightgray"
                                         TextArea {
                                             id: textArea2
                                             text: modelData
                                             anchors.verticalCenter: parent.verticalCenter
                                             wrapMode: TextArea.WrapAnywhere
                                             background: Rectangle {
-                                                    color: "lightgrey"
+                                                    color: index === myobj.value1 ? "lightblue":"lightgray"
                                                 }
 
                                             onTextChanged: {
