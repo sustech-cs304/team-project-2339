@@ -363,6 +363,7 @@ void MyObject1::sendResume(){
             hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
         }
         m_myList42.append(hexString);
+        start_idx += DebugController::mysignals.at(i).width;
     }
     m_value1=lineNum;
 }
@@ -405,6 +406,7 @@ void MyObject1::sendStep(){
             hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
         }
         m_myList42.append(hexString);
+        start_idx += DebugController::mysignals.at(i).width;
     }
     m_value1=lineNum;
 }
