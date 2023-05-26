@@ -56,7 +56,7 @@ module alu (
         case (alu_opcode)
             `EXE_SLL , `EXE_SLLV : alu_output = val2 << val1;
             `EXE_SRL , `EXE_SRLV : alu_output = val2 >> val1;
-            `EXE_SRA , `EXE_SRAV : alu_output = $signed(val2) >>> val1;
+            `EXE_SRA , `EXE_SRAV : alu_output =   $signed(val2) >>> val1;
             `EXE_ADD , `EXE_ADDI : alu_output =   $signed(val1) +   $signed(val2);
             `EXE_ADDU, `EXE_ADDIU: alu_output = $unsigned(val1) + $unsigned(val2);
             `EXE_SUB             : alu_output =   $signed(val1) -   $signed(val2);
