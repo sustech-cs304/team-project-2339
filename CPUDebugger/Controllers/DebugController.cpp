@@ -92,6 +92,7 @@ std::optional<QByteArray> DebugController::sendPrograme()
 
     uartCommunicator.sendResume(tmpResumeResponse, 0);
     QThread::sleep(1);
+    uartCommunicator.sendPause();
     return cpuResponse;
 }
 

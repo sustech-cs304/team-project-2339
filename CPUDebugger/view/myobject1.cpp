@@ -359,7 +359,7 @@ void MyObject1::sendResume(){
     binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
     m_myList42.clear();
     m_myList42.append(binaryString);
-    m_value1=lineNum;
+    m_value1=lineNum+1;
 }
 
 void MyObject1::sendPause(){
@@ -390,7 +390,7 @@ void MyObject1::sendStep(){
     binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
     m_myList42.clear();
     m_myList42.append(binaryString);
-    m_value1=lineNum;
+    m_value1=lineNum+1;
 }
 
 void MyObject1::detect(){
