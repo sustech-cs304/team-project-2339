@@ -144,6 +144,6 @@ int DebugController::setPC(FileType fileType, int PC)
     return 0;
 }
 
-void DebugController::setSignals(QList<CPUSignal>* sharedSignals){
+void DebugController::setSignals(QList<CPUSignal> sharedSignals){
     DebugController::mysignals = sharedSignals;
 }

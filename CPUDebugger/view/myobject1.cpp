@@ -392,10 +392,12 @@ void MyObject1::sendStep(){
             + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
+
+
     QString hexString;
-        for (int i = 7; i >= 4; i--) {
-            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(i)), 2, 16, QChar('0'));
-        }
+    for (int i = 7; i >= 4; i--) {
+        hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(i)), 2, 16, QChar('0'));
+    }
     m_myList42.clear();
     m_myList42.append(hexString);
     m_value1=lineNum;
