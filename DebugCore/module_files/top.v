@@ -587,13 +587,14 @@ module top (
         
         .pc_next                (instruction_mem_pc_next),
         .pc                     (instruction_mem_pc),
+        .wb_result              (reg_write_select_reg_write_data),
         .instruction            (instruction_mem_instruction),
 
         .uart_addr              (debug_unit_write_address),
         .uart_data              (debug_unit_write_data),
         .uart_write_enable      (debug_unit_write_enable),
 
-        .rx_light                (rx_light),
+        .rx_light               (rx_light),
 
         .debug_pause            (debug_unit_debug_pause),
         .uart_complete          (debug_unit_uart_complete)

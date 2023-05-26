@@ -12,6 +12,7 @@ module debug_unit (
 
     //// [TODO] demo only !!! ////
     input      [`ISA_WIDTH - 1:0] instruction,  // from instruction_mem
+    input      [`ISA_WIDTH - 1:0] wb_result,    // from reg_write_select
 
     output reg [`RAM_DEPTH:0] uart_addr,        // 
     output reg [`ISA_WIDTH - 1:0] uart_data,    // 
@@ -81,6 +82,7 @@ module debug_unit (
 
     reg  [SIGNALS_BYTE_CNT_WIDTH - 1:0] signals_byte_idx;
     wire [SIGNALS_WIDTH - 1:0]          signals = {
+                                                      wb_result,
                                                       instruction,
                                                       pc,
                                                       OP_SIGNAL
