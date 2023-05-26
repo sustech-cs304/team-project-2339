@@ -1139,27 +1139,27 @@ Window {
 
             Rectangle{
                 anchors.fill: parent
-
+        
                 Rectangle{
                     width: parent.width/8*7
                     height: parent.height/8*7
                     anchors.centerIn: parent
-
+        
                     Grid{
                         rows: 1
                         columns: 2
                         spacing: 0
                         anchors.fill: parent
-
+        
                         Rectangle {
                             id:left3
                             height: parent.height
                             width: parent.width/4*3
-
+        
                             Rectangle {
                                 height: parent.height/10
                                 width: parent.width
-
+        
                                 Image {
                                     id:image31
                                     x:10
@@ -1169,7 +1169,7 @@ Window {
                                     height: width
                                     fillMode: Image.PreserveAspectFit
                                 }
-
+        
                                 Text {
                                     id:text31
                                     x:20+image31.width
@@ -1179,7 +1179,7 @@ Window {
                                     font.pixelSize: 20 * root.height/480
                                     font.bold: true
                                 }
-
+        
                                 Text {
                                     id:text32
                                     anchors.top: text31.bottom
@@ -1190,21 +1190,21 @@ Window {
                                     font.bold: false
                                     wrapMode: Text.WordWrap
                                 }
-
+        
                                 Rectangle {
                                     id: piece31
                                     anchors.top: text32.bottom
                                     height: 20 * root.height/480
                                     anchors.right: parent.right
                                 }
-
+        
                                 Rectangle{
                                     id: folderChoose
                                     width: text32.width
                                     height: button31.height
                                     anchors.left: text31.left
                                     anchors.top: piece31.bottom
-
+        
                                     Rectangle {
                                         id:rect31
                                         width: parent.width-button31.width+10
@@ -1214,13 +1214,13 @@ Window {
                                         border.width: 1
                                         border.color: "#DFE0E4"
                                         radius: 5
-
+        
                                         Flickable {
                                             anchors.fill: parent
                                             contentWidth: inputBoxInput.width
                                             clip: true
                                             interactive: true
-
+        
                                         TextInput {
                                             id: inputBoxInput
                                             text:folderDialog.folder
@@ -1238,14 +1238,14 @@ Window {
                                         }
                                         }
                                     }
-
+        
                                     Button{
                                         id:button35
                                         x:rect31.width+10
                                         height: button31.height
                                         width: button31.width/2
                                         anchors.left: rect31.right
-
+        
                                         contentItem: Text {
                                             text: qsTr("Path")
                                             color: "white"
@@ -1253,12 +1253,12 @@ Window {
                                             horizontalAlignment: Text.AlignHCenter
                                             verticalAlignment: Text.AlignVCenter
                                         }
-
+        
                                         background: Rectangle {
                                             color: "#AA0055ff"
                                             radius: height/5
                                         }
-
+        
                                         MouseArea{
                                             anchors.fill: parent
                                             onClicked: {
@@ -1267,21 +1267,21 @@ Window {
                                             }
                                         }
                                     }
-
+        
                                 }
-
+        
                                 FolderDialog {
                                     id: folderDialog
                                     folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0] //默认打开Pictures文件夹
                                 }
-
+        
                                 Rectangle {
                                     id: piece32
                                     anchors.top: folderChoose.bottom
                                     height: 20 * root.height/480
                                     anchors.right: parent.right
                                 }
-
+        
                                 Image {
                                     id:image32
                                     anchors.top: piece32.bottom
@@ -1291,7 +1291,7 @@ Window {
                                     height: width
                                     fillMode: Image.PreserveAspectFit
                                 }
-
+        
                                 Text {
                                     id:text33
                                     anchors.top: piece32.bottom
@@ -1301,7 +1301,7 @@ Window {
                                     font.pixelSize: 20 * root.height/480
                                     font.bold: true
                                 }
-
+        
                                 Text {
                                     id:text34
                                     anchors.top: text33.bottom
@@ -1312,25 +1312,25 @@ Window {
                                     font.bold: false
                                     wrapMode: Text.WordWrap
                                 }
-
+        
                             }
-
+        
                         }
-
+        
                         Rectangle {
                             id:right3
                             height: parent.height
                             width: parent.width/4
-
+        
                             Button {
                                 id:button31
                                 width:  parent.width/2+3
                                 height: width/3+2
                                 y:20 * root.height/480+image31.height+text32.height+piece31.height
-
+        
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.bottom: folderChoose.bottom
-
+        
                                 contentItem: Text {
                                     text: qsTr("AutoExport")
                                     horizontalAlignment: Text.AlignHCenter
@@ -1338,54 +1338,54 @@ Window {
                                     color: "white"
                                     font.pixelSize: 13 * root.height/480
                                 }
-
+        
                                 background: Rectangle {
                                     color: "#AA0077ff"
                                     radius: height/5
                                 }
-
+        
                                 onClicked: {
                                     console.log("Export to")
                                     myobj.string31=folderDialog.folder
                                     myobj.exportTo()
                                 }
                             }
-
-                            Button {
-                                id:button32
-                                width:  parent.width/2+4
-                                height: width/3+2
-                                y:button31.y+60 * root.height/480
-
-                                anchors.horizontalCenter: parent.horizontalCenter
-
-                                contentItem: Text {
-                                    text: qsTr("Complete")
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                    color: "white"
-                                    font.pixelSize: 13 * root.height/480
-                                }
-
-                                background: Rectangle {
-                                    color: "#AA0099ff"
-                                    radius: height/5
-                                }
-
-                                onClicked: {
-                                    console.log("Complete")
-                                    myobj.complete()
-                                }
-                            }
-
+        
+        //                    Button {
+        //                        id:button32
+        //                        width:  parent.width/2+4
+        //                        height: width/3+2
+        //                        y:button31.y+60 * root.height/480
+        
+        //                        anchors.horizontalCenter: parent.horizontalCenter
+        
+        //                        contentItem: Text {
+        //                            text: qsTr("Complete")
+        //                            horizontalAlignment: Text.AlignHCenter
+        //                            verticalAlignment: Text.AlignVCenter
+        //                            color: "white"
+        //                            font.pixelSize: 13 * root.height/480
+        //                        }
+        
+        //                        background: Rectangle {
+        //                            color: "#AA0099ff"
+        //                            radius: height/5
+        //                        }
+        
+        //                        onClicked: {
+        //                            console.log("Complete")
+        //                            myobj.complete()
+        //                        }
+        //                    }
+        
                             Button {
                                 id:button33
                                 width:  parent.width/2+4
                                 height: width/3+2
-                                y:button32.y+60 * root.height/480
-
+                                y:button31.y+60 * root.height/480
+        
                                 anchors.horizontalCenter: parent.horizontalCenter
-
+        
                                 contentItem: Text {
                                     text: qsTr("Detect")
                                     horizontalAlignment: Text.AlignHCenter
@@ -1393,30 +1393,30 @@ Window {
                                     color: "white"
                                     font.pixelSize: 13 * root.height/480
                                 }
-
+        
                                 background: Rectangle {
                                     color: "#AA00bbff"
                                     radius: height/5
                                 }
-
+        
                                 onClicked: {
                                     console.log("detect")
                                     myobj.detect()
                                     button34.isClicked=myobj.detectResult
                                 }
                             }
-
+        
                             Button {
                                 id:button34
                                 width:  parent.width/2+4
                                 height: width/3+2
-                                y:button33.y+60 * root.height/480
+                                y:button33.y+120 * root.height/480
                                 enabled: button34.isClicked
-
+        
                                 property bool isClicked: false
-
+        
                                 anchors.horizontalCenter: parent.horizontalCenter
-
+        
                                 contentItem: Text {
                                     text: qsTr("Confirm")
                                     horizontalAlignment: Text.AlignHCenter
@@ -1424,12 +1424,12 @@ Window {
                                     color: "white"
                                     font.pixelSize: 13 * root.height/480
                                 }
-
+        
                                 background: Rectangle {
                                     color: button34.isClicked? "orange":"lightgrey"
                                     radius: height/5
                                 }
-
+        
                                 onClicked: {
                                     console.log("Confirm3")
                                     btn4.enabled=true
@@ -1551,8 +1551,10 @@ Window {
                                             text: modelData
                                             anchors.verticalCenter: parent.verticalCenter
                                             wrapMode: TextArea.WrapAnywhere
+                                            color: "black"
+
                                             background: Rectangle {
-                                                    color: index === myobj.value1 ? "lightblue":"lightgray"
+                                                    color:index === myobj.value1 ? "lightblue":"lightgray"
                                                 }
 
                                             onTextChanged: {

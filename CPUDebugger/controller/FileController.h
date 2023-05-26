@@ -17,7 +17,8 @@ public:
     ~FileController();
     void import(QString& absolutePath);
     QList<CPUSignal> getSignalList();
-    QList<QString> getSignals();
+    QList<CPUSignal> getSignalList(QList<QString> &ss);
+    QList<QString> getStringSignals();
     QString getSvgPath();
     void genGraph(QString path);
     void genGraph();
