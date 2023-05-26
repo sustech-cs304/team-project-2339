@@ -79,7 +79,9 @@ CMakeLists.txt.user*
 
 .vscode/*
 *.stash
-.DS_Store
 *.json
 *.qmltypes
 *.zip
+
+# clion build directory
+/cmake-build-debug

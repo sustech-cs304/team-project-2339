@@ -125,7 +125,9 @@ void AsmFile::parseAsm(QString asmString) {
     // pad the .text section with 0s for a total of 64KB (14-bit address width)
     bin = bin.append(TEXT_MEM_SIZE - bin.length(), '\x00').append(data);
 
-//    qDebug() << bin.toHex();
+    for (auto i = asmToPCMap.begin(); i != asmToPCMap.end(); ++i) {
+        qDebug("line %d mapped to PC %d", i.key(), i.value());
+    }
 }
 
 void printByte(char byte) {

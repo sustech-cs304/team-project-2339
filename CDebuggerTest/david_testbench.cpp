@@ -14,32 +14,30 @@ Q_OBJECT
 private slots:
 
     void parseASM();
+
     void generate();
 };
 
 void Testbench::parseASM() {
     QFile   top(QDir::currentPath().append("/test.asm"));
     AsmFile asmFile(top);
+
+    asmFile.updateAsmFile("");
 }
 
 void Testbench::generate() {
     QList<CPUSignal> list{
-            CPUSignal{"instruction_1", 32, 32, QBitArray(), false},
-            CPUSignal{"another_instruction", 32, 32, QBitArray(), false}
+            CPUSignal{"instruction_1", 0, 31},
+            CPUSignal{"another_instruction", 0, 31}
     };
 //    qDebug("%s", insertInput(list).toLocal8Bit().constData());
 //    qDebug("%s", insertBytes(list).toLocal8Bit().constData());
 //    qDebug("%s", insertWidth(list).toLocal8Bit().constData());
 //    qDebug("%s", insertSignals(list).toLocal8Bit().constData());
 
-    QFile top(QDir::currentPath().append("/top.v"));
-    QDir  output(QDir::currentPath());
-
-    top.open(QIODevice::ReadWrite | QIODevice::Text);
-
-    generateCore(top, output, list);
-
-    top.close();
+    generateCore(QDir::currentPath().append("/top.v"),
+                 QDir::currentPath(),
+                 list);
 }
 
 //class Testbench : public QObject {

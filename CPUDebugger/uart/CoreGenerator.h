@@ -11,7 +11,7 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 #include <QRegularExpression>
-#include <CPUSignal.h>
+#include "CPUDebugger/model/CPUSignal.h"
 
 #define OPCODE_WIDTH 8
 

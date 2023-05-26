@@ -1,7 +1,7 @@
 #ifndef CPUSIGNAL_H
 #define CPUSIGNAL_H
 #include "qdebug.h"
-#include "verilog_data.hpp"
+#include "CPUDebugger/parse-verilog/verilog_data.hpp"
 #include <QString>
 #include <QBitArray>
 typedef int SType;
