@@ -141,7 +141,7 @@ void FileController::filter(QList<QString> &ss, QString filter)
 bool FileController::searchSignal(QString signalName, CPUSignal &cpusignal)
 {
     for (const CPUSignal& sig: signalList) {
-        if (sig.name.compare(signalName) == 0) {
+        if (sig.toString().compare(signalName) == 0) {
             cpusignal = sig;
             return true;
         }
