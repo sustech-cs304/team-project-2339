@@ -4,6 +4,7 @@
 std::shared_ptr<QFile> PreDebugController::uploadFile(QString filePath)
 {
     std::shared_ptr<QFile> file_ptr = std::make_shared<QFile>(filePath);
+    PreDebugStore::breakPoints.clear();
     if (file_ptr == nullptr)
     {
         throw std::invalid_argument("wrong file path");
@@ -28,6 +29,7 @@ void PreDebugController::clear()
 {
     PreDebugStore::file = nullptr;
     PreDebugStore::asmFile = nullptr;
+    PreDebugStore::breakPoints.clear();
 }
 
 void PreDebugController::setBreakPoint(int lineIdx)

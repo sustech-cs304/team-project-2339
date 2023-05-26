@@ -1508,7 +1508,7 @@ Window {
                                             onClicked:  {
                                                 button1.isClicked = !button1.isClicked
                                                 button1.color = button1.isClicked ? "red" : "#555555"
-                                                myobj.value=index+1
+                                                myobj.value=index
                                                 myobj.makeBreakPoint()
                                             }
                                         }
@@ -1546,11 +1546,27 @@ Window {
                                         height: 20
                                         width: parent.width*6
                                         color: index+1 === myobj.value1 ? "lightblue":"lightgray"
-                                        Text {
-                                            id:text2
+                                        TextArea {
+                                            id: textArea2
                                             text: modelData
                                             anchors.verticalCenter: parent.verticalCenter
+                                            wrapMode: TextArea.WrapAnywhere
+                                            background: Rectangle {
+                                                    color: "lightgrey"
+                                                }
+
+                                            onTextChanged: {
+                                                myobj.string42=textArea2.text
+                                                myobj.value42=index
+                                                myobj.changeAsmFile()
+
+                                            }
                                         }
+        //                                Text {
+        //                                    id:text2
+        //                                    text: modelData
+        //                                    anchors.verticalCenter: parent.verticalCenter
+        //                                }
                                     }
                                     onContentYChanged: {
                                         listView1.contentY = contentY

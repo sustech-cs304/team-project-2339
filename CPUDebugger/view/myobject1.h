@@ -56,6 +56,8 @@ public:
 
     Q_INVOKABLE void getAsmFile(); //page4 get asm file
 
+    Q_INVOKABLE void changeAsmFile();
+
     Q_INVOKABLE void exportTo(); //page3 export to button
 
     Q_INVOKABLE void complete(); //page3 complete button
@@ -119,6 +121,12 @@ public:
     QString string22() const;
     void setString22(const QString &newString22);
 
+    QString string42() const;
+    void setString42(const QString &newString42);
+
+    int value42() const;
+    void setValue42(int newValue42);
+
 private:
     int m_value;
     int m_value1;
@@ -127,6 +135,8 @@ private:
     QString m_string31; //page3 folder address
     QString m_string32; //page3 detect result
     QString m_string41; //page4 asm file address
+    QString m_string42; //page4 change asm file
+    int m_value42;
 
     bool detectResult;
     bool result41; //page4 get asm file
@@ -180,6 +190,10 @@ private:
 
     Q_PROPERTY(QString string22 READ string22 WRITE setString22 NOTIFY string22Changed)
 
+    Q_PROPERTY(QString string42 READ string42 WRITE setString42 NOTIFY string42Changed)
+
+    Q_PROPERTY(int value42 READ value42 WRITE setValue42 NOTIFY value42Changed)
+
 signals:
 
     void valueChanged();
@@ -199,6 +213,8 @@ signals:
     void string1Changed();
     void string21Changed();
     void string22Changed();
+    void string42Changed();
+    void value42Changed();
 };
 
 
