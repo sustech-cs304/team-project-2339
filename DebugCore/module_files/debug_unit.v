@@ -367,5 +367,4 @@ module debug_unit (
                 uart_write_enable = 1'b0;
         end
     end
-
 endmodule

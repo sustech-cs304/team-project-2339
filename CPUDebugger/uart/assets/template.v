@@ -217,168 +217,148 @@ module debug_unit (
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
             // transmission
-            tx_byte            <= {1'b1, {(UART_LEN){1'b0}}, 1'b0};
-            tx_start           <= 1'b0;
-            signals_byte_idx   <= 1;
-            core_tx_state      <= CORE_TX_IDLE;
+            tx_byte            = {1'b1, {(UART_LEN){1'b0}}, 1'b0};
+            tx_start           = 1'b0;
+            signals_byte_idx   = 1;
+            core_tx_state      = CORE_TX_IDLE;
 
             // reception
             {
                 uart_data,
                 uart_byte_idx
-            }                  <= 0;
-            uart_addr          <= -1;
-            uart_write_enable  <= 1'b0;
-            breakpoint         <= 0;
-            debug_pause        <= 1'b1;
-            core_rx_state      <= CORE_RX_OPCODE;
+            }                  = 0;
+            uart_addr          = -1;
+            uart_write_enable  = 1'b0;
+            breakpoint         = 0;
+            debug_pause        = 1'b1;
+            core_rx_state      = CORE_RX_OPCODE;
         end else begin
             // transmission FSM
             case (core_tx_state)
                 CORE_TX_SIGNAL :
                     case ({tx_complete, signals_byte_idx == SIGNALS_BYTE_CNT})
                         2'b11  : begin
-                            core_tx_state        <= CORE_TX_IDLE;
+                            core_tx_state        = CORE_TX_IDLE;
 
-                            tx_start             <= 1'b0;
-                            signals_byte_idx     <= 1; // starts from 1 as the 0th byte will be sent when received opcode
+                            tx_start             = 1'b0;
+                            signals_byte_idx     = 1; // starts from 1 as the 0th byte will be sent when received opcode
                         end
                         2'b10  : begin
-                            signals_byte_idx     <= signals_byte_idx + 1;
-                            tx_byte[1+:UART_LEN] <= signals[(signals_byte_idx * UART_LEN)+:UART_LEN];
+                            tx_byte[1+:UART_LEN] = signals[(signals_byte_idx * UART_LEN)+:UART_LEN];
+                            signals_byte_idx     = signals_byte_idx + 1;
                         end
                         default:
-                            core_tx_state <= core_tx_state; // prevent auto latches
+                            core_tx_state = core_tx_state; // prevent auto latches
                     endcase
                 CORE_TX_PING   : begin
                     if (tx_complete) begin
-                        core_tx_state <= CORE_TX_IDLE;
+                        core_tx_state = CORE_TX_IDLE;
 
-                        tx_start      <= 1'b0;
+                        tx_start      = 1'b0;
                     end else
-                        core_tx_state <= core_tx_state; // prevent auto latches
+                        core_tx_state = core_tx_state; // prevent auto latches
                 end
                 default        :
                     casex ({(breakpoint_reached | (core_rx_state == CORE_RX_NEXT)) & ~debug_pause,
                             rx_complete         & (core_rx_state == CORE_RX_OPCODE)})
                         2'b1x  : begin // after reaching the breakpoint
-                            debug_pause          <= 1'b1;
-                            core_tx_state        <= CORE_TX_SIGNAL;
+                            debug_pause          = 1'b1;
+                            core_tx_state        = CORE_TX_SIGNAL;
 
-                            tx_start             <= 1'b1;
-                            tx_byte[1+:UART_LEN] <= signals[0+:UART_LEN];
+                            tx_start             = 1'b1;
+                            tx_byte[1+:UART_LEN] = signals[0+:UART_LEN];
                         end
                         2'b01  : // after receiving the opcode
                             case (rx_byte)
                                 // send data back to PC
                                 OP_PING    : begin
-                                    core_tx_state        <= CORE_TX_PING;
+                                    core_tx_state        = CORE_TX_PING;
 
-                                    tx_start             <= 1'b1;
-                                    tx_byte[1+:UART_LEN] <= OP_OK;
+                                    tx_start             = 1'b1;
+                                    tx_byte[1+:UART_LEN] = OP_OK;
                                 end
                                 OP_PAUSE   : begin
-                                    debug_pause          <= 1'b1;
-                                    core_tx_state        <= CORE_TX_SIGNAL;
+                                    debug_pause          = 1'b1;
+                                    core_tx_state        = CORE_TX_SIGNAL;
 
-                                    tx_start             <= 1'b1;
-                                    tx_byte[1+:UART_LEN] <= signals[0+:UART_LEN];
+                                    tx_start             = 1'b1;
+                                    tx_byte[1+:UART_LEN] = signals[0+:UART_LEN];
                                 end
                                 default    :
-                                    core_tx_state <= CORE_TX_IDLE;
+                                    core_tx_state = CORE_TX_IDLE;
                             endcase
                         default:
-                            core_tx_state <= core_tx_state; // prevent auto latches
+                            core_tx_state = core_tx_state; // prevent auto latches
                     endcase
             endcase
             // reception FSM
             if (rx_complete | uart_complete |   // after receiving a byte or no additional bytes to be received
                 core_rx_state == CORE_RX_NEXT)  // takes care of the next instruction
                 case (core_rx_state)
-                    CORE_RX_OPCODE  :
-                        case (rx_byte)
-                            // receive additional data
-                            OP_RESUME  : begin
-                                debug_pause   <= 1'b1;
-                                core_rx_state <= CORE_RX_PC;
-                            end
-                            OP_PROGRAM : begin
-                                debug_pause   <= 1'b1;
-                                core_rx_state <= CORE_RX_PROGRAM;
-                            end
-                            // trigger breakpoint_reached in next cycle
-                            OP_NEXT    : begin
-                                debug_pause   <= 1'b0;
-                                breakpoint    <= breakpoint + `INSTRUCTION_BYTES;
-                            end
-                            default    :
-                                core_rx_state <= core_rx_state; // prevent auto latches
-                        endcase
                     CORE_RX_PROGRAM : begin
                         if (uart_complete) begin
-                            core_rx_state      <= CORE_RX_OPCODE;
+                            core_rx_state      = CORE_RX_OPCODE;
 
-                            uart_addr          <= -1;
-                            uart_data          <= 0;
+                            uart_addr          = -1;
+                            uart_data          = 0;
 
-                            debug_pause        <= 1'b0; // enable signal sending
-                            breakpoint         <= 0;
+                            debug_pause        = 1'b0; // enable signal sending
+                            breakpoint         = 0;
                         end else if (uart_byte_idx == ISA_BYTE_CNT) begin
-                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] <= rx_byte;
+                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] = rx_byte;
 
-                            uart_addr          <= uart_addr + 1;
-                            uart_byte_idx      <= 0;
-                            uart_write_enable  <= 1'b1; // only up for a single cycle
+                            uart_addr          = uart_addr + 1;
+                            uart_byte_idx      = 0;
+                            uart_write_enable  = 1'b1; // only up for a single cycle
                         end else begin
-                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] <= rx_byte;
+                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] = rx_byte;
 
-                            uart_byte_idx      <= uart_byte_idx + 1;
+                            uart_byte_idx      = uart_byte_idx + 1;
                         end
                     end
                     CORE_RX_PC      : begin
                         if (uart_byte_idx == ISA_BYTE_CNT) begin
-                            core_rx_state <= CORE_RX_OPCODE;
+                            core_rx_state = CORE_RX_OPCODE;
 
-                            breakpoint    <= {rx_byte, uart_data[`ISA_WIDTH - UART_LEN:0]};
+                            breakpoint    = {rx_byte, uart_data[`ISA_WIDTH - UART_LEN:0]};
 
-                            uart_data     <= 0;
-                            uart_byte_idx <= 0;
+                            uart_data     = 0;
+                            uart_byte_idx = 0;
 
-                            debug_pause   <= 1'b0;
+                            debug_pause   = 1'b0;
                         end else begin
-                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] <= rx_byte;
+                            uart_data[(uart_byte_idx * UART_LEN)+:UART_LEN] = rx_byte;
 
-                            uart_byte_idx <= uart_byte_idx + 1;
+                            uart_byte_idx = uart_byte_idx + 1;
                         end
                     end
                     CORE_RX_NEXT    : begin
-                        debug_pause   <= 1'b1;
-                        core_rx_state <= CORE_RX_OPCODE;
+                        debug_pause   = 1'b1;
+                        core_rx_state = CORE_RX_OPCODE;
                     end
                     /* CORE_RX_OPCODE */
                     default         :
                         case (rx_byte)
                             // receive additional data
                             OP_RESUME  : begin
-                                debug_pause   <= 1'b1;
-                                core_rx_state <= CORE_RX_PC;
+                                debug_pause   = 1'b1;
+                                core_rx_state = CORE_RX_PC;
                             end
                             OP_PROGRAM : begin
-                                uart_write_enable <= 1'b1; // set the CPU to start receiving UART program
-                                core_rx_state     <= CORE_RX_PROGRAM;
+                                uart_write_enable = 1'b1; // set the CPU to start receiving UART program
+                                core_rx_state     = CORE_RX_PROGRAM;
                             end
                             // will be back to this state after the next cycle
                             OP_NEXT    : begin
-                                debug_pause   <= 1'b0;
-                                core_rx_state <= CORE_RX_NEXT;
+                                debug_pause   = 1'b0;
+                                core_rx_state = CORE_RX_NEXT;
                             end
                             default    :
-                                core_rx_state <= core_rx_state; // prevent auto latches
+                                core_rx_state = core_rx_state; // prevent auto latches
                     endcase
                 endcase
             else
-                uart_write_enable <= 1'b0;
+                uart_write_enable = 1'b0;
         end
     end
-
 endmodule
