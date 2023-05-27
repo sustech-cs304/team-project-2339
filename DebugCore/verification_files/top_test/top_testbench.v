@@ -178,18 +178,19 @@ module top_testbench ();
         // signals[22] = 2;
         // signals[23] = 2;
         // signals[25] = OP_NEXT;
-        signals[35]  = OP_RESUME;
-        signals[36] = 8'h18;
-        signals[37] = 0;
-        signals[38] = 0;
-        signals[39] = 0;
+        signals[40]  = OP_RESUME;
+        signals[41] = 8'h18;
+        signals[42] = 0;
+        signals[43] = 0;
+        signals[44] = 0;
 
-        signals[50]  = OP_NEXT;
-        // signals[41] = 8'h0c;
-        // signals[42] = 0;
-        // signals[43] = 0;
-        // signals[44] = 0;
-        signals[65]  = OP_NEXT;
+        signals[60]  = OP_RESUME;
+        signals[61] = 8'h0c;
+        signals[62] = 0;
+        signals[63] = 0;
+        signals[64] = 0;
+
+        signals[75]  = OP_NEXT;
     end
 
     initial begin
