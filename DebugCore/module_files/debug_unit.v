@@ -76,7 +76,7 @@ module debug_unit (
                 CORE_TX_PING        = 2'b10;    // respond ok to ping
     reg [CORE_TX_STATE_WIDTH - 1:0] core_tx_state;
     
-    localparam  SIGNALS_WIDTH          = `ISA_WIDTH * 3 + 8,        //// [TODO] demo only !!! ////
+    localparam  SIGNALS_WIDTH          = (`ISA_WIDTH * 3) + 8,      //// [TODO] demo only !!! ////
                 SIGNALS_BYTE_CNT       = SIGNALS_WIDTH / 8,
                 SIGNALS_BYTE_CNT_WIDTH = 4;                         // ceil(sqrt(SIGNALS_WIDTH / 8)): has to be calculated [TODO]
 

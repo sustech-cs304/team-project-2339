@@ -168,28 +168,28 @@ module top_testbench ();
         // signals[12] = 0;
         // signals[13] = 0;
         // signals[14] = OP_PAUSE;
-        signals[15] = OP_PROGRAM;
-        signals[16] = 1;
-        signals[17] = 1;
-        signals[18] = 1;
-        signals[19] = 1;
+        signals[20] = OP_PROGRAM;
+        signals[21] = 1;
+        signals[22] = 1;
+        signals[23] = 1;
+        signals[24] = 1;
         // signals[20] = 2;
         // signals[21] = 2;
         // signals[22] = 2;
         // signals[23] = 2;
         // signals[25] = OP_NEXT;
-        signals[30]  = OP_RESUME;
-        signals[31] = 8'h18;
-        signals[32] = 0;
-        signals[33] = 0;
-        signals[34] = 0;
+        signals[35]  = OP_RESUME;
+        signals[36] = 8'h18;
+        signals[37] = 0;
+        signals[38] = 0;
+        signals[39] = 0;
 
-        signals[40]  = OP_NEXT;
+        signals[50]  = OP_NEXT;
         // signals[41] = 8'h0c;
         // signals[42] = 0;
         // signals[43] = 0;
         // signals[44] = 0;
-        signals[45]  = OP_NEXT;
+        signals[65]  = OP_NEXT;
     end
 
     initial begin
