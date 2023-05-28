@@ -1859,6 +1859,7 @@ Window {
 
                                     onClicked: {
                                         myobj.getAsmFile()
+                                        textArea2.text=myobj.string43
                                         listView1.model=myobj.myList41
                                         highlight4.y=18*myobj.value1+4
                                         button46.light=true
