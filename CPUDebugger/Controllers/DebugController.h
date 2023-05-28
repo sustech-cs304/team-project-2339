@@ -9,7 +9,7 @@
 #include "uart/comm.h"
 #include "Controllers/PreDebugController.h"
 #include "Stores/PreDebugStore.h"
-
+#include "model/CPUSignal.h"
 
 class DebugController
 {

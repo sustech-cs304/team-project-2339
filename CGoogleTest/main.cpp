@@ -1,4 +1,7 @@
+#include "CPUSignal.h"
 #include <gtest/gtest.h>
+
+QList<CPUSignal> mysignals;
 
 int main(int argc, char *argv[])
 {

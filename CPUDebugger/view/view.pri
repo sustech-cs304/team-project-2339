@@ -5,7 +5,8 @@ RESOURCES += $$PWD/qml.qrc \
     $$PWD/resourse.qrc
 
 HEADERS += \
-    $$PWD/myobject1.h
+    $$PWD/myobject1.h \
+    $$PWD/worker1.h
 
 DISTFILES += \
     $$PWD/images/image1.png \

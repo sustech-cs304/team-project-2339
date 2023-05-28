@@ -37,6 +37,7 @@ class CParser: public verilog::ParserVerilogInterface {
 public:
     QList<CPUSignal> export_signals();
 private:
+    std::pair<int, int> searchWidth(std::string name);
     std::vector<verilog::Port> ports;
     std::vector<verilog::Net> nets;
     std::vector<verilog::Assignment> assignments;
