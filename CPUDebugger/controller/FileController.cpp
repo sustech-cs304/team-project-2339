@@ -93,7 +93,7 @@ void FileController::exportUart(QList<QString> signalList, QString outputUrl) {
             results.append(sig);
         }
     }
-    generateCore(oriTopPath, outputDir, results);
+    generateCore(oriTopPath, outputUrl, results);
 }
 
 void FileController::delTempDir() {
