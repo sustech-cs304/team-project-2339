@@ -49,7 +49,7 @@ std::optional<QByteArray> DebugController::step()
             + ((static_cast<unsigned int>(cpuResponse[2]) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse[3]) & 0xFF) << 24);
     DebugStore::setPC_Bin(binPC);
-    qDebug() << "response pc" << binPC;
+    qDebug() << cpuResponse;
     return cpuResponse;
 }
 
@@ -90,7 +90,8 @@ std::optional<QByteArray> DebugController::sendPrograme()
     DebugStore::setPC_Bin(binPC);
     qDebug() << cpuResponse;
 
-    uartCommunicator.sendResume(cpuResponse, 0);
+    uartCommunicator.sendResume(tmpResumeResponse, 0);
+    QThread::sleep(1);
     return cpuResponse;
 }
 
