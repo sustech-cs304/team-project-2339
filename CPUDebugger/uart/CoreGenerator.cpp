@@ -168,7 +168,7 @@ bool generateCore(QString topFilePath,
     // read all text from top module
     QString            topText   = topFile.readAll();
     // replace any previous instantiations of debug unit or insert before last line
-    QRegularExpression coreRegex = QRegularExpression("(debug_unit(?=\\()(.|\\n)*(?=;));");
+    QRegularExpression coreRegex = QRegularExpression("(debug_unit(?=\\()(.|\\n)*(?=;);)");
     if (topText.contains(coreRegex))
         topText.replace(coreRegex,
                         QString::asprintf(moduleSection, qPrintable(insertModule(selectedSignals))));
