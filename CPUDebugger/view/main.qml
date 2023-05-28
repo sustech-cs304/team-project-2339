@@ -1642,7 +1642,6 @@ Window {
                                         text: modelData
                                         anchors.verticalCenter: parent.verticalCenter
                                         anchors.right: parent.right
-                                        width:160
 
                                     }
 
