@@ -23,7 +23,11 @@ Window {
         id:myobj
         value: 10
         string:"aaa"
-        value1: -1
+        value1: 0
+//        myList1: ["Apple", "Banana", "Cherry"]
+//        myList2: ["Orange", "melon"]
+//        myList41:["1","0","1","0"]
+//        myList42:["1111 0000 1111 0000"]
 
         Component.onCompleted:  {
             console.log(value,string)
@@ -1452,7 +1456,7 @@ Window {
 
                 Grid {
                     rows: 1
-                    columns: 3
+                    columns: 5
                     spacing: 0
                     anchors.fill: parent
 
@@ -1462,17 +1466,23 @@ Window {
                         height: parent.height
                         width: parent.width/2
 
+                        Flickable {
+                            id: flickable1
+                            height: parent.height
+                            width: parent.width
+                            contentHeight:flickable1.height
+                            contentWidth: parent.width
+                            flickableDirection: Flickable.VerticalFlick
+                            clip: true
+
                         ListView {
                             id: listView1
                             height: parent.height
                             width: 60
                             model:myobj.myList41
                             anchors.verticalCenter: parent.verticalCenter
-
-                            property int contY: 0
-
                             delegate: Rectangle {
-                                height: 18
+                                    height: 20
                                 width: parent.width
                                 color: "lightgrey"
 
@@ -1481,7 +1491,6 @@ Window {
                                     text: index+1
                                     anchors.verticalCenter: parent.verticalCenter
                                     width:20
-                                    font.pixelSize: 13
                                 }
 
                                 Rectangle {
@@ -1516,7 +1525,7 @@ Window {
 
                             }
                             onContentYChanged: {
-                                innerFlickable.contentY = contentY
+                                    listView2.contentY = contentY
                             }
                         }
 
@@ -1524,56 +1533,51 @@ Window {
                             id: innerFlickable
                             height: parent.height
                             width: parent.width -listView1.width
-        //                        contentHeight: textArea.implicitHeight
+                                contentHeight: 200
                             contentWidth: parent.width*6
                             clip: true
                             x:listView1.width
-                            y:-4
-                            contentHeight: textArea2.contentHeight
-                            flickableDirection:Flickable.HorizontalAndVerticalFlick
-                            Rectangle{
-                                id:highlight4
-                                height: 17
-                                width: parent.width
-                                y:18*myobj.value1+4
-                                color: "lightblue"
-                            }
 
-
+                                ListView {
+                                    id: listView2
+                                    height: window4.height
+                                    width: window4.width /3*2
+                                    model: myobj.myList41
+                                    delegate: Rectangle {
+                                        id:rect1
+                                        height: 20
+                                        width: parent.width*6
+                                        color: index === myobj.value1 ? "lightblue":"lightgray"
                             TextArea {
                                     id: textArea2
-        //                                    anchors.verticalCenter: parent.verticalCenter
+                                            text: modelData
+                                            anchors.verticalCenter: parent.verticalCenter
                                     wrapMode: TextArea.WrapAnywhere
-                                    text: myobj.string43
                                     color: "black"
-                                    font.pixelSize: 15
 
                                     background: Rectangle {
-                                            color:"#00000000"
+                                                    color:index === myobj.value1 ? "lightblue":"lightgray"
                                         }
 
                                     onTextChanged: {
-                                        console.log(textArea2.text)
-                                        myobj.value42 = textArea2.lineCount
-                                        console.log("Line count:", lineCount);
-                                        myobj.string43=textArea2.text
+                                                myobj.string42=textArea2.text
+                                                myobj.value42=index
                                         myobj.changeAsmFile()
-                                        myobj.value41=listView1.contentY
-                                        console.log(myobj.value1)
-                                        listView1.model=myobj.myList41
-                                        console.log(myobj.value1)
-                                        listView1.contentY=myobj.value41
-                                        highlight4.y=18*myobj.value1+4
-                                    }
-
 
                                 }
-
+                                        }
+        //                                Text {
+        //                                    id:text2
+        //                                    text: modelData
+        //                                    anchors.verticalCenter: parent.verticalCenter
+        //                                }
+                                    }
                             onContentYChanged: {
                                 listView1.contentY = contentY
                             }
                         }
-
+                            }
+                        }
 
                     }
 
@@ -1642,6 +1646,8 @@ Window {
                                         text: modelData
                                         anchors.verticalCenter: parent.verticalCenter
                                         anchors.right: parent.right
+                                        width:160
+
                                     }
 
                                 }
@@ -1680,7 +1686,8 @@ Window {
                                         button42.light=false
                                         button43.light=true
                                         myobj.sendResume()
-                                        highlight4.y=18*myobj.value1+4
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
                                         listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
@@ -1715,7 +1722,8 @@ Window {
                                         button42.light=false
                                         button43.light=false
                                         myobj.sendStep()
-                                        highlight4.y=18*myobj.value1+4
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
                                         listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
@@ -1748,7 +1756,8 @@ Window {
                                     onClicked: {
                                         console.log("pause")
                                         myobj.sendPause()
-                                        highlight4.y=18*myobj.value1+4
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
                                         listView4.model = myobj.myList42
 
                                         button41.light=true
@@ -1781,7 +1790,8 @@ Window {
 
                                     onClicked: {
                                         myobj.sendBreakPoint()
-                                        highlight4.y=18*myobj.value1+4
+                                        listView2.model = null
+                                        listView2.model = myobj.myList41
                                         listView4.model = myobj.myList42
                                         button41.light=true
                                         button42.light=true
@@ -1857,9 +1867,8 @@ Window {
 
                                     onClicked: {
                                         myobj.getAsmFile()
-                                        textArea2.text=myobj.string43
                                         listView1.model=myobj.myList41
-                                        highlight4.y=18*myobj.value1+4
+                                        listView2.model=myobj.myList41
                                         button46.light=true
                                         console.log("update")
                                     }

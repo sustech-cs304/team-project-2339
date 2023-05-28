@@ -58,7 +58,6 @@ void MyObject1::getAsmFile()
         }
     file1->close();
     qDebug()<<m_myList41;
-    m_string43=m_myList41.join("\n");
     qDebug() << __FUNCTION__;
 }
 
@@ -495,35 +494,7 @@ void MyObject1::closeWindow()
 
 void MyObject1::changeAsmFile()
 {
-    m_myList41=m_string43.split("\n");
-    qDebug()<<m_myList41;
-    m_string43=m_myList41.join("\n");
-    qDebug()<<m_string43;
+    m_myList41.replace(m_value42, m_string42);
 }
 
 
-int MyObject1::value41() const
-{
-    return m_value41;
-}
-
-void MyObject1::setValue41(int newValue41)
-{
-    if (m_value41 == newValue41)
-        return;
-    m_value41 = newValue41;
-    emit value41Changed();
-}
-
-QString MyObject1::string43() const
-{
-    return m_string43;
-}
-
-void MyObject1::setString43(const QString &newString43)
-{
-    if (m_string43 == newString43)
-        return;
-    m_string43 = newString43;
-    emit string43Changed();
-}
