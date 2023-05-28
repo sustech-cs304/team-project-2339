@@ -127,6 +127,12 @@ public:
     int value42() const;
     void setValue42(int newValue42);
 
+    int value41() const;
+    void setValue41(int newValue41);
+
+    QString string43() const;
+    void setString43(const QString &newString43);
+
 private:
     int m_value;
     int m_value1;
@@ -137,6 +143,8 @@ private:
     QString m_string41; //page4 asm file address
     QString m_string42; //page4 change asm file
     int m_value42;
+    int m_value41; //page4 for keep contentY
+    QString m_string43; //page4 for asm file (full ver)
 
     bool detectResult;
     bool result41; //page4 get asm file
@@ -194,6 +202,10 @@ private:
 
     Q_PROPERTY(int value42 READ value42 WRITE setValue42 NOTIFY value42Changed)
 
+    Q_PROPERTY(int value41 READ value41 WRITE setValue41 NOTIFY value41Changed)
+
+    Q_PROPERTY(QString string43 READ string43 WRITE setString43 NOTIFY string43Changed)
+
 signals:
 
     void valueChanged();
@@ -215,9 +227,10 @@ signals:
     void string22Changed();
     void string42Changed();
     void value42Changed();
+    void value41Changed();
+    void string43Changed();
 };
 
 
 #endif // MYOBJECT1_H
-
 
