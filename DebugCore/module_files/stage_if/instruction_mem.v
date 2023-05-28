@@ -45,8 +45,11 @@ module instruction_mem (
 
     assign if_no_op = (hazard_control == `HAZD_CTL_NO_OP);
 
+    reg rom_disable,
+        rom_disable_next;
+
     ROM rom(
-        .ena    (uart_instruction_write_enable | ~if_no_op), // disabled unpon no_op
+        .ena    (uart_instruction_write_enable | ~rom_disable), // disabled unpon no_op
         .clka   (~clk),
         
         .addra  (uart_disable ? pc[`ROM_DEPTH + 1:2] : uart_addr[`ROM_DEPTH - 1:0]), // pc address is in unit of words
@@ -67,19 +70,32 @@ module instruction_mem (
     
     always @(posedge clk, negedge rst_n) begin
         if (~rst_n) begin
-            pc <= 0;
+            {
+                pc,
+                rom_disable,
+                rom_disable_next
+            } <= 0;
         end else case (hazard_control)
             `HAZD_CTL_NO_OP: begin
+                // give 1 cycle for the rom to respond instructions to a new PC
+                rom_disable      <= rom_disable_next;
+                rom_disable_next <= 1'b1;
+
                 if (pc_offset | pc_overload | pc_reset) 
-                    pc <= pc_next;
+                    pc           <= pc_next;
                 else
-                    pc <= pc; // prevent auto latches
+                    pc           <= pc; // prevent auto latches
             end
-            `HAZD_CTL_RETRY: 
-                pc       <= pc;
+            `HAZD_CTL_RETRY: begin
+                pc               <= pc;
+            end
             /* this is the `HAZD_CTL_NORMAL state */
             default        : begin
-                pc       <= pc_next;
+                // recover immediately
+                rom_disable      <= 1'b0;
+                rom_disable_next <= 1'b0;
+
+                pc               <= pc_next;
             end
         endcase
     end

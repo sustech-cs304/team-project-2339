@@ -2,7 +2,7 @@
 #define CPUSIGNAL_H
 
 #include "qdebug.h"
-#include "parse-verilog/verilog_data.hpp"
+#include "CPUDebugger/parse-verilog/verilog_data.hpp"
 #include <QString>
 #include <QBitArray>
 
@@ -23,7 +23,7 @@ class CPUSignal {
 public:
     CPUSignal(QString name, int lBound, int rBound) : name(name), lBound(lBound), rBound(rBound) {
         rawWidth = rBound - lBound + 1;
-        width    = (rawWidth + 7) & (~7);
+        width    = (rawWidth + 7) & (!7);
     }
 
     static CPUSignal createInstance(verilog::NetConcat &net) {
@@ -48,13 +48,13 @@ public:
         }
     }
 
-    QString toString() const {
+    QString toString() {
         if (lBound == -1 && rBound == -1) {
             return name;
         } else if (lBound == rBound) {
             return name + "[" + QString::number(lBound) + "]";
         } else {
-            return name + "[" + QString::number(rBound) + ":" + QString::number(lBound) + "]";
+            return name + "[" + QString::number(lBound) + ", " + QString::number(rBound) + "]";
         }
     }
 

@@ -1,7 +1,5 @@
 #include "myobject1.h"
 
-extern QList<CPUSignal> mysignals;
-
 MyObject1::MyObject1(QObject *parent)
     : QObject{parent}
 {
@@ -347,30 +345,20 @@ void MyObject1::makeList41()
 
 }
 
-extern QList<CPUSignal> mysignals;
-
 void MyObject1::sendResume(){
     std::optional<QByteArray> cpuResponse = DebugController::resume();
-    if (cpuResponse == nullptr)
-        return;
     int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
              + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
             + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
-
-    int sig_num = mysignals.length();
-    CPUSignal tmpsig = mysignals.at(0);
+    QString binaryString;
+    binaryString += QString::number(cpuResponse->at(4), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(5), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(6), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
     m_myList42.clear();
-    int start_idx = 3;
-    for (int i = 0 ; i < mysignals.length() ; i ++){
-        QString hexString;
-        for (int j = start_idx + (mysignals.at(i).width/8); j > start_idx; j--) {
-            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
-        }
-        m_myList42.append(hexString);
-        start_idx += mysignals.at(i).width/8;
-    }
+    m_myList42.append(binaryString);
     m_value1=lineNum;
 }
 
@@ -380,51 +368,28 @@ void MyObject1::sendPause(){
 
 void MyObject1::sendBreakPoint()
 {
-    std::optional<QByteArray> cpuResponse = DebugController::sendPrograme();
-    if(cpuResponse == nullptr){
+    if(DebugController::sendPrograme()== nullptr){
         result42=false;
     }else {
         result42=true;
     }
-    int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
-             + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
-            + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
-            + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
-    int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
-
-    m_myList42.clear();
-    int start_idx = 3;
-    for (int i = 0 ; i < mysignals.length() ; i ++){
-        QString hexString;
-        for (int j = start_idx + (mysignals.at(i).width/8); j > start_idx; j--) {
-            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
-        }
-        m_myList42.append(hexString);
-        start_idx += mysignals.at(i).width/8;
-    }
-    m_value1=lineNum;
+    sendStep();
 }
 
 void MyObject1::sendStep(){
     std::optional<QByteArray> cpuResponse = DebugController::step();
-    if (cpuResponse == nullptr)
-        return;
     int binPC = (static_cast<unsigned int>(cpuResponse->at(0)) & 0xFF)
              + ((static_cast<unsigned int>(cpuResponse->at(1)) & 0xFF) << 8)
             + ((static_cast<unsigned int>(cpuResponse->at(2)) & 0xFF) << 16)
             + ((static_cast<unsigned int>(cpuResponse->at(3)) & 0xFF) << 24);
     int lineNum = PreDebugStore::asmFile->getAsmLine(binPC);
-
+    QString binaryString;
+    binaryString += QString::number(cpuResponse->at(4), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(5), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(6), 2).rightJustified(8, '0');
+    binaryString += QString::number(cpuResponse->at(7), 2).rightJustified(8, '0');
     m_myList42.clear();
-    int start_idx = 3;
-    for (int i = 0 ; i < mysignals.length() ; i ++){
-        QString hexString;
-        for (int j = start_idx + (mysignals.at(i).width/8); j > start_idx; j--) {
-            hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));
-        }
-        m_myList42.append(hexString);
-        start_idx += mysignals.at(i).width/8;
-    }
+    m_myList42.append(binaryString);
     m_value1=lineNum;
 }
 
@@ -452,8 +417,8 @@ void MyObject1::confirm1()
 {
     qDebug() << "m_string: " << m_string1;
     fileContrl->import(m_string1);
-    
-    m_myList1 = fileContrl->getStringSignals();
+
+    m_myList1 = fileContrl->getSignals();
     qDebug() << m_myList1;
 
     fileContrl->genGraph();
@@ -462,7 +427,6 @@ void MyObject1::confirm1()
 
 void MyObject1::confirm2()
 {
-    mysignals = fileContrl->getSignalList(m_myList2);
 }
 
 /**
