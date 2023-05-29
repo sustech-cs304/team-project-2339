@@ -9,7 +9,6 @@
 
 
 class CParser: public verilog::ParserVerilogInterface {
-    virtual ~CParser(){}
 
     void add_module(std::string&& name){
 //        std::cout << "Module name = " << name << '\n';
@@ -36,6 +35,8 @@ class CParser: public verilog::ParserVerilogInterface {
     }
 public:
     QList<CPUSignal> export_signals();
+    virtual ~CParser(){
+    }
 private:
     std::pair<int, int> searchWidth(std::string name);
     std::vector<verilog::Port> ports;

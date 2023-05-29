@@ -17,6 +17,7 @@ protected:
         dirPath = projPath + "/examples/module_files";
         destPath = projPath + "/examples/target";
         tokenPath = projPath + "/examples/token.txt";
+        exportPath = "";
         qDebug() << "Compiler test begin";
     }
 
@@ -28,6 +29,7 @@ public:
     QString dirPath;
     QString destPath;
     QString tokenPath;
+    QString exportPath;
 };
 
 TEST_F(CompilerTest, GenGraph) {
@@ -56,9 +58,14 @@ TEST_F(CompilerTest, ExportSignals) {
     for (const CPUSignal& sig: sigs) {
         qDebug() << "Signal: " << sig.name << sig.lBound << " " << sig.rBound << " " << sig.rawWidth << " " << sig.width;
     }
-//    QList<QString> ss = c->getStringSignals();
-//    qDebug() << ss;
-//    ASSERT_GE(ss.size(), 0);
+    QList<QString> stringSigs = c->getStringSignals();
+
+    QList<QString> ss;
+    ss.append(stringSigs.first());
+
+    QList<CPUSignal> sigs_new = c->getSignalList(ss);
+    ASSERT_GE(sigs_new.size(), 0);
+    c->exportUart(ss, exportPath);
     ASSERT_EQ(c->getSvgPath(), QUrl::fromLocalFile(QString(QDir::tempPath()+"/tmp/show.svg")).url());
     delete c;
 }

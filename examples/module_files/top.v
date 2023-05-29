@@ -578,9 +578,7 @@ module top (
         .uart_tx                (uart_tx),
 
         .pc                     (instruction_mem_pc),
-		.signal_0               (id_ex_reg_reg_1_idx),
-		.signal_1               (vsync),
-		.signal_2               (clk_tube),
+		.signal_0               (mux_pc_overload),
 
         .uart_addr              (debug_unit_write_address),
         .uart_data              (debug_unit_write_data),

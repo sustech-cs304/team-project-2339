@@ -18,6 +18,7 @@ public:
     {
         delete marcoMap;
         delete c;
+        delete parser;
     }
     void clear();
     void process(QString path, std::optional<QString> dest);
