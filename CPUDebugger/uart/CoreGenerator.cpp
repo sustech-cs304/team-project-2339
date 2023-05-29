@@ -15,6 +15,7 @@ const char *moduleSection  = "debug_unit(\n"
                              "        .uart_rx                (uart_rx),\n"
                              "        .uart_tx                (uart_tx),\n"
                              "\n"
+                             "        .pc_next                (instruction_mem_pc_next),\n"
                              "        .pc                     (instruction_mem_pc),\n"
                              "%s\n"
                              "        .uart_addr              (debug_unit_write_address),\n"
@@ -35,6 +36,7 @@ const char *moduleComplete = "\n"
                              "        .uart_rx                (uart_rx),\n"
                              "        .uart_tx                (uart_tx),\n"
                              "\n"
+                             "        .pc_next                (instruction_mem_pc_next),\n"
                              "        .pc                     (instruction_mem_pc),\n"
                              "%s\n"
                              "        .uart_addr              (debug_unit_write_address),\n"
@@ -94,7 +96,7 @@ QString insertBytes(const QList<CPUSignal> &selectedSignals) {
 QString insertSignals(const QList<CPUSignal> &selectedSignals) {
     QString signalLines;
 
-    for (int i = 0; i < selectedSignals.size(); ++i)
+    for (int i = selectedSignals.size() - 1; 0 <= i; --i)
         signalLines.append(QString::asprintf(signalFormat, i));
 
     return signalLines;
@@ -176,6 +178,7 @@ bool generateCore(QString topFilePath,
         topText.replace("endmodule",
                         QString::asprintf(moduleComplete, qPrintable(insertModule(selectedSignals))));
     // write back to top module
+    qDebug() << topText;
     topFile.seek(0);
     topFile.write(topText.toUtf8());
     return true;
