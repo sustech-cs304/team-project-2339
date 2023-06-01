@@ -28,52 +28,153 @@ public:
     QString string() const;
     void setString(const QString &newString);
 
+
+    /**
+     * @brief  display the contents of an uploaded asm file
+     *
+     */
     Q_INVOKABLE void loadFile1();
 
+    /**
+     * @brief pass the user-selected breakpoint
+     *
+     */
     Q_INVOKABLE void makeBreakPoint();
 
+    /**
+     * @brief initialize list1
+     *
+     */
     Q_INVOKABLE void makeList1();
 
+    /**
+     * @brief remove selected signal from list1
+     *
+     * @param index selected signal index
+     */
     Q_INVOKABLE void removeMyList1(int index);
 
+    /**
+     * @brief add selected signal to list1
+     *
+     */
     Q_INVOKABLE void addMyList1();
 
+    /**
+     * @brief initialize list2
+     *
+     */
     Q_INVOKABLE void makeList2();
 
+    /**
+     * @brief remove selected signal from list2
+     *
+     * @param index selected signal index
+     */
     Q_INVOKABLE void removeMyList2(int index);
 
+    /**
+     * @brief add selected signal to list2
+     *
+     * @param string selected signal name
+     */
     Q_INVOKABLE void addMyList2(QString string);
 
+    /**
+     * @brief initialize list41
+     *
+     */
     Q_INVOKABLE void makeList41();
-    
-    Q_INVOKABLE void sendResume(); //page4 resume
 
-    Q_INVOKABLE void sendStep(); //page4 step
-    
-    Q_INVOKABLE void sendPause(); //page4 pause
+    /**
+     * @brief page4 send resume signal
+     *
+     */
+    Q_INVOKABLE void sendResume();
 
+    /**
+     * @brief page4 send step signal
+     *
+     */
+    Q_INVOKABLE void sendStep();
+
+    /**
+     * @brief page4 send pause signal
+     *
+     */
+    Q_INVOKABLE void sendPause();
+
+    /**
+     * @brief page4 send breakpoint signal
+     *
+     */
     Q_INVOKABLE void sendBreakPoint(); //page4 break point
 
+    /**
+     * @brief page4 get asm file context
+     *
+     */
     Q_INVOKABLE void getAsmFile(); //page4 get asm file
 
+    /**
+     * @brief page4 change asm file context
+     *
+     */
     Q_INVOKABLE void changeAsmFile();
 
-    Q_INVOKABLE void exportTo(); //page3 export to button
+    /**
+     * @brief page3 send export to chosen address
+     *
+     */
+    Q_INVOKABLE void exportTo();
 
-    Q_INVOKABLE void complete(); //page3 complete button
+    /**
+     * @brief page3 confirm button, check if everything is done and meets the page jump condition
+     *
+     */
+    Q_INVOKABLE void complete(); 、
 
-    Q_INVOKABLE void detect();  //page3 detect button
+    /**
+     * @brief page3 to detect the port
+     *
+     */
+    Q_INVOKABLE void detect();
 
+    /**
+     * @brief page1 confirm button, check if everything is done and meets the page jump condition
+     *
+     */
     Q_INVOKABLE void confirm1();
 
+
+    /**
+     * @brief page2 confirm button, check if everything is done and meets the page jump condition
+     *
+     */
     Q_INVOKABLE void confirm2();
 
+    /**
+     * @brief page2 absolute path of svg image passed to the front-end
+     *
+     */
     Q_INVOKABLE void loadSvgPath();
 
+    /**
+     * @brief page2 Sort signals according to the relevance with keywords
+     *
+     */
     Q_INVOKABLE void search();
 
+    /**
+     * @brief cancel search
+     *
+     */
     Q_INVOKABLE void searchCancel();
 
+    /**
+     * @brief when we close the application, Some cache will be cleared here
+     *
+     */
     Q_INVOKABLE void closeWindow();
 
     int value1() const;
@@ -153,8 +254,8 @@ private:
     QList<QString> m_myList2;
     QList<QString> m_myList41;
     QList<QString> m_myList42; //page4 signal result list
-    
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
     Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged)
 
@@ -193,6 +294,8 @@ private:
     Q_PROPERTY(QString string42 READ string42 WRITE setString42 NOTIFY string42Changed)
 
     Q_PROPERTY(int value42 READ value42 WRITE setValue42 NOTIFY value42Changed)
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 signals:
 

@@ -338,7 +338,7 @@ void MyObject1::removeMyList2(int index)
 void MyObject1::addMyList2(QString string)
 {
     m_myList2.append(string);
-    
+
 }
 
 void MyObject1::makeList41()
@@ -452,7 +452,7 @@ void MyObject1::confirm1()
 {
     qDebug() << "m_string: " << m_string1;
     fileContrl->import(m_string1);
-    
+
     m_myList1 = fileContrl->getStringSignals();
     qDebug() << m_myList1;
 
