@@ -16,6 +16,11 @@ import os
 from sphinx.builders.html import StandaloneHTMLBuilder
 import subprocess, os
 
+# Auto run doxygen if on the Read the Docs environment
+read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
+if read_the_docs_build:
+    subprocess.call(["cd ..", "doxygen Doxyfile"], shell=True)
+
 project = 'CPUDebugger'
 copyright = '2023, David Li'
 author = 'David Li'
@@ -106,8 +111,3 @@ primary_domain = 'cpp'
 
 # Tell sphinx what the pygments highlight language should be.
 highlight_language = 'cpp'
-
-# Auto run doxygen if on the Read the Docs environment
-read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
-if read_the_docs_build:
-    subprocess.call(["cd ..", "doxygen Doxyfile"], shell=True)
