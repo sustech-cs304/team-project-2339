@@ -83,3 +83,4 @@ CMakeLists.txt.user*
 *.qmltypes
 *.zip
 /CPUDebugger/.idea/
+.idea
