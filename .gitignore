@@ -79,7 +79,7 @@ CMakeLists.txt.user*
 
 .vscode/*
 *.stash
-.DS_Store
 *.json
 *.qmltypes
 *.zip
+/CPUDebugger/.idea/
