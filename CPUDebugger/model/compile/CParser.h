@@ -34,6 +34,12 @@ class CParser: public verilog::ParserVerilogInterface {
         insts.push_back(std::move(inst));
     }
 public:
+    /**
+     * @brief export_signals
+     * Export one signal list. You should excute this function
+     * before you use @c read @c.
+     * @return
+     */
     QList<CPUSignal> export_signals();
     virtual ~CParser(){
     }

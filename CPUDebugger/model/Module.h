@@ -4,6 +4,10 @@
 #include <QList>
 #include <QException>
 #include "CPUSignal.h"
+/**
+ * @brief The Module class (deprecated)
+ * We have not used yet.
+ */
 class  Module {
 public:
     Module(QString name);

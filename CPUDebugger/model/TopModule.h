@@ -3,6 +3,10 @@
 #include "QString"
 #include <QList>
 #include "Module.h"
+/**
+ * @brief The TopModule class (deprecated)
+ * We have not used yet.
+ */
 class TopModule {
 public:
     void setModule(Module&&);

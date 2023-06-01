@@ -13,15 +13,90 @@
 class FileUtil
 {
 public:
+    /**
+     * @brief getTextStreams (deprecated)
+     * Get the string list for one file.
+     * @param the pointer of QFile
+     * @return
+     */
     static QStringList getTextStreams(QFile *f);
+    /**
+     * @brief exportFile
+     * Export file to the path with @c ss @c
+     * @param path
+     * @param ss
+     */
     static void exportFile(QString path, QString ss);
+    /**
+     * @brief exportFile
+     * Export file to the path with string list.
+     * @param path
+     * @param lines
+     */
     static void exportFile(QString path, QStringList lines);
+    /**
+     * @brief exportFile
+     * Export file to the path with tokens.
+     * @param path
+     * @param tokens
+     */
     static void exportFile(QString path, QList<Token> tokens);
+    /**
+     * @brief exportFile
+     * Export file with filename in directory with path with string list.
+     * @param dirPath
+     * The path of directory
+     * @param filename
+     * The name of file
+     * @param lines
+     */
     static void exportFile(QString dirPath, QString filename, QStringList lines);
+    /**
+     * @brief execute
+     * Execute the file with ".exe" in Windows.
+     * @param binPath
+     * The path of executing file.
+     * @param workDir
+     * The working directory when you execute the file.
+     * @param arguments
+     * The argumnets you import
+     * @return
+     */
     static QString execute(QString binPath, QString workDir, QStringList &arguments);
+    /**
+     * @brief importFile
+     * Import one file with path. The path should be url when @c isUrl=true @c
+     * @param path
+     * @param isUrl
+     * The path is url or not.
+     * @return
+     */
     static QFile* importFile(QString path, bool isUrl=false);
+    /**
+     * @brief convert
+     * Convert the url to file path
+     * @param url
+     * @return
+     */
     static QString convert(QString url);
+    /**
+     * @brief dupRemove
+     * Remove all the duplicated element in string list.
+     * @param ss
+     * @return
+     */
     static QList<QString> dupRemove(QList<QString> ss);
+    /**
+     * @brief getDirList
+     * Get all the files in the directory with filter.
+     * @param dirPath
+     * The path of directory.
+     * @param filter
+     * Search the file with @c filter @c suffix.
+     * @param recursively
+     * If it is true, it will search the directory recursively.
+     * @return
+     */
     static QStringList getDirList(QString dirPath, QString filter="v", bool recursively=false);
 private:
     static int findFile(const QString &filePath, QString &filter, QStringList &result, bool recursively);

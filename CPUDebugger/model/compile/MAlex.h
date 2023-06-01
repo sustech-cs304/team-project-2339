@@ -51,6 +51,10 @@ public:
         tokenList.clear();
         is_annotated = false;
     }
+    /**
+     * @brief read_line
+     * read and analyze one line.
+     */
     void read_line(Line);
     int next_c(QChar);
     bool is_range(QChar);

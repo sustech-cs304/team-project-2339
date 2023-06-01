@@ -15,15 +15,86 @@ class FileController {
 public:
     FileController();
     ~FileController();
+    /**
+     * @brief import
+     * Import directory from absolutePath. It analyzes the info
+     * of files with suffix "v". The temporary directory will be
+     * created in the tmp path of OS.
+     * @param absolutePath
+     * The absolutePath of one directory
+     */
     void import(QString& absolutePath);
+    /**
+     * @brief getSignalList
+     * Get the list of signals with @c CPUSignal @c for top module file. You
+     * should execute this function before you use @c import @c.
+     * @return
+     * A list with @c CPUSignal @c.
+     */
     QList<CPUSignal> getSignalList();
+    /**
+     * @brief getSignalList
+     * Get the list of signals with @c CPUSignal @c for top module file filtered by @c ss @c. You
+     * should execute this function before you use @c import @c.
+     * @param ss
+     * @return
+     * A list with @c CPUSignal @c.
+     */
     QList<CPUSignal> getSignalList(QList<QString> &ss);
+    /**
+     * @brief getStringSignals
+     * Get the list of signals with @c QString @c for top module file. You
+     * should execute this function before you use @c import @c.
+     * @return
+     * A list with @c QString @c
+     */
     QList<QString> getStringSignals();
+    /**
+     * @brief getSvgPath
+     * Get the path of graph file with svg format. You should execute this function
+     * before you use @c import @c.
+     * @return
+     * The path of svg file.
+     */
     QString getSvgPath();
+    /**
+     * @brief genGraph
+     * Generate graph with svg format under the path.
+     * @param path
+     *
+     * @warning
+     * You should check out all the @c *.v @c in the path.
+     */
     void genGraph(QString path);
+    /**
+     * @brief genGraph
+     * Generate graph with svg format under the tmporary directory
+     * You should execute this function before you use @c import @c
+     */
     void genGraph();
+    /**
+     * @brief exportUart
+     * Export the debug unit into the file with outputUrl. The debug
+     * unit is based on signalList.
+     * @param signalList
+     * @param outputUrl
+     */
     void exportUart(QList<QString> signalList, QString outputUrl);
+    /**
+     * @brief delTempDir
+     * Delete the temporary directory created before
+     */
     void delTempDir();
+    /**
+     * @brief filter
+     * Sort the string list with the rule of @c filter @c.
+     * The string will rank in the front if the its prefix matches
+     * the @c filter @c
+     * @param ss
+     * The string list to be sorted.
+     * @param filter
+     * The run to sort the list.
+     */
     void filter(QList<QString> &ss, QString filter);
 private:
     bool searchSignal(QString signalName, CPUSignal&cpusignal);

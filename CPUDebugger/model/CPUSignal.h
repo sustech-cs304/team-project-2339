@@ -26,6 +26,12 @@ public:
         width    = (rawWidth + 7) & (~7);
     }
 
+    /**
+     * @brief createInstance
+     * The method to create the instance of CPUSignal with @c net @c
+     * @param net
+     * @return
+     */
     static CPUSignal createInstance(verilog::NetConcat &net) {
         switch (net.index()) {
             case 0: {

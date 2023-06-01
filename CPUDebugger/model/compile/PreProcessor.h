@@ -21,8 +21,28 @@ public:
         delete parser;
     }
     void clear();
+    /**
+     * @brief process
+     * Process the file with path and export tokens to the dest file path.
+     * @param path
+     * @param dest
+     */
     void process(QString path, std::optional<QString> dest);
+    /**
+     * @brief replace
+     * Replace the file with path and export file to the dest file path.
+     * @param path
+     * @param dest
+     * @param ignoreStatement
+     */
     void replace(QString path, QString dest, bool ignoreStatement);
+    /**
+     * @brief filter
+     * Filter the token list with filter type.
+     * @param fType
+     * The filter type contains FILTER_IGNORE_BEFORE_MODULE, FILTER_IGNORE_STATEMENT,
+     * define FILTER_EQUATION_COMPUTION
+     */
     void filter(QList<Token>&, FilterType fType);
     QMap<QString, QString>& getMarcoMap();
     QList<CPUSignal> genSignals(QString &path);
