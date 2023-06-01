@@ -1,4 +1,4 @@
-#include "UartSimulator.h"
+#include "uartSimulator.h"
 
 std::shared_ptr<QString> UartSimulator::step(int line_num)
 {

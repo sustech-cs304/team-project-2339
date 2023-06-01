@@ -1,0 +1,24 @@
+#!/usr/bin/env groovy
+pipeline {
+    stages {
+        stage("Build") {
+            steps {
+                qmake: qmake.exe CGoogleTest.pro
+                Make: mingw32-make.exe -j16 in .\build-CGoogleTest-Desktop_Qt_6_4_3_MinGW_64_bit-Release
+            }
+        }
+        stage("Test") {
+            steps {
+                .\release --gtest_output=xml:gtestresults.xml
+            }
+        }
+    }
+    post {
+        always {
+            xunit (
+                thresholds: [ skipped(failureThreshold: '0'), failed(failureThreshold: '0') ],
+                tools: [ GoogleTest(pattern: 'reports/*.xml') ]
+            )
+        }
+    }
+}

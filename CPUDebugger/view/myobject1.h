@@ -132,7 +132,7 @@ public:
      * @brief page3 confirm button, check if everything is done and meets the page jump condition
      *
      */
-    Q_INVOKABLE void complete(); 、
+    Q_INVOKABLE void complete();
 
     /**
      * @brief page3 to detect the port

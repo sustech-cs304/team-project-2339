@@ -13,9 +13,9 @@ CONFIG += thread
 
 SOURCES += \
         main.cpp \
-    tst_asmupload.cpp \
+        tst_asmupload.cpp \
         tst_importfile.cpp \
-    tst_parser.cpp \
+        tst_parser.cpp \
         tst_uart.cpp \
 #        PreDebugController_Test/compiler_test.cpp \
 #        PreDebugController_Test/generalTest.cpp \
