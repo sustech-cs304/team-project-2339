@@ -26,25 +26,25 @@ public:
     void import(QString& absolutePath);
     /**
      * @brief getSignalList
-     * Get the list of signals with @c CPUSignal @c for top module file. You
-     * should execute this function before you use @c import @c.
+     * Get the list of signals with @c CPUSignal for top module file. You
+     * should execute this function before you use @c import.
      * @return
-     * A list with @c CPUSignal @c.
+     * A list with @c CPUSignal.
      */
     QList<CPUSignal> getSignalList();
     /**
      * @brief getSignalList
-     * Get the list of signals with @c CPUSignal @c for top module file filtered by @c ss @c. You
-     * should execute this function before you use @c import @c.
+     * Get the list of signals with @c CPUSignal for top module file filtered by @c ss @c. You
+     * should execute this function before you use @c import.
      * @param ss
      * @return
-     * A list with @c CPUSignal @c.
+     * A list with @c CPUSignal .
      */
     QList<CPUSignal> getSignalList(QList<QString> &ss);
     /**
      * @brief getStringSignals
-     * Get the list of signals with @c QString @c for top module file. You
-     * should execute this function before you use @c import @c.
+     * Get the list of signals with @c QString for top module file. You
+     * should execute this function before you use @c import .
      * @return
      * A list with @c QString @c
      */
@@ -52,7 +52,7 @@ public:
     /**
      * @brief getSvgPath
      * Get the path of graph file with svg format. You should execute this function
-     * before you use @c import @c.
+     * before you use @c import .
      * @return
      * The path of svg file.
      */
@@ -63,13 +63,13 @@ public:
      * @param path
      *
      * @warning
-     * You should check out all the @c *.v @c in the path.
+     * You should check out all the @c *.v  in the path.
      */
     void genGraph(QString path);
     /**
      * @brief genGraph
      * Generate graph with svg format under the tmporary directory
-     * You should execute this function before you use @c import @c
+     * You should execute this function before you use @c import
      */
     void genGraph();
     /**
@@ -87,9 +87,9 @@ public:
     void delTempDir();
     /**
      * @brief filter
-     * Sort the string list with the rule of @c filter @c.
+     * Sort the string list with the rule of @c filter .
      * The string will rank in the front if the its prefix matches
-     * the @c filter @c
+     * the @c filter
      * @param ss
      * The string list to be sorted.
      * @param filter

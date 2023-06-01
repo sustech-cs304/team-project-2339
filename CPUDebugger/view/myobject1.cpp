@@ -363,7 +363,7 @@ void MyObject1::sendResume(){
     CPUSignal tmpsig = mysignals.at(0);
     m_myList42.clear();
     int start_idx = 3;
-    for (int i = 0 ; i < mysignals.length() ; i ++){
+    for (int i = 0 ; i < mysignals.length(); i ++){
         QString hexString;
         for (int j = start_idx + (mysignals.at(i).width/8); j > start_idx; j--) {
             hexString += QString("%1").arg(static_cast<quint8>(cpuResponse->at(j)), 2, 16, QChar('0'));

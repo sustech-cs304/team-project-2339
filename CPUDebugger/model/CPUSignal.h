@@ -28,7 +28,7 @@ public:
 
     /**
      * @brief createInstance
-     * The method to create the instance of CPUSignal with @c net @c
+     * The method to create the instance of CPUSignal with @c net
      * @param net
      * @return
      */

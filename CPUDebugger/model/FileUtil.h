@@ -22,7 +22,7 @@ public:
     static QStringList getTextStreams(QFile *f);
     /**
      * @brief exportFile
-     * Export file to the path with @c ss @c
+     * Export file to the path with @c ss
      * @param path
      * @param ss
      */
@@ -65,7 +65,7 @@ public:
     static QString execute(QString binPath, QString workDir, QStringList &arguments);
     /**
      * @brief importFile
-     * Import one file with path. The path should be url when @c isUrl=true @c
+     * Import one file with path. The path should be url when @c isUrl=true
      * @param path
      * @param isUrl
      * The path is url or not.
@@ -92,7 +92,7 @@ public:
      * @param dirPath
      * The path of directory.
      * @param filter
-     * Search the file with @c filter @c suffix.
+     * Search the file with @c filter suffix.
      * @param recursively
      * If it is true, it will search the directory recursively.
      * @return
