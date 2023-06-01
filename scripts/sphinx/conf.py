@@ -10,16 +10,16 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
+# import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 from sphinx.builders.html import StandaloneHTMLBuilder
 import subprocess, os
 
-# Auto run doxygen if on the Read the Docs environment
+# Check if we're running on Read the Docs' servers
 read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
 if read_the_docs_build:
-    subprocess.call(["cd ..", "doxygen Doxyfile"], shell=True)
+    subprocess.call("cd .. ; doxygen", shell=True)
 
 project = 'CPUDebugger'
 copyright = '2023, David Li'
