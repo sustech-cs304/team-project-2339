@@ -1,4 +1,8 @@
-# Usage
+# CPU Debugger
+
+This project is an assistant software for students in CS208-Compute Organization, providing a convenience method to debug CPU written by verilog and assemble language codes needed on course.
+
+## Usage
 
 ### Architecture
 
