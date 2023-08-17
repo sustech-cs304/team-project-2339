@@ -24,7 +24,7 @@ This section introduces the operations for utilizing the CPU Debugger PC client.
 
 1. ****CPU Import Stage****:
     
-    ![0 import](graphs/0%20import.png)
+    ![0 import](documentations/User Manual/graphs/0%20import.png)
     
     - `1`: Select the CPU directory with the dark gray button or simply drag the directory (alternative) into the dashed box as shown in the graph.
         
