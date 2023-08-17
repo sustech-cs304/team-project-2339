@@ -53,7 +53,7 @@ This section introduces the operations for utilizing the CPU Debugger PC client.
     - `2.2`: Wait for the progress bar to complete, this process will take a while if large Verilog files are present.
 2. ******Signal Select Stage******:
     
-    ![1 signal](graphs/1%20signal.png)
+    ![1 signal](documentations/User%20Manual/graphs/1%20signal.png)
     
     - `3.1`: (Optional) Search for a specific signal wire by specifying its name or part of its name, note that searching merely reorders the list, no signals will be masked. This is useful for CPUs with many signals at the `top.v` module.
     - `3.2`: Select signals to probe. Selected signals’ values will be available during ASM execution.
@@ -72,13 +72,13 @@ This section introduces the operations for utilizing the CPU Debugger PC client.
     - `5`: Confirm the signal selection and proceed to the next stage.
 3. ****************Export Stage****************:
     
-    ![2 export](graphs/2%20export.png)
+    ![2 export](documentations/User%20Manual/graphs/2%20export.png)
     
     - `6`: Select a directory to export the `debug_core.v` Debug Core coprocessor, this directory will default to the directory previously specified for the entire CPU.
     - `7`: This button will become active after the bitstream has been flashed into the FPGA, press it to complete the export stage.
 4. **********************Debug Stage**********************:
     
-    ![3 debug](graphs/3%20debug.png)
+    ![3 debug](documentations/User%20Manual/graphs/3%20debug.png)
     
     - `8`: Select an ASM file to be imported to the CPU Debugger.
     - `9`: Send the assembled ASM file in binary format to the CPU, the CPU must have RAM and ROM sizes of 64K (details will be provided below).
@@ -116,7 +116,7 @@ output reg uart_complete
 - `pc_next` is the value of the program counter of the next cycle, this must be able to reflect any changes (reset to 0, jump, or offset) right after they happen.
 - `uart_addr` is the address for writing the received ASM binary into RAM and ROM. As shown in the graph below, the data memory and instruction memory will be sent at a single package with different addresses, be sure that the RAM and ROM are both of 64K and provide a logic that saves the upper 64K into RAM (for data) and lower 64K into ROM (for instruction).
 
-![UART_Address.png](graphs/UART_Address.png)
+![UART_Address.png](documentations/User%20Manual/graphs/UART_Address.png)
 
 - `uart_data` is the specific value of a word in the memory corresponding to its address, here the RAM and ROM must be word-aligned.
 - `uart_write_enable` is the enable signal that denotes the competition of receiving a word from UART. This goes high for a single cycle and should typically be connected to the `ena` port of the block RAM IP core’s module instance.
